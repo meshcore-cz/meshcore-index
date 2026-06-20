@@ -1,0 +1,10 @@
+# Source: meshcore-dev/MeshCore variants/meshtiny/platformio.ini + boards/meshtiny.json
+name: "Meshtiny"
+vendorId: "mtools"
+mcu: "nRF52"
+chip_type: "nrf52"
+radio: "SX1262"
+product_url: "https://shop.mtoolstec.com/product/meshtiny"
+official: true
+connectivity:
+  - BLE

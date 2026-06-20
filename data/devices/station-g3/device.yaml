@@ -1,0 +1,9 @@
+# Source: meshcore-dev/MeshCore variants/station_g3_esp32/platformio.ini + boards/station-g3-esp32.json
+name: "UnitEng Station G3 ESP32"
+vendorId: "uniteng"
+mcu: "ESP32-S3"
+chip_type: "esp32"
+product_url: "https://wiki.bqvoy.com/en/devkits/station-g3"
+official: true
+connectivity:
+  - Wi-Fi

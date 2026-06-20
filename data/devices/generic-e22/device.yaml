@@ -1,0 +1,6 @@
+# Source: meshcore-dev/MeshCore variants/generic-e22/platformio.ini
+name: "Generic E22 SX126x"
+mcu: "ESP32"
+chip_type: "esp32"
+radio: "SX1262 / SX1268"
+official: true

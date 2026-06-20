@@ -1,0 +1,7 @@
+# Source: meshcore-dev/MeshCore variants/heltec_ct62/platformio.ini
+name: "Heltec CT62"
+vendorId: "heltec"
+mcu: "ESP32-C3"
+chip_type: "esp32"
+radio: "SX1262"
+official: true

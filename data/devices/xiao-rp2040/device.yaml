@@ -1,0 +1,7 @@
+# Source: meshcore-dev/MeshCore variants/xiao_rp2040/platformio.ini
+name: "Seeed Studio XIAO RP2040"
+vendorId: "seeed"
+mcu: "RP2040"
+chip_type: "rp2040"
+radio: "SX1262"
+official: true

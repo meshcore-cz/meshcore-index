@@ -44,6 +44,8 @@ Create `data/firmwares/<id>/firmware.yaml`.
 |----------|----------|-------|
 | `id`     | yes      | Must reference a device directory under `data/devices/`. |
 | `status` | yes      | `supported` \| `partial` \| `untested` \| `unsupported`. |
+| `target` | no       | Firmware-specific build target, e.g. an upstream MeshCore `variants/<target>/` directory. |
+| `platformio_board` | no | PlatformIO `board = ...` value used by that target, when known. |
 | `notes`  | no       | Short caveat shown in the matrix tooltip / detail page. |
 
 ### `changelog` (release source)
@@ -96,6 +98,7 @@ Create `data/devices/<id>/device.yaml`.
 | `mcu`             | yes      | string   | Chip family, e.g. `ESP32`, `nRF52`. |
 | `vendorId`        | no       | string   | References a `data/vendors/<id>/` directory. Optional — a device need not have a vendor. |
 | `radio`           | no       | string   | e.g. `SX1262`, `SX1276`, `LR1110`. |
+| `product_url`     | no       | url      | Product, docs, or datasheet page for the board/module. |
 | `chip_type`       | no       | string   | Flasher chip family (`esp32`/`nrf52`/…). |
 | `official`        | no       | bool     | `true` if listed in the official MeshCore flasher. |
 | `image`           | no       | string   | SVG filename placed in the same directory; shown as the thumbnail. |

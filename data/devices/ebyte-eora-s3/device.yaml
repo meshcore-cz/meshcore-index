@@ -1,0 +1,10 @@
+# Source: meshcore-dev/MeshCore variants/ebyte_eora_s3/platformio.ini + boards/ebyte_eora-s3.json
+name: "Ebyte EoRa-S3-XXXTB Radio"
+vendorId: "ebyte"
+mcu: "ESP32-S3"
+chip_type: "esp32"
+radio: "SX1262"
+product_url: "https://www.cdebyte.com/products/EoRa-S3-900TB"
+official: true
+connectivity:
+  - Wi-Fi

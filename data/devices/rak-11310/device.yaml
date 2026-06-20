@@ -1,0 +1,7 @@
+# Source: meshcore-dev/MeshCore variants/rak11310/platformio.ini
+name: "RAK 11310"
+vendorId: "rak"
+mcu: "RP2040"
+chip_type: "rp2040"
+radio: "SX1262"
+official: true

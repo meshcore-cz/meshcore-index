@@ -28,7 +28,8 @@
     {:else if d.vendorName}
       <p class="mt-1 text-dim">{d.vendorName}</p>
     {/if}
-    {#if d.description}<p class="mt-1 max-w-[70ch] text-dim">{d.description}</p>{/if}
+  {#if d.description}<p class="mt-1 max-w-[70ch] text-dim">{d.description}</p>{/if}
+    {#if d.product_url}<a class="mt-2 inline-block text-[0.9rem] text-accent2 hover:underline" href={d.product_url} target="_blank" rel="noreferrer">Product page ↗</a>{/if}
   </div>
 </header>
 
@@ -52,6 +53,7 @@
         <tr class="text-left text-[0.78rem] tracking-wide text-dim uppercase">
           <th class="border-b border-edge px-2.5 py-2">Firmware</th>
           <th class="border-b border-edge px-2.5 py-2">Type</th>
+          <th class="border-b border-edge px-2.5 py-2">Target</th>
           <th class="border-b border-edge px-2.5 py-2">Status</th>
           <th class="border-b border-edge px-2.5 py-2">Notes</th>
         </tr>
@@ -62,6 +64,7 @@
           <tr>
             <td class="border-b border-edge px-2.5 py-2"><a class="text-accent2 hover:underline" href="{base}/firmware/{f.firmware.id}/">{f.firmware.name}</a></td>
             <td class="border-b border-edge px-2.5 py-2 text-dim">{TYPE_META[f.firmware.type]?.label ?? f.firmware.type}</td>
+            <td class="border-b border-edge px-2.5 py-2 font-mono text-[0.8rem] text-dim">{f.target ?? '—'}</td>
             <td class="border-b border-edge px-2.5 py-2">
               <span class="inline-block rounded-full px-2 py-0.5 text-[0.78rem] whitespace-nowrap {meta.tw}">{meta.symbol ?? ''} {meta.label}</span>
             </td>

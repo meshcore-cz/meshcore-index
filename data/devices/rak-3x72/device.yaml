@@ -1,0 +1,8 @@
+# Source: meshcore-dev/MeshCore variants/rak3x72/platformio.ini + boards/rak3172.json
+name: "RAK 3x72"
+vendorId: "rak"
+mcu: "STM32WL"
+chip_type: "stm32"
+radio: "STM32WL"
+product_url: "https://store.rakwireless.com/products/wisduo-lpwan-module-rak3172"
+official: true

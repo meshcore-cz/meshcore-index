@@ -1,0 +1,7 @@
+# Source: meshcore-dev/MeshCore variants/tenstar_c3/platformio.ini
+name: "Tenstar C3"
+vendorId: "tenstar"
+mcu: "ESP32-C3"
+chip_type: "esp32"
+radio: "SX1262 / SX1268"
+official: true

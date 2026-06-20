@@ -38,6 +38,8 @@
         "properties": {
           "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
           "status": { "enum": ["supported", "partial", "untested", "unsupported"] },
+          "target": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+$" },
+          "platformio_board": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+$" },
           "notes": { "type": "string" }
         }
       }

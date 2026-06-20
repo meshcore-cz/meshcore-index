@@ -1,0 +1,10 @@
+# Source: meshcore-dev/MeshCore variants/lilygo_t_impulse_plus/platformio.ini + boards/lilygo_t_impulse_plus_nrf52840.json
+name: "LilyGo T-Impulse Plus"
+vendorId: "lilygo"
+mcu: "nRF52"
+chip_type: "nrf52"
+radio: "SX1262"
+product_url: "https://www.lilygo.cc/"
+official: true
+connectivity:
+  - BLE

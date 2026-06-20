@@ -1,0 +1,7 @@
+# Source: meshcore-dev/MeshCore variants/muziworks_r1_neo/platformio.ini
+name: "Muzi Works R1 Neo"
+vendorId: "muziworks"
+mcu: "nRF52"
+chip_type: "nrf52"
+radio: "SX1262"
+official: true

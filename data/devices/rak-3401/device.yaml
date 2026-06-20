@@ -1,0 +1,10 @@
+# Source: meshcore-dev/MeshCore variants/rak3401/platformio.ini + boards/rak3401.json
+name: "RAK WisCore RAK3401"
+vendorId: "rak"
+mcu: "nRF52"
+chip_type: "nrf52"
+radio: "SX1262"
+product_url: "https://www.rakwireless.com"
+official: true
+connectivity:
+  - BLE

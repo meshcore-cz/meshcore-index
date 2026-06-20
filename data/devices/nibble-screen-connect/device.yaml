@@ -1,0 +1,10 @@
+# Source: meshcore-dev/MeshCore variants/nibble_screen_connect/platformio.ini
+name: "Nibble Screen Connect"
+vendorId: "nibble"
+mcu: "ESP32-S3"
+chip_type: "esp32"
+radio: "SX1262"
+official: true
+connectivity:
+  - Wi-Fi
+  - BLE

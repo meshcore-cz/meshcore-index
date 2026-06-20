@@ -34,27 +34,323 @@ features:
   - Web-based flasher
 
 devices:
-  - id: heltec-v3
+  - id: ebyte-eora-s3
     status: supported
-  - id: heltec-v4
+    target: ebyte_eora_s3
+    platformio_board: ebyte_eora-s3
+  - id: gatiot-gat562-30s
     status: supported
-  - id: heltec-paper
+    target: gat562_30s_mesh_kit
+    platformio_board: rak4631
+  - id: gatiot-gat562-evb-pro
     status: supported
+    target: gat562_mesh_evb_pro
+    platformio_board: rak4631
+  - id: gatiot-gat562
+    status: supported
+    target: gat562_mesh_tracker_pro
+    platformio_board: rak4631
+  - id: gatiot-gat562-watch13
+    status: supported
+    target: gat562_mesh_watch13
+    platformio_board: rak4631
+  - id: generic-e22
+    status: supported
+    target: generic-e22
+    platformio_board: esp32doit-devkit-v1
+  - id: generic-espnow
+    status: supported
+    target: generic_espnow
+    platformio_board: esp32-c3-devkitm-1
+  - id: heltec-ct62
+    status: supported
+    target: heltec_ct62
+    platformio_board: esp32-c3-devkitm-1
+  - id: heltec-e213
+    status: supported
+    target: heltec_e213
+    platformio_board: heltec_e213
+  - id: heltec-e290
+    status: supported
+    target: heltec_e290
+    platformio_board: heltec_e290
+  - id: heltec-mesh-solar
+    status: supported
+    target: heltec_mesh_solar
+    platformio_board: heltec_mesh_solar
+  - id: heltec-t096
+    status: supported
+    target: heltec_t096
+    platformio_board: heltec_t096
+  - id: heltec-t1
+    status: supported
+    target: heltec_t1
+    platformio_board: heltec_t1
   - id: heltec-t114
     status: supported
-  - id: rak-4631
+    target: heltec_t114
+    platformio_board: heltec_t114
+  - id: heltec-t190
     status: supported
+    target: heltec_t190
+    platformio_board: heltec_t190
+  - id: heltec-wt3
+    status: supported
+    target: heltec_tracker
+    platformio_board: esp32-s3-devkitc-1
+  - id: heltec-wt2
+    status: supported
+    target: heltec_tracker_v2
+    platformio_board: heltec_tracker_v2
+  - id: heltec-v2
+    status: supported
+    target: heltec_v2
+    platformio_board: heltec_wifi_lora_32_V2
+  - id: heltec-v3
+    status: supported
+    target: heltec_v3
+    platformio_board: esp32-s3-devkitc-1
+  - id: heltec-v4
+    status: supported
+    target: heltec_v4
+    platformio_board: heltec_v4
+  - id: heltec-v4-exp
+    status: supported
+    target: heltec_v4
+    platformio_board: heltec_v4
+  - id: heltec-paper
+    status: supported
+    target: heltec_wireless_paper
+    platformio_board: esp32-s3-devkitc-1
+  - id: ikoka-handheld
+    status: supported
+    target: ikoka_handheld_nrf
+    platformio_board: seeed-xiao-afruitnrf52-nrf52840
+  - id: ikoka-nano
+    status: supported
+    target: ikoka_nano_nrf
+    platformio_board: seeed-xiao-afruitnrf52-nrf52840
+  - id: ikoka-stick
+    status: supported
+    target: ikoka_stick_nrf
+    platformio_board: seeed-xiao-afruitnrf52-nrf52840
+  - id: keepteen-lt1
+    status: supported
+    target: keepteen_lt1
+    platformio_board: keepteen_lt1
+  - id: lilygo-t3-s3-sx126x
+    status: supported
+    target: lilygo_t3s3
+    platformio_board: t3_s3_v1_x
+  - id: lilygo-t3-s3-sx127x
+    status: supported
+    target: lilygo_t3s3_sx1276
+    platformio_board: t3_s3_v1_x
+  - id: lilygo-t-impulse-plus
+    status: supported
+    target: lilygo_t_impulse_plus
+    platformio_board: lilygo_t_impulse_plus_nrf52840
+  - id: lilygo-tbeam-1w
+    status: supported
+    target: lilygo_tbeam_1w
+    platformio_board: t_beam_1w
   - id: lilygo-t-beam-sx1262
     status: supported
-  - id: lilygo-techo
+    target: lilygo_tbeam_SX1262
+    platformio_board: ttgo-t-beam
+  - id: lilygo-t-beam-1-2-sx1276
     status: supported
+    target: lilygo_tbeam_SX1276
+    platformio_board: ttgo-t-beam
+  - id: lilygo-tbeam-supreme
+    status: supported
+    target: lilygo_tbeam_supreme_SX1262
+    platformio_board: t_beams3_supreme
   - id: lilygo-t-deck
     status: supported
-  - id: xiao-esp32s3
+    target: lilygo_tdeck
+    platformio_board: t-deck
+  - id: lilygo-techo
     status: supported
-  - id: xiao-esp32c3
+    target: lilygo_techo
+    platformio_board: t-echo
+  - id: lilygo-techo-card
     status: supported
-  - id: xiao-esp32c6
+    target: lilygo_techo_card
+    platformio_board: t-echo
+  - id: lilygo-techo-lite
     status: supported
+    target: lilygo_techo_lite
+    platformio_board: t-echo
+  - id: lilygo-teth-elite
+    status: supported
+    target: lilygo_teth_elite
+    platformio_board: esp32s3box
+  - id: lilygo-tlora-c6
+    status: supported
+    target: lilygo_tlora_c6
+    platformio_board: esp32-c6-devkitm-1
+  - id: lilygo-tlora-1-6
+    status: supported
+    target: lilygo_tlora_v2_1
+    platformio_board: ttgo-lora32-v1
+  - id: m5stack-unit-c6l
+    status: supported
+    target: m5stack_unit_c6l
+    platformio_board: esp32-c6-devkitm-1
+  - id: heltec-meshpocket
+    status: supported
+    target: mesh_pocket
+    platformio_board: heltec_mesh_pocket
+  - id: meshadventurer
+    status: supported
+    target: meshadventurer
+    platformio_board: esp32doit-devkit-v1
+  - id: meshtiny
+    status: supported
+    target: meshtiny
+    platformio_board: meshtiny
+  - id: minewsemi-me25ls01
+    status: supported
+    target: minewsemi_me25ls01
+    platformio_board: minewsemi_me25ls01
+  - id: muziworks-r1-neo
+    status: supported
+    target: muziworks_r1_neo
+    platformio_board: rak4631
+  - id: nano-g2
+    status: supported
+    target: nano_g2_ultra
+    platformio_board: nano-g2-ultra
+  - id: nibble-screen-connect
+    status: supported
+    target: nibble_screen_connect
+    platformio_board: esp32-s3-zero
+  - id: faketec
+    status: supported
+    target: promicro
+    platformio_board: promicro_nrf52840
+  - id: rak-11310
+    status: supported
+    target: rak11310
+    platformio_board: rakwireless_rak11300
+  - id: rak-3112
+    status: supported
+    target: rak3112
+    platformio_board: esp32-s3-devkitc-1
+  - id: rak-3401
+    status: supported
+    target: rak3401
+    platformio_board: rak3401
+  - id: rak-3x72
+    status: supported
+    target: rak3x72
+    platformio_board: rak3172
+  - id: rak-4631
+    status: supported
+    target: rak4631
+    platformio_board: rak4631
+  - id: rak-wismesh-tag
+    status: supported
+    target: rak_wismesh_tag
+    platformio_board: rak4631
+  - id: rpi-picow
+    status: supported
+    target: rpi_picow
+    platformio_board: rpipicow
+  - id: sensecap-indicator-espnow
+    status: supported
+    target: sensecap_indicator-espnow
+    platformio_board: esp32-s3-devkitc-1
+  - id: sensecap-solar
+    status: supported
+    target: sensecap_solar
+    platformio_board: seeed_sensecap_solar
   - id: station-g2
     status: supported
+    target: station_g2
+    platformio_board: station-g2
+  - id: station-g3
+    status: supported
+    target: station_g3_esp32
+    platformio_board: station-g3-esp32
+  - id: sensecap-t1000e
+    status: supported
+    target: t1000-e
+    platformio_board: tracker-t1000-e
+  - id: tenstar-c3
+    status: supported
+    target: tenstar_c3
+    platformio_board: esp32-c3-devkitm-1
+  - id: thinknode-m1
+    status: supported
+    target: thinknode_m1
+    platformio_board: thinknode_m1
+  - id: thinknode-m2
+    status: supported
+    target: thinknode_m2
+    platformio_board: ESP32-S3-WROOM-1-N4
+  - id: thinknode-m3
+    status: supported
+    target: thinknode_m3
+    platformio_board: thinknode_m3
+  - id: thinknode-m5
+    status: supported
+    target: thinknode_m5
+    platformio_board: ESP32-S3-WROOM-1-N4
+  - id: thinknode-m6
+    status: supported
+    target: thinknode_m6
+    platformio_board: thinknode_m6
+  - id: tiny-relay
+    status: supported
+    target: tiny_relay
+    platformio_board: tiny_relay
+  - id: waveshare-rp2040-lora
+    status: supported
+    target: waveshare_rp2040_lora
+    platformio_board: pico
+  - id: wio-e5-dev
+    status: supported
+    target: wio-e5-dev
+    platformio_board: lora_e5_dev_board
+  - id: wio-e5-mini
+    status: supported
+    target: wio-e5-mini
+    platformio_board: lora_e5_mini
+  - id: wio-tracker-l1
+    status: supported
+    target: wio-tracker-l1
+    platformio_board: seeed-wio-tracker-l1
+  - id: wio-tracker-l1-eink
+    status: supported
+    target: wio-tracker-l1-eink
+    platformio_board: seeed-wio-tracker-l1
+  - id: wio-wm1110
+    status: supported
+    target: wio_wm1110
+    platformio_board: seeed-xiao-afruitnrf52-nrf52840
+  - id: xiao-esp32c3
+    status: supported
+    target: xiao_c3
+    platformio_board: seeed_xiao_esp32c3
+  - id: xiao-esp32c6
+    status: supported
+    target: xiao_c6
+    platformio_board: esp32-c6-devkitm-1
+  - id: xiao-nrf52
+    status: supported
+    target: xiao_nrf52
+    platformio_board: seeed-xiao-afruitnrf52-nrf52840
+  - id: xiao-rp2040
+    status: supported
+    target: xiao_rp2040
+    platformio_board: seeed_xiao_rp2040
+  - id: xiao-esp32s3-plain
+    status: supported
+    target: xiao_s3
+    platformio_board: seeed_xiao_esp32s3
+  - id: xiao-esp32s3
+    status: supported
+    target: xiao_s3_wio
+    platformio_board: seeed_xiao_esp32s3

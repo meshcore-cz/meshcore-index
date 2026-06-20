@@ -1,0 +1,8 @@
+# Source: meshcore-dev/MeshCore variants/sensecap_indicator-espnow/platformio.ini
+name: "Seeed Studio SenseCAP Indicator ESP-NOW"
+vendorId: "seeed"
+mcu: "ESP32-S3"
+chip_type: "esp32"
+official: true
+connectivity:
+  - Wi-Fi

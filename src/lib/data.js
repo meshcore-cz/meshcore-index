@@ -66,13 +66,21 @@ export function devicesForVendor(vendorId) {
 
 /**
  * Firmwares that list this device, with the per-device status/notes.
- * @returns {Array<{firmware: any, status: string, notes?: string}>}
+ * @returns {Array<{firmware: any, status: string, notes?: string, target?: string, platformio_board?: string}>}
  */
 export function firmwaresForDevice(deviceId) {
   const out = [];
   for (const fw of firmwares) {
     const entry = (fw.devices ?? []).find((d) => d.id === deviceId);
-    if (entry) out.push({ firmware: fw, status: entry.status, notes: entry.notes });
+    if (entry) {
+      out.push({
+        firmware: fw,
+        status: entry.status,
+        notes: entry.notes,
+        target: entry.target,
+        platformio_board: entry.platformio_board
+      });
+    }
   }
   return out;
 }
@@ -80,14 +88,21 @@ export function firmwaresForDevice(deviceId) {
 /**
  * Build a compatibility matrix. Firmwares are the columns (there are only a
  * handful); devices are the rows, limited to those at least one firmware lists.
- * @returns {{firmwares: typeof firmwares, rows: Array<{device: any, cells: Record<string, {status: string, notes?: string}>}>}}
+ * @returns {{firmwares: typeof firmwares, rows: Array<{device: any, cells: Record<string, {status: string, notes?: string, target?: string, platformio_board?: string}>}>}}
  */
 export function compatibilityMatrix() {
   const rows = devices.map((device) => {
     const cells = {};
     for (const fw of firmwares) {
       const entry = (fw.devices ?? []).find((d) => d.id === device.id);
-      if (entry) cells[fw.id] = { status: entry.status, notes: entry.notes };
+      if (entry) {
+        cells[fw.id] = {
+          status: entry.status,
+          notes: entry.notes,
+          target: entry.target,
+          platformio_board: entry.platformio_board
+        };
+      }
     }
     return { device, cells };
   });

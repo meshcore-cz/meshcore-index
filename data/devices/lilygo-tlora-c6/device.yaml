@@ -1,0 +1,10 @@
+# Source: meshcore-dev/MeshCore variants/lilygo_tlora_c6/platformio.ini
+name: "LilyGo T-LoRa C6"
+vendorId: "lilygo"
+mcu: "ESP32-C6"
+chip_type: "esp32"
+radio: "SX1262"
+official: true
+connectivity:
+  - Wi-Fi
+  - BLE

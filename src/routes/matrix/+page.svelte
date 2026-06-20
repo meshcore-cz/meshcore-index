@@ -36,7 +36,16 @@
         <tr class="group">
           <th class="sticky left-0 border-b border-edge bg-elev px-3.5 py-1.5 text-left font-medium group-hover:bg-elev2">
             <a class="flex items-center gap-2.5 text-[0.88rem] hover:text-accent" href="{base}/device/{row.device.id}/">
-              {#if row.device.imageUrl}<img src={row.device.imageUrl} alt="" class="h-[26px] w-[26px] shrink-0 rounded bg-elev2 object-contain p-0.5" />{/if}
+              <span class="flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded bg-elev2 p-0.5 text-muted">
+                {#if row.device.imageUrl}
+                  <img src={row.device.imageUrl} alt="" class="max-h-full max-w-full object-contain" />
+                {:else}
+                  <svg aria-hidden="true" viewBox="0 0 24 24" class="h-[17px] w-[17px]">
+                    <rect x="7" y="4" width="10" height="16" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.8" />
+                    <path d="M10 2.8v2.4M14 2.8v2.4M10 18.8v2.4M14 18.8v2.4M5.2 8h2.4M5.2 12h2.4M5.2 16h2.4M16.4 8h2.4M16.4 12h2.4M16.4 16h2.4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.4" />
+                  </svg>
+                {/if}
+              </span>
               <span>{row.device.name}</span>
             </a>
           </th>
@@ -47,7 +56,7 @@
               class="w-[110px] min-w-[90px] cursor-default border-b border-l border-edge text-center text-base {meta
                 ? meta.cell
                 : 'text-edge'}"
-              title={cell ? `${meta?.label}${cell.notes ? ' — ' + cell.notes : ''}` : 'No data'}
+              title={cell ? `${meta?.label}${cell.target ? ' · ' + cell.target : ''}${cell.notes ? ' — ' + cell.notes : ''}` : 'No data'}
             >
               {meta ? meta.symbol : '·'}
             </td>

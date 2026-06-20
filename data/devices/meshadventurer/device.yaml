@@ -1,0 +1,6 @@
+# Source: meshcore-dev/MeshCore variants/meshadventurer/platformio.ini
+name: "Meshadventurer"
+mcu: "ESP32"
+chip_type: "esp32"
+radio: "SX1262 / SX1268"
+official: true

@@ -1,0 +1,9 @@
+# Source: meshcore-dev/MeshCore variants/wio_wm1110/platformio.ini
+name: "Seeed Studio Wio WM1110"
+vendorId: "seeed"
+mcu: "nRF52"
+chip_type: "nrf52"
+radio: "LR1110"
+official: true
+connectivity:
+  - BLE

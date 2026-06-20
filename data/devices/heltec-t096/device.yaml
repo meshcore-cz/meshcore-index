@@ -1,0 +1,10 @@
+# Source: meshcore-dev/MeshCore variants/heltec_t096/platformio.ini + boards/heltec_t096.json
+name: "Heltec T096"
+vendorId: "heltec"
+mcu: "nRF52"
+chip_type: "nrf52"
+radio: "SX1262"
+product_url: "https://heltec.org/"
+official: true
+connectivity:
+  - BLE

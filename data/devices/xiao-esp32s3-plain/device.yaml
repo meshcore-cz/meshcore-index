@@ -1,0 +1,10 @@
+# Source: meshcore-dev/MeshCore variants/xiao_s3/platformio.ini
+name: "Seeed Studio XIAO ESP32S3"
+vendorId: "seeed"
+mcu: "ESP32-S3"
+chip_type: "esp32"
+radio: "SX1262"
+official: true
+connectivity:
+  - Wi-Fi
+  - BLE

@@ -1,0 +1,10 @@
+# Source: meshcore-dev/MeshCore variants/m5stack_unit_c6l/platformio.ini
+name: "M5Stack Unit C6L"
+vendorId: "m5stack"
+mcu: "ESP32-C6"
+chip_type: "esp32"
+radio: "SX1262"
+official: true
+connectivity:
+  - Wi-Fi
+  - BLE

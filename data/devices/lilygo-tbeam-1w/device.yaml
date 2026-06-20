@@ -1,0 +1,12 @@
+# Source: meshcore-dev/MeshCore variants/lilygo_tbeam_1w/platformio.ini + boards/t_beam_1w.json
+name: "LilyGo T-Beam 1W"
+vendorId: "lilygo"
+mcu: "ESP32-S3"
+chip_type: "esp32"
+radio: "SX1262"
+product_url: "http://www.lilygo.cn/"
+official: true
+connectivity:
+  - Wi-Fi
+  - BLE
+  - LoRa

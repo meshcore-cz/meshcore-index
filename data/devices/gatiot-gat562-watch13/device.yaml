@@ -1,0 +1,7 @@
+# Source: meshcore-dev/MeshCore variants/gat562_mesh_watch13/platformio.ini
+name: "GAT-IoT GAT562 Mesh Watch13"
+vendorId: "gatiot"
+mcu: "nRF52"
+chip_type: "nrf52"
+radio: "SX1262"
+official: true

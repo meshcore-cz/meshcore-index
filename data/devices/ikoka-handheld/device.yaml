@@ -1,0 +1,7 @@
+# Source: meshcore-dev/MeshCore variants/ikoka_handheld_nrf/platformio.ini
+name: "Ikoka Handheld nRF"
+vendorId: "ikoka"
+mcu: "nRF52"
+chip_type: "nrf52"
+radio: "SX1262"
+official: true

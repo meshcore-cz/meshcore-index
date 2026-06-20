@@ -1,0 +1,9 @@
+# Source: meshcore-dev/MeshCore variants/lilygo_techo_card/platformio.ini
+name: "LilyGo T-Echo Card"
+vendorId: "lilygo"
+mcu: "nRF52"
+chip_type: "nrf52"
+radio: "SX1262"
+official: true
+connectivity:
+  - BLE

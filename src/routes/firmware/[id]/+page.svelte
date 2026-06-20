@@ -82,6 +82,7 @@
           <th class="border-b border-edge px-2.5 py-2">Device</th>
           <th class="border-b border-edge px-2.5 py-2">MCU</th>
           <th class="border-b border-edge px-2.5 py-2">Radio</th>
+          <th class="border-b border-edge px-2.5 py-2">Target</th>
           <th class="border-b border-edge px-2.5 py-2">Status</th>
           <th class="border-b border-edge px-2.5 py-2">Notes</th>
         </tr>
@@ -93,6 +94,7 @@
             <td class="border-b border-edge px-2.5 py-2"><a class="text-accent2 hover:underline" href="{base}/device/{d.device.id}/">{d.device.name}</a></td>
             <td class="border-b border-edge px-2.5 py-2 text-dim">{d.device.mcu ?? '—'}</td>
             <td class="border-b border-edge px-2.5 py-2 text-dim">{d.device.radio ?? '—'}</td>
+            <td class="border-b border-edge px-2.5 py-2 font-mono text-[0.8rem] text-dim">{d.target ?? '—'}</td>
             <td class="border-b border-edge px-2.5 py-2">
               <span class="inline-block rounded-full px-2 py-0.5 text-[0.78rem] whitespace-nowrap {meta.tw}">{meta.symbol ?? ''} {meta.label}</span>
             </td>

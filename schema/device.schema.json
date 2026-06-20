@@ -12,6 +12,7 @@
     "vendorId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
     "chip_type": { "type": "string" },
     "radio": { "type": "string" },
+    "product_url": { "type": "string", "pattern": "^https?://" },
     "image": { "type": "string", "pattern": "\\.svg$" },
     "official": { "type": "boolean" },
     "flasher_roles": { "type": "array", "items": { "type": "string" } },
