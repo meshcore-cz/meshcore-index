@@ -1,0 +1,12 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "RAK WisMesh 1W Booster (3401 + 13302)"
+vendorId: rak
+mcu: nRF52
+chip_type: nrf52
+image: rak_13302.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
+  - roomServer

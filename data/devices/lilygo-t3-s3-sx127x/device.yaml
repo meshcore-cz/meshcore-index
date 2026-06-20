@@ -1,0 +1,13 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "LilyGo T3 S3 (SX127x)"
+vendorId: lilygo
+mcu: ESP32
+chip_type: esp32
+radio: SX127X
+image: lilygo_t3s3.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
+  - roomServer

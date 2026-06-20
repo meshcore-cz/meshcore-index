@@ -1,0 +1,56 @@
+# MeshCore firmware definition
+# Schema: see data/SCHEMA.md
+name: MeshCore (Official)
+type: official            # official | fork | custom
+maintainer: meshcore-dev (community project, originated by Scott Powell / ripplebiz)
+description: >
+  The official MeshCore firmware — a lightweight C++ library and firmware for
+  multi-hop packet routing over LoRa radios. It powers decentralized,
+  self-healing mesh networks for off-grid, emergency and tactical
+  communication, with prebuilt images and a web flasher.
+repository: https://github.com/meshcore-dev/MeshCore
+website: https://meshcore.io
+license: MIT
+status: active           # active | maintenance | inactive | experimental
+latest_version: "1.16.0"
+released: "2026-06-01"
+
+roles:
+  - companion
+  - repeater
+  - room-server
+  - sensor
+
+features:
+  - Multi-hop packet routing
+  - End-to-end encrypted DMs
+  - BLE / USB / TCP companion clients
+  - Web, iOS, Android, Python & NodeJS clients
+  - Native flood-advert traffic management (1.16+)
+  - Web-based flasher
+
+devices:
+  - id: heltec-v3
+    status: supported
+  - id: heltec-v4
+    status: supported
+  - id: heltec-paper
+    status: supported
+  - id: heltec-t114
+    status: supported
+  - id: rak-4631
+    status: supported
+  - id: lilygo-t-beam-sx1262
+    status: supported
+  - id: lilygo-techo
+    status: supported
+  - id: lilygo-t-deck
+    status: supported
+  - id: xiao-esp32s3
+    status: supported
+  - id: xiao-esp32c3
+    status: supported
+  - id: xiao-esp32c6
+    status: supported
+  - id: station-g2
+    status: supported

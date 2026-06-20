@@ -1,0 +1,12 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "Seeed Studio Wio Tracker L1 EINK"
+vendorId: seeed
+mcu: nRF52
+chip_type: nrf52
+image: wio_tracker_l1_eink.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
+  - roomServer

@@ -1,0 +1,27 @@
+{
+  "name": "meshcore-firmware-atlas",
+  "version": "0.1.0",
+  "description": "A database and compatibility matrix of MeshCore firmwares, built from human-readable YAML files.",
+  "type": "module",
+  "scripts": {
+    "build:data": "node scripts/build-data.js",
+    "predev": "node scripts/build-data.js",
+    "dev": "vite dev",
+    "prebuild": "node scripts/build-data.js",
+    "build": "vite build",
+    "preview": "vite preview",
+    "validate": "node scripts/validate.js",
+    "test": "node scripts/validate.js"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^3.0.6",
+    "@sveltejs/kit": "^2.8.0",
+    "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "@tailwindcss/vite": "^4.3.1",
+    "ajv": "^8.20.0",
+    "js-yaml": "^4.1.0",
+    "svelte": "^5.1.0",
+    "tailwindcss": "^4.3.1",
+    "vite": "^5.4.0"
+  }
+}

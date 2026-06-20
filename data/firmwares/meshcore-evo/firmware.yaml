@@ -1,0 +1,40 @@
+name: MeshCore-Evo
+type: fork
+maintainer: mattzzw
+description: >
+  An improved repeater-focused fork of MeshCore that bundled pending upstream
+  PRs and improvements for dense meshes — notably flood-advert traffic
+  mitigation and enhanced `denyf *` handling. Largely superseded once official
+  1.16.0 added native flood traffic management.
+repository: https://github.com/mattzzw/MeshCore-Evo
+website: https://meshcore.io
+license: MIT
+status: maintenance
+latest_version: "1.15.0_0.1.21"
+released: "2026-05-25"
+
+roles:
+  - companion
+  - repeater
+  - room-server
+
+features:
+  - Flood-advert traffic mitigation
+  - Enhanced denyf "*" handling
+  - Tuned for dense repeater meshes
+  - Tracks upstream MeshCore releases
+
+devices:
+  - id: heltec-v3
+    status: supported
+  - id: heltec-t114
+    status: supported
+  - id: rak-4631
+    status: supported
+  - id: lilygo-t-beam-sx1262
+    status: supported
+  - id: xiao-esp32s3
+    status: supported
+  - id: station-g2
+    status: partial
+    notes: Builds available; less frequently tested than core repeater boards.

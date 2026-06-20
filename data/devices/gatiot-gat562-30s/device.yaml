@@ -1,0 +1,12 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "GAT-IoT GAT562 30s"
+vendorId: gatiot
+mcu: nRF52
+chip_type: nrf52
+image: gatiot_gat562_30s.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
+  - roomServer

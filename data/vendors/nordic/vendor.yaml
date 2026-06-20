@@ -1,0 +1,5 @@
+name: "Nordic Semiconductor"
+website: "https://www.nordicsemi.com"
+logo: logo.svg
+description: >
+  Semiconductor vendor; the nRF52/nRF54 SoCs power many low-power mesh nodes.

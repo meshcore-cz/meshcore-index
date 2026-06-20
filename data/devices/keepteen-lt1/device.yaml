@@ -1,0 +1,12 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "Keepteen LT1"
+vendorId: keepteen
+mcu: nRF52
+chip_type: nrf52
+image: keepteen_lt1.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
+  - roomServer

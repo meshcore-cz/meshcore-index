@@ -1,0 +1,36 @@
+name: Meshcomod
+type: fork
+maintainer: ALLFATHER-BV
+description: >
+  A multi-transport companion firmware built on MeshCore that exposes USB,
+  Bluetooth and TCP connectivity simultaneously, so phones, web clients and
+  Home Assistant can all talk to one radio at once. Adds runtime Wi-Fi config
+  and an on-device UI.
+repository: https://github.com/ALLFATHER-BV/meshcomod
+website: https://meshcomod.com
+license: MIT
+status: active
+latest_version: "1.16.0.4"
+released: "2026-06-16"
+
+roles:
+  - companion
+  - repeater
+  - room-server
+
+features:
+  - Simultaneous USB + BLE + TCP connections
+  - Real-time push to all connected clients
+  - Home Assistant sidebar integration
+  - Runtime Wi-Fi configuration (no CLI recovery)
+  - On-device UI tabs (BLE pairing, TCP status)
+
+devices:
+  - id: heltec-v4
+    status: supported
+  - id: heltec-v3
+    status: supported
+  - id: heltec-paper
+    status: supported
+  - id: xiao-esp32s3
+    status: supported

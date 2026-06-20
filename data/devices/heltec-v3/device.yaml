@@ -1,0 +1,12 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "Heltec v3"
+vendorId: heltec
+mcu: ESP32
+chip_type: esp32
+image: heltec_v3.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
+  - roomServer

@@ -1,0 +1,5 @@
+name: "Heltec Automation"
+website: "https://heltec.org"
+logo: logo.svg
+description: >
+  Maker of affordable ESP32 and nRF52 LoRa development boards widely used across the MeshCore ecosystem.

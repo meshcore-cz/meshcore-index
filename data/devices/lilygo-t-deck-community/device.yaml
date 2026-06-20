@@ -1,0 +1,12 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "LilyGo T-Deck (community)"
+vendorId: lilygo
+mcu: ESP32
+chip_type: esp32
+image: lilygo_tdeck.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
+  - roomServer

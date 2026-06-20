@@ -1,0 +1,12 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "Ikoka Stick"
+vendorId: ikoka
+mcu: nRF52
+chip_type: nrf52
+image: ikoka_stick.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
+  - roomServer

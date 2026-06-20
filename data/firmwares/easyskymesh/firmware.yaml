@@ -1,0 +1,35 @@
+name: EasySkyMesh
+type: fork
+maintainer: IoTThinks
+description: >
+  A power-saving oriented MeshCore firmware with experimental, advanced
+  features and bug fixes aimed at ultra-low-power repeater and sensor
+  deployments. Targets extended battery life (e.g. ~16µA power-off) with the
+  intent of upstreaming improvements into MeshCore.
+repository: https://github.com/IoTThinks/EasySkyMesh
+website: https://iotthinks.com
+license: MIT
+status: active
+latest_version: "PowerSaving 16"
+released: "2026-06-08"
+
+roles:
+  - repeater
+  - sensor
+
+features:
+  - Ultra-low-power operation (~16µA power-off)
+  - Sensor integration
+  - Auto-reboot / watchdog
+  - Long-range mesh messaging
+
+devices:
+  - id: heltec-v3
+    status: supported
+  - id: heltec-t114
+    status: supported
+  - id: rak-4631
+    status: supported
+  - id: xiao-esp32s3
+    status: partial
+    notes: Power-saving figures vary by board revision.

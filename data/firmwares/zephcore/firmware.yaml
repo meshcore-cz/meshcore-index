@@ -1,0 +1,50 @@
+name: ZephCore
+type: custom
+maintainer: liquidraver
+description: >
+  A ground-up port of MeshCore from Arduino to the Zephyr RTOS. Replaces the
+  Arduino loop with Zephyr's event-driven primitives so the CPU sleeps between
+  events, while aiming for full protocol compatibility with stock MeshCore
+  firmware and the MeshCore mobile apps.
+repository: https://github.com/liquidraver/ZephCore
+website: ""
+license: MIT
+status: active
+latest_version: "v20260619.094253"
+released: "2026-06-19"
+
+roles:
+  - companion
+  - repeater
+  - room-server
+  - observer
+
+features:
+  - Zephyr RTOS event-driven architecture
+  - CAD-based RX power saving
+  - Adaptive contention window
+  - Adaptive Power Control
+  - DFU / OTA update support
+  - Listen-only observer (WiFi + MQTT)
+  - Protocol-compatible with MeshCore apps
+
+devices:
+  - id: rak-4631
+    status: supported
+  - id: lilygo-techo
+    status: supported
+  - id: wio-tracker-l1
+    status: supported
+  - id: heltec-v3
+    status: supported
+  - id: lilygo-t-beam-sx1262
+    status: supported
+  - id: xiao-esp32c3
+    status: supported
+  - id: xiao-esp32c6
+    status: supported
+  - id: xiao-esp32s3
+    status: supported
+  - id: nrf54l15
+    status: partial
+    notes: Early bring-up; not all peripherals wired.

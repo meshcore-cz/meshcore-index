@@ -1,0 +1,9 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "LilyGo T-Display Pro"
+vendorId: lilygo
+mcu: ESP32
+chip_type: esp32
+image: lilygo_tdisplay.svg
+official: true
+flasher_roles:
+  - gui

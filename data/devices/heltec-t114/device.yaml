@@ -1,0 +1,12 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "Heltec T114"
+vendorId: heltec
+mcu: nRF52
+chip_type: nrf52
+image: heltec_t114.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
+  - roomServer

@@ -1,0 +1,13 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "RPI Pico 2040 + WaveShare SX1262"
+vendorId: raspberry
+mcu: —
+chip_type: noflash
+radio: SX1262
+image: rpi_picow.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
+  - roomServer

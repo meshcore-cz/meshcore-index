@@ -1,0 +1,12 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "RAK WisBlock / WisMesh (RAK 4631)"
+vendorId: rak
+mcu: nRF52
+chip_type: nrf52
+image: rak_4631.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
+  - roomServer

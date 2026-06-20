@@ -1,0 +1,5 @@
+name: "LilyGO"
+website: "https://lilygo.cc"
+logo: logo.svg
+description: >
+  Maker of integrated LoRa handhelds and dev boards (T-Beam, T-Deck, T-Echo, …).

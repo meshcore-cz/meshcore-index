@@ -1,0 +1,9 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "Heltec v4 + Expansion Kit (Touch)"
+vendorId: heltec
+mcu: ESP32
+chip_type: esp32
+image: heltec_v4_exp.svg
+official: true
+flasher_roles:
+  - gui

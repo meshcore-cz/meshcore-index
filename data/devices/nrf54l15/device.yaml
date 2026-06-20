@@ -1,0 +1,6 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "Nordic nRF54L15 DK"
+vendorId: nordic
+mcu: nRF54L15
+chip_type: nrf54l
+official: false

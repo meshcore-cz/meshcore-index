@@ -1,0 +1,12 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "Heltec Wireless Tracker v2"
+vendorId: heltec
+mcu: ESP32
+chip_type: esp32
+image: heltec_wt2.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
+  - roomServer

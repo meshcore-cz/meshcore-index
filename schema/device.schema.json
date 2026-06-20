@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://meshcore-atlas/schema/device.schema.json",
+  "title": "Device",
+  "description": "A hardware board. The id comes from the directory name, not this file.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "mcu"],
+  "properties": {
+    "name": { "type": "string", "minLength": 1 },
+    "mcu": { "type": "string", "minLength": 1 },
+    "vendorId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "chip_type": { "type": "string" },
+    "radio": { "type": "string" },
+    "image": { "type": "string", "pattern": "\\.svg$" },
+    "official": { "type": "boolean" },
+    "flasher_roles": { "type": "array", "items": { "type": "string" } },
+    "frequency_bands": { "type": "array", "items": { "type": "number" } },
+    "form_factor": { "type": "string" },
+    "display": { "type": "string" },
+    "battery": { "type": "string" },
+    "gps": { "type": "boolean" },
+    "connectivity": { "type": "array", "items": { "type": "string" } },
+    "description": { "type": "string" }
+  }
+}

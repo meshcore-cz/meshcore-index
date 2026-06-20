@@ -1,0 +1,12 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "Heltec Vision Master E290"
+vendorId: heltec
+mcu: ESP32
+chip_type: esp32
+image: heltec_e290.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
+  - roomServer

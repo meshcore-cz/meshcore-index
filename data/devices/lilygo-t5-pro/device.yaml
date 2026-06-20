@@ -1,0 +1,9 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "LilyGo T5 E-Paper S3 Pro (H752-XX)"
+vendorId: lilygo
+mcu: ESP32
+chip_type: esp32
+image: lilygo_t5_pro.svg
+official: true
+flasher_roles:
+  - gui

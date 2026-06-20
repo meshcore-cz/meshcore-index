@@ -1,0 +1,5 @@
+name: "Pro Micro"
+website: ""
+logo: logo.svg
+description: >
+  Generic Pro Micro form-factor nRF52 boards.

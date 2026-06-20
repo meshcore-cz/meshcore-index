@@ -1,0 +1,11 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: "Seeed Studio Xiao C3"
+vendorId: seeed
+mcu: ESP32
+chip_type: esp32
+image: xiao_esp32c3.svg
+official: true
+flasher_roles:
+  - companionBle
+  - companionUsb
+  - repeater
