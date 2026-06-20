@@ -1,10 +1,23 @@
 # Source: meshcore-dev/MeshCore variants/m5stack_unit_c6l/platformio.ini
-name: "M5Stack Unit C6L"
-vendorId: "m5stack"
-mcu: "ESP32-C6"
-chip_type: "esp32"
-radio: "SX1262"
+name: M5Stack Unit C6L
+vendorId: m5stack
+kind: product
+lifecycle: active
+familyId: m5stack-m5stack-unit-c6l
 official: true
-connectivity:
-  - Wi-Fi
-  - BLE
+hardware:
+  mcu:
+    model: esp32-c6
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: present

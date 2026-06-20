@@ -1,6 +1,6 @@
 <script>
   import { base } from '$app/paths';
-  import { STATUS_META, TYPE_META, FW_STATUS_TW, groupReleases } from '$lib/data.js';
+  import { STATUS_META, TYPE_META, FW_STATUS_TW, groupReleases, deviceMcuLabel, deviceRadioLabel } from '$lib/data.js';
   import ReleaseGroupList from '$lib/ReleaseGroupList.svelte';
   let { data } = $props();
   let fw = $derived(data.firmware);
@@ -94,8 +94,8 @@
           {@const meta = STATUS_META[d.status] ?? { label: d.status, tw: '' }}
           <tr>
             <td class="border-b border-edge px-2.5 py-2"><a class="text-accent2 hover:underline" href="{base}/device/{d.device.id}/">{d.device.name}</a></td>
-            <td class="border-b border-edge px-2.5 py-2 text-dim">{d.device.mcu ?? '—'}</td>
-            <td class="border-b border-edge px-2.5 py-2 text-dim">{d.device.radio ?? '—'}</td>
+            <td class="border-b border-edge px-2.5 py-2 text-dim">{deviceMcuLabel(d.device)}</td>
+            <td class="border-b border-edge px-2.5 py-2 text-dim">{deviceRadioLabel(d.device)}</td>
             <td class="border-b border-edge px-2.5 py-2 font-mono text-[0.8rem] text-dim">{d.target ?? '—'}</td>
             <td class="border-b border-edge px-2.5 py-2">
               <span class="inline-block rounded-full px-2 py-0.5 text-[0.78rem] whitespace-nowrap {meta.tw}">{meta.symbol ?? ''} {meta.label}</span>

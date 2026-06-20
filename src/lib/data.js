@@ -1,6 +1,7 @@
 // The compiled dataset is produced by `npm run build:data` (scripts/build-data.js)
 // from the YAML sources. The same content is also published at /data.json.
 import dataset from '$lib/generated/data.json';
+import Fuse from 'fuse.js';
 
 // Images (device thumbnails and vendor logos) must go through the bundler to
 // get hashed asset URLs; map each glob result back to its directory id.
@@ -62,6 +63,118 @@ export function getVendor(id) {
 /** Devices belonging to a vendor, sorted by name. */
 export function devicesForVendor(vendorId) {
   return devices.filter((d) => d.vendorId === vendorId);
+}
+
+/** Shared parts catalog (data/globals.yaml), keyed by category then part id. */
+export const globals = dataset.globals ?? {};
+
+/**
+ * Resolve a bare chip/model string against a catalog category, matching the key
+ * case-insensitively. Returns `{ id, name, vendor?, url?, description? }` or null.
+ */
+function lookupPart(category, key) {
+  if (!key) return null;
+  const cat = globals[category];
+  if (!cat) return null;
+  const lower = String(key).toLowerCase();
+  for (const [id, part] of Object.entries(cat)) {
+    if (id.toLowerCase() === lower) return { id, ...part };
+  }
+  return null;
+}
+
+/**
+ * Walk the MCU family tree (globals.family) for a model key. The key may be a
+ * family id (only the family is known) or a model id nested under a family.
+ * @returns {{ familyId, family, modelId, model, architecture }|null}
+ */
+function findMcu(key) {
+  if (!key) return null;
+  const lower = String(key).toLowerCase();
+  for (const [familyId, family] of Object.entries(globals.family ?? {})) {
+    if (familyId.toLowerCase() === lower) {
+      return { familyId, family, modelId: null, model: null, architecture: family.architecture };
+    }
+    for (const [modelId, model] of Object.entries(family.models ?? {})) {
+      if (modelId.toLowerCase() === lower) {
+        return {
+          familyId,
+          family,
+          modelId,
+          model,
+          architecture: model.architecture ?? family.architecture
+        };
+      }
+    }
+  }
+  return null;
+}
+
+const partShape = (id, rec) =>
+  rec ? { id, name: rec.name, vendor: rec.vendor, url: rec.url, description: rec.description } : null;
+
+/**
+ * Resolve a device's MCU model into family / model / architecture catalog
+ * entries. Family and CPU architecture are derived from the catalog, so a
+ * device only stores `hardware.mcu.model`.
+ * @returns {{ family, model, architecture }|null}
+ */
+export function resolveMcuInfo(device) {
+  const hit = findMcu(device.hardware?.mcu?.model);
+  if (!hit) return null;
+  return {
+    family: partShape(hit.familyId, hit.family),
+    model: partShape(hit.modelId, hit.model),
+    architecture: lookupPart('architecture', hit.architecture) ?? (hit.architecture ? { name: hit.architecture } : null)
+  };
+}
+
+/** Catalog entry for a radio chip string. */
+export function resolveRadio(chip) {
+  return lookupPart('radio', chip);
+}
+
+/** Catalog entry for a LoRa frequency band key (e.g. "868"). */
+export function resolveFrequency(band) {
+  return lookupPart('frequency', band);
+}
+
+/** Catalog entry for a display technology string. */
+export function resolveDisplay(technology) {
+  return lookupPart('display', technology);
+}
+
+/** Catalog entry for a GNSS chip string. */
+export function resolveGnss(chip) {
+  return lookupPart('gnss', chip);
+}
+
+export function deviceMcuLabel(device) {
+  const mcu = device.hardware?.mcu;
+  return mcu?.model ?? mcu?.family ?? 'Unknown';
+}
+
+export function deviceRadioLabel(device) {
+  const radios = device.hardware?.radios ?? [];
+  if (!radios.length) return 'Unknown';
+  const labels = radios
+    .map((r) => (r.chip ? resolveRadio(r.chip)?.name ?? r.chip : r.technology))
+    .filter(Boolean);
+  return labels.length ? labels.join(', ') : 'Unknown';
+}
+
+export function deviceSearchText(device) {
+  return [
+    device.name,
+    device.vendorName,
+    deviceMcuLabel(device),
+    deviceRadioLabel(device),
+    ...(device.roles ?? []),
+    ...(device.transports ?? [])
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
 }
 
 /**
@@ -198,3 +311,66 @@ export const FW_STATUS_TW = {
   maintenance: 'text-dim',
   inactive: 'text-bad'
 };
+
+/**
+ * Flat, pre-built index for the global (Cmd+K) search over devices, firmwares
+ * and vendors. Each item carries a
+ * display title/subtitle, a category, a base-relative `href`, an optional image
+ * and a lowercased `text` blob to match against. Built once at module load.
+ * @typedef {{ type: string, title: string, subtitle?: string, href: string,
+ *   image?: string|null, text: string }} SearchItem
+ * @type {SearchItem[]}
+ */
+export const searchItems = [
+  ...devices.map((d) => ({
+    type: 'Device',
+    title: d.name,
+    subtitle: [d.vendorName, deviceMcuLabel(d), deviceRadioLabel(d)]
+      .filter((s) => s && s !== 'Unknown')
+      .join(' · '),
+    href: `/device/${d.id}/`,
+    image: d.imageUrl,
+    text: [deviceSearchText(d), ...(d.aliases ?? [])].join(' ').toLowerCase()
+  })),
+  ...firmwares.map((f) => ({
+    type: 'Firmware',
+    title: f.name,
+    subtitle: [TYPE_META[f.type]?.label ?? f.type, f.maintainer].filter(Boolean).join(' · '),
+    href: `/firmware/${f.id}/`,
+    text: [f.name, f.type, f.maintainer, f.description].filter(Boolean).join(' ').toLowerCase()
+  })),
+  ...vendors.map((v) => ({
+    type: 'Vendor',
+    title: v.name,
+    subtitle: [v.country, v.deviceCount ? `${v.deviceCount} device${v.deviceCount === 1 ? '' : 's'}` : null]
+      .filter(Boolean)
+      .join(' · '),
+    href: `/vendor/${v.id}/`,
+    image: v.logoUrl,
+    text: [v.name, v.country, v.description].filter(Boolean).join(' ').toLowerCase()
+  }))
+];
+
+// Fuzzy matcher over the index. Title is weighted highest, then subtitle, then
+// the catch-all text blob. ignoreLocation lets matches land anywhere in a field.
+const fuse = new Fuse(searchItems, {
+  keys: [
+    { name: 'title', weight: 0.6 },
+    { name: 'subtitle', weight: 0.25 },
+    { name: 'text', weight: 0.15 }
+  ],
+  threshold: 0.4,
+  ignoreLocation: true,
+  minMatchCharLength: 1
+});
+
+/**
+ * Fuzzy-search the atlas with Fuse.js. Returns at most `limit` items, best
+ * match first.
+ * @returns {SearchItem[]}
+ */
+export function searchAtlas(query, limit = 12) {
+  const q = query.trim();
+  if (!q) return [];
+  return fuse.search(q, { limit }).map((r) => r.item);
+}

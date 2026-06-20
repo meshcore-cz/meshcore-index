@@ -1,7 +1,23 @@
 # Source: meshcore-dev/MeshCore variants/gat562_mesh_evb_pro/platformio.ini
-name: "GAT-IoT GAT562 Mesh EVB Pro"
-vendorId: "gatiot"
-mcu: "nRF52"
-chip_type: "nrf52"
-radio: "SX1262"
+name: GAT-IoT GAT562 Mesh EVB Pro
+vendorId: gatiot
+kind: kit
+lifecycle: active
+familyId: gatiot-gat562
+variantOf: gatiot-gat562
+aliases:
+  - GAT562 EVB Pro
 official: true
+hardware:
+  mcu:
+    model: nrf52
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  wifi:
+    status: unknown

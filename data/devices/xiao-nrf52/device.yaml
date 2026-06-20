@@ -1,12 +1,34 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "Seeed Studio Xiao nRF52 WIO"
+name: Seeed Studio Xiao nRF52 WIO
 vendorId: seeed
-mcu: nRF52
-chip_type: nrf52
+kind: dev-board
+lifecycle: active
+familyId: seeed-xiao-wio
 image: xiao_nrf52.svg
 official: true
-flasher_roles:
-  - companionBle
-  - companionUsb
+roles:
+  - companion
   - repeater
-  - roomServer
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: nrf52
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: unknown

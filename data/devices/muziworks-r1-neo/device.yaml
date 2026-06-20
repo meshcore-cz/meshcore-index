@@ -1,7 +1,20 @@
 # Source: meshcore-dev/MeshCore variants/muziworks_r1_neo/platformio.ini
-name: "Muzi Works R1 Neo"
-vendorId: "muziworks"
-mcu: "nRF52"
-chip_type: "nrf52"
-radio: "SX1262"
+name: Muzi Works R1 Neo
+vendorId: muziworks
+kind: product
+lifecycle: active
+familyId: muziworks-muzi-works-r1-neo
 official: true
+hardware:
+  mcu:
+    model: nrf52
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  wifi:
+    status: unknown

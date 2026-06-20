@@ -1,8 +1,21 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "Seeed Studio Xiao C6"
+name: Seeed Studio Xiao C6
 vendorId: seeed
-mcu: ESP32
-chip_type: esp32
-radio: SX1262
+kind: dev-board
+lifecycle: unknown
+familyId: seeed-xiao-c6
 image: xiao_esp32c6.svg
 official: false
+hardware:
+  mcu:
+    model: esp32-c6
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  wifi:
+    status: present

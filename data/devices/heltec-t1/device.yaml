@@ -1,10 +1,24 @@
 # Source: meshcore-dev/MeshCore variants/heltec_t1/platformio.ini + boards/heltec_t1.json
-name: "Heltec Mesh Node T1"
-vendorId: "heltec"
-mcu: "nRF52"
-chip_type: "nrf52"
-radio: "SX1262"
-product_url: "https://heltec.org/"
+name: Heltec Mesh Node T1
+vendorId: heltec
+kind: product
+lifecycle: active
+familyId: heltec-mesh-node-t1
+product_url: https://heltec.org/
 official: true
-connectivity:
-  - BLE
+hardware:
+  mcu:
+    model: nrf52
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: unknown

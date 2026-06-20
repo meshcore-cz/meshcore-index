@@ -1,10 +1,24 @@
 # Source: meshcore-dev/MeshCore variants/rak3401/platformio.ini + boards/rak3401.json
-name: "RAK WisCore RAK3401"
-vendorId: "rak"
-mcu: "nRF52"
-chip_type: "nrf52"
-radio: "SX1262"
-product_url: "https://www.rakwireless.com"
+name: RAK WisCore RAK3401
+vendorId: rak
+kind: product
+lifecycle: active
+familyId: rak-wiscore-rak3401
+product_url: https://www.rakwireless.com
 official: true
-connectivity:
-  - BLE
+hardware:
+  mcu:
+    model: nrf52
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: unknown

@@ -1,5 +1,6 @@
 <script>
   import { base } from '$app/paths';
+  import { deviceMcuLabel, deviceRadioLabel } from '$lib/data.js';
   let { data } = $props();
   let v = $derived(data.vendor);
 </script>
@@ -41,7 +42,7 @@
           </div>
           <div>
             <span class="block text-[0.9rem]">{d.name}</span>
-            <span class="block font-mono text-[0.76rem] text-dim">{d.mcu}{d.radio ? ' · ' + d.radio : ''}</span>
+            <span class="block font-mono text-[0.76rem] text-dim">{deviceMcuLabel(d)} · {deviceRadioLabel(d)}</span>
           </div>
         </a>
       {/each}

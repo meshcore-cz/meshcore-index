@@ -149,7 +149,6 @@ Create `data/devices/<id>/device.yaml`.
 | Field             | Required | Type     | Notes |
 |-------------------|----------|----------|-------|
 | `name`            | yes      | string   | Human-readable board name. |
-| `mcu`             | yes      | string   | Chip family, e.g. `ESP32`, `nRF52`. |
 | `vendorId`        | no       | string   | References a `data/vendors/<id>/` directory. Optional — a device need not have a vendor. |
 | `kind`            | no       | enum     | `product`, `dev-board`, `module`, `kit`, or `generic-build`. |
 | `lifecycle`       | no       | enum     | `announced`, `active`, `discontinued`, or `unknown`. |
@@ -158,38 +157,21 @@ Create `data/devices/<id>/device.yaml`.
 | `variantOf`       | no       | string   | Device id this record varies from. |
 | `aliases`         | no       | string[] | Alternate product names. |
 | `replaces`        | no       | string   | Older device id this record replaces. |
-| `radio`           | no       | string   | e.g. `SX1262`, `SX1276`, `LR1110`. |
 | `product_url`     | no       | url      | Product, docs, or datasheet page for the board/module. |
-| `chip_type`       | no       | string   | Flasher chip family (`esp32`/`nrf52`/…). |
 | `official`        | no       | bool     | `true` if listed in the official MeshCore flasher. |
 | `image`           | no       | string   | SVG filename placed in the same directory; shown as the thumbnail. |
-| `flasher_roles`   | no       | string[] | Legacy flasher variant names from upstream config. Build output derives canonical `roles`, `transports`, and `variants` from this. |
 | `roles`           | no       | enum[]   | Canonical roles: `companion`, `repeater`, `room-server`, `observer`, `sensor`, `kiss-modem`, `standalone-ui`. |
 | `transports`      | no       | enum[]   | Canonical transports: `ble`, `usb`, `tcp`, `wifi`, `ethernet`, `serial`. |
-| `variants`        | no       | object[] | Build variants that separate role from transport/interface. |
-| `frequency_bands` | no       | number[] | MHz, e.g. `[868, 915]`. |
-| `form_factor`     | no       | string   | e.g. `Handheld`, `Dev board`. |
-| `display`         | no       | string   | Screen description, or `None`. |
-| `battery`         | no       | string   | Power/battery notes. |
-| `gps`             | no       | bool     | Onboard GNSS. |
-| `hardware`        | no       | object   | Structured hardware details; absent values mean unknown. |
+| `hardware`        | yes      | object   | Structured hardware details; `hardware.mcu` is required, absent optional values mean unknown. |
 | `interfaces`      | no       | object   | Structured USB/BLE/Wi-Fi interface details. |
-| `connectivity`    | no       | string[] | e.g. `[USB-C, BLE, Wi-Fi]`. |
 | `description`     | no       | string   | One short paragraph. |
 
 Most boards were generated from the official flasher
 [`config.json`](https://github.com/meshcore-dev/flasher.meshcore.io/blob/main/config.json);
 their thumbnails come from that repo's `img/` folder.
 
-Legacy flasher roles are normalized during `build:data`:
-
-| Flasher role     | Canonical role   | Transport |
-|------------------|------------------|-----------|
-| `companionBle`   | `companion`      | `ble`     |
-| `companionUsb`   | `companion`      | `usb`     |
-| `repeater`       | `repeater`       | —         |
-| `roomServer`     | `room-server`    | —         |
-| `gui`, `guiSD`   | `standalone-ui`  | —         |
+Use structured fields instead of deprecated flat aliases such as `mcu`, `radio`,
+`gps`, `display`, `battery`, `connectivity`, or upstream `flasher_roles`.
 
 ## Adding a vendor
 

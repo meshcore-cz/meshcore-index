@@ -1,6 +1,21 @@
 # Source: meshcore-dev/MeshCore variants/generic-e22/platformio.ini
-name: "Generic E22 SX126x"
-mcu: "ESP32"
-chip_type: "esp32"
-radio: "SX1262 / SX1268"
+name: Generic E22 SX126x
+kind: generic-build
+lifecycle: active
+familyId: generic-e22
 official: true
+hardware:
+  mcu:
+    model: esp32
+  radios:
+    - technology: lora
+      chip: sx1262
+    - technology: lora
+      chip: sx1268
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  wifi:
+    status: present

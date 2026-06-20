@@ -1,7 +1,20 @@
 # Source: meshcore-dev/MeshCore variants/wio-e5-mini/platformio.ini
-name: "Seeed Studio Wio-E5 mini"
-vendorId: "seeed"
-mcu: "STM32WL"
-chip_type: "stm32"
-radio: "STM32WL"
+name: Seeed Studio Wio-E5 mini
+vendorId: seeed
+kind: product
+lifecycle: active
+familyId: seeed-wio-e5-mini
 official: true
+hardware:
+  mcu:
+    model: stm32wl
+  radios:
+    - technology: other
+      chip: stm32wl
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  wifi:
+    status: unknown

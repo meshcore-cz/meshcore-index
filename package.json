@@ -27,5 +27,8 @@
     "tailwindcss": "^4.3.1",
     "turndown": "^7.2.4",
     "vite": "^5.4.0"
+  },
+  "dependencies": {
+    "fuse.js": "^7.4.2"
   }
 }

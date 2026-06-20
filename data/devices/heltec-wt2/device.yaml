@@ -1,12 +1,42 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "Heltec Wireless Tracker v2"
+name: Heltec Wireless Tracker v2
 vendorId: heltec
-mcu: ESP32
-chip_type: esp32
+kind: product
+lifecycle: active
+familyId: heltec-wireless-tracker
+revision: '2'
+aliases:
+  - Wireless Tracker v2
 image: heltec_wt2.svg
 official: true
-flasher_roles:
-  - companionBle
-  - companionUsb
+roles:
+  - companion
   - repeater
-  - roomServer
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: esp32
+  display:
+    status: unknown
+  gnss:
+    status: present
+    chip: unknown
+  power:
+    batterySupported: true
+    charging: true
+    solarInput: false
+interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: present

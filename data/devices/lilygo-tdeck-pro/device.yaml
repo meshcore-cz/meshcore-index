@@ -1,10 +1,28 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "LilyGo T-Deck Pro"
+name: LilyGo T-Deck Pro
 vendorId: lilygo
-mcu: ESP32
-chip_type: esp32
+kind: product
+lifecycle: active
+familyId: lilygo-t-deck
+revision: pro
+aliases:
+  - T-Deck Pro
 image: lilygo_tdeck_pro.svg
 official: true
-flasher_roles:
-  - gui
-  - guiSD
+roles:
+  - standalone-ui
+hardware:
+  mcu:
+    model: esp32
+  display:
+    status: present
+    technology: display
+  gnss:
+    status: unknown
+  power:
+    batterySupported: true
+    charging: true
+    solarInput: false
+interfaces:
+  wifi:
+    status: present

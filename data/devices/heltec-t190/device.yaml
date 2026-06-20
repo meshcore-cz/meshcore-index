@@ -1,12 +1,25 @@
 # Source: meshcore-dev/MeshCore variants/heltec_t190/platformio.ini + boards/heltec_t190.json
-name: "Heltec Vision Master T190"
-vendorId: "heltec"
-mcu: "ESP32-S3"
-chip_type: "esp32"
-radio: "SX1262"
-product_url: "https://heltec.org/project/vision-master-t190/"
+name: Heltec Vision Master T190
+vendorId: heltec
+kind: product
+lifecycle: active
+familyId: heltec-vision-master-t190
+product_url: https://heltec.org/project/vision-master-t190/
 official: true
-connectivity:
-  - Wi-Fi
-  - BLE
-  - LoRa
+hardware:
+  mcu:
+    model: esp32-s3
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: present
+    technology: display
+  gnss:
+    status: unknown
+interfaces:
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: present

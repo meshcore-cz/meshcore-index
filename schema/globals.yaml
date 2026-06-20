@@ -1,0 +1,100 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://meshcore-atlas/schema/globals.yaml
+title: Globals
+description: >-
+  Shared parts catalog. Top-level keys are component categories; each maps a part
+  id (the value used in device.yaml) to its canonical name and metadata.
+type: object
+additionalProperties: false
+properties:
+  family:
+    $ref: '#/$defs/familyCatalog'
+  architecture:
+    $ref: '#/$defs/catalog'
+  radio:
+    $ref: '#/$defs/catalog'
+  frequency:
+    $ref: '#/$defs/frequencyCatalog'
+  display:
+    $ref: '#/$defs/catalog'
+  gnss:
+    $ref: '#/$defs/catalog'
+$defs:
+  familyCatalog:
+    type: object
+    additionalProperties:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+        vendor:
+          type: string
+        url:
+          type: string
+          pattern: ^https?://
+        description:
+          type: string
+        architecture:
+          type: string
+        models:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties: false
+            required:
+              - name
+            properties:
+              name:
+                type: string
+                minLength: 1
+              vendor:
+                type: string
+              url:
+                type: string
+                pattern: ^https?://
+              description:
+                type: string
+              architecture:
+                type: string
+  catalog:
+    type: object
+    additionalProperties:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+        vendor:
+          type: string
+        url:
+          type: string
+          pattern: ^https?://
+        description:
+          type: string
+  frequencyCatalog:
+    type: object
+    additionalProperties:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+        range:
+          type: string
+        region:
+          type: string
+        url:
+          type: string
+          pattern: ^https?://
+        description:
+          type: string

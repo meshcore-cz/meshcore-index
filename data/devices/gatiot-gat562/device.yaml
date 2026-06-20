@@ -1,12 +1,41 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "GAT-IoT GAT562 Tracker"
+name: GAT-IoT GAT562 Tracker
 vendorId: gatiot
-mcu: nRF52
-chip_type: nrf52
+kind: product
+lifecycle: active
+familyId: gatiot-gat562
+aliases:
+  - GAT562 Tracker
 image: gatiot_gat562.svg
 official: true
-flasher_roles:
-  - companionBle
-  - companionUsb
+roles:
+  - companion
   - repeater
-  - roomServer
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: nrf52
+  display:
+    status: unknown
+  gnss:
+    status: present
+    chip: unknown
+  power:
+    batterySupported: true
+    charging: true
+    solarInput: false
+interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: unknown

@@ -7,14 +7,10 @@
   "additionalProperties": false,
   "required": [
     "name",
-    "mcu"
+    "hardware"
   ],
   "properties": {
     "name": {
-      "type": "string",
-      "minLength": 1
-    },
-    "mcu": {
       "type": "string",
       "minLength": 1
     },
@@ -60,12 +56,6 @@
       "type": "string",
       "pattern": "^[a-z0-9-]+$"
     },
-    "chip_type": {
-      "type": "string"
-    },
-    "radio": {
-      "type": "string"
-    },
     "product_url": {
       "type": "string",
       "pattern": "^https?://"
@@ -76,12 +66,6 @@
     },
     "official": {
       "type": "boolean"
-    },
-    "flasher_roles": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
     },
     "roles": {
       "type": "array",
@@ -110,83 +94,18 @@
         ]
       }
     },
-    "variants": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "role"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "pattern": "^[a-z0-9-]+$"
-          },
-          "role": {
-            "enum": [
-              "companion",
-              "repeater",
-              "room-server",
-              "observer",
-              "sensor",
-              "kiss-modem",
-              "standalone-ui"
-            ]
-          },
-          "transports": {
-            "type": "array",
-            "items": {
-              "enum": [
-                "ble",
-                "usb",
-                "tcp",
-                "wifi",
-                "ethernet",
-                "serial"
-              ]
-            }
-          },
-          "sourceRole": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "frequency_bands": {
-      "type": "array",
-      "items": {
-        "type": "number"
-      }
-    },
-    "form_factor": {
-      "type": "string"
-    },
-    "display": {
-      "type": "string"
-    },
-    "battery": {
-      "type": "string"
-    },
-    "gps": {
-      "type": "boolean"
-    },
     "hardware": {
       "type": "object",
       "additionalProperties": false,
+      "required": [
+        "mcu"
+      ],
       "properties": {
         "mcu": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "family": {
-              "type": "string"
-            },
             "model": {
-              "type": "string"
-            },
-            "architecture": {
               "type": "string"
             },
             "flashMb": {
@@ -234,10 +153,19 @@
               ]
             },
             "technology": {
-              "type": "string"
+              "enum": [
+                "unknown",
+                "display",
+                "oled",
+                "e-paper",
+                "e-ink"
+              ]
             },
             "controller": {
               "type": "string"
+            },
+            "size": {
+              "type": "number"
             },
             "resolution": {
               "type": "object",
@@ -253,6 +181,13 @@
             },
             "touch": {
               "type": "boolean"
+            },
+            "colors": {
+              "enum": [
+                "monochrome",
+                "grayscale",
+                "color"
+              ]
             }
           }
         },
@@ -285,8 +220,31 @@
             "solarInput": {
               "type": "boolean"
             },
+            "solarPanelBuiltIn": {
+              "type": "boolean"
+            },
+            "solarPanelWatts": {
+              "type": "number",
+              "minimum": 0
+            },
+            "batteryBuiltIn": {
+              "type": "boolean"
+            },
+            "batteryCapacityMah": {
+              "type": "number",
+              "minimum": 1
+            },
             "pmic": {
               "type": "string"
+            }
+          }
+        },
+        "enclosure": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "builtIn": {
+              "type": "boolean"
             }
           }
         }
@@ -341,12 +299,6 @@
             }
           }
         }
-      }
-    },
-    "connectivity": {
-      "type": "array",
-      "items": {
-        "type": "string"
       }
     },
     "description": {

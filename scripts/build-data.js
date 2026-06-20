@@ -26,6 +26,13 @@ function readDir(root, kind, file) {
   return out;
 }
 
+// Read the shared parts catalog (data/globals.yaml). Optional.
+function readGlobals(root) {
+  const path = join(root, 'data', 'globals.yaml');
+  if (!existsSync(path)) return {};
+  return yaml.load(readFileSync(path, 'utf8')) ?? {};
+}
+
 function readCompatibility(root) {
   const base = join(root, 'data', 'compatibility');
   const records = [];
@@ -59,114 +66,6 @@ function readCompatibility(root) {
   );
 }
 
-const roleVariantByFlasherRole = {
-  companionBle: { id: 'companion-ble', role: 'companion', transports: ['ble'] },
-  companionUsb: { id: 'companion-usb', role: 'companion', transports: ['usb'] },
-  repeater: { id: 'repeater', role: 'repeater', transports: [] },
-  roomServer: { id: 'room-server', role: 'room-server', transports: [] },
-  gui: { id: 'standalone-ui', role: 'standalone-ui', transports: [] },
-  guiSD: { id: 'standalone-ui-sd', role: 'standalone-ui', transports: [] }
-};
-
-function uniq(values) {
-  return [...new Set(values.filter(Boolean))];
-}
-
-function inferredMcu(mcu) {
-  if (!mcu) return undefined;
-  const raw = String(mcu);
-  const token = raw.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  let family = token;
-  if (token.startsWith('esp32')) family = 'esp32';
-  else if (token.includes('nrf52') || token.includes('nrf52840')) family = 'nrf52';
-  else if (token.includes('rp2040')) family = 'rp2040';
-  return { family, model: token };
-}
-
-function inferredRadios(radio) {
-  if (!radio) return undefined;
-  const chips = uniq(
-    String(radio)
-      .split(/\s*(?:\/|,|\+|\bor\b)\s*/i)
-      .map((s) => s.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, ''))
-  );
-  return chips.map((chip) => ({
-    technology: chip.includes('esp-now') ? 'esp-now' : 'lora',
-    chip
-  }));
-}
-
-function inferredDisplay(display) {
-  if (display == null) return { status: 'unknown' };
-  const value = String(display).trim();
-  if (!value || /^none$/i.test(value)) return { status: 'none' };
-  return { status: 'present', technology: value };
-}
-
-function inferredGnss(gps) {
-  if (gps === true) return { status: 'present' };
-  if (gps === false) return { status: 'none' };
-  return { status: 'unknown' };
-}
-
-function inferredPower(battery) {
-  if (battery == null) return undefined;
-  const value = String(battery).trim();
-  return /^none$/i.test(value)
-    ? { batterySupported: false }
-    : { batterySupported: true, pmic: value };
-}
-
-function inferredInterfaces(device) {
-  const connectivity = (device.connectivity ?? []).map((c) => String(c).toLowerCase());
-  const hasUsb = connectivity.some((c) => c.includes('usb'));
-  const hasBle = connectivity.some((c) => c.includes('ble') || c.includes('bluetooth'));
-  const hasWifi = connectivity.some((c) => c.includes('wi-fi') || c.includes('wifi'));
-  const out = {};
-  if (hasUsb) out.usb = { capabilities: ['power', 'serial', 'flashing'] };
-  if (hasBle) out.bluetooth = { ble: true, version: 'unknown' };
-  out.wifi = { status: hasWifi ? 'present' : 'unknown' };
-  return Object.keys(out).length ? out : undefined;
-}
-
-function normalizeDevice(device) {
-  const variants = [
-    ...(device.variants ?? []),
-    ...(device.flasher_roles ?? [])
-      .map((sourceRole) => {
-        const variant = roleVariantByFlasherRole[sourceRole];
-        return variant ? { ...variant, sourceRole } : null;
-      })
-      .filter(Boolean)
-  ];
-  const roles = uniq([...(device.roles ?? []), ...variants.map((v) => v.role)]);
-  const transports = uniq([
-    ...(device.transports ?? []),
-    ...variants.flatMap((v) => v.transports ?? [])
-  ]);
-
-  const hardware = {
-    ...(device.hardware ?? {}),
-    ...(device.hardware?.mcu ? {} : { mcu: inferredMcu(device.mcu) }),
-    ...(device.hardware?.radios ? {} : { radios: inferredRadios(device.radio) }),
-    ...(device.hardware?.display ? {} : { display: inferredDisplay(device.display) }),
-    ...(device.hardware?.gnss ? {} : { gnss: inferredGnss(device.gps) }),
-    ...(device.hardware?.power ? {} : { power: inferredPower(device.battery) })
-  };
-  for (const [key, value] of Object.entries(hardware)) {
-    if (value === undefined) delete hardware[key];
-  }
-
-  return {
-    ...device,
-    ...(roles.length ? { roles } : {}),
-    ...(transports.length ? { transports } : {}),
-    ...(variants.length ? { variants } : {}),
-    ...(Object.keys(hardware).length ? { hardware } : {}),
-    interfaces: { ...(inferredInterfaces(device) ?? {}), ...(device.interfaces ?? {}) }
-  };
-}
-
 function buildSchemas(root) {
   const schemaDir = join(root, 'schema');
   const outDir = join(root, 'static', 'schema');
@@ -196,7 +95,6 @@ export async function buildData(root = defaultRoot) {
   const vendorById = new Map(vendors.map((v) => [v.id, v]));
 
   const devices = readDir(root, 'devices', 'device.yaml')
-    .map(normalizeDevice)
     .map((d) => ({ ...d, vendorName: vendorById.get(d.vendorId)?.name ?? null }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -208,6 +106,7 @@ export async function buildData(root = defaultRoot) {
   const typeRank = { official: 0, fork: 1, custom: 2 };
   const rawFirmwares = readDir(root, 'firmwares', 'firmware.yaml');
   const compatibility = readCompatibility(root);
+  const globals = readGlobals(root);
 
   const firmwares = rawFirmwares
     .map((fw) => {
@@ -245,7 +144,8 @@ export async function buildData(root = defaultRoot) {
     firmwares,
     devices,
     vendors,
-    compatibility
+    compatibility,
+    globals
   };
 
   const json = JSON.stringify(dataset, null, 2) + '\n';

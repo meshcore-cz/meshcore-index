@@ -1,10 +1,23 @@
 # Source: meshcore-dev/MeshCore variants/lilygo_teth_elite/platformio.ini
-name: "LilyGo T-ETH Elite"
-vendorId: "lilygo"
-mcu: "ESP32-S3"
-chip_type: "esp32"
-radio: "SX1262"
+name: LilyGo T-ETH Elite
+vendorId: lilygo
+kind: product
+lifecycle: active
+familyId: lilygo-t-eth-elite
 official: true
-connectivity:
-  - Wi-Fi
-  - BLE
+hardware:
+  mcu:
+    model: esp32-s3
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: present

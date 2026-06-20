@@ -1,6 +1,21 @@
 # Source: meshcore-dev/MeshCore variants/meshadventurer/platformio.ini
-name: "Meshadventurer"
-mcu: "ESP32"
-chip_type: "esp32"
-radio: "SX1262 / SX1268"
+name: Meshadventurer
+kind: product
+lifecycle: active
+familyId: meshadventurer
 official: true
+hardware:
+  mcu:
+    model: esp32
+  radios:
+    - technology: lora
+      chip: sx1262
+    - technology: lora
+      chip: sx1268
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  wifi:
+    status: present

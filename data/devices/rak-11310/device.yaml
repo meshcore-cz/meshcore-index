@@ -1,7 +1,20 @@
 # Source: meshcore-dev/MeshCore variants/rak11310/platformio.ini
-name: "RAK 11310"
-vendorId: "rak"
-mcu: "RP2040"
-chip_type: "rp2040"
-radio: "SX1262"
+name: RAK 11310
+vendorId: rak
+kind: product
+lifecycle: active
+familyId: rak-11310
 official: true
+hardware:
+  mcu:
+    model: rp2040
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  wifi:
+    status: unknown

@@ -1,12 +1,62 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "Seeed Studio Wio Tracker L1 EINK"
+name: Seeed Studio Wio Tracker L1 E-ink
 vendorId: seeed
-mcu: nRF52
-chip_type: nrf52
+kind: product
+lifecycle: active
+familyId: seeed-wio-tracker-l1
+variantOf: wio-tracker-l1
 image: wio_tracker_l1_eink.svg
 official: true
-flasher_roles:
-  - companionBle
-  - companionUsb
+product_url: https://www.seeedstudio.com/Wio-Tracker-L1-E-ink-p-6456.html
+description: >-
+  Low-power Meshtastic/MeshCore node with LoRa, L76K GNSS, and a detachable
+  2.13-inch E-ink display for ultra-low-power status updates. Supports USB-C,
+  solar, and Li-ion battery power.
+roles:
+  - companion
   - repeater
-  - roomServer
+  - room-server
+  - standalone-ui
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: nrf52840
+    flashMb: 1
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - 862-930MHz
+  display:
+    status: present
+    technology: e-ink
+    controller: SSD1680
+    size: 2.13
+    resolution:
+      width: 122
+      height: 250
+    colors: monochrome
+  gnss:
+    status: present
+    chip: L76K
+  power:
+    batterySupported: true
+    batteryBuiltIn: false
+    charging: true
+    solarInput: true
+  enclosure:
+    builtIn: false
+interfaces:
+  usb:
+    connector: USB-C
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: "5.0"
+    ble: true
+  wifi:
+    status: none

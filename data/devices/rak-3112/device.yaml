@@ -1,12 +1,36 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "RAK WisBlock 3112"
+name: RAK WisBlock 3112
 vendorId: rak
-mcu: ESP32
-chip_type: esp32
+kind: product
+lifecycle: active
+familyId: rak-wisblock
+aliases:
+  - RAK3112
 image: rak_3112.svg
 official: true
-flasher_roles:
-  - companionBle
-  - companionUsb
+roles:
+  - companion
   - repeater
-  - roomServer
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: esp32
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: present

@@ -59,6 +59,7 @@ const firmwareSchema = loadSchema('firmware');
 const vendorSchema = loadSchema('vendor');
 const changelogSchema = loadSchema('changelog');
 const compatibilitySchema = loadSchema('compatibility');
+const globalsSchema = loadSchema('globals');
 
 const vendors = readCollection('vendors', 'vendor.yaml');
 const devices = readCollection('devices', 'device.yaml');
@@ -106,6 +107,23 @@ if (existsSync(compatibilityBase)) {
           }
         }
       }
+    }
+  }
+}
+
+// Optional shared parts catalog (data/globals.yaml).
+const globalsPath = join(root, 'data', 'globals.yaml');
+if (existsSync(globalsPath)) {
+  let globals;
+  try {
+    globals = yaml.load(readFileSync(globalsPath, 'utf8'));
+  } catch (e) {
+    err('globals', `YAML parse error: ${e.message}`);
+    globals = null;
+  }
+  if (globals != null && !globalsSchema(globals)) {
+    for (const e of globalsSchema.errors) {
+      err('globals', `${e.instancePath || '/'} ${e.message}`);
     }
   }
 }

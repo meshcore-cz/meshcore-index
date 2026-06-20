@@ -289,7 +289,11 @@ devices:
     status: supported
     target: sensecap_indicator-espnow
     platformio_board: esp32-s3-devkitc-1
-  - id: sensecap-solar
+  - id: sensecap-solar-p1
+    status: supported
+    target: sensecap_solar
+    platformio_board: seeed_sensecap_solar
+  - id: sensecap-solar-p1-pro
     status: supported
     target: sensecap_solar
     platformio_board: seeed_sensecap_solar
@@ -346,6 +350,10 @@ devices:
     target: wio-e5-mini
     platformio_board: lora_e5_mini
   - id: wio-tracker-l1
+    status: supported
+    target: wio-tracker-l1
+    platformio_board: seeed-wio-tracker-l1
+  - id: wio-tracker-l1-pro
     status: supported
     target: wio-tracker-l1
     platformio_board: seeed-wio-tracker-l1

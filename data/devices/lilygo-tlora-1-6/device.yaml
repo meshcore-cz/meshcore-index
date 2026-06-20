@@ -1,12 +1,35 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "LilyGo LoRa32 V2.1_1.6"
+name: LilyGo LoRa32 V2.1_1.6
 vendorId: lilygo
-mcu: ESP32
-chip_type: esp32
+kind: product
+lifecycle: active
+familyId: lilygo-lora32-1-1-6
+revision: '2'
 image: lilygo_tlora_1.6.svg
 official: true
-flasher_roles:
-  - companionBle
-  - companionUsb
+roles:
+  - companion
   - repeater
-  - roomServer
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: esp32
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: present

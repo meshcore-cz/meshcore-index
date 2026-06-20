@@ -1,12 +1,34 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "Elecrow ThinkNode M2"
+name: Elecrow ThinkNode M2
 vendorId: elecrow
-mcu: ESP32
-chip_type: esp32
+kind: product
+lifecycle: active
+familyId: elecrow-elecrow-thinknode-m2
 image: thinknode_m2.svg
 official: true
-flasher_roles:
-  - companionBle
-  - companionUsb
+roles:
+  - companion
   - repeater
-  - roomServer
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: esp32
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: present

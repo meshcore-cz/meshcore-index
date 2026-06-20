@@ -1,0 +1,50 @@
+status: supported
+support:
+  availability: available
+  level: official
+  verification: verified
+roles:
+  companion:
+    status: verified
+    transports:
+      ble: verified
+      usb: verified
+  repeater:
+    status: verified
+    management:
+      serialCli: verified
+      wifiOta: verified
+  room-server:
+    status: verified
+peripherals:
+  display: verified
+  gnss: verified
+  battery: verified
+  buttons: verified
+  wifi: verified
+  ble: verified
+builds:
+  - target: heltec_v3
+    platformio_board: esp32-s3-devkitc-1
+    role: companion
+    transports:
+      - ble
+      - usb
+    artifactSource: web-flasher
+  - target: heltec_v3
+    platformio_board: esp32-s3-devkitc-1
+    role: repeater
+    artifactSource: web-flasher
+  - target: heltec_v3
+    platformio_board: esp32-s3-devkitc-1
+    role: room-server
+    artifactSource: web-flasher
+verification:
+  firmwareVersion: 1.16.0
+  testedAt: '2026-06-20'
+  testedBy: user-report
+  confidence: community-tested
+provenance:
+  source: user-report
+  importedAt: '2026-06-20'
+notes: Everything works on Heltec v3 with the latest official MeshCore firmware.

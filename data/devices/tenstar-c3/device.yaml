@@ -1,7 +1,22 @@
 # Source: meshcore-dev/MeshCore variants/tenstar_c3/platformio.ini
-name: "Tenstar C3"
-vendorId: "tenstar"
-mcu: "ESP32-C3"
-chip_type: "esp32"
-radio: "SX1262 / SX1268"
+name: Tenstar C3
+vendorId: tenstar
+kind: product
+lifecycle: active
+familyId: tenstar-tenstar-c3
 official: true
+hardware:
+  mcu:
+    model: esp32-c3
+  radios:
+    - technology: lora
+      chip: sx1262
+    - technology: lora
+      chip: sx1268
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  wifi:
+    status: present

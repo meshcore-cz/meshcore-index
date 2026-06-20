@@ -1,0 +1,62 @@
+# Source: https://wiki.seeedstudio.com/meshtastic_solar_node/
+name: Seeed Studio SenseCAP Solar Node P1-Pro
+vendorId: seeed
+kind: product
+lifecycle: active
+familyId: seeed-sensecap-solar
+variantOf: sensecap-solar-p1
+aliases:
+  - SenseCAP Solar Node P1-Pro
+  - SenseCAP Solar P1-Pro
+image: sensecap_solar.svg
+official: true
+product_url: https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-Pro-for-Meshtastic-LoRa-p-6412.html
+description: >-
+  Solar-powered Meshtastic/MeshCore node or repeater with built-in XIAO L76K
+  GNSS and four pre-installed 3350 mAh 18650 batteries. Same XIAO nRF52840 Plus
+  and Wio-SX1262 core as the P1, plus a 5W solar panel and IPX6 outdoor
+  enclosure with Grove expansion port.
+roles:
+  - companion
+  - repeater
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: nrf52840
+    flashMb: 1
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - 862-930MHz
+  display:
+    status: none
+  gnss:
+    status: present
+    chip: L76K
+  power:
+    batterySupported: true
+    batteryBuiltIn: true
+    batteryCapacityMah: 13400
+    charging: true
+    solarInput: true
+    solarPanelBuiltIn: true
+    solarPanelWatts: 5
+    pmic: CN3165
+  enclosure:
+    builtIn: true
+interfaces:
+  usb:
+    connector: USB-C
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: "5.0"
+    ble: true
+  wifi:
+    status: none

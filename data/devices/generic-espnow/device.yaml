@@ -1,7 +1,16 @@
 # Source: meshcore-dev/MeshCore variants/generic_espnow/platformio.ini
-name: "Generic ESP-NOW"
-mcu: "ESP32-C3"
-chip_type: "esp32"
+name: Generic ESP-NOW
+kind: generic-build
+lifecycle: active
+familyId: generic-espnow
 official: true
-connectivity:
-  - Wi-Fi
+hardware:
+  mcu:
+    model: esp32-c3
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  wifi:
+    status: present

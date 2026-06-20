@@ -1,0 +1,63 @@
+# Source: meshcore-dev/flasher.meshcore.io config.json
+name: Seeed Studio Wio Tracker L1 Pro
+vendorId: seeed
+kind: product
+lifecycle: active
+familyId: seeed-wio-tracker-l1
+variantOf: wio-tracker-l1
+image: wio_tracker_l1.svg
+official: true
+product_url: https://www.seeedstudio.com/Wio-Tracker-L1-Pro-p-6454.html
+description: >-
+  Ready-to-use Meshtastic/MeshCore handheld with the same L1 board inside a
+  durable enclosure, 1.3-inch OLED, built-in 2000 mAh battery, 4-way joystick,
+  and L76K GNSS. Supports USB-C and solar charging.
+roles:
+  - companion
+  - repeater
+  - room-server
+  - standalone-ui
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: nrf52840
+    flashMb: 1
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - 862-930MHz
+  display:
+    status: present
+    technology: oled
+    controller: SH1106
+    size: 1.3
+    resolution:
+      width: 128
+      height: 64
+    colors: monochrome
+  gnss:
+    status: present
+    chip: L76K
+  power:
+    batterySupported: true
+    batteryBuiltIn: true
+    batteryCapacityMah: 2000
+    charging: true
+    solarInput: true
+  enclosure:
+    builtIn: true
+interfaces:
+  usb:
+    connector: USB-C
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: "5.0"
+    ble: true
+  wifi:
+    status: none

@@ -1,12 +1,36 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "ProMicro nrf52 (faketec)"
+name: ProMicro nrf52 (faketec)
 vendorId: promicro
-mcu: nRF52
-chip_type: nrf52
+kind: dev-board
+lifecycle: active
+familyId: promicro-nrf52
+aliases:
+  - ProMicro nRF52
 image: faketec.svg
 official: true
-flasher_roles:
-  - companionBle
-  - companionUsb
+roles:
+  - companion
   - repeater
-  - roomServer
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: nrf52
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: unknown

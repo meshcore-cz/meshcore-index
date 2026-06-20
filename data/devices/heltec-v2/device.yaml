@@ -1,12 +1,37 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "Heltec v2"
+name: Heltec v2
 vendorId: heltec
-mcu: ESP32
-chip_type: esp32
+kind: product
+lifecycle: active
+familyId: heltec-wifi-lora-32
+revision: '2'
+aliases:
+  - WiFi LoRa 32 V2
 image: heltec_v2.svg
 official: true
-flasher_roles:
-  - companionBle
-  - companionUsb
+roles:
+  - companion
   - repeater
-  - roomServer
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: esp32
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: present

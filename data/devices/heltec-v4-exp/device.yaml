@@ -1,9 +1,24 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "Heltec v4 + Expansion Kit (Touch)"
+name: Heltec v4 + Expansion Kit (Touch)
 vendorId: heltec
-mcu: ESP32
-chip_type: esp32
+kind: kit
+lifecycle: active
+familyId: heltec-wifi-lora-32
+revision: '4'
+variantOf: heltec-v4
+aliases:
+  - WiFi LoRa 32 V4 Expansion Kit
 image: heltec_v4_exp.svg
 official: true
-flasher_roles:
-  - gui
+roles:
+  - standalone-ui
+hardware:
+  mcu:
+    model: esp32
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  wifi:
+    status: present

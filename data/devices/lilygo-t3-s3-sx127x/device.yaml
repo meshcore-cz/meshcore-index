@@ -1,13 +1,39 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "LilyGo T3 S3 (SX127x)"
+name: LilyGo T3 S3 (SX127x)
 vendorId: lilygo
-mcu: ESP32
-chip_type: esp32
-radio: SX127X
+kind: product
+lifecycle: active
+familyId: lilygo-t3-s3
+aliases:
+  - T3 S3 SX127x
 image: lilygo_t3s3.svg
 official: true
-flasher_roles:
-  - companionBle
-  - companionUsb
+roles:
+  - companion
   - repeater
-  - roomServer
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: esp32
+  radios:
+    - technology: lora
+      chip: sx127x
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: present

@@ -1,7 +1,24 @@
 # Source: meshcore-dev/MeshCore variants/ikoka_handheld_nrf/platformio.ini
-name: "Ikoka Handheld nRF"
-vendorId: "ikoka"
-mcu: "nRF52"
-chip_type: "nrf52"
-radio: "SX1262"
+name: Ikoka Handheld nRF
+vendorId: ikoka
+kind: product
+lifecycle: active
+familyId: ikoka-handheld-nrf
 official: true
+hardware:
+  mcu:
+    model: nrf52
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+  power:
+    batterySupported: true
+    charging: true
+    solarInput: false
+interfaces:
+  wifi:
+    status: unknown

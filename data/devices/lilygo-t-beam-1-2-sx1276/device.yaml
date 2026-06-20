@@ -1,13 +1,45 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "LilyGo T-Beam 1.2 (SX1276)"
+name: LilyGo T-Beam 1.2 (SX1276)
 vendorId: lilygo
-mcu: ESP32
-chip_type: esp32
-radio: SX1276
+kind: product
+lifecycle: active
+familyId: lilygo-t-beam
+revision: '1.2'
+aliases:
+  - T-Beam 1.2 SX1276
 image: lilygo_tbeam.svg
 official: true
-flasher_roles:
-  - companionBle
-  - companionUsb
+roles:
+  - companion
   - repeater
-  - roomServer
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: esp32
+  radios:
+    - technology: lora
+      chip: sx1276
+  display:
+    status: unknown
+  gnss:
+    status: present
+    chip: unknown
+  power:
+    batterySupported: true
+    charging: true
+    solarInput: false
+interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: present

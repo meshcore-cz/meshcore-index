@@ -1,13 +1,37 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "RPI Pico 2040 + WaveShare SX1262"
+name: RPI Pico 2040 + WaveShare SX1262
 vendorId: raspberry
-mcu: —
-chip_type: noflash
-radio: SX1262
+kind: kit
+lifecycle: active
+familyId: raspberry-rpi-pico-2040-waveshare
 image: rpi_picow.svg
 official: true
-flasher_roles:
-  - companionBle
-  - companionUsb
+roles:
+  - companion
   - repeater
-  - roomServer
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: rp2040
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: unknown

@@ -1,10 +1,25 @@
 # Source: meshcore-dev/MeshCore variants/meshtiny/platformio.ini + boards/meshtiny.json
-name: "Meshtiny"
-vendorId: "mtools"
-mcu: "nRF52"
-chip_type: "nrf52"
-radio: "SX1262"
-product_url: "https://shop.mtoolstec.com/product/meshtiny"
+name: Meshtiny
+vendorId: mtools
+kind: product
+lifecycle: active
+familyId: mtools-meshtiny
+product_url: https://shop.mtoolstec.com/product/meshtiny
 official: true
-connectivity:
-  - BLE
+hardware:
+  mcu:
+    model: nrf52
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: unknown
+  gnss:
+    status: present
+    chip: unknown
+interfaces:
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: unknown

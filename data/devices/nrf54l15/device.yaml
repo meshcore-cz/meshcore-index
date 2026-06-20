@@ -1,6 +1,17 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "Nordic nRF54L15 DK"
+name: Nordic nRF54L15 DK
 vendorId: nordic
-mcu: nRF54L15
-chip_type: nrf54l
+kind: dev-board
+lifecycle: unknown
+familyId: nordic-nordic-nrf54l15-dk
 official: false
+hardware:
+  mcu:
+    model: nrf54l15
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  wifi:
+    status: unknown

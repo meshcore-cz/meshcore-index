@@ -1,7 +1,20 @@
 # Source: meshcore-dev/MeshCore variants/waveshare_rp2040_lora/platformio.ini
-name: "Waveshare RP2040-LoRa"
-vendorId: "waveshare"
-mcu: "RP2040"
-chip_type: "rp2040"
-radio: "SX1262"
+name: Waveshare RP2040-LoRa
+vendorId: waveshare
+kind: product
+lifecycle: active
+familyId: waveshare-waveshare-lora
 official: true
+hardware:
+  mcu:
+    model: rp2040
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  wifi:
+    status: unknown

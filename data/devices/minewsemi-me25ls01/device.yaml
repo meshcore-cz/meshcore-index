@@ -1,10 +1,24 @@
 # Source: meshcore-dev/MeshCore variants/minewsemi_me25ls01/platformio.ini + boards/minewsemi_me25ls01.json
-name: "MinewSemi ME25LS01"
-vendorId: "minewsemi"
-mcu: "nRF52"
-chip_type: "nrf52"
-radio: "LR1110"
-product_url: "https://en.minewsemi.com/lora-module/lr1110-nrf52840-me25LS01"
+name: MinewSemi ME25LS01
+vendorId: minewsemi
+kind: product
+lifecycle: active
+familyId: minewsemi-minewsemi-me25ls01
+product_url: https://en.minewsemi.com/lora-module/lr1110-nrf52840-me25LS01
 official: true
-connectivity:
-  - BLE
+hardware:
+  mcu:
+    model: nrf52
+  radios:
+    - technology: lora
+      chip: lr1110
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+interfaces:
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: unknown

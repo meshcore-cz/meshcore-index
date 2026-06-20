@@ -1,12 +1,38 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
-name: "LilyGo T-Echo Lite"
+name: LilyGo T-Echo Lite
 vendorId: lilygo
-mcu: nRF52
-chip_type: nrf52
+kind: product
+lifecycle: active
+familyId: lilygo-t-echo
 image: lilygo_techo_lite.svg
 official: true
-flasher_roles:
-  - companionBle
-  - companionUsb
+roles:
+  - companion
   - repeater
-  - roomServer
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: nrf52
+  display:
+    status: unknown
+  gnss:
+    status: unknown
+  power:
+    batterySupported: true
+    charging: true
+    solarInput: false
+interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: unknown
+    ble: true
+  wifi:
+    status: unknown
