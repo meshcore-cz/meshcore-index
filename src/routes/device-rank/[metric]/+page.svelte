@@ -4,6 +4,7 @@
   import { browser } from '$app/environment';
   import { goto } from '$app/navigation';
   import { METRICS } from '$lib/metrics.js';
+  import { favoriteIds } from '$lib/favorites.js';
   import Seo from '$lib/Seo.svelte';
   import ArrowUpDown from '@lucide/svelte/icons/arrow-up-down';
 
@@ -98,6 +99,7 @@
                 {/if}
               </span>
               <span class="truncate font-medium">{fromEntry.device.name}</span>
+              {#if $favoriteIds.includes(fromEntry.device.id)}<span class="rounded bg-accent/15 px-1.5 py-0.5 text-[0.6rem] font-bold tracking-wide text-accent uppercase">Favourite</span>{/if}
             </a>
           </td>
           <td class="px-3.5 py-2 text-right font-semibold tabular-nums">
@@ -129,7 +131,7 @@
     </thead>
     <tbody>
       {#each ranked as { device, value }, i (device.id)}
-        <tr class="group {device.id === fromId ? 'bg-accent/10' : ''}">
+        <tr class="group {$favoriteIds.includes(device.id) || device.id === fromId ? 'bg-accent/10' : ''}">
           <td class="border-b border-edge px-3.5 py-2 text-right tabular-nums text-dim">
             {rankAt(i, ranked.length)}
           </td>
@@ -146,6 +148,7 @@
                 {/if}
               </span>
               <span>{device.name}</span>
+              {#if $favoriteIds.includes(device.id)}<span class="rounded bg-accent/15 px-1.5 py-0.5 text-[0.6rem] font-bold tracking-wide text-accent uppercase">Favourite</span>{/if}
             </a>
           </td>
           <td class="border-b border-edge px-3.5 py-2 text-right font-semibold tabular-nums">

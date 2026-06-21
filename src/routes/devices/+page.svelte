@@ -9,6 +9,7 @@
     resolveRadio
   } from '$lib/data.js';
   import { compareIds, toggleCompare, clearCompare } from '$lib/compare.js';
+  import { favoriteIds, toggleFavorite } from '$lib/favorites.js';
   import Seo from '$lib/Seo.svelte';
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
@@ -226,6 +227,7 @@
 
   let activeSort = $derived(SORTS.find((s) => s.id === sort) ?? SORTS[0]);
   let sorted = $derived([...filtered].sort(activeSort.cmp));
+  let favoriteDevices = $derived($favoriteIds.map((id) => data.devices.find((d) => d.id === id)).filter(Boolean));
 
   // When a metric sort is active, the value to surface on each card (or null).
   function sortBadge(d) {
@@ -272,6 +274,41 @@
 
 <h1 class="mb-1 text-[clamp(1.5rem,5vw,2rem)] font-bold">Devices</h1>
 <p class="mb-4 text-dim">Hardware known to run one or more MeshCore firmwares.</p>
+
+{#if favoriteDevices.length}
+  <section class="mb-4 rounded-xl border border-accent/35 bg-accent/10 p-4">
+    <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+      <h2 class="text-[0.95rem] font-semibold">Favourite Devices</h2>
+      <a
+        class="text-[0.8rem] text-accent2 hover:underline"
+        href="{base}/compare/?ids={favoriteDevices.map((d) => d.id).join(',')}"
+        onclick={() => compareIds.set(favoriteDevices.map((d) => d.id))}
+      >
+        Compare favourites →
+      </a>
+    </div>
+    <div class="flex gap-2 overflow-x-auto pb-1">
+      {#each favoriteDevices as fav (fav.id)}
+        <a
+          class="group flex min-w-[210px] items-center gap-2 rounded-lg border border-edge bg-elev p-2 transition hover:border-accent"
+          href="{base}/device/{fav.id}/"
+        >
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-elev2 p-1 text-muted">
+            {#if fav.imageUrl}
+              <img src={fav.imageUrl} alt="" class="max-h-full max-w-full object-contain" />
+            {:else}
+              <span class="font-mono text-[0.55rem]">{deviceMcuLabel(fav)}</span>
+            {/if}
+          </span>
+          <span class="min-w-0">
+            <span class="block truncate text-[0.85rem] font-medium group-hover:text-accent">{fav.name}</span>
+            <span class="block truncate text-[0.72rem] text-dim">{deviceMcuLabel(fav)}</span>
+          </span>
+        </a>
+      {/each}
+    </div>
+  </section>
+{/if}
 
 <input
   type="search"
@@ -409,7 +446,7 @@
             <span class="font-mono text-[0.8rem] text-dim">{deviceMcuLabel(d)}</span>
           {/if}
           {#if !d.official}
-            <span class="absolute top-2 right-2 rounded bg-accent2/15 px-1.5 py-0.5 text-[0.6rem] font-bold tracking-wide text-accent2 uppercase">Community</span>
+            <span class="absolute right-2 bottom-2 rounded bg-accent2/15 px-1.5 py-0.5 text-[0.6rem] font-bold tracking-wide text-accent2 uppercase">Community</span>
           {/if}
           <button
             type="button"
@@ -427,6 +464,24 @@
               : 'border-edge bg-elev/80 text-dim opacity-0 group-hover:opacity-100 hover:text-ink'}"
           >
             {$compareIds.includes(d.id) ? '✓ Compare' : '+ Compare'}
+          </button>
+          <button
+            type="button"
+            aria-label="Toggle favourite for {d.name}"
+            title={$favoriteIds.includes(d.id) ? 'Remove from favourites' : 'Add to favourites'}
+            aria-pressed={$favoriteIds.includes(d.id)}
+            onclick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleFavorite(d.id);
+            }}
+            class="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-md border text-[0.95rem] leading-none transition {$favoriteIds.includes(
+              d.id
+            )
+              ? 'border-accent bg-accent text-bg'
+              : 'border-edge bg-elev/80 text-dim opacity-0 group-hover:opacity-100 hover:text-ink'}"
+          >
+            {$favoriteIds.includes(d.id) ? '★' : '☆'}
           </button>
         </div>
 

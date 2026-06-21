@@ -4,7 +4,7 @@
 //  - src/lib/generated/data.json : imported by the web app (Vite can't import
 //    from the static/ public dir, so the importable copy lives under src/).
 //  - static/data.json            : published verbatim and served at /data.json.
-import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { load } from 'js-yaml';
@@ -83,6 +83,51 @@ function buildSchemas(root) {
     writeFileSync(join(outDir, publicName), JSON.stringify(schema, null, 2) + '\n');
     count += 1;
   }
+  return count;
+}
+
+function writeJsonRecord(file, record) {
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, JSON.stringify(record, null, 2) + '\n');
+}
+
+function cleanGeneratedDir(root, dir) {
+  rmSync(join(root, 'static', dir), { recursive: true, force: true });
+}
+
+function buildRecordJson(root, { devices, firmwares, vendors, compatibility }) {
+  for (const dir of ['device', 'firmware', 'vendor', 'compatibility']) {
+    cleanGeneratedDir(root, dir);
+  }
+
+  let count = 0;
+  for (const device of devices) {
+    writeJsonRecord(join(root, 'static', 'device', `${device.id}.json`), device);
+    count += 1;
+  }
+  for (const firmware of firmwares) {
+    writeJsonRecord(join(root, 'static', 'firmware', `${firmware.id}.json`), firmware);
+    count += 1;
+  }
+  for (const vendor of vendors) {
+    writeJsonRecord(join(root, 'static', 'vendor', `${vendor.id}.json`), vendor);
+    count += 1;
+  }
+  for (const report of compatibility) {
+    writeJsonRecord(
+      join(
+        root,
+        'static',
+        'compatibility',
+        report.firmwareId,
+        report.firmwareVersionSlug,
+        `${report.deviceId}.json`
+      ),
+      report
+    );
+    count += 1;
+  }
+
   return count;
 }
 
@@ -216,13 +261,18 @@ export async function buildData(root = defaultRoot) {
     generatedAt: dataset.generatedAt
   });
 
-  return { ...dataset.counts, schemas: buildSchemas(root), sitemapUrls };
+  return {
+    ...dataset.counts,
+    recordsJson: buildRecordJson(root, { devices, firmwares, vendors, compatibility }),
+    schemas: buildSchemas(root),
+    sitemapUrls
+  };
 }
 
 // Run as a CLI when invoked directly (npm run build:data / pre-hooks).
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
-  const { firmwares, devices, vendors, compatibility, schemas, sitemapUrls } = await buildData();
+  const { firmwares, devices, vendors, compatibility, recordsJson, schemas, sitemapUrls } = await buildData();
   console.log(
-    `✓ Wrote data.json — ${firmwares} firmware(s), ${devices} device(s), ${vendors} vendor(s), ${compatibility} compatibility report(s); ${schemas} schema(s); ${sitemapUrls} sitemap URL(s).`
+    `✓ Wrote data.json — ${firmwares} firmware(s), ${devices} device(s), ${vendors} vendor(s), ${compatibility} compatibility report(s); ${recordsJson} record JSON file(s); ${schemas} schema(s); ${sitemapUrls} sitemap URL(s).`
   );
 }

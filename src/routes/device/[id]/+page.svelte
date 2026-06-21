@@ -20,6 +20,7 @@
   import { compareIds } from '$lib/compare.js';
   import { clampDescription, abs, absUrl } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
+  import { favoriteIds, toggleFavorite } from '$lib/favorites.js';
   // Lucide icons for the hardware spec cards (per-icon imports tree-shake).
   import Radio from '@lucide/svelte/icons/radio';
   import Cpu from '@lucide/svelte/icons/cpu';
@@ -407,6 +408,7 @@
 
   let radios = $derived(d.hardware?.radios ?? []);
   let refs = $derived(resolveRefs(d.refs));
+  let favoriteCompareIds = $derived([d.id, ...$favoriteIds.filter((id) => id !== d.id)]);
 
   // Whole-card visibility — a card renders only when it has content.
   let specCards = $derived(
@@ -520,6 +522,27 @@
         {#if d.datasheetUrl}<a class="text-accent2 hover:underline" href={d.datasheetUrl} target="_blank" rel="noreferrer">Datasheet ↗</a>{/if}
       </div>
     {/if}
+    <div class="mt-3 flex flex-wrap gap-2">
+      <button
+        type="button"
+        class="rounded-full border px-3 py-1.5 text-[0.85rem] font-medium transition {$favoriteIds.includes(d.id)
+          ? 'border-accent bg-accent text-bg'
+          : 'border-edge bg-elev text-dim hover:border-accent/60 hover:text-ink'}"
+        aria-pressed={$favoriteIds.includes(d.id)}
+        onclick={() => toggleFavorite(d.id)}
+      >
+        {$favoriteIds.includes(d.id) ? '★ Favourite' : '☆ Add to favourites'}
+      </button>
+      {#if favoriteCompareIds.length > 1}
+        <a
+          class="rounded-full border border-edge bg-elev px-3 py-1.5 text-[0.85rem] font-medium text-dim transition hover:border-accent/60 hover:text-ink"
+          href="{base}/compare/?ids={favoriteCompareIds.join(',')}"
+          onclick={() => compareIds.set(favoriteCompareIds)}
+        >
+          Compare with favourites
+        </a>
+      {/if}
+    </div>
     {#if refs.length}
       <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.85rem] text-dim">
         <span>References:</span>
