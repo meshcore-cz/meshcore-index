@@ -1,14 +1,23 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
+# Source: https://wiki.seeedstudio.com/XIAO_ESP32C3_Getting_Started/
 name: Seeed Studio Xiao C3
 vendorId: seeed
 kind: dev-board
 lifecycle: active
 familyId: seeed-xiao-c3
+aliases:
+  - Seeed XIAO C3 + Wio-SX1262
+  - XIAO C3 + Wio-SX1262
 image: xiao_esp32c3.svg
 official: true
+product_url: https://wiki.seeedstudio.com/XIAO_ESP32C3_Getting_Started/
 roles:
   - companion
   - repeater
+description: >-
+  Thumb-sized ESP32-C3 board used as the host board in the Seeed XIAO C3 +
+  Wio-SX1262 kit. The base board provides Wi-Fi, BLE, USB flashing, and a
+  compact GPIO footprint; LoRa comes from the separate Wio-SX1262 module.
 transports:
   - ble
   - usb

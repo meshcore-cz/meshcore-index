@@ -5,6 +5,9 @@ vendorId: heltec
 kind: product
 lifecycle: active
 familyId: heltec-meshsolar-meshtower
+aliases:
+  - Heltec Mesh Solar
+  - Heltec MeshTower
 image: heltec_mesh_solar.svg
 official: true
 product_url: https://heltec.org/project/meshsolar/

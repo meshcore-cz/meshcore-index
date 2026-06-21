@@ -5,6 +5,7 @@ kind: product
 lifecycle: active
 familyId: heltec-ct62
 aliases:
+  - Heltec CT62 (Capsule Sensor)
   - HT-CT62
 product_url: https://heltec.org/project/ht-ct62/
 datasheet: datasheet.pdf

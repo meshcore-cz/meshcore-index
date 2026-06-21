@@ -1,0 +1,64 @@
+# Source: https://mesh-sn.de/en/devices/details/rak-wismesh-pocket-v2
+# Source: https://store.rakwireless.com/products/wismesh-pocket
+# Source: https://docs.rakwireless.com/product-categories/meshtastic/wismesh-pocket-v2/quickstart/
+name: RAK WisMesh Pocket V2
+vendorId: rak
+kind: product
+lifecycle: active
+familyId: rak-wismesh-pocket-v2
+official: true
+product_url: https://store.rakwireless.com/products/wismesh-pocket
+roles:
+  - companion
+  - repeater
+  - room-server
+transports:
+  - ble
+  - usb
+hardware:
+  mcu:
+    model: nrf52840
+    flashMb: 1
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - '868'
+        - '915'
+      txPowerDbm: 22
+      antenna: SMA
+  display:
+    status: present
+    technology: oled
+    size: 1.3
+    resolution:
+      width: 128
+      height: 64
+    colors: monochrome
+  gnss:
+    status: present
+  input:
+    - type: button
+  power:
+    batterySupported: true
+    batteryBuiltIn: true
+    batteryCapacityMah: 3200
+    charging: true
+  physical:
+    dimensionsMm:
+      width: 90
+      height: 55
+      depth: 20
+    weightG: 95
+interfaces:
+  usb:
+    connector: USB-C
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: '5.0'
+    ble: true
+  wifi:
+    status: none

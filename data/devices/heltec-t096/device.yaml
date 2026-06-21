@@ -5,6 +5,7 @@ kind: product
 lifecycle: active
 familyId: heltec-t096
 aliases:
+  - Heltec Mesh Node T096
   - Mesh Node T096
 product_url: https://heltec.org/project/t096/
 datasheet: datasheet.pdf

@@ -1,10 +1,14 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
 # Source: https://wiki.seeedstudio.com/XIAO_BLE/
+# Source: https://wiki.seeedstudio.com/xiao_nrf52840%26_wio_SX1262_kit_for_meshtastic/
 name: Seeed Studio Xiao nRF52 WIO
 vendorId: seeed
 kind: dev-board
 lifecycle: active
 familyId: seeed-xiao-wio
+aliases:
+  - Seeed XIAO nRF52840 + Wio-SX1262 Kit
+  - XIAO nRF52840 + Wio-SX1262 Kit
 image: xiao_nrf52.svg
 official: true
 product_url: https://wiki.seeedstudio.com/XIAO_BLE/
@@ -12,6 +16,10 @@ roles:
   - companion
   - repeater
   - room-server
+description: >-
+  Thumb-sized nRF52840 board used as the host board in the Seeed XIAO nRF52840
+  + Wio-SX1262 kit. The base board provides BLE, USB flashing, and a compact
+  wearable-friendly footprint; LoRa comes from the separate Wio-SX1262 module.
 transports:
   - ble
   - usb

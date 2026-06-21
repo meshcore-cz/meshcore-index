@@ -8,6 +8,7 @@ lifecycle: active
 familyId: gatiot-gat562
 variantOf: gatiot-gat562
 aliases:
+  - GAT562 30S Mesh Kit (1W)
   - GAT562 30s
 image: gatiot_gat562_30s.svg
 datasheet: datasheet.pdf

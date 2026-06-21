@@ -5,6 +5,8 @@ vendorId: ebyte
 kind: product
 lifecycle: active
 familyId: ebyte-ebyte-eora-s3-xxxtb-radio
+aliases:
+  - Ebyte EoRa-S3-900TB
 product_url: https://www.cdebyte.com/products/EoRa-S3-900TB
 official: true
 roles:

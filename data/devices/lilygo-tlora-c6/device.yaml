@@ -6,6 +6,8 @@ vendorId: lilygo
 kind: product
 lifecycle: active
 familyId: lilygo-t-lora-c6
+aliases:
+  - LilyGo T-Lora C6
 product_url: https://lilygo.cc/en-us/products/t-lora-c6
 official: true
 roles:

@@ -5,6 +5,7 @@ kind: product
 lifecycle: active
 familyId: seeed-sensecap-t1000-e
 aliases:
+  - SenseCAP Card Tracker T1000-E
   - SenseCAP T1000-E
   - T1000-E
 image: sensecap_t1000e.svg

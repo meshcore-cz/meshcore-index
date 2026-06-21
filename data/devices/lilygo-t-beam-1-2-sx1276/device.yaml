@@ -6,6 +6,7 @@ lifecycle: active
 familyId: lilygo-t-beam
 revision: '1.2'
 aliases:
+  - LilyGo T-Beam V1.2 (SX1276)
   - T-Beam 1.2 SX1276
   - T-Beam V1.2 SX1276
 image: lilygo_tbeam.svg

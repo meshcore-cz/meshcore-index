@@ -1,22 +1,19 @@
-# Source: meshcore-dev/MeshCore variants/gat562_mesh_evb_pro/platformio.ini
-# Source: https://mesh-sn.de/en/devices/details/gat562-mesh-evb-pro
+# Source: https://mesh-sn.de/en/devices/details/gat562-mesh-tracker-pro
 # Source: https://github.com/gat-iot/GAT562-family
-name: GAT-IoT GAT562 Mesh EVB Pro
+name: GAT-IoT GAT562 Mesh Tracker Pro
 vendorId: gatiot
-kind: kit
+kind: product
 lifecycle: active
 familyId: gatiot-gat562
 variantOf: gatiot-gat562
 aliases:
-  - GAT562 Mesh EVB Pro
-  - GAT562 EVB Pro
+  - GAT562 Mesh Tracker Pro
 official: true
-datasheet: datasheet.pdf
-product_url: https://www.gat-iot.com/products/gat562-mesh-evb-pro/
 roles:
   - companion
   - repeater
   - room-server
+  - standalone-ui
 transports:
   - ble
   - usb
@@ -31,22 +28,27 @@ hardware:
         - '868'
         - '915'
       txPowerDbm: 22
-      antenna: IPEX-1.0
+      antenna: internal
   display:
-    status: none
+    status: present
+    technology: display
   gnss:
-    status: none
+    status: present
+  input:
+    - type: button
   power:
     batterySupported: true
-    batteryBuiltIn: false
-    charging: false
+    batteryBuiltIn: true
+    batteryCapacityMah: 2500
+    charging: true
     solarInput: false
+  enclosure:
+    builtIn: true
   physical:
     dimensionsMm:
-      width: 60
+      width: 70
       height: 40
-      depth: 10
-    weightG: 20
+      depth: 20
 interfaces:
   usb:
     connector: USB-C

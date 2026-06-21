@@ -6,6 +6,7 @@ kind: kit
 lifecycle: active
 familyId: rak-wisblock
 aliases:
+  - RAK3401 WisBlock (1W Booster)
   - WisMesh 1W Booster
   - RAK3401 + RAK13302
 image: rak_13302.svg

@@ -7,6 +7,7 @@ familyId: heltec-wifi-lora-32
 revision: '4'
 variantOf: heltec-v4
 aliases:
+  - Heltec LoRa 32 V4 + Expansion Kit
   - WiFi LoRa 32 Expansion Kit
   - WiFi LoRa 32 V4 Expansion Kit
 image: heltec_v4_exp.svg

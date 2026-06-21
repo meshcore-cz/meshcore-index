@@ -6,6 +6,7 @@ lifecycle: active
 familyId: heltec-wifi-lora-32
 revision: '3'
 aliases:
+  - Heltec WiFi LoRa 32 V3
   - WiFi LoRa 32 V3
 replaces: heltec-v2
 image: heltec_v3.svg

@@ -8,6 +8,8 @@ familyId: uniteng-station-g2
 image: station_g2.svg
 official: true
 product_url: https://wiki.uniteng.com/en/meshtastic/station-g2
+aliases:
+  - Station G2
 description: >-
   Station-class ESP32-S3 mesh device with a high-power LoRa front end, tuned
   for improved receive sensitivity and 35 dBm transmit capability. Intended for

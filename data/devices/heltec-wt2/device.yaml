@@ -8,6 +8,8 @@ lifecycle: active
 familyId: heltec-wireless-tracker
 revision: '2'
 aliases:
+  - Heltec Wireless Tracker V1.1
+  - Heltec Wireless Tracker V2
   - Wireless Tracker v2
 image: heltec_wt2.svg
 datasheet: datasheet.pdf

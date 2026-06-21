@@ -5,6 +5,7 @@ kind: module
 lifecycle: active
 familyId: rak-wisblock
 aliases:
+  - RAK4631 WisBlock Core
   - RAK4631
   - WisBlock Core RAK4631
   - RAK4631-R

@@ -1,0 +1,39 @@
+# Source: https://mesh-sn.de/en/devices/details/raspberry-pi-pico2-w-waveshare-sx1262
+# Source: https://meshtastic.org/docs/hardware/devices/raspberrypi/pico/
+name: Raspberry Pi Pico2 W + Waveshare SX1262
+vendorId: raspberry
+kind: kit
+lifecycle: active
+familyId: raspberry-pi-pico2-w-waveshare-sx1262
+official: true
+roles:
+  - companion
+  - repeater
+  - room-server
+transports:
+  - ble
+  - usb
+  - wifi
+hardware:
+  mcu:
+    model: rp2350
+    flashMb: 4
+  radios:
+    - technology: lora
+      chip: sx1262
+  display:
+    status: none
+  gnss:
+    status: none
+interfaces:
+  usb:
+    connector: Micro-USB
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: '5.0'
+    ble: true
+  wifi:
+    status: present

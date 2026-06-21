@@ -5,6 +5,8 @@ vendorId: rak
 kind: product
 lifecycle: active
 familyId: rak-11310
+aliases:
+  - RAK11310 WisBlock Core
 official: true
 roles:
   - companion

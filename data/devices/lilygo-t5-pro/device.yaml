@@ -9,6 +9,7 @@ image: lilygo_t5_pro.svg
 official: true
 product_url: https://lilygo.cc/en-us/products/t5-e-paper-s3-pro
 aliases:
+  - LilyGo T5 E-Paper S3 Pro
   - T5 E-Paper S3 Pro
 roles:
   - companion

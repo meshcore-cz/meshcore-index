@@ -6,6 +6,7 @@ kind: product
 lifecycle: active
 familyId: elecrow-elecrow-thinknode-m2
 aliases:
+  - Elecrow ThinkNode M2
   - ThinkNode M2 Mini
   - ThinkNode M2
 image: thinknode_m2.svg

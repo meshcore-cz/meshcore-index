@@ -6,6 +6,7 @@ lifecycle: active
 familyId: seeed-sensecap-solar
 variantOf: sensecap-solar-p1
 aliases:
+  - SenseCAP Solar Node P1 Pro
   - SenseCAP Solar Node P1-Pro
   - SenseCAP Solar P1-Pro
 image: sensecap_solar.svg
