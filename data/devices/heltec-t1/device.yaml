@@ -6,19 +6,33 @@ lifecycle: active
 familyId: heltec-mesh-node-t1
 product_url: https://heltec.org/
 official: true
+description: >-
+  Compact Heltec nRF52 + SX1262 mesh target for portable low-power LoRa
+  builds. The upstream firmware target exists, but the public product page is
+  still sparse.
+transports:
+  - ble
+  - usb
 hardware:
   mcu:
     model: nrf52
+    flashMb: 1
   radios:
     - technology: lora
       chip: sx1262
   display:
-    status: unknown
+    status: none
   gnss:
-    status: unknown
+    status: none
 interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
   bluetooth:
-    version: unknown
+    version: '5.0'
     ble: true
   wifi:
-    status: unknown
+    status: none

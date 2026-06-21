@@ -9,34 +9,65 @@ aliases:
   - T-Deck community build
 image: lilygo_tdeck.svg
 official: true
+product_url: https://lilygo.cc/en-us/products/t-deck
+description: >-
+  Community firmware build of the LilyGo T-Deck handheld, inheriting the same
+  ESP32-S3, SX1262, 2.8-inch IPS display, and keyboard/trackball layout as the
+  retail T-Deck.
 roles:
   - companion
   - repeater
   - room-server
+  - standalone-ui
 transports:
   - ble
   - usb
+  - wifi
 hardware:
   mcu:
-    model: esp32
+    model: esp32-s3
+    flashMb: 16
+    psramMb: 8
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - '433'
+        - '868'
+        - '915'
+      txPowerDbm: 22
   display:
     status: present
     technology: display
+    controller: ST7789
+    size: 2.8
+    resolution:
+      width: 320
+      height: 240
+    colors: color
   gnss:
-    status: unknown
+    status: none
+  input:
+    - type: keyboard
+      description: mini QWERTY
+    - type: trackball
   power:
     batterySupported: true
+    batteryBuiltIn: true
     charging: true
     solarInput: false
+  enclosure:
+    builtIn: true
 interfaces:
   usb:
-    connector: unknown
+    connector: USB-C
     capabilities:
       - power
       - serial
       - flashing
   bluetooth:
-    version: unknown
+    version: '5.0'
     ble: true
   wifi:
     status: present
+    standard: 802.11 b/g/n

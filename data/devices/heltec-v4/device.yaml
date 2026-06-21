@@ -1,4 +1,5 @@
 # Source: https://heltec.org/project/wifi-lora-32-v4/
+# Source: https://wiki.heltec.org/docs/devices/open-source-hardware/esp32-series/lora-32/wifi-lora-32-v4/
 name: Heltec V4
 vendorId: heltec
 kind: dev-board
@@ -13,6 +14,7 @@ replaces: heltec-v3
 image: heltec_v4.svg
 official: true
 product_url: https://heltec.org/project/wifi-lora-32-v4/
+datasheet: datasheet.pdf
 price:
   amount: 18
   currency: USD

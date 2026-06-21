@@ -75,6 +75,13 @@ hardware:
   certifications:
     - FCC
     - CE
+  input:
+    - type: button
+      description: power button
+    - type: button
+      description: reset button
+    - type: button
+      description: user-defined button
 interfaces:
   usb:
     connector: USB-C

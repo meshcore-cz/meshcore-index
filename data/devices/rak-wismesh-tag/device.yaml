@@ -47,6 +47,7 @@ hardware:
     touch: true
   gnss:
     status: present
+    chip: MIA-M10Q
   input:
     - type: button
       description: power button (hold 5s on/off, double-click forced uplink, single-click sleep/wake)
@@ -54,6 +55,7 @@ hardware:
     batterySupported: true
     batteryBuiltIn: true
     batteryCapacityMah: 3200
+    batteryConnector: JST1.25-2
     charging: true
   enclosure:
     builtIn: true

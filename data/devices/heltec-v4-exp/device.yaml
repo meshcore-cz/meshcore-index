@@ -12,6 +12,7 @@ aliases:
 image: heltec_v4_exp.svg
 official: true
 product_url: https://heltec.org/project/wifi-lora-32-v4-expansion-housing/
+datasheet: datasheet.pdf
 price:
   amount: 50
   currency: USD

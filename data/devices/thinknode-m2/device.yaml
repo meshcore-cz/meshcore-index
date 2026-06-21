@@ -8,6 +8,7 @@ aliases:
   - ThinkNode M2 Mini
   - ThinkNode M2
 image: thinknode_m2.svg
+datasheet: datasheet.pdf
 official: true
 product_url: https://www.elecrow.com/thinknode-m2-meshtastic-lora-signal-transceiver-powered-by-esp32-s3-with-1-3-oled-display.html
 price:
@@ -51,10 +52,14 @@ hardware:
     colors: monochrome
   gnss:
     status: none
+  input:
+    - type: button
+      description: function button
   power:
     batterySupported: true
     batteryBuiltIn: true
     batteryCapacityMah: 1000
+    batteryConnector: JST1.25-2
     charging: true
   enclosure:
     builtIn: true
@@ -73,6 +78,7 @@ hardware:
 interfaces:
   usb:
     connector: USB-C
+    bridge: CH9102
     capabilities:
       - power
       - serial
