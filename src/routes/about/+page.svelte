@@ -1,8 +1,12 @@
 <script>
   import { base } from '$app/paths';
+  import Seo from '$lib/Seo.svelte';
 </script>
 
-<svelte:head><title>About — MeshCore Index</title></svelte:head>
+<Seo
+  title="About"
+  description="How the MeshCore Index works — a community-maintained, open-data catalog of MeshCore firmwares and hardware, generated from human-readable YAML."
+/>
 
 <h1 class="mb-2 text-[clamp(1.5rem,5vw,2rem)] font-bold">About</h1>
 <p class="max-w-[70ch]">

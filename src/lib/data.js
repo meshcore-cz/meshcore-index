@@ -76,6 +76,9 @@ export function devicesForVendor(vendorId) {
 /** Shared parts catalog (data/globals.yaml), keyed by category then part id. */
 export const globals = dataset.globals ?? {};
 
+/** ISO timestamp of when the dataset was last compiled from YAML. */
+export const generatedAt = dataset.generatedAt ?? null;
+
 /**
  * Resolve a bare chip/model string against a catalog category, matching the key
  * case-insensitively. Returns `{ id, name, vendor?, url?, description? }` or null.

@@ -84,6 +84,48 @@ function buildSchemas(root) {
   return count;
 }
 
+// Production origin + base path for absolute URLs. Mirrors src/lib/seo.js;
+// BASE_PATH is supplied by the GitHub Pages workflow, SITE_ORIGIN is optional.
+const SITE_ORIGIN = (process.env.SITE_ORIGIN ?? 'https://meshcore-cz.github.io').replace(
+  /\/+$/,
+  ''
+);
+const BASE_PATH = (process.env.BASE_PATH ?? '').replace(/\/+$/, '');
+
+/** Write sitemap.xml + robots.txt from the compiled dataset. */
+function buildSitemap(root, { devices, firmwares, vendors, generatedAt }) {
+  const lastmod = (generatedAt ?? new Date().toISOString()).slice(0, 10);
+  const prefix = `${SITE_ORIGIN}${BASE_PATH}`;
+
+  const paths = [
+    '/',
+    '/devices/',
+    '/vendors/',
+    '/matrix/',
+    '/releases/',
+    '/about/',
+    ...devices.map((d) => `/device/${d.id}/`),
+    ...firmwares.flatMap((f) => [`/firmware/${f.id}/`, `/firmware/${f.id}/releases/`]),
+    ...vendors.map((v) => `/vendor/${v.id}/`)
+  ];
+
+  const urls = paths
+    .map(
+      (p) =>
+        `  <url><loc>${prefix}${p}</loc><lastmod>${lastmod}</lastmod></url>`
+    )
+    .join('\n');
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+
+  // /compare/ is intentionally excluded from the sitemap and disallowed: it's a
+  // query-param view with no stable, indexable content.
+  const robots = `User-agent: *\nAllow: /\nDisallow: ${BASE_PATH}/compare/\n\nSitemap: ${prefix}/sitemap.xml\n`;
+
+  writeFileSync(join(root, 'static', 'sitemap.xml'), sitemap);
+  writeFileSync(join(root, 'static', 'robots.txt'), robots);
+  return paths.length;
+}
+
 /** Compile the YAML sources and write both data.json copies. Returns counts. */
 export async function buildData(root = defaultRoot) {
   // Dynamically imported so the markdown libs stay out of the Vite config bundle.
@@ -157,13 +199,20 @@ export async function buildData(root = defaultRoot) {
     writeFileSync(target, json);
   }
 
-  return { ...dataset.counts, schemas: buildSchemas(root) };
+  const sitemapUrls = buildSitemap(root, {
+    devices,
+    firmwares,
+    vendors,
+    generatedAt: dataset.generatedAt
+  });
+
+  return { ...dataset.counts, schemas: buildSchemas(root), sitemapUrls };
 }
 
 // Run as a CLI when invoked directly (npm run build:data / pre-hooks).
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
-  const { firmwares, devices, vendors, compatibility, schemas } = await buildData();
+  const { firmwares, devices, vendors, compatibility, schemas, sitemapUrls } = await buildData();
   console.log(
-    `✓ Wrote data.json — ${firmwares} firmware(s), ${devices} device(s), ${vendors} vendor(s), ${compatibility} compatibility report(s); ${schemas} schema(s).`
+    `✓ Wrote data.json — ${firmwares} firmware(s), ${devices} device(s), ${vendors} vendor(s), ${compatibility} compatibility report(s); ${schemas} schema(s); ${sitemapUrls} sitemap URL(s).`
   );
 }

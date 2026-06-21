@@ -1,11 +1,12 @@
 <script>
   import { base } from '$app/paths';
   import ReleaseGroupList from '$lib/ReleaseGroupList.svelte';
+  import Seo from '$lib/Seo.svelte';
   let { data } = $props();
   let fw = $derived(data.firmware);
 </script>
 
-<svelte:head><title>{fw.name} releases — MeshCore Index</title></svelte:head>
+<Seo title={`${fw.name} releases`} description={`Full release history for ${fw.name}, a MeshCore firmware.`} />
 
 <a class="mb-4 inline-block text-[0.9rem] text-dim hover:underline" href="{base}/firmware/{fw.id}/">← {fw.name}</a>
 

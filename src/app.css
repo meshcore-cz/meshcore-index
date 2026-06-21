@@ -19,9 +19,30 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
+/* Light theme — overrides the @theme custom properties under [data-theme].
+   Tailwind utilities (bg-bg, text-dim, …) read these vars, so flipping the
+   data-theme attribute (set in app.html before paint) re-themes the whole UI. */
+:root[data-theme='light'] {
+  --color-bg: #ffffff;
+  --color-elev: #f6f8fa;
+  --color-elev2: #eaeef2;
+  --color-edge: #d0d7de;
+  --color-ink: #1f2328;
+  --color-dim: #59636e;
+  --color-accent: #1a8268;
+  --color-accent2: #2563eb;
+  --color-ok: #1a7f37;
+  --color-warn: #9a6700;
+  --color-muted: #6e7781;
+  --color-bad: #cf222e;
+}
+
 @layer base {
   html {
     color-scheme: dark;
+  }
+  html[data-theme='light'] {
+    color-scheme: light;
   }
   body {
     background: var(--color-bg);

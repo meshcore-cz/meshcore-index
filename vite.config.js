@@ -37,6 +37,14 @@ function yamlDataPlugin() {
 
 export default defineConfig({
   plugins: [yamlDataPlugin(), tailwindcss(), sveltekit()],
+  // Expose the deploy base path to app code for building absolute (canonical /
+  // OG / JSON-LD) URLs. SvelteKit's $app/paths `base` is relative in this static
+  // build, so it can't be used for that; this mirrors what build-data.js reads.
+  define: {
+    'import.meta.env.VITE_BASE_PATH': JSON.stringify(
+      (process.env.BASE_PATH ?? '').replace(/\/+$/, '')
+    )
+  },
   server: {
     // Allow the dev server to serve device images that live under data/.
     fs: { allow: [projectRoot] }

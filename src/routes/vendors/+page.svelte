@@ -1,9 +1,13 @@
 <script>
   import { base } from '$app/paths';
+  import Seo from '$lib/Seo.svelte';
   let { data } = $props();
 </script>
 
-<svelte:head><title>Vendors — MeshCore Index</title></svelte:head>
+<Seo
+  title="Vendors"
+  description={`${data.vendors.length} hardware makers whose boards run MeshCore firmware.`}
+/>
 
 <h1 class="mb-1 text-[clamp(1.5rem,5vw,2rem)] font-bold">Vendors</h1>
 <p class="mb-5 text-dim">Hardware makers whose boards run MeshCore firmware.</p>
@@ -28,7 +32,7 @@
       <div class="flex flex-col">
         <h2 class="text-[1.15rem] font-semibold">{v.name}</h2>
         <span class="text-[0.9rem] text-dim">
-          {#if v.country}{v.country} · {/if}{v.deviceCount} device{v.deviceCount === 1 ? '' : 's'}
+          {v.country ? `${v.country} · ` : ''}{v.deviceCount} device{v.deviceCount === 1 ? '' : 's'}
         </span>
       </div>
     </a>

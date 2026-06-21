@@ -5,6 +5,7 @@
   import { goto } from '$app/navigation';
   import { deviceRadioLabel, devicePriceLabel, resolveMcuInfo, resolveGnss } from '$lib/data.js';
   import { compareIds } from '$lib/compare.js';
+  import Seo from '$lib/Seo.svelte';
 
   let { data } = $props();
   let byId = $derived(new Map(data.devices.map((d) => [d.id, d])));
@@ -114,7 +115,11 @@
   );
 </script>
 
-<svelte:head><title>Compare devices — MeshCore Index</title></svelte:head>
+<Seo
+  title="Compare devices"
+  description="Compare MeshCore LoRa devices side by side — MCU, radio, display, power and more."
+  noindex
+/>
 
 <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
   <div>

@@ -9,6 +9,10 @@
     resolveRadio
   } from '$lib/data.js';
   import { compareIds, toggleCompare, clearCompare } from '$lib/compare.js';
+  import Seo from '$lib/Seo.svelte';
+  import { browser } from '$app/environment';
+  import { page } from '$app/stores';
+  import { get } from 'svelte/store';
   let { data } = $props();
 
   // --- Per-device accessors used by both facets and card rendering -----------
@@ -111,12 +115,25 @@
     Object.fromEntries(FACETS.map((f) => [f.id, tally(data.devices.flatMap(f.get))]))
   );
 
-  // --- Filter state ----------------------------------------------------------
-  let query = $state('');
-  let advanced = $state(false);
-  let sel = $state(Object.fromEntries(FACETS.map((f) => [f.id, []])));
-  let toggles = $state(Object.fromEntries(TOGGLES.map((t) => [t.id, false])));
-  let ranges = $state(Object.fromEntries(RANGES.map((r) => [r.id, { min: '', max: '' }])));
+  // --- Filter state (hydrated from / synced to the URL, so a filtered view is
+  // shareable and bookmarkable) ----------------------------------------------
+  const initParams = browser ? get(page).url.searchParams : new URLSearchParams();
+  const csv = (key) => (initParams.get(key) ?? '').split(',').filter(Boolean);
+
+  let query = $state(initParams.get('q') ?? '');
+  let advanced = $state(initParams.get('adv') === '1');
+  let sel = $state(Object.fromEntries(FACETS.map((f) => [f.id, csv(f.id)])));
+  let toggles = $state(
+    Object.fromEntries(TOGGLES.map((t) => [t.id, csv('has').includes(t.id)]))
+  );
+  let ranges = $state(
+    Object.fromEntries(
+      RANGES.map((r) => {
+        const [min = '', max = ''] = (initParams.get(r.id) ?? '').split(',');
+        return [r.id, { min, max }];
+      })
+    )
+  );
 
   function toggleFacet(id, value) {
     const cur = sel[id];
@@ -176,9 +193,29 @@
   const chipOn = 'border-accent bg-accent/15 text-accent';
   const chipOff = 'border-edge bg-elev text-dim hover:border-accent/60 hover:text-ink';
   const rowLabel = 'w-14 shrink-0 pt-1 text-[0.7rem] tracking-wide text-dim uppercase';
+
+  // Reflect the active filters into the query string so a filtered view is
+  // shareable. Native history.replaceState keeps it a pure URL-bar update — no
+  // navigation, no scroll, no history entries, and no dependence on the router.
+  $effect(() => {
+    if (!browser) return;
+    const p = new URLSearchParams();
+    if (query.trim()) p.set('q', query.trim());
+    for (const f of FACETS) if (sel[f.id].length) p.set(f.id, sel[f.id].join(','));
+    const has = TOGGLES.filter((t) => toggles[t.id]).map((t) => t.id);
+    if (has.length) p.set('has', has.join(','));
+    for (const r of RANGES)
+      if (rangeActive(r)) p.set(r.id, `${ranges[r.id].min},${ranges[r.id].max}`);
+    if (advanced) p.set('adv', '1');
+    const qs = p.toString();
+    history.replaceState(history.state, '', qs ? `${location.pathname}?${qs}` : location.pathname);
+  });
 </script>
 
-<svelte:head><title>Devices — MeshCore Index</title></svelte:head>
+<Seo
+  title="Devices"
+  description={`Browse ${data.devices.length} LoRa devices known to run MeshCore — filter by MCU, radio, node role, connectivity, price and more.`}
+/>
 
 <h1 class="mb-1 text-[clamp(1.5rem,5vw,2rem)] font-bold">Devices</h1>
 <p class="mb-4 text-dim">Hardware known to run one or more MeshCore firmwares.</p>

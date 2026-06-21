@@ -1,5 +1,6 @@
 <script>
   import ReleaseRow from '$lib/ReleaseRow.svelte';
+  import Seo from '$lib/Seo.svelte';
   let { data } = $props();
 
   const PER_PAGE = 100;
@@ -14,7 +15,10 @@
   }
 </script>
 
-<svelte:head><title>Releases — MeshCore Index</title></svelte:head>
+<Seo
+  title="Releases"
+  description={`${data.releases.length} MeshCore firmware releases across all projects, newest first.`}
+/>
 
 <h1 class="mb-1 text-[clamp(1.5rem,5vw,2rem)] font-bold">Releases</h1>
 <p class="mb-5 text-dim">{data.releases.length} releases across all firmwares, newest first.</p>

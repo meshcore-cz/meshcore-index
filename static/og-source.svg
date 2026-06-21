@@ -1,0 +1,37 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#11202b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#4dd0a7" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#4dd0a7" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <ellipse cx="980" cy="120" rx="520" ry="420" fill="url(#glow)"/>
+
+  <!-- mesh node motif -->
+  <g stroke="#2a3340" stroke-width="2">
+    <line x1="120" y1="500" x2="320" y2="430"/>
+    <line x1="320" y1="430" x2="240" y2="250"/>
+    <line x1="320" y1="430" x2="520" y2="470"/>
+    <line x1="240" y1="250" x2="120" y2="500"/>
+  </g>
+  <g fill="#4dd0a7">
+    <circle cx="120" cy="500" r="7"/>
+    <circle cx="320" cy="430" r="9"/>
+    <circle cx="240" cy="250" r="6"/>
+    <circle cx="520" cy="470" r="6" fill="#5aa9ff"/>
+  </g>
+
+  <!-- diamond mark -->
+  <path d="M150 90 L210 150 L150 210 L90 150 Z" fill="none" stroke="#4dd0a7" stroke-width="9" stroke-linejoin="round"/>
+
+  <text x="90" y="350" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="84" fill="#e6edf3" font-weight="800">MeshCore Index</text>
+
+  <text x="92" y="420" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="34" fill="#9aa7b4" font-weight="400">A catalog of MeshCore firmwares and the devices they run on</text>
+  <text x="92" y="468" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="34" fill="#9aa7b4" font-weight="400">— details, node roles, and a compatibility matrix.</text>
+</svg>

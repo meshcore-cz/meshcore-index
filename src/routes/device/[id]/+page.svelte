@@ -14,8 +14,41 @@
     devicePriceLabel,
     stripVendorLabel
   } from '$lib/data.js';
+  import { clampDescription, abs, absUrl } from '$lib/seo.js';
+  import Seo from '$lib/Seo.svelte';
   let { data } = $props();
   let d = $derived(data.device);
+
+  // Meta description: prefer the authored blurb, else synthesise from specs.
+  let metaDescription = $derived(
+    clampDescription(
+      d.description ||
+        [d.vendorName, deviceMcuLabel(d), deviceRadioLabel(d)]
+          .filter((s) => s && s !== 'Unknown')
+          .join(' · ') + ` — runs ${data.firmwares.length} MeshCore firmware${data.firmwares.length === 1 ? '' : 's'}.`
+    )
+  );
+
+  // Product structured data for rich search results.
+  let productJsonLd = $derived({
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: d.name,
+    ...(d.description ? { description: clampDescription(d.description, 300) } : {}),
+    ...(d.imageUrl ? { image: abs(d.imageUrl) } : {}),
+    ...(d.vendorName ? { brand: { '@type': 'Brand', name: d.vendorName } } : {}),
+    category: 'LoRa device',
+    url: absUrl(`/device/${d.id}/`),
+    ...(d.price?.amount != null
+      ? {
+          offers: {
+            '@type': 'Offer',
+            price: d.price.amount,
+            priceCurrency: d.price.currency ?? 'USD'
+          }
+        }
+      : {})
+  });
 
   // A value counts as "unknown" if it is missing, blank, or the literal "unknown".
   const known = (v) => v !== undefined && v !== null && v !== '' && v !== 'unknown';
@@ -336,7 +369,7 @@
   {/if}
 {/snippet}
 
-<svelte:head><title>{d.name} — MeshCore Index</title></svelte:head>
+<Seo title={d.name} description={metaDescription} type="article" jsonLd={productJsonLd} />
 
 <a class="mb-4 inline-block text-[0.9rem] text-dim hover:underline" href="{base}/devices/">← All devices</a>
 

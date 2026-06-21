@@ -1,10 +1,14 @@
 <script>
   import { base } from '$app/paths';
   import { STATUS_META, TYPE_META } from '$lib/data.js';
+  import Seo from '$lib/Seo.svelte';
   let { data } = $props();
 </script>
 
-<svelte:head><title>Compatibility Matrix — MeshCore Index</title></svelte:head>
+<Seo
+  title="Compatibility Matrix"
+  description={`Device × firmware support across ${data.rows.length} devices and ${data.firmwares.length} MeshCore firmwares — at a glance.`}
+/>
 
 <h1 class="mb-1 text-[clamp(1.5rem,5vw,2rem)] font-bold">Compatibility matrix</h1>
 <p class="mb-4 max-w-[60ch] text-dim">

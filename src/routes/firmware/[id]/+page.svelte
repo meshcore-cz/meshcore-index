@@ -1,6 +1,8 @@
 <script>
   import { base } from '$app/paths';
   import { STATUS_META, TYPE_META, FW_STATUS_TW, groupReleases, deviceMcuLabel, deviceRadioLabel } from '$lib/data.js';
+  import { clampDescription, absUrl } from '$lib/seo.js';
+  import Seo from '$lib/Seo.svelte';
   import ReleaseGroupList from '$lib/ReleaseGroupList.svelte';
   let { data } = $props();
   let fw = $derived(data.firmware);
@@ -8,9 +10,28 @@
   const PREVIEW = 3;
   let releaseGroups = $derived(groupReleases(fw.releases));
   let previewGroups = $derived(releaseGroups.slice(0, PREVIEW));
+
+  let fwDescription = $derived(
+    clampDescription(
+      fw.description ||
+        `${fw.name} — ${TYPE_META[fw.type]?.label ?? fw.type} MeshCore firmware${fw.maintainer ? ` by ${fw.maintainer}` : ''}, supporting ${data.devices.length} device${data.devices.length === 1 ? '' : 's'}.`
+    )
+  );
+  let fwJsonLd = $derived({
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: fw.name,
+    applicationCategory: 'Firmware',
+    operatingSystem: 'MeshCore',
+    ...(fw.description ? { description: clampDescription(fw.description, 300) } : {}),
+    ...(fw.maintainer ? { author: { '@type': 'Person', name: fw.maintainer } } : {}),
+    ...(fw.latest_version ? { softwareVersion: fw.latest_version } : {}),
+    url: absUrl(`/firmware/${fw.id}/`),
+    offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' }
+  });
 </script>
 
-<svelte:head><title>{fw.name} — MeshCore Index</title></svelte:head>
+<Seo title={fw.name} description={fwDescription} type="article" jsonLd={fwJsonLd} />
 
 <a class="mb-4 inline-block text-[0.9rem] text-dim hover:underline" href="{base}/">← All firmwares</a>
 

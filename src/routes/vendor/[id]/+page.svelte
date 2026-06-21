@@ -1,11 +1,27 @@
 <script>
   import { base } from '$app/paths';
   import { deviceMcuLabel, deviceRadioLabel } from '$lib/data.js';
+  import { clampDescription, abs, absUrl } from '$lib/seo.js';
+  import Seo from '$lib/Seo.svelte';
   let { data } = $props();
   let v = $derived(data.vendor);
+
+  let vendorDescription = $derived(
+    clampDescription(
+      v.description ||
+        `${v.name}${v.country ? ` (${v.country})` : ''} — ${data.devices.length} MeshCore-compatible device${data.devices.length === 1 ? '' : 's'}.`
+    )
+  );
+  let vendorJsonLd = $derived({
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: v.name,
+    ...(v.logoUrl ? { logo: abs(v.logoUrl) } : {}),
+    url: v.url ?? absUrl(`/vendor/${v.id}/`)
+  });
 </script>
 
-<svelte:head><title>{v.name} — MeshCore Index</title></svelte:head>
+<Seo title={v.name} description={vendorDescription} jsonLd={vendorJsonLd} />
 
 <a class="mb-4 inline-block text-[0.9rem] text-dim hover:underline" href="{base}/vendors/">← All vendors</a>
 

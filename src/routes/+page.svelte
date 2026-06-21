@@ -1,11 +1,38 @@
 <script>
   import { base } from '$app/paths';
   import { TYPE_META, FW_STATUS_TW } from '$lib/data.js';
+  import { SITE_NAME, absUrl } from '$lib/seo.js';
+  import Seo from '$lib/Seo.svelte';
   import ReleaseRow from '$lib/ReleaseRow.svelte';
+  import { browser } from '$app/environment';
+  import { page } from '$app/stores';
+  import { get } from 'svelte/store';
   let { data } = $props();
 
-  let query = $state('');
-  let typeFilter = $state('all');
+  const homeJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE_NAME,
+    url: absUrl('/'),
+    description:
+      'A catalog of official and community MeshCore firmwares and the devices they run on.'
+  };
+
+  // Filter state is hydrated from / synced to the URL so a filtered view links.
+  const initParams = browser ? get(page).url.searchParams : new URLSearchParams();
+  let query = $state(initParams.get('q') ?? '');
+  let typeFilter = $state(
+    ['official', 'fork', 'custom'].includes(initParams.get('type')) ? initParams.get('type') : 'all'
+  );
+
+  $effect(() => {
+    if (!browser) return;
+    const p = new URLSearchParams();
+    if (query.trim()) p.set('q', query.trim());
+    if (typeFilter !== 'all') p.set('type', typeFilter);
+    const qs = p.toString();
+    history.replaceState(history.state, '', qs ? `${location.pathname}?${qs}` : location.pathname);
+  });
 
   const statusLabels = {
     active: 'Active',
@@ -29,7 +56,10 @@
   );
 </script>
 
-<svelte:head><title>MeshCore Index</title></svelte:head>
+<Seo
+  description="A catalog of official and community MeshCore firmwares and the devices they run on — with details, node roles, and a compatibility matrix."
+  jsonLd={homeJsonLd}
+/>
 
 <section class="mb-7">
   <h1 class="mb-1.5 text-[clamp(1.6rem,5vw,2.2rem)] font-bold">MeshCore Index</h1>
