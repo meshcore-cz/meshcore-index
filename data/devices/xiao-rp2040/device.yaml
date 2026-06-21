@@ -1,20 +1,44 @@
 # Source: meshcore-dev/MeshCore variants/xiao_rp2040/platformio.ini
+# Source: https://wiki.seeedstudio.com/XIAO-RP2040/
 name: Seeed Studio XIAO RP2040
 vendorId: seeed
 kind: dev-board
 lifecycle: active
 familyId: seeed-xiao
 official: true
+product_url: https://wiki.seeedstudio.com/XIAO-RP2040/
+roles:
+  - companion
+  - repeater
+  - room-server
+transports:
+  - usb
 hardware:
   mcu:
     model: rp2040
+    flashMb: 2
   radios:
     - technology: lora
       chip: sx1262
+  input:
+    - type: button
+      description: Boot
+    - type: button
+      description: Reset
+  physical:
+    dimensionsMm:
+      width: 21
+      height: 17.8
   display:
-    status: unknown
+    status: none
   gnss:
-    status: unknown
+    status: none
 interfaces:
+  usb:
+    connector: USB-C
+    capabilities:
+      - power
+      - serial
+      - flashing
   wifi:
-    status: unknown
+    status: none

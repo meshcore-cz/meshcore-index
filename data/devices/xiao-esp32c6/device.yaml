@@ -1,4 +1,5 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
+# Source: https://wiki.seeedstudio.com/xiao_esp32c6_getting_started/
 name: Seeed Studio Xiao C6
 vendorId: seeed
 kind: dev-board
@@ -6,16 +7,48 @@ lifecycle: unknown
 familyId: seeed-xiao-c6
 image: xiao_esp32c6.svg
 official: false
+product_url: https://wiki.seeedstudio.com/xiao_esp32c6_getting_started/
+roles:
+  - companion
+  - repeater
+  - room-server
+transports:
+  - ble
+  - usb
+  - wifi
 hardware:
   mcu:
     model: esp32-c6
+    flashMb: 4
   radios:
     - technology: lora
       chip: sx1262
+      frequencyVariants:
+        - '868'
+        - '915'
   display:
-    status: unknown
+    status: none
   gnss:
-    status: unknown
+    status: none
+  input:
+    - type: button
+      description: Boot
+    - type: button
+      description: Reset
+  physical:
+    dimensionsMm:
+      width: 21
+      height: 17.8
 interfaces:
+  usb:
+    connector: USB-C
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: '5.3'
+    ble: true
   wifi:
     status: present
+    standard: 802.11 ax

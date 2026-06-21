@@ -1,23 +1,51 @@
 # Source: meshcore-dev/MeshCore variants/xiao_s3/platformio.ini
+# Source: https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/
 name: Seeed Studio XIAO ESP32S3
 vendorId: seeed
 kind: dev-board
 lifecycle: active
 familyId: seeed-xiao
 official: true
+product_url: https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/
+roles:
+  - companion
+  - repeater
+  - room-server
+transports:
+  - ble
+  - usb
+  - wifi
 hardware:
   mcu:
     model: esp32-s3
+    flashMb: 8
+    psramMb: 8
   radios:
     - technology: lora
       chip: sx1262
   display:
-    status: unknown
+    status: none
   gnss:
-    status: unknown
+    status: none
+  input:
+    - type: button
+      description: Boot
+    - type: button
+      description: Reset
+  physical:
+    dimensionsMm:
+      width: 21
+      height: 17.8
 interfaces:
+  usb:
+    connector: USB-C
+    capabilities:
+      - power
+      - serial
+      - flashing
   bluetooth:
-    version: unknown
+    version: '5.0'
     ble: true
   wifi:
     status: present
+    standard: 802.11 b/g/n

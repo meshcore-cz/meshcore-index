@@ -1,4 +1,5 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
+# Source: https://wiki.seeedstudio.com/XIAO_BLE/
 name: Seeed Studio Xiao nRF52 WIO
 vendorId: seeed
 kind: dev-board
@@ -6,6 +7,7 @@ lifecycle: active
 familyId: seeed-xiao-wio
 image: xiao_nrf52.svg
 official: true
+product_url: https://wiki.seeedstudio.com/XIAO_BLE/
 roles:
   - companion
   - repeater
@@ -15,20 +17,30 @@ transports:
   - usb
 hardware:
   mcu:
-    model: nrf52
+    model: nrf52840
+    flashMb: 1
   display:
-    status: unknown
+    status: none
   gnss:
-    status: unknown
+    status: none
+  input:
+    - type: button
+      description: Boot
+    - type: button
+      description: Reset
+  physical:
+    dimensionsMm:
+      width: 21
+      height: 17.8
 interfaces:
   usb:
-    connector: unknown
+    connector: USB-C
     capabilities:
       - power
       - serial
       - flashing
   bluetooth:
-    version: unknown
+    version: '5.0'
     ble: true
   wifi:
-    status: unknown
+    status: none
