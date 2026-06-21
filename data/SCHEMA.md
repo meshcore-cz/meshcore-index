@@ -1,7 +1,8 @@
 # Data schema
 
-> **Agents:** see [`AGENTS.md`](../AGENTS.md) for editing conventions, datasheets,
-> naming, and validation checklist.
+> This file is the **field reference** (what fields exist). For *how to fill them
+> well* — naming, datasheets, prices, built-in vs optional hardware, the catalog,
+> and the contributor checklist — see [`RULES.md`](RULES.md).
 
 The site is generated entirely from human-readable YAML in this `data/` folder.
 No database server — just files you can edit and review in a PR.
@@ -151,7 +152,7 @@ Create `data/devices/<id>/device.yaml`.
 
 | Field             | Required | Type     | Notes |
 |-------------------|----------|----------|-------|
-| `name`            | yes      | string   | Short display name — see [`AGENTS.md`](../AGENTS.md) naming rules. |
+| `name`            | yes      | string   | Short display name — see [`RULES.md`](RULES.md) naming rules. |
 | `vendorId`        | no       | string   | References a `data/vendors/<id>/` directory. Optional — a device need not have a vendor. |
 | `kind`            | no       | enum     | `product`, `dev-board`, `module`, `kit`, or `generic-build`. |
 | `lifecycle`       | no       | enum     | `announced`, `active`, `discontinued`, or `unknown`. |

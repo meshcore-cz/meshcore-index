@@ -1,206 +1,41 @@
 # Agent guide — MeshCore Firmware Atlas
 
-Instructions for AI agents editing this repository. Human schema reference:
-[`data/SCHEMA.md`](data/SCHEMA.md). Machine contracts: [`schema/`](schema/).
+Operational notes for AI agents working in this repo.
+
+> **Editing data?** Read [`data/RULES.md`](data/RULES.md) first — it's the
+> authoring guide (naming, datasheets, prices, built-in vs optional hardware,
+> catalog, pitfalls, checklist) for humans and agents alike.
+> Field reference: [`data/SCHEMA.md`](data/SCHEMA.md). Machine contracts:
+> [`schema/`](schema/).
 
 ## What this repo is
 
-A static SvelteKit site cataloging MeshCore (and related) firmware support for LoRa
-hardware. All content lives in YAML under `data/`; the app imports compiled
+A static SvelteKit site cataloging MeshCore (and related) firmware support for
+LoRa hardware. All content lives in YAML under `data/`; the app imports compiled
 `src/lib/generated/data.json` (built from that YAML).
 
-## Commands
+## Working in this repo
 
 ```bash
 npm test              # validate all YAML against JSON Schema + referential checks
 npm run build:data    # regenerate data.json and static/schema/*.json
 ```
 
-Run **`npm test`** after every data change. Run **`build:data`** when schema or
-globals change (pre-dev/pre-build hooks usually do this automatically).
+- Run **`npm test`** after every data change; run **`build:data`** when `schema/`
+  or `data/globals.yaml` change (dev/build hooks usually do this automatically).
+- Do **not** create git commits or PRs unless the user explicitly asks.
+- Keep diffs focused; don't refactor unrelated UI or bulk-edit all devices unless asked.
 
-Do **not** create git commits or PRs unless the user explicitly asks.
+## UI / code conventions (when touching `src/`)
 
-## Directory layout
+- Hero strip **strips the vendor prefix** from catalog MCU/radio names
+  (`ESP32-S3`, not `Espressif ESP32-S3`).
+- Component datasheet links come from `data/globals.yaml`; device PDFs use `datasheetUrl`.
+- Reuse existing helpers in `src/lib/data.js` (`resolveMcuInfo`,
+  `deviceDisplayLabel`, `devicePriceLabel`, etc.).
 
-```
-data/devices/<id>/device.yaml    # id = directory name (kebab-case), not in YAML
-data/devices/<id>/<image>.svg     # thumbnail (optional)
-data/devices/<id>/datasheet.pdf  # vendor spec PDF (optional, immutable copy)
-data/firmwares/<id>/firmware.yaml
-data/vendors/<id>/vendor.yaml
-data/globals.yaml                # MCU/radio/display/GNSS catalog
-schema/*.yaml                    # JSON Schema sources
-src/                             # SvelteKit UI
-```
+## Before finishing
 
-Device support for a firmware is declared in `data/firmwares/.../firmware.yaml`
-(`devices[]`), not only by having a device record.
-
-## Enriching a device
-
-1. Read the vendor **product page**, the **datasheet PDF** (Heltec:
-   `resource.heltec.cn/download/…`), and vendor docs/wiki when linked.
-2. Copy structure from a **similar enriched device** (see templates below) — do
-   not invent a sparse partial YAML.
-3. Add `# Source:` with the product page URL; add a second `# Source:` line for
-   datasheet or docs URL when helpful.
-4. Fill **all applicable structured fields** — not just `description` prose.
-5. Add catalog keys to `data/globals.yaml` only when a new MCU model, radio chip,
-   or GNSS part appears (additive — unknown keys render as raw text).
-6. If the vendor publishes a spec PDF, **commit it locally and link it in YAML**
-   (see Datasheets below) — do not leave the URL in a comment.
-
-### Templates (copy from these)
-
-| Device kind | Start from |
-|-------------|------------|
-| Heltec ESP32 + LoRa (V3/V4/T190) | `heltec-v3`, `heltec-v4`, `heltec-t190` |
-| Heltec nRF52 + LoRa (T114) | `heltec-t114` |
-| Seeed tracker / node | `wio-tracker-l1`, `sensecap-t1000e` |
-| Elecrow ThinkNode | `thinknode-m2`, `thinknode-m1` |
-| LilyGo handheld | `lilygo-t-deck`, `lilygo-techo` |
-
-### Naming
-
-Keep **`name` as short as possible** — what you'd say out loud or fit on a card.
-Drop vendor marketing filler that doesn't distinguish the product.
-
-**Use `name` for the short label:**
-- `Heltec T114` not `Heltec Mesh Node T114`
-- `Heltec T190` not `Heltec Vision Master T190`
-- `Heltec V3` not `Heltec WiFi LoRa 32 V3`
-- `LilyGo T-Echo` not `LilyGo T-Echo LILYGO`
-- `ThinkNode M2 Mini` when that's the distinct SKU (not `Elecrow ThinkNode M2 Mini Meshtastic…`)
-
-**Put in `aliases`** (not `name`): official product titles, module codes, old names.
-Examples: `Mesh Node T114`, `Vision Master T190`, `WiFi LoRa 32 V3`, `HT-VMT190`.
-
-**Vendor prefix:** include when it disambiguates (`Seeed Studio Wio Tracker L1`,
-`Elecrow ThinkNode M1`). Omit when the brand is obvious from context or the
-product line is already unique (`Heltec V3`, `LilyGo T-Deck`, `Heltec T190`).
-
-- Device **id** stays kebab-case and stable (`heltec-v3`, not renamed for marketing).
-- **`kind`**: use `dev-board` for bare development boards; `product` for finished
-  handhelds/enclosed products; `kit` for bundled kits (see `heltec-v4-exp`).
-
-### Prices
-
-- `price.amount`: round to **whole USD** (e.g. `$39.90` → `40`, not `17.9`).
-- `price.asOf`: `YYYY-MM` (e.g. `2026-06`).
-- Omit `price` entirely when the shop only shows “add to cart” with no fixed USD.
-
-### Datasheets (required when a vendor PDF exists)
-
-Datasheets work like thumbnails: a **file in the device directory** plus a
-**field in `device.yaml`**. The site links them on the device page.
-
-```yaml
-image: heltec_v3.svg          # only if the .svg file exists in the directory
-datasheet: datasheet.pdf        # required when you have a vendor PDF
-```
-
-```
-data/devices/heltec-t190/
-  device.yaml
-  datasheet.pdf              # curl from resource.heltec.cn or vendor CDN
-```
-
-**Do not** put `# Datasheet: https://…` in comments — that does not create a link.
-When you find a vendor PDF during enrichment:
-
-1. `curl -o data/devices/<id>/datasheet.pdf '<vendor-url>'`
-2. Add `datasheet: datasheet.pdf` in `device.yaml`
-3. Run `npm test` — validation fails if `datasheet` is set but the file is missing
-
-Heltec PDFs usually live under `https://resource.heltec.cn/download/<product>/`.
-
-### URLs
-
-- `product_url`: vendor **marketing/product page** (external, may change).
-- `datasheet`: local PDF filename in the device directory — see **Datasheets** above.
-
-### Built-in vs optional hardware
-
-Read the spec table and packing list carefully. **Do not guess from checkout options alone.**
-
-| Pattern | YAML approach | Example |
-|---------|---------------|---------|
-| **Always on board** | `display.status: present` with size/resolution/controller | T190 1.9″ TFT, V3 OLED |
-| **Optional at purchase** (common SKU has it) | `display.status: present` + note “optional” in `description` | T114 with display variant |
-| **Add-on module only** | `gnss.status: none` + `expansion` for connector/module | T114 L76K, V4 GNSS header |
-| **Built-in GNSS** | `gnss.status: present` + `chip` | T1000-E AG3335, T-Echo L76K |
-
-**Do not remove `display: present`** on boards that ship with a display in the
-catalogued SKU (e.g. T114 with TFT). When the user is enriching for MeshCore, they
-often mean the display-equipped configuration.
-
-Optional **LoRa** at purchase: still document `radios[]` for the MeshCore target
-board; mention optional/no-LoRa SKU in `description` only.
-
-### Fields to fill when enriching (checklist)
-
-Use the **datasheet**, not just the shop blurb. Typical gaps from incomplete agent work:
-
-| Area | Fill in |
-|------|---------|
-| MCU | `model`, `flashMb`, `psramMb` when applicable |
-| Radio | all band keys from spec (`433`, `470`, `868`, `915`), `txPowerDbm`, `antenna` |
-| Display | `status`, `technology`, `controller`, `size`, `resolution`, `colors` |
-| Power | `batterySupported`, `batteryBuiltIn`, `batteryConnector`, `charging`, `solarInput` |
-| Physical | `dimensionsMm`, `weightG` from spec table |
-| USB | `connector` (usually `USB-C` on current boards — never leave `unknown` if known) |
-| Expansion | concrete `type` (`header-2.54`, `gnss-1.25-8`, `quicklink-sh1.0-4p`) — not generic `connector` |
-| Image | `image: foo.svg` **only** if `data/devices/<id>/foo.svg` exists |
-
-Skip redundant fields: e.g. do not set `display.touch: false`, do not duplicate
-datasheet URLs in comments.
-
-### MCU catalog
-
-Devices store only `hardware.mcu.model` (e.g. `esp32-s3`, `esp32`, `nrf52840`).
-Family and architecture come from `data/globals.yaml`. The original **ESP32**
-chip is model `esp32` under family `esp32` — both are registered in globals;
-lookup prefers the **model** entry over the family.
-
-### Battery & card badges
-
-- `batterySupported: true` alone = external connector support, **not** a built-in pack.
-- Do **not** expect a “Battery” card badge for connector-only support; badges show
-  **`batteryCapacityMah`** (e.g. `850 mAh`) when a built-in capacity is known.
-- `batteryBuiltIn: true` + `batteryCapacityMah` for integrated cells.
-
-### Display & UI roles
-
-- `standalone-ui` role when the device has a usable on-device display for firmware UI.
-- Display size in YAML drives hero/cards (e.g. `0.96″ OLED`, `1.9″ display`).
-- Include `controller` (e.g. `ST7789`, `SSD1306`) when the datasheet names it.
-
-### Common pitfalls
-
-- Match **radio chip** to hardware (V2 = SX1276, V3/V4/T114/T190 = SX1262 — ignore wrong titles on shop pages).
-- `interfaces.wifi.status: none` when there is no Wi-Fi (LR1110 Wi-Fi *scan* for positioning is not user Wi-Fi).
-- **Heltec ESP32-S3R8** boards often have **16 MB flash + 8 MB PSRAM** — check datasheet, don't leave MCU bare.
-- Only add schema fields that exist in `schema/device.yaml` — run `npm test`.
-- Keep diffs focused; don't refactor unrelated UI or bulk-edit all 92 devices unless asked.
-- **Don't "correct" display to `unknown`** on boards the user/catalog treats as having a screen without checking intent (T114 lesson).
-- **Don't revert or strip** another agent's enrichment unless the user asks — review against datasheet first.
-
-## UI conventions (when touching `src/`)
-
-- Hero strip **strips vendor prefix** from catalog MCU/radio names (`ESP32-S3`, not `Espressif ESP32-S3`).
-- Component datasheet links use `data/globals.yaml`; device PDFs use `datasheetUrl`.
-- Reuse existing helpers in `src/lib/data.js` (`resolveMcuInfo`, `deviceDisplayLabel`, etc.).
-
-## Checklist before finishing
-
-- [ ] `npm test` passes
-- [ ] Copied structure from a similar enriched device — not a minimal stub
-- [ ] Short `name`; long titles in `aliases`; `kind` set correctly
-- [ ] Datasheet PDF downloaded + `datasheet: datasheet.pdf` (when vendor PDF exists)
-- [ ] No `# Datasheet:` URL comments
-- [ ] MCU flash/PSRAM, radio bands, display specs, USB connector, physical dims filled from datasheet
-- [ ] `image:` only if the SVG file exists in the device directory
-- [ ] Display/GNSS reflect built-in vs add-on correctly (see table above)
-- [ ] Price rounded to whole USD, or omitted if shop has no fixed price
-- [ ] `# Source:` comment(s) with product page (+ docs URL if used)
+- `npm test` passes.
+- For data changes, follow the contributor checklist in
+  [`data/RULES.md`](data/RULES.md).
