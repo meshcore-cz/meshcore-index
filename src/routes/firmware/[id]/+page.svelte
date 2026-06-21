@@ -1,6 +1,6 @@
 <script>
   import { base } from '$app/paths';
-  import { STATUS_META, TYPE_META, FW_STATUS_TW, groupReleases, getFirmware, deviceMcuLabel, deviceRadioLabel } from '$lib/data.js';
+  import { STATUS_META, TYPE_META, FW_STATUS_TW, groupReleases, getFirmware, deviceMcuLabel, deviceRadioLabel, resolveRefs } from '$lib/data.js';
   import { clampDescription, absUrl } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
   import ReleaseGroupList from '$lib/ReleaseGroupList.svelte';
@@ -10,6 +10,7 @@
 
   const PREVIEW = 3;
   let releaseGroups = $derived(groupReleases(fw.releases));
+  let refs = $derived(resolveRefs(fw.refs));
   let previewGroups = $derived(releaseGroups.slice(0, PREVIEW));
 
   const FRAMEWORK_LABELS = { arduino: 'Arduino', zephyr: 'Zephyr', 'esp-idf': 'ESP-IDF', other: 'Other' };
@@ -96,9 +97,12 @@
       {/if}
     </p>
   {/if}
-  <div class="mt-1.5 flex gap-4">
+  <div class="mt-1.5 flex flex-wrap gap-4">
     {#if fw.repository}<a class="text-accent2 hover:underline" href={fw.repository} target="_blank" rel="noreferrer">Repository ↗</a>{/if}
     {#if fw.website}<a class="text-accent2 hover:underline" href={fw.website} target="_blank" rel="noreferrer">Website ↗</a>{/if}
+    {#each refs as ref}
+      <a class="text-accent2 hover:underline" href={ref.url} target="_blank" rel="noreferrer">{ref.name} ↗</a>
+    {/each}
   </div>
 </header>
 

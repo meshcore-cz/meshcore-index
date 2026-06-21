@@ -1,6 +1,6 @@
 <script>
   import { base } from '$app/paths';
-  import { deviceMcuLabel, deviceRadioLabel } from '$lib/data.js';
+  import { deviceMcuLabel, deviceRadioLabel, resolveRefs } from '$lib/data.js';
   import { clampDescription, abs, absUrl } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
   let { data } = $props();
@@ -43,6 +43,9 @@
     <div class="flex flex-wrap gap-x-4 gap-y-1 text-[0.92rem]">
       {#if v.country}<span class="text-dim">{v.country}</span>{/if}
       {#if v.website}<a class="text-accent2 hover:underline" href={v.website} target="_blank" rel="noreferrer">{v.website} ↗</a>{/if}
+      {#each resolveRefs(v.refs) as ref}
+        <a class="text-accent2 hover:underline" href={ref.url} target="_blank" rel="noreferrer">{ref.name} ↗</a>
+      {/each}
     </div>
   </div>
 </header>

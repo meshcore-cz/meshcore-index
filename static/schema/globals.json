@@ -23,6 +23,32 @@
     },
     "gnss": {
       "$ref": "#/$defs/catalog"
+    },
+    "refs": {
+      "type": "object",
+      "description": "External reference databases that records can cross-link to via `refs`.",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "urlTemplate"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "urlTemplate": {
+            "type": "string",
+            "pattern": "\\{id\\}",
+            "description": "URL with a `{id}` placeholder replaced by the record's ref value."
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
     }
   },
   "$defs": {

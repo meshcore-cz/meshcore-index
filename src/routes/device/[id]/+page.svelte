@@ -10,6 +10,7 @@
     resolveFrequency,
     resolveDisplay,
     resolveGnss,
+    resolveRefs,
     deviceDisplayLabel,
     devicePriceLabel,
     stripVendorLabel
@@ -160,6 +161,7 @@
       },
       { label: 'Architecture', value: mcuInfo?.architecture?.name, part: mcuInfo?.architecture },
       { label: 'Flash', value: d.hardware?.mcu?.flashMb && `${d.hardware.mcu.flashMb} MB` },
+      { label: 'RAM', value: d.hardware?.mcu?.ramKb && `${d.hardware.mcu.ramKb} KB` },
       { label: 'PSRAM', value: d.hardware?.mcu?.psramMb && `${d.hardware.mcu.psramMb} MB` }
     ])
   );
@@ -215,6 +217,7 @@
         label: 'Built-in capacity',
         value: d.hardware?.power?.batteryCapacityMah && `${d.hardware.power.batteryCapacityMah} mAh`
       },
+      { label: 'Chemistry', value: BATTERY_CHEMISTRY[d.hardware?.power?.batteryChemistry] },
       {
         label: 'Built-in',
         value:
@@ -246,6 +249,20 @@
             : d.hardware?.power?.solarInput === false
               ? 'No'
               : undefined
+      },
+      {
+        label: 'Power draw (idle)',
+        value:
+          d.hardware?.power?.consumptionIdleMa != null
+            ? `${d.hardware.power.consumptionIdleMa} mA`
+            : undefined
+      },
+      {
+        label: 'Power draw (TX)',
+        value:
+          d.hardware?.power?.consumptionTxMa != null
+            ? `${d.hardware.power.consumptionTxMa} mA`
+            : undefined
       },
       { label: 'PMIC', value: d.hardware?.power?.pmic },
       { label: 'Battery connector', value: d.hardware?.power?.batteryConnector },
@@ -283,6 +300,15 @@
 
   let physicalRows = $derived(
     rows([
+      {
+        label: 'LEDs',
+        value:
+          d.hardware?.leds?.status === 'present'
+            ? d.hardware.leds.description ?? 'Yes'
+            : d.hardware?.leds?.status === 'none'
+              ? 'None'
+              : undefined
+      },
       { label: 'Dimensions', value: formatDimensions(d.hardware?.physical?.dimensionsMm) },
       { label: 'Weight', value: d.hardware?.physical?.weightG && `${d.hardware.physical.weightG} g` },
       { label: 'Operating temp', value: formatOperatingTemp(d.hardware?.environmental) },
@@ -333,6 +359,7 @@
   );
 
   let radios = $derived(d.hardware?.radios ?? []);
+  let refs = $derived(resolveRefs(d.refs));
 
   // Whole-card visibility — a card renders only when it has content.
   let specCards = $derived(
@@ -348,6 +375,16 @@
       { title: 'Details', icon: 'ℹ️', rows: metaRows }
     ].filter((c) => c.rows.length)
   );
+
+  const BATTERY_CHEMISTRY = {
+    'li-po': 'LiPo',
+    'li-ion': 'Li-ion',
+    lifepo4: 'LiFePO₄',
+    lto: 'LTO',
+    nimh: 'NiMH',
+    alkaline: 'Alkaline',
+    other: 'Other'
+  };
 
   const LIFECYCLE_TW = {
     active: 'bg-ok/15 text-ok',
@@ -405,6 +442,14 @@
       <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[0.9rem]">
         {#if d.product_url}<a class="text-accent2 hover:underline" href={d.product_url} target="_blank" rel="noreferrer">Product page ↗</a>{/if}
         {#if d.datasheetUrl}<a class="text-accent2 hover:underline" href={d.datasheetUrl} target="_blank" rel="noreferrer">Datasheet ↗</a>{/if}
+      </div>
+    {/if}
+    {#if refs.length}
+      <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.85rem] text-dim">
+        <span>References:</span>
+        {#each refs as ref}
+          <a class="text-accent2 hover:underline" href={ref.url} target="_blank" rel="noreferrer">{ref.name} ↗</a>
+        {/each}
       </div>
     {/if}
   </div>

@@ -34,6 +34,7 @@ hardware:
   mcu:
     model: esp32-s3
     flashMb: 8
+    ramKb: 512
   radios:
     - technology: lora
       chip: sx1262
@@ -60,6 +61,9 @@ hardware:
     batteryBuiltIn: false
     batteryConnector: SH1.25-2
     charging: true
+  leds:
+    status: present
+    description: White user LED (GPIO35)
   expansion:
     - type: header-2.54
       count: 2

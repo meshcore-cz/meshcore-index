@@ -15,6 +15,16 @@ properties:
   name:
     type: string
     minLength: 1
+  refs:
+    type: object
+    description: >-
+      Cross-references to external databases. Each key must be a ref id defined
+      in data/globals.yaml `refs`; each value is this record's id/slug on that
+      site, expanded into a URL via the ref's urlTemplate.
+    minProperties: 1
+    additionalProperties:
+      type: string
+      minLength: 1
   type:
     enum:
       - official

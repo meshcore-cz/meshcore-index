@@ -80,6 +80,29 @@ export const globals = dataset.globals ?? {};
 export const generatedAt = dataset.generatedAt ?? null;
 
 /**
+ * Expand a record's `refs` map into outbound links. Each `{ <key>: <id> }`
+ * entry is resolved against globals.refs: the id replaces `{id}` in the ref's
+ * urlTemplate. Unknown ref keys are skipped.
+ * @returns {{ key, name, value, url }[]}
+ */
+export function resolveRefs(refs) {
+  if (!refs) return [];
+  const registry = globals.refs ?? {};
+  const out = [];
+  for (const [key, value] of Object.entries(refs)) {
+    const def = registry[key];
+    if (!def?.urlTemplate) continue;
+    out.push({
+      key,
+      name: def.name ?? key,
+      value,
+      url: def.urlTemplate.replaceAll('{id}', encodeURIComponent(value))
+    });
+  }
+  return out;
+}
+
+/**
  * Resolve a bare chip/model string against a catalog category, matching the key
  * case-insensitively. Returns `{ id, name, vendor?, url?, description? }` or null.
  */

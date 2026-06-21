@@ -189,3 +189,12 @@ gnss:
     name: u-blox NEO-6
     vendor: u-blox
     url: https://www.u-blox.com/en/product/neo-6-series
+
+# External reference databases. A record's `refs` map ({ <ref-key>: <id> }) is
+# expanded against these entries: the `id` is substituted into `urlTemplate`
+# wherever `{id}` appears. `name` is the human label shown on the detail page.
+# Keys here are the only values allowed as `refs` keys (enforced by validate.js).
+refs:
+  mesh-sh-device:
+    name: mesh-sn.de
+    urlTemplate: https://mesh-sn.de/en/devices/details/{id}

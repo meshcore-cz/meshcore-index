@@ -190,6 +190,7 @@ Use structured fields instead of deprecated flat aliases such as `mcu`, `radio`,
 |-------|------|-------|
 | `mcu.model` | string | Catalog key, e.g. `esp32-s3`, `nrf52840`. |
 | `mcu.flashMb` / `psramMb` | number | On-board memory. |
+| `mcu.ramKb` | number | On-chip SRAM in KB. |
 | `radios[]` | array | LoRa / ESP-NOW radios. |
 | `radios[].chip` | string | Catalog key, e.g. `sx1262`. |
 | `radios[].frequencyVariants[]` | string[] | Regional band keys, e.g. `868`, `915`. |
@@ -201,12 +202,17 @@ Use structured fields instead of deprecated flat aliases such as `mcu`, `radio`,
 | `input[].type` | enum | `keyboard`, `trackball`, `joystick`, `encoder`, `button`, `microphone`, `speaker`. |
 | `input[].description` | string | Optional detail, e.g. `mini QWERTY`. |
 | `power.batteryConnector` | string | External battery connector, e.g. `SH1.25-2`. |
+| `power.batteryChemistry` | enum | `li-po`, `li-ion`, `lifepo4`, `lto`, `nimh`, `alkaline`, `other`. |
+| `power.consumptionIdleMa` | number | Typical idle/RX current draw in mA. |
+| `power.consumptionTxMa` | number | Typical peak TX current draw in mA. |
 | `power.pmic` | string | Charge / power-management IC. |
 | `expansion[]` | array | Grove, header, or other expansion ports. |
 | `expansion[].type` | string | Port family, e.g. `grove`, `header-2.54`. |
 | `expansion[].count` | integer | Number of connectors. |
 | `expansion[].pins` | integer | Pin count per header, when relevant. |
 | `expansion[].interfaces[]` | string[] | Supported buses, e.g. `I2C`, `UART`. |
+| `leds.status` | enum | `unknown`, `none`, `present`. |
+| `leds.description` | string | What LEDs are present, e.g. `User RGB + charge status`. |
 | `enclosure.builtIn` | bool | Factory enclosure included. |
 | `enclosure.ipRating` | string | Ingress protection, e.g. `IPX6`. |
 | `physical.dimensionsMm` | object | `width`, `height`, `depth` in millimetres. |
@@ -236,6 +242,33 @@ Create `data/vendors/<id>/vendor.yaml` plus a `logo.svg`.
 | `country`     | no       | string | Company or project country, when known. Use `Various` for generic board families. |
 | `logo`        | no       | string | Logo filename in the same directory. Prefer SVG, but PNG/JPG/WebP are allowed. |
 | `description` | no       | string | One short paragraph. |
+
+## External references (`refs`)
+
+Any device, firmware or vendor may carry a `refs` map that cross-links the
+record to its entry in an external database. Each **key** must be a ref id
+registered under `refs:` in [`globals.yaml`](globals.yaml); each **value** is
+this record's id/slug on that site. The site expands it into a link by
+substituting the value into the ref's `urlTemplate` (`{id}` placeholder).
+
+```yaml
+# device.yaml
+refs:
+  mesh-sh-device: lilygo-t-echo   # → https://mesh-sn.de/en/devices/details/lilygo-t-echo
+```
+
+Register new databases in `globals.yaml`:
+
+```yaml
+refs:
+  mesh-sh-device:
+    name: mesh-sn.de              # label shown on the detail page
+    urlTemplate: https://mesh-sn.de/en/devices/details/{id}
+```
+
+An unknown `refs` key fails validation, so add the registry entry first. Use a
+type-specific key (e.g. `…-device`, `…-firmware`) when the same site has
+different paths per record type.
 
 ## Build & validate
 

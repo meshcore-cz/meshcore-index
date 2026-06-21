@@ -112,21 +112,21 @@ if (existsSync(compatibilityBase)) {
 }
 
 // Optional shared parts catalog (data/globals.yaml).
+let globalsData = null;
 const globalsPath = join(root, 'data', 'globals.yaml');
 if (existsSync(globalsPath)) {
-  let globals;
   try {
-    globals = yaml.load(readFileSync(globalsPath, 'utf8'));
+    globalsData = yaml.load(readFileSync(globalsPath, 'utf8'));
   } catch (e) {
     err('globals', `YAML parse error: ${e.message}`);
-    globals = null;
   }
-  if (globals != null && !globalsSchema(globals)) {
+  if (globalsData != null && !globalsSchema(globalsData)) {
     for (const e of globalsSchema.errors) {
       err('globals', `${e.instancePath || '/'} ${e.message}`);
     }
   }
 }
+const refIds = new Set(Object.keys(globalsData?.refs ?? {}));
 
 // Optional changelog.yaml alongside each firmware.
 for (const f of firmwares) {
@@ -142,6 +142,15 @@ for (const f of firmwares) {
   if (!changelogSchema(cl)) {
     for (const e of changelogSchema.errors) {
       err(`firmwares/${f.id}/changelog`, `${e.instancePath || '/'} ${e.message}`);
+    }
+  }
+}
+
+// Every `refs` key must name a ref database registered in globals.refs.
+for (const r of [...vendors, ...devices, ...firmwares]) {
+  for (const key of Object.keys(r.data.refs ?? {})) {
+    if (!refIds.has(key)) {
+      err(r.where, `refs key "${key}" is not defined in data/globals.yaml refs`);
     }
   }
 }

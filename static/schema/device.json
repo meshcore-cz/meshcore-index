@@ -14,6 +14,15 @@
       "type": "string",
       "minLength": 1
     },
+    "refs": {
+      "type": "object",
+      "description": "Cross-references to external databases. Each key must be a ref id defined in data/globals.yaml `refs`; each value is this record's id/slug on that site, expanded into a URL via the ref's urlTemplate.",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
     "vendorId": {
       "type": "string",
       "pattern": "^[a-z0-9-]+$"
@@ -145,6 +154,11 @@
             },
             "psramMb": {
               "type": "number"
+            },
+            "ramKb": {
+              "type": "number",
+              "minimum": 0,
+              "description": "On-chip SRAM in kilobytes."
             }
           }
         },
@@ -295,6 +309,28 @@
               "type": "number",
               "minimum": 1
             },
+            "batteryChemistry": {
+              "enum": [
+                "li-po",
+                "li-ion",
+                "lifepo4",
+                "lto",
+                "nimh",
+                "alkaline",
+                "other"
+              ],
+              "description": "Cell chemistry of the supported/built-in battery."
+            },
+            "consumptionIdleMa": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Typical idle/receive current draw in milliamps."
+            },
+            "consumptionTxMa": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Typical peak current draw while transmitting, in milliamps."
+            },
             "pmic": {
               "type": "string"
             },
@@ -326,6 +362,23 @@
                   "type": "string"
                 }
               }
+            }
+          }
+        },
+        "leds": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "unknown",
+                "none",
+                "present"
+              ]
+            },
+            "description": {
+              "type": "string",
+              "description": "What LEDs are present, e.g. \"User RGB + charge status\"."
             }
           }
         },
