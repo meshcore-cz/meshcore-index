@@ -21,6 +21,13 @@ export const abs = (rootedPath) => `${SITE_ORIGIN}${rootedPath}`;
 /** Absolute URL for an app route, prefixing origin + base path. */
 export const absUrl = (path = '/') => `${SITE_BASE}${path.startsWith('/') ? path : `/${path}`}`;
 
+/**
+ * Rooted path (base-path aware) to a generated OG card for a data item, e.g.
+ * `/og/device/<id>.png`. Cards are produced at build time by
+ * scripts/build-og.js. Pass straight into <Seo image={...}> — it absolutizes.
+ */
+export const ogImageFor = (kind, id) => `${BASE}/og/${kind}/${id}.png`;
+
 /** Trim a string to a tidy meta-description length, breaking on a word. */
 export function clampDescription(text, max = 160) {
   const s = String(text ?? '')

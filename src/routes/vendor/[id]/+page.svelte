@@ -1,7 +1,7 @@
 <script>
   import { base } from '$app/paths';
   import { deviceMcuLabel, deviceRadioLabel, resolveRefs } from '$lib/data.js';
-  import { clampDescription, abs, absUrl } from '$lib/seo.js';
+  import { clampDescription, abs, absUrl, ogImageFor } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
   let { data } = $props();
   let v = $derived(data.vendor);
@@ -21,7 +21,7 @@
   });
 </script>
 
-<Seo title={v.name} description={vendorDescription} jsonLd={vendorJsonLd} />
+<Seo title={v.name} description={vendorDescription} image={ogImageFor('vendor', v.id)} jsonLd={vendorJsonLd} />
 
 <a class="mb-4 inline-block text-[0.9rem] text-dim hover:underline" href="{base}/vendors/">← All vendors</a>
 

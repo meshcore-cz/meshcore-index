@@ -1,7 +1,7 @@
 <script>
   import { base } from '$app/paths';
   import { STATUS_META, TYPE_META, FW_STATUS_TW, groupReleases, getFirmware, deviceMcuLabel, deviceRadioLabel, resolveRefs } from '$lib/data.js';
-  import { clampDescription, absUrl } from '$lib/seo.js';
+  import { clampDescription, absUrl, ogImageFor } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
   import ReleaseGroupList from '$lib/ReleaseGroupList.svelte';
   import CapabilityMatrix from '$lib/CapabilityMatrix.svelte';
@@ -105,7 +105,7 @@
   });
 </script>
 
-<Seo title={fw.name} description={fwDescription} type="article" jsonLd={fwJsonLd} />
+<Seo title={fw.name} description={fwDescription} type="article" image={ogImageFor('firmware', fw.id)} jsonLd={fwJsonLd} />
 
 <a class="mb-4 inline-block text-[0.9rem] text-dim hover:underline" href="{base}/">← All firmwares</a>
 
@@ -172,53 +172,6 @@
   </div>
 </dl>
 
-{#if popularityEntries.length || verificationEntries.length || fw.verification?.notes?.length}
-  <section class="mb-7 grid gap-4 lg:grid-cols-2">
-    {#if popularityEntries.length}
-      <div class="rounded-xl border border-edge bg-elev p-[1.1rem]">
-        <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2 border-b border-edge pb-1.5">
-          <h2 class="text-[1.1rem] font-semibold">Popularity</h2>
-          {#if fw.popularity?.lastChecked}<span class="text-[0.72rem] text-dim">checked {fw.popularity.lastChecked}</span>{/if}
-        </div>
-        <dl class="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-x-4 gap-y-3">
-          {#each popularityEntries as item}
-            <div>
-              <dt class="text-[0.72rem] tracking-wide text-dim uppercase">{item.label}</dt>
-              <dd class="mt-1 text-[0.95rem] font-medium">{formatNumber(item.value)}</dd>
-            </div>
-          {/each}
-        </dl>
-      </div>
-    {/if}
-
-    {#if verificationEntries.length || fw.verification?.notes?.length}
-      <div class="rounded-xl border border-edge bg-elev p-[1.1rem]">
-        <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2 border-b border-edge pb-1.5">
-          <h2 class="text-[1.1rem] font-semibold">Verification</h2>
-          {#if fw.verification?.lastChecked}<span class="text-[0.72rem] text-dim">checked {fw.verification.lastChecked}</span>{/if}
-        </div>
-        {#if verificationEntries.length}
-          <dl class="flex flex-wrap gap-1.5">
-            {#each verificationEntries as item}
-              <div class="rounded-full border px-2.5 py-1 text-[0.8rem] {boolTone(item.value)}">
-                <dt class="inline">{item.label}</dt>
-                <dd class="ml-1 inline font-medium">{boolLabel(item.value)}</dd>
-              </div>
-            {/each}
-          </dl>
-        {/if}
-        {#if fw.verification?.notes?.length}
-          <ul class="mt-3 space-y-1 text-[0.85rem] text-dim">
-            {#each fw.verification.notes as note}
-              <li>{note}</li>
-            {/each}
-          </ul>
-        {/if}
-      </div>
-    {/if}
-  </section>
-{/if}
-
 {#if fw.capabilities}
   <section class="mb-7">
     <h2 class="mb-3 border-b border-edge pb-1.5 text-[1.1rem] font-semibold">Capabilities</h2>
@@ -241,6 +194,50 @@
     <ul class="mt-3 flex flex-wrap gap-1.5">
       {#each fw.features as f}<li class="rounded-md bg-elev2 px-2.5 py-1 text-[0.85rem]">{f}</li>{/each}
     </ul>
+  </section>
+{/if}
+
+{#if popularityEntries.length || verificationEntries.length || fw.verification?.notes?.length}
+  <section class="mb-7 rounded-xl border border-edge bg-elev/60 px-3 py-2.5">
+    <div class="mb-2 flex flex-wrap items-center justify-between gap-2">
+      <h2 class="text-[0.72rem] font-semibold tracking-wide text-dim uppercase">Project signals</h2>
+      <div class="flex flex-wrap gap-x-3 gap-y-1 text-[0.7rem] text-muted">
+        {#if fw.popularity?.lastChecked}<span>popularity {fw.popularity.lastChecked}</span>{/if}
+        {#if fw.verification?.lastChecked}<span>verification {fw.verification.lastChecked}</span>{/if}
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+      {#if popularityEntries.length}
+        <dl class="flex flex-wrap gap-x-4 gap-y-1.5">
+          {#each popularityEntries as item}
+            <div class="inline-flex items-baseline gap-1.5">
+              <dt class="text-[0.68rem] tracking-wide text-dim uppercase">{item.label}</dt>
+              <dd class="text-[0.84rem] font-semibold">{formatNumber(item.value)}</dd>
+            </div>
+          {/each}
+        </dl>
+      {/if}
+
+      {#if verificationEntries.length}
+        <dl class="flex flex-wrap gap-1">
+          {#each verificationEntries as item}
+            <div class="rounded-md border px-1.5 py-0.5 text-[0.68rem] {boolTone(item.value)}">
+              <dt class="inline">{item.label}</dt>
+              <dd class="ml-1 inline font-semibold">{boolLabel(item.value)}</dd>
+            </div>
+          {/each}
+        </dl>
+      {/if}
+    </div>
+
+    {#if fw.verification?.notes?.length}
+      <ul class="mt-2 space-y-1 border-t border-edge pt-2 text-[0.76rem] text-dim">
+        {#each fw.verification.notes as note}
+          <li>{note}</li>
+        {/each}
+      </ul>
+    {/if}
   </section>
 {/if}
 

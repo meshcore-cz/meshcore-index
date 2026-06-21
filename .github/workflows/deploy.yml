@@ -26,10 +26,21 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      # Reuse previously rendered OG cards; build-og.js only regenerates the
+      # items whose data/template hash changed.
+      - name: Cache OG cards
+        uses: actions/cache@v4
+        with:
+          path: |
+            static/og
+            .cache/og
+          key: og-${{ hashFiles('data/devices/**', 'data/vendors/**', 'data/firmwares/**', 'scripts/build-og.js') }}
+          restore-keys: |
+            og-
       # Validate every YAML record against the JSON Schemas + referential checks.
       - name: Validate data
         run: npm test
-      # Ensure the static site builds (also regenerates data.json via prebuild).
+      # Ensure the static site builds (also regenerates data.json + OG cards via prebuild).
       - name: Build
         run: npm run build
 
@@ -45,6 +56,15 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Cache OG cards
+        uses: actions/cache@v4
+        with:
+          path: |
+            static/og
+            .cache/og
+          key: og-${{ hashFiles('data/devices/**', 'data/vendors/**', 'data/firmwares/**', 'scripts/build-og.js') }}
+          restore-keys: |
+            og-
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v5

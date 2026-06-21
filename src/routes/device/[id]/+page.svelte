@@ -18,7 +18,7 @@
   } from '$lib/data.js';
   import { metricById } from '$lib/metrics.js';
   import { compareIds } from '$lib/compare.js';
-  import { clampDescription, abs, absUrl } from '$lib/seo.js';
+  import { clampDescription, abs, absUrl, ogImageFor } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
   import { favoriteIds, toggleFavorite } from '$lib/favorites.js';
   // Lucide icons for the hardware spec cards (per-icon imports tree-shake).
@@ -479,7 +479,7 @@
   {/if}
 {/snippet}
 
-<Seo title={d.name} description={metaDescription} type="article" jsonLd={productJsonLd} />
+<Seo title={d.name} description={metaDescription} type="article" image={ogImageFor('device', d.id)} jsonLd={productJsonLd} />
 
 <a class="mb-4 inline-block text-[0.9rem] text-dim hover:underline" href="{base}/devices/">← All devices</a>
 
