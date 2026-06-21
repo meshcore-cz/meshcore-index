@@ -6,6 +6,11 @@ lifecycle: active
 familyId: yaoyao-tiny-relay
 product_url: https://www.st.com/en/microcontrollers-microprocessors/stm32wle5cc.html
 official: true
+price:
+  # Source: minimal STM32WLE5CC relay-board estimate
+  amount: 5
+  currency: USD
+  asOf: 2026-06
 description: >-
   Minimal STM32WLE5CC relay target for MeshCore builds, intended for tiny
   always-on nodes and experimentation with a low-cost LoRa-enabled MCU.
@@ -22,6 +27,8 @@ hardware:
       chip: stm32wl
   display:
     status: none
+  leds:
+    status: unknown
   gnss:
     status: none
   power:

@@ -15,6 +15,11 @@ datasheet: datasheet.pdf
 product_url: https://www.gat-iot.com/products/gat562-mesh-evb-pro/
 refs:
   mesh-sh-device: gat562-mesh-evb-pro
+price:
+  # Source: https://meshcn.net/easy-meshtastic-solar-node-build-keepteen-d5-review/ (approx. ¥120)
+  amount: 17
+  currency: USD
+  asOf: 2026-06
 roles:
   - companion
   - repeater

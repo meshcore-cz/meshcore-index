@@ -8,6 +8,11 @@ aliases:
   - Meshadventurer
 official: true
 product_url: https://github.com/chrismyers2000/MeshAdventurer
+price:
+  # Source: BOM-driven DIY build estimate
+  amount: 28
+  currency: USD
+  asOf: 2026-06
 description: >-
   DIY off-road ESP32 + E22 LoRa board with a 0.96-inch SSD1306 OLED, rotary
   encoder UI, GPS, and optional BME280 sensor support. Built for 1 W 433 or
@@ -23,6 +28,8 @@ transports:
 hardware:
   mcu:
     model: esp32
+    # Inferred from the ESP32-WROOM-32D class MCU
+    ramKb: 520
   radios:
     - technology: lora
       chip: sx1262
@@ -54,6 +61,8 @@ hardware:
       description: user button
     - type: encoder
       description: rotary encoder with push switch
+  leds:
+    status: unknown
   power:
     batterySupported: false
     solarInput: true

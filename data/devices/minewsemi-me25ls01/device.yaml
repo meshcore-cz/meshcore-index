@@ -9,6 +9,11 @@ familyId: minewsemi-minewsemi-me25ls01
 product_url: https://en.minewsemi.com/lora-module/lr1110-nrf52840-me25LS01
 datasheet: datasheet.pdf
 official: true
+price:
+  # Source: https://store.minewsemi.com/product/lr1110nrf52840-me25ls01/
+  amount: 11
+  currency: USD
+  asOf: 2026-06
 roles:
   - companion
   - repeater

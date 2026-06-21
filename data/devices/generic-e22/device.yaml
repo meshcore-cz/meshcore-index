@@ -8,6 +8,11 @@ description: >-
   Generic ESP32-based build target for SX1262 or SX1268 LoRa hardware. Used as
   a fallback profile for E22-family modules when a vendor-specific record is
   unavailable.
+price:
+  # Source: generic ESP32 + E22 module build estimate
+  amount: 12
+  currency: USD
+  asOf: 2026-06
 transports:
   - ble
   - usb
@@ -15,12 +20,16 @@ transports:
 hardware:
   mcu:
     model: esp32
+    # Inferred from the ESP32 classic family
+    ramKb: 520
   radios:
     - technology: lora
       chip: sx1262
     - technology: lora
       chip: sx1268
   display:
+    status: unknown
+  leds:
     status: unknown
   gnss:
     status: unknown

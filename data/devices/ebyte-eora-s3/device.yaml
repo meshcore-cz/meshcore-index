@@ -11,6 +11,11 @@ product_url: https://www.cdebyte.com/products/EoRa-S3-900TB
 official: true
 refs:
   mesh-sh-device: ebyte-eora-s3-900tb
+price:
+  # Source: comparable ESP32-S3 + OLED + SX1262 dev-board pricing (estimate)
+  amount: 18
+  currency: USD
+  asOf: 2026-06
 description: >-
   Compact ESP32-S3 + SX1262 development board with a 0.96-inch OLED, SD card
   slot, USB-C, and LiPo charging circuit. Suited to small MeshCore/Meshtastic

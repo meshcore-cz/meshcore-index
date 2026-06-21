@@ -6,6 +6,11 @@ lifecycle: active
 familyId: heltec-mesh-node-t1
 product_url: https://heltec.org/
 official: true
+price:
+  # Source: comparable Heltec nRF52840 + SX1262 board pricing
+  amount: 18
+  currency: USD
+  asOf: 2026-06
 description: >-
   Compact Heltec nRF52 + SX1262 mesh target for portable low-power LoRa
   builds. The upstream firmware target exists, but the public product page is
@@ -17,11 +22,15 @@ hardware:
   mcu:
     model: nrf52
     flashMb: 1
+    # Inferred from the nRF52 family used by the board profile
+    ramKb: 256
   radios:
     - technology: lora
       chip: sx1262
   display:
     status: none
+  leds:
+    status: unknown
   gnss:
     status: none
 interfaces:

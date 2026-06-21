@@ -10,6 +10,11 @@ official: true
 aliases:
   - Ikoka Stick Meshtastic Device
 product_url: https://github.com/ndoo/ikoka-stick-meshtastic-device
+price:
+  # Source: mesh101 price range for comparable Ikoka devices ($30-45)
+  amount: 39
+  currency: USD
+  asOf: 2026-06
 description: >-
   Compact mesh stick built around XIAO and EBYTE E22 options, with a 0.96-inch
   OLED and lithium battery charging support. The design supports both nRF52840
@@ -57,6 +62,9 @@ hardware:
     batteryBuiltIn: false
     charging: true
     solarInput: false
+    batteryChemistry: li-ion
+  leds:
+    status: unknown
 interfaces:
   usb:
     connector: USB-C

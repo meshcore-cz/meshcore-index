@@ -4,13 +4,22 @@ kind: generic-build
 lifecycle: active
 familyId: generic-espnow
 official: true
+price:
+  # Source: bare ESP32-C3 dev-board estimate
+  amount: 5
+  currency: USD
+  asOf: 2026-06
 transports:
   - wifi
 hardware:
   mcu:
     model: esp32-c3
+    # Inferred from the ESP32-C3 family
+    ramKb: 400
   display:
     status: none
+  leds:
+    status: unknown
   gnss:
     status: none
 interfaces:

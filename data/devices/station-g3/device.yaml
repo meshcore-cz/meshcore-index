@@ -11,6 +11,11 @@ description: >-
   power input and firmware compatibility with Station G2 profiles.
 product_url: https://wiki.bqvoy.com/en/devkits/station-g3
 official: true
+price:
+  # Source: https://shop.uniteng.com/product/meshtastic-mesh-device-station-edition/
+  amount: 109
+  currency: USD
+  asOf: 2026-06
 roles:
   - companion
   - repeater

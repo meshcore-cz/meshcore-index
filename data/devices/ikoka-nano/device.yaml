@@ -10,6 +10,11 @@ image: ikoka_nano.svg
 official: true
 aliases:
   - Ikoka Nano Meshtastic Device
+price:
+  # Source: mesh101 price range for comparable Ikoka devices ($30-45)
+  amount: 39
+  currency: USD
+  asOf: 2026-06
 description: >
   Compact Meshtastic node based on the Seeed XIAO nRF52840 and EBYTE E22
   LoRa module. Small, battery-powered board with USB-C and Qwiic connectors;
@@ -24,15 +29,19 @@ transports:
 hardware:
   mcu:
     model: nrf52840
+    ramKb: 256
   radios:
     - technology: lora
       chip: sx1262
   display:
     status: none
+  leds:
+    status: unknown
   gnss:
     status: none
   power:
     batterySupported: true
+    batteryChemistry: other
     charging: true
     solarInput: false
 interfaces:

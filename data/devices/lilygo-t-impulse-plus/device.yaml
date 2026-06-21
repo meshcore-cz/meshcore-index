@@ -11,6 +11,11 @@ description: >-
   Low-power nRF52840 wristband with SX1262 LoRa, a 64x32 OLED, GPS, and a
   touch-button wake flow. Built for wearable MeshCore companions with very low
   deep-sleep current.
+price:
+  # Source: comparable LILYGO wearable pricing (estimate)
+  amount: 37
+  currency: USD
+  asOf: 2026-06
 transports:
   - ble
   - usb

@@ -12,13 +12,22 @@ roles:
   - companion
   - repeater
   - room-server
+price:
+  # Source: community parts cost estimate for ProMicro nRF52 + HT-RA62 builds
+  amount: 13
+  currency: USD
+  asOf: 2026-06
 transports:
   - ble
   - usb
 hardware:
   mcu:
     model: nrf52
+    # Inferred from the ProMicro nRF52 family
+    ramKb: 256
   display:
+    status: unknown
+  leds:
     status: unknown
   gnss:
     status: unknown

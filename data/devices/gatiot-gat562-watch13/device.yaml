@@ -12,6 +12,11 @@ aliases:
 official: true
 refs:
   mesh-sh-device: gat562-mesh-watch
+price:
+  # Source: comparable GAT562 wearable market pricing (estimate)
+  amount: 30
+  currency: USD
+  asOf: 2026-06
 datasheet: datasheet.pdf
 roles:
   - companion

@@ -8,6 +8,11 @@ aliases:
   - T-Echo Card
 official: true
 product_url: https://github.com/Xinyuan-LilyGO/T-Echo-Card
+price:
+  # Source: https://lilygo.cc/en-us/products/t-echo-lilygo
+  amount: 45
+  currency: USD
+  asOf: 2026-06
 description: >-
   Low-power nRF52840 + SX1262 card-sized node with a 0.42-inch OLED, L76K GNSS,
   ICM20948 IMU, speaker, microphone, and WS2812 LED. Solar panel for continuous

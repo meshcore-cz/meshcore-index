@@ -11,6 +11,11 @@ aliases:
 official: true
 refs:
   mesh-sh-device: gat562-mesh-tracker-pro
+price:
+  # Source: comparable GAT562 handheld market pricing (estimate)
+  amount: 39
+  currency: USD
+  asOf: 2026-06
 roles:
   - companion
   - repeater

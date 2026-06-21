@@ -12,6 +12,11 @@ aliases:
   - Ikoka Handheld Meshtastic Device
   - Ikoka Handheld
 product_url: https://github.com/ndoo/ikoka-handheld-meshtastic-device
+price:
+  # Source: mesh101 price range for comparable Ikoka devices ($30-45)
+  amount: 40
+  currency: USD
+  asOf: 2026-06
 description: >-
   Long-range handheld mesh board based on XIAO nRF52840 plus an EBYTE E22 LoRa
   module, with a 0.96-inch OLED and optional lithium battery charging. The
@@ -63,6 +68,7 @@ hardware:
     batterySupported: true
     batteryBuiltIn: false
     batteryConnector: LiPo-Pouch extern (JST PicoBlade 1.25mm)
+    batteryChemistry: li-po
     charging: true
     solarInput: false
     # Source: https://mesh-sn.de/hardware/details/ikoka-handheld
