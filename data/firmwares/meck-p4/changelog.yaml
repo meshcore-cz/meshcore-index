@@ -1,6 +1,6 @@
 source: github
 repo: pelgraine/Meck-P4
-updatedAt: '2026-06-21T09:01:28.484Z'
+updatedAt: '2026-06-21T09:55:31.755Z'
 releases:
   - version: v0.6.2-patch
     name: 'Meck P4 v0.6.2 Pre-release (Patch): Trace and notification fixes'

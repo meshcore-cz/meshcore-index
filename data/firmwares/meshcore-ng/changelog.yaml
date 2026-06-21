@@ -1,6 +1,6 @@
 source: github
 repo: MichTronics/MeshCoreNG
-updatedAt: '2026-06-21T09:01:31.926Z'
+updatedAt: '2026-06-21T09:55:35.449Z'
 releases:
   - version: bridge-tcp-v1.1.2
     name: TCP Bridge Firmware v1.1.2

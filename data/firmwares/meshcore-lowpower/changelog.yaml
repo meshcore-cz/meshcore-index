@@ -1,6 +1,6 @@
 source: github
 repo: dt267/MeshCore-Low-Power-Firmware-For-Heltec-V3-V4
-updatedAt: '2026-06-21T09:01:30.121Z'
+updatedAt: '2026-06-21T09:55:33.826Z'
 releases:
   - version: MeshCore-low-power-v1.16.dev_0621
     name: MeshCore low power - v1.16.dev_0621

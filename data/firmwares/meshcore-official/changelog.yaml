@@ -1,6 +1,6 @@
 source: script
 repo: meshcore-dev/MeshCore
-updatedAt: '2026-06-21T09:01:34.818Z'
+updatedAt: '2026-06-21T09:55:37.699Z'
 releases:
   - version: room-server-v1.16.0
     name: Room Server Firmware v1.16.0

@@ -1,6 +1,6 @@
 source: github
 repo: pelgraine/Meck
-updatedAt: '2026-06-21T09:01:28.090Z'
+updatedAt: '2026-06-21T09:55:31.295Z'
 releases:
   - version: v1.12.2
     name: 'Meck v1.12.2 (patch): Notes & WiFi password ''q'' input fix'
