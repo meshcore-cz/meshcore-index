@@ -110,6 +110,64 @@ properties:
     type: string
   license:
     type: string
+  popularity:
+    type: object
+    additionalProperties: false
+    description: Snapshot of public project popularity/adoption signals.
+    properties:
+      githubStars:
+        type: integer
+        minimum: 0
+      githubForks:
+        type: integer
+        minimum: 0
+      githubWatchers:
+        type: integer
+        minimum: 0
+      githubOpenIssues:
+        type: integer
+        minimum: 0
+      githubContributors:
+        type: integer
+        minimum: 0
+      releaseDownloads:
+        type: integer
+        minimum: 0
+        description: Total GitHub release asset downloads, when available.
+      latestReleaseDownloads:
+        type: integer
+        minimum: 0
+        description: GitHub release asset downloads for the latest release, when available.
+      lastChecked:
+        type: string
+        pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+  verification:
+    type: object
+    additionalProperties: false
+    description: Auditability and release-process signals; complements status/lifecycle/maturity.
+    properties:
+      sourceAvailable:
+        type: boolean
+      releasesAvailable:
+        type: boolean
+      signedReleases:
+        type: boolean
+      reproducibleBuilds:
+        type: boolean
+      ciBuilds:
+        type: boolean
+      officialFlasher:
+        type: boolean
+      hasDocumentation:
+        type: boolean
+      lastChecked:
+        type: string
+        pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+      notes:
+        type: array
+        items:
+          type: string
+          minLength: 1
   latest_version:
     type: string
     description: >-

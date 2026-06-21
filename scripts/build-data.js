@@ -1,5 +1,4 @@
-// Compiles every YAML file under data/ into a single data.json, and publishes
-// JSON copies of the YAML schemas.
+// Compiles every YAML file under data/ into a single data.json.
 // Two data.json copies are written, with identical content:
 //  - src/lib/generated/data.json : imported by the web app (Vite can't import
 //    from the static/ public dir, so the importable copy lives under src/).
@@ -23,7 +22,29 @@ function readDir(root, kind, file) {
     if (!d.isDirectory()) continue;
     const path = join(base, d.name, file);
     if (!existsSync(path)) continue;
-    out.push({ id: d.name, ...(load(readFileSync(path, 'utf8')) ?? {}) });
+    const authored = load(readFileSync(path, 'utf8')) ?? {};
+    const overlayPath = join(base, d.name, 'data.json');
+    const overlay = existsSync(overlayPath)
+      ? stripOverlayMeta(JSON.parse(readFileSync(overlayPath, 'utf8')))
+      : {};
+    out.push({ id: d.name, ...deepMerge(authored, overlay) });
+  }
+  return out;
+}
+
+function isPlainObject(value) {
+  return value != null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function stripOverlayMeta(value) {
+  if (!isPlainObject(value)) return {};
+  return Object.fromEntries(Object.entries(value).filter(([key]) => !key.startsWith('$')));
+}
+
+function deepMerge(base, overlay) {
+  const out = { ...base };
+  for (const [key, value] of Object.entries(overlay)) {
+    out[key] = isPlainObject(out[key]) && isPlainObject(value) ? deepMerge(out[key], value) : value;
   }
   return out;
 }
@@ -66,24 +87,6 @@ function readCompatibility(root) {
       a.firmwareVersionSlug.localeCompare(b.firmwareVersionSlug) ||
       a.deviceId.localeCompare(b.deviceId)
   );
-}
-
-function buildSchemas(root) {
-  const schemaDir = join(root, 'schema');
-  const outDir = join(root, 'static', 'schema');
-  mkdirSync(outDir, { recursive: true });
-
-  let count = 0;
-  for (const file of readdirSync(schemaDir).filter((f) => f.endsWith('.yaml')).sort()) {
-    const schema = load(readFileSync(join(schemaDir, file), 'utf8')) ?? {};
-    const publicName = file.replace(/\.yaml$/, '.json');
-    if (typeof schema.$id === 'string') {
-      schema.$id = schema.$id.replace(/\/schema\/[^/]+$/, `/schema/${publicName}`);
-    }
-    writeFileSync(join(outDir, publicName), JSON.stringify(schema, null, 2) + '\n');
-    count += 1;
-  }
-  return count;
 }
 
 function writeJsonRecord(file, record) {
@@ -264,15 +267,14 @@ export async function buildData(root = defaultRoot) {
   return {
     ...dataset.counts,
     recordsJson: buildRecordJson(root, { devices, firmwares, vendors, compatibility }),
-    schemas: buildSchemas(root),
     sitemapUrls
   };
 }
 
 // Run as a CLI when invoked directly (npm run build:data / pre-hooks).
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
-  const { firmwares, devices, vendors, compatibility, recordsJson, schemas, sitemapUrls } = await buildData();
+  const { firmwares, devices, vendors, compatibility, recordsJson, sitemapUrls } = await buildData();
   console.log(
-    `✓ Wrote data.json — ${firmwares} firmware(s), ${devices} device(s), ${vendors} vendor(s), ${compatibility} compatibility report(s); ${recordsJson} record JSON file(s); ${schemas} schema(s); ${sitemapUrls} sitemap URL(s).`
+    `✓ Wrote data.json — ${firmwares} firmware(s), ${devices} device(s), ${vendors} vendor(s), ${compatibility} compatibility report(s); ${recordsJson} record JSON file(s); ${sitemapUrls} sitemap URL(s).`
   );
 }

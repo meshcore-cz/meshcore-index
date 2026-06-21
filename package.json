@@ -5,12 +5,15 @@
   "type": "module",
   "scripts": {
     "build:data": "node scripts/build-data.js",
+    "build:schema": "node scripts/build-schemas.js",
     "brand": "bash scripts/generate-brand-assets.sh",
     "changelogs": "node scripts/update-changelogs.js",
+    "enrich:firmwares": "node scripts/enrich-firmwares.js",
     "predev": "node scripts/build-data.js",
     "dev": "vite dev",
     "prebuild": "node scripts/build-data.js",
     "build": "vite build",
+    "postbuild": "node scripts/build-schemas.js",
     "preview": "vite preview",
     "validate": "node scripts/validate.js",
     "test": "node scripts/validate.js"

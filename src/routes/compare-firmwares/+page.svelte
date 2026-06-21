@@ -32,6 +32,9 @@
 
   const DASH = '—';
   const txt = (v) => (v == null || v === '' || v === 'unknown' ? DASH : String(v));
+  const numberFmt = new Intl.NumberFormat('en');
+  const num = (v) => (Number.isFinite(v) ? numberFmt.format(v) : DASH);
+  const yesNo = (v) => (typeof v === 'boolean' ? (v ? 'Yes' : 'No') : DASH);
 
   const FRAMEWORK_LABELS = { arduino: 'Arduino', zephyr: 'Zephyr', 'esp-idf': 'ESP-IDF', other: 'Other' };
   const LANGUAGE_LABELS = { cpp: 'C++', c: 'C', rust: 'Rust' };
@@ -63,7 +66,23 @@
     { label: 'Latest version', get: (f) => txt(f.latest_version) },
     { label: 'Released', get: (f) => txt(f.released) },
     { label: 'Node roles', get: (f) => (f.roles ?? []).join(', ') || DASH },
-    { label: 'Devices', get: (f) => String(f.deviceCount) }
+    { label: 'Devices', get: (f) => String(f.deviceCount) },
+    { label: 'GitHub stars', get: (f) => num(f.popularity?.githubStars) },
+    { label: 'Forks', get: (f) => num(f.popularity?.githubForks) },
+    { label: 'Watchers', get: (f) => num(f.popularity?.githubWatchers) },
+    { label: 'Open issues', get: (f) => num(f.popularity?.githubOpenIssues) },
+    { label: 'Contributors', get: (f) => num(f.popularity?.githubContributors) },
+    { label: 'Release downloads', get: (f) => num(f.popularity?.releaseDownloads) },
+    { label: 'Latest downloads', get: (f) => num(f.popularity?.latestReleaseDownloads) },
+    { label: 'Popularity checked', get: (f) => txt(f.popularity?.lastChecked) },
+    { label: 'Source available', get: (f) => yesNo(f.verification?.sourceAvailable) },
+    { label: 'Releases available', get: (f) => yesNo(f.verification?.releasesAvailable) },
+    { label: 'Signed releases', get: (f) => yesNo(f.verification?.signedReleases) },
+    { label: 'Reproducible builds', get: (f) => yesNo(f.verification?.reproducibleBuilds) },
+    { label: 'CI builds', get: (f) => yesNo(f.verification?.ciBuilds) },
+    { label: 'Official flasher', get: (f) => yesNo(f.verification?.officialFlasher) },
+    { label: 'Documentation', get: (f) => yesNo(f.verification?.hasDocumentation) },
+    { label: 'Verification checked', get: (f) => txt(f.verification?.lastChecked) }
   ];
 
   let scalarRows = $derived(

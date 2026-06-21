@@ -15,11 +15,43 @@
 
   const FRAMEWORK_LABELS = { arduino: 'Arduino', zephyr: 'Zephyr', 'esp-idf': 'ESP-IDF', other: 'Other' };
   const LANGUAGE_LABELS = { cpp: 'C++', c: 'C', rust: 'Rust' };
+  const POPULARITY_LABELS = {
+    githubStars: 'GitHub stars',
+    githubForks: 'Forks',
+    githubWatchers: 'Watchers',
+    githubOpenIssues: 'Open issues',
+    githubContributors: 'Contributors',
+    releaseDownloads: 'Release downloads',
+    latestReleaseDownloads: 'Latest downloads'
+  };
+  const VERIFICATION_LABELS = {
+    sourceAvailable: 'Source available',
+    releasesAvailable: 'Releases available',
+    signedReleases: 'Signed releases',
+    reproducibleBuilds: 'Reproducible builds',
+    ciBuilds: 'CI builds',
+    officialFlasher: 'Official flasher',
+    hasDocumentation: 'Documentation'
+  };
+  const numberFmt = new Intl.NumberFormat('en');
+  const formatNumber = (value) => numberFmt.format(value);
+  const boolLabel = (value) => (value ? 'Yes' : 'No');
+  const boolTone = (value) => (value ? 'border-accent/40 bg-accent/10 text-accent' : 'border-edge bg-elev2 text-dim');
   const runtimeLabel = $derived(
     [FRAMEWORK_LABELS[fw.runtime?.framework] ?? fw.runtime?.framework,
      LANGUAGE_LABELS[fw.runtime?.language] ?? fw.runtime?.language]
       .filter(Boolean)
       .join(' · ')
+  );
+  let popularityEntries = $derived(
+    Object.entries(POPULARITY_LABELS)
+      .map(([key, label]) => ({ key, label, value: fw.popularity?.[key] }))
+      .filter((item) => Number.isFinite(item.value))
+  );
+  let verificationEntries = $derived(
+    Object.entries(VERIFICATION_LABELS)
+      .map(([key, label]) => ({ key, label, value: fw.verification?.[key] }))
+      .filter((item) => typeof item.value === 'boolean')
   );
 
   // Lineage: resolve the upstream firmware to a catalog entry (so we can link)
@@ -139,6 +171,53 @@
     {#if fw.license}<div><dt class="text-[0.72rem] tracking-wide text-dim uppercase">License</dt><dd class="mt-1 text-[0.95rem]">{fw.license}</dd></div>{/if}
   </div>
 </dl>
+
+{#if popularityEntries.length || verificationEntries.length || fw.verification?.notes?.length}
+  <section class="mb-7 grid gap-4 lg:grid-cols-2">
+    {#if popularityEntries.length}
+      <div class="rounded-xl border border-edge bg-elev p-[1.1rem]">
+        <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2 border-b border-edge pb-1.5">
+          <h2 class="text-[1.1rem] font-semibold">Popularity</h2>
+          {#if fw.popularity?.lastChecked}<span class="text-[0.72rem] text-dim">checked {fw.popularity.lastChecked}</span>{/if}
+        </div>
+        <dl class="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-x-4 gap-y-3">
+          {#each popularityEntries as item}
+            <div>
+              <dt class="text-[0.72rem] tracking-wide text-dim uppercase">{item.label}</dt>
+              <dd class="mt-1 text-[0.95rem] font-medium">{formatNumber(item.value)}</dd>
+            </div>
+          {/each}
+        </dl>
+      </div>
+    {/if}
+
+    {#if verificationEntries.length || fw.verification?.notes?.length}
+      <div class="rounded-xl border border-edge bg-elev p-[1.1rem]">
+        <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2 border-b border-edge pb-1.5">
+          <h2 class="text-[1.1rem] font-semibold">Verification</h2>
+          {#if fw.verification?.lastChecked}<span class="text-[0.72rem] text-dim">checked {fw.verification.lastChecked}</span>{/if}
+        </div>
+        {#if verificationEntries.length}
+          <dl class="flex flex-wrap gap-1.5">
+            {#each verificationEntries as item}
+              <div class="rounded-full border px-2.5 py-1 text-[0.8rem] {boolTone(item.value)}">
+                <dt class="inline">{item.label}</dt>
+                <dd class="ml-1 inline font-medium">{boolLabel(item.value)}</dd>
+              </div>
+            {/each}
+          </dl>
+        {/if}
+        {#if fw.verification?.notes?.length}
+          <ul class="mt-3 space-y-1 text-[0.85rem] text-dim">
+            {#each fw.verification.notes as note}
+              <li>{note}</li>
+            {/each}
+          </ul>
+        {/if}
+      </div>
+    {/if}
+  </section>
+{/if}
 
 {#if fw.capabilities}
   <section class="mb-7">

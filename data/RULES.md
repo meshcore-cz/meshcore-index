@@ -7,19 +7,21 @@ human or agent.
 - **Machine contracts:** [`../schema/`](../schema/) (JSON Schema sources).
 - **This file:** the conventions and judgement calls that the schema can't enforce.
 
-All site content is YAML under `data/`. The app reads a compiled
-`src/lib/generated/data.json`, built from that YAML.
+Authored site content is YAML under `data/`. Generated enrichment overlays may
+live in sibling `data.json` files; the app reads a compiled
+`src/lib/generated/data.json`, built from both layers.
 
 ## Validate your changes
 
 ```bash
 npm test              # validate all YAML against JSON Schema + referential checks
-npm run build:data    # regenerate data.json and static/schema/*.json
+npm run build:data    # regenerate data.json and generated record JSON
 ```
 
 Run **`npm test`** after every data change. `build:data` runs automatically via
-the dev/build hooks, but run it by hand after changing `schema/` or
-`data/globals.yaml`.
+the dev/build hooks, but run it by hand after changing `data/globals.yaml`.
+Schema JSON is published into `build/schema/` by `npm run build` / `npm run build:schema`;
+do not commit generated schema JSON under `static/`.
 
 ## Directory layout
 
@@ -28,6 +30,7 @@ data/devices/<id>/device.yaml    # id = directory name (kebab-case), not in YAML
 data/devices/<id>/<image>.svg    # thumbnail (optional)
 data/devices/<id>/datasheet.pdf  # vendor spec PDF (optional, immutable copy)
 data/firmwares/<id>/firmware.yaml
+data/firmwares/<id>/data.json    # generated overlay, e.g. GitHub popularity (optional)
 data/vendors/<id>/vendor.yaml
 data/globals.yaml                # MCU/radio/display/GNSS/frequency catalog
 ```

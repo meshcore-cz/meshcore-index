@@ -13,6 +13,23 @@ const ajv = new Ajv({ allErrors: true });
 const errors = [];
 const err = (where, msg) => errors.push(`${where}: ${msg}`);
 
+function isPlainObject(value) {
+  return value != null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function stripOverlayMeta(value) {
+  if (!isPlainObject(value)) return {};
+  return Object.fromEntries(Object.entries(value).filter(([key]) => !key.startsWith('$')));
+}
+
+function deepMerge(base, overlay) {
+  const out = { ...base };
+  for (const [key, value] of Object.entries(overlay)) {
+    out[key] = isPlainObject(out[key]) && isPlainObject(value) ? deepMerge(out[key], value) : value;
+  }
+  return out;
+}
+
 function loadSchema(name) {
   return ajv.compile(load(readFileSync(join(root, 'schema', `${name}.yaml`), 'utf8')));
 }
@@ -38,6 +55,17 @@ function readCollection(kind, file) {
     } catch (e) {
       err(`${kind}/${d.name}`, `YAML parse error: ${e.message}`);
       continue;
+    }
+    const overlayPath = join(base, d.name, 'data.json');
+    if (existsSync(overlayPath)) {
+      try {
+        data = deepMerge(
+          data ?? {},
+          stripOverlayMeta(JSON.parse(readFileSync(overlayPath, 'utf8')))
+        );
+      } catch (e) {
+        err(`${kind}/${d.name}/data.json`, `JSON parse error: ${e.message}`);
+      }
     }
     out.push({ id: d.name, where: `${kind}/${d.name}`, data: data ?? {} });
   }
