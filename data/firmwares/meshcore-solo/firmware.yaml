@@ -1,16 +1,25 @@
+# Source: https://github.com/MarekZegare4/MeshCore-Solo
+# Source: https://github.com/MarekZegare4/MeshCore-Solo/releases
 name: MeshCore Solo
 type: fork
 maintainer: MarekZegare4
-description: >
-  A companion-focused MeshCore firmware fork with extended features and UI enhancements —
-  offline GPS navigation (waypoints, compass, GPX export), sensor screens, favourites dial,
-  screen lock, auto-reply bot, and a rich tools screen. Targets Seeed nRF52 boards with
-  unified BLE + USB builds.
+maintainers:
+  - name: MarekZegare4
+    url: https://github.com/MarekZegare4
+maintainerUrl: https://github.com/MarekZegare4
 repository: https://github.com/MarekZegare4/MeshCore-Solo
+website: https://marekzegare4.github.io/Solo-tools/
 license: MIT
+description: >
+  A fork of the official MeshCore companion radio firmware with extended features and UI
+  enhancements. Adds GPS navigation (waypoints, compass, trail recording with GPX export),
+  battery power-saving (hardware RX duty-cycle + adaptive power control), favourite contacts
+  dial, extended language support with native Unicode rendering, message delivery status,
+  screen lock, auto-reply bot, repeater mode with diagnostics, and more — all optimized for
+  joystick-only navigation on small displays.
 status: active
 lifecycle: active
-maturity: beta
+maturity: stable
 distribution: community
 lineage:
   kind: fork
@@ -21,47 +30,80 @@ runtime:
   language: cpp
 roles:
   - companion
+  - repeater
+  - standalone-ui
 features:
-  - Offline GPS navigation (waypoints, compass, GPX export)
-  - Navigate to waypoints, nodes, or shared locations
-  - GPS trail recording with auto-fit map and summary stats
-  - Sensor screens (temperature, humidity, pressure, luminosity, CO₂)
-  - Favourites dial — pin up to six contacts for quick access
-  - Screen lock with lock-screen data display
-  - Auto-reply bot and auto-advert
-  - Native Unicode rendering with Lemon font
-  - Metric or imperial units across the UI
-  - E-ink display support with adaptive layout and rotation
-  - Unified BLE + USB companion build
+  - Extended Unicode support with Lemon font and native input
+  - GPS navigation suite (waypoints, compass, backtrack, trail recording)
+  - GPX export via USB serial
+  - Screenshot capture over USB
+  - Favourites dial for pinned contacts
+  - Message delivery status indicators
+  - DM auto-resend and incoming deduplication
+  - Screen lock with time and sensor display
+  - Auto-reply bot with command responses
+  - Auto-advert for location sharing
+  - Battery power saving (RX duty-cycle + APC)
+  - Companion repeater mode with diagnostics
+  - Ping functionality in Nearby Nodes
+  - SOS broadcast with configurable target
+  - Quiet hours for sound suppression
+  - Mark-all-read at type level
+  - Lock-screen unread count
+  - Channel scanner home page
+  - Contact distance sorting
+  - Signal stats screen
+  - Display test pattern
+  - Power profile presets
+  - Solo Tools web app for screenshot capture and GPX export (https://marekzegare4.github.io/Solo-tools/)
 capabilities:
   protocol:
     meshcoreCompatible: true
+    rawPacketSend: true
+    rawPacketObserve: true
   transports:
     ble: true
     usbSerial: true
     nativeTcp: false
     wifiAp: false
   operations:
-    ota: false
     webFlasher: false
+    ota: false
+    bleDfu: false
+    configurationBackup: true
   networking:
-    repeater: false
+    repeater: true
     roomServer: false
     observer: false
+    mqtt: false
     kissModem: false
   hardware:
     gps: true
     display: true
     sensors: true
-    lowPowerRx: false
+    lowPowerRx: true
+changelog:
+  source: github
+  repo: MarekZegare4/MeshCore-Solo
 devices:
   - id: wio-tracker-l1
     status: supported
+    target: wio-tracker-l1
+    platformio_board: seeed-wio-tracker-l1
+    notes: OLED variant (SSD1306/SH1106 128x64)
   # Source: alias of wio-tracker-l1, same board — see README supported devices table
   - id: wio-tracker-l1-pro
     status: supported
+    target: wio-tracker-l1
+    platformio_board: seeed-wio-tracker-l1
+    notes: OLED variant — same firmware target as wio-tracker-l1
   - id: wio-tracker-l1-eink
     status: supported
-    notes: E-ink variant with GxEPD2 250×122 panel.
+    target: wio-tracker-l1-eink
+    platformio_board: seeed-wio-tracker-l1
+    notes: E-ink variant (GxEPD2 250x122)
   - id: gatiot-gat562-30s
     status: supported
+    target: gat562_30s_mesh_kit
+    platformio_board: rak4631
+    notes: GAT562 30S Mesh Kit

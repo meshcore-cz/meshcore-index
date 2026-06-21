@@ -1,15 +1,23 @@
+# Source: https://github.com/TogeriX-hub/FieldMesh
+# Source: https://github.com/TogeriX-hub/FieldMesh/releases
 name: FieldMesh
 type: fork
-maintainer: TogeriX-hub
-description: >
-  A MeshCore firmware fork for outdoor use — GPS tracking, off-grid mode with client repeat,
-  SOS alerts, and standalone capabilities. Features message history browsing on-device, text
-  input and send via joystick (Wio Tracker L1), and headless device support.
+maintainer: TogeriX-hub (Tobias Guertler)
+maintainers:
+  - name: TogeriX-hub
+    url: https://github.com/TogeriX-hub
 repository: https://github.com/TogeriX-hub/FieldMesh
+website: https://www.tobiasguertler.de/blog/en/fieldmesh
 license: MIT
+description: >
+  A MeshCore firmware fork optimized for outdoor use — festivals, hiking, off-grid events.
+  Adds automatic GPS advertising, dedicated tracking page with distance calculation, Off-Grid
+  mode with legal frequency defaults and one-press toggle, SOS system with buzzer alarms,
+  message history with RAM ring buffer, and text input/send on joystick-equipped devices.
+  Designed to be field-ready: put it in your backpack and trust it's doing its job.
 status: active
 lifecycle: active
-maturity: beta
+maturity: stable
 distribution: community
 lineage:
   kind: fork
@@ -21,43 +29,76 @@ runtime:
 roles:
   - companion
   - repeater
+  - standalone-ui
 features:
-  - GPS tracking
-  - Off-grid mode with client repeat
-  - SOS alerts
-  - On-device message history (up to 32 entries)
+  - Automatic GPS advertising (zero-hop, every 5 minutes)
+  - Dedicated tracking page with Haversine distance calculation
+  - Off-Grid mode with Client Repeat on separate legal frequencies
+  - One-press Off-Grid toggle (menu or 5x button press on headless devices)
+  - SOS system with two-step confirmation and buzzer alarm
+  - Message history (RAM ring buffer, up to 32 entries)
   - Text input and send via joystick (Wio Tracker L1)
-  - Headless device support (no display, single button)
-  - Standalone UI capabilities
+  - Online node counter on home screen
+  - Mode indicators (GPS-SHARE, OFF-GRID)
+  - Headless device support (T1000-E, RAK WiseMesh TAG)
+  - Forced buzzer feedback for all actions on headless devices
+  - Splash screen with version info and FieldMesh branding
+  - Backlight fixes for various displays
 capabilities:
   protocol:
     meshcoreCompatible: true
+    rawPacketSend: true
+    rawPacketObserve: true
   transports:
     ble: true
     usbSerial: true
     nativeTcp: false
     wifiAp: false
   operations:
-    ota: false
     webFlasher: false
+    ota: false
+    bleDfu: false
+    configurationBackup: true
   networking:
     repeater: true
     roomServer: false
     observer: false
+    mqtt: false
     kissModem: false
   hardware:
     gps: true
     display: true
     sensors: false
     lowPowerRx: false
+changelog:
+  source: github
+  repo: TogeriX-hub/FieldMesh
 devices:
   # Source: README tested-on table — Elecrow ThinkNode M1 (E-Ink)
   - id: thinknode-m1
     status: supported
+    target: thinknode_m1
+    platformio_board: thinknode_m1
+    notes: E-Ink display, single button; primary development target
   # Source: README tested-on table — Seeed Wio Tracker L1 (OLED, joystick)
   - id: wio-tracker-l1
     status: supported
+    target: wio-tracker-l1
+    platformio_board: seeed-wio-tracker-l1
+    notes: OLED display (SSD1306/SH1106 128x64), joystick; text input and send supported
+  - id: wio-tracker-l1-eink
+    status: supported
+    target: wio-tracker-l1-eink
+    platformio_board: seeed-wio-tracker-l1
+    notes: E-ink variant (GxEPD2 250x122)
   # Source: README tested-on table — Seeed T1000-E (headless)
   - id: sensecap-t1000e
     status: supported
-    notes: Primary headless reference device.
+    target: t1000-e
+    platformio_board: tracker-t1000-e
+    notes: Headless device (no display, single button); primary headless reference
+  - id: rak-wismesh-tag
+    status: supported
+    target: rak_wismesh_tag
+    platformio_board: rak4631
+    notes: Headless device; contributions welcome
