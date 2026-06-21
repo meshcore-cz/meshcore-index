@@ -39,6 +39,7 @@ hardware:
       width: 540
       height: 960
     colors: grayscale
+    touch: true
   gnss:
     status: none
   power:

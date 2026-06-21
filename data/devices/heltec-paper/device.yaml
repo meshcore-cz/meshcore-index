@@ -62,6 +62,7 @@ hardware:
       width: 88
       height: 88
       depth: 25
+    weightG: 60
   environmental:
     operatingTempC:
       min: 0

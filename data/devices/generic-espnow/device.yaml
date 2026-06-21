@@ -4,13 +4,16 @@ kind: generic-build
 lifecycle: active
 familyId: generic-espnow
 official: true
+transports:
+  - wifi
 hardware:
   mcu:
     model: esp32-c3
   display:
-    status: unknown
+    status: none
   gnss:
-    status: unknown
+    status: none
 interfaces:
   wifi:
     status: present
+    standard: 802.11 b/g/n

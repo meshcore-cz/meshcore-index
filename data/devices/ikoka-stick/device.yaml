@@ -1,4 +1,5 @@
 # Source: meshcore-dev/flasher.meshcore.io config.json
+# Source: https://github.com/ndoo/ikoka-stick-meshtastic-device
 name: Ikoka Stick
 vendorId: ikoka
 kind: product
@@ -6,29 +7,53 @@ lifecycle: active
 familyId: ikoka-stick
 image: ikoka_stick.svg
 official: true
+aliases:
+  - Ikoka Stick Meshtastic Device
 roles:
   - companion
   - repeater
   - room-server
+  - standalone-ui
 transports:
   - ble
   - usb
 hardware:
   mcu:
     model: nrf52
+    flashMb: 1
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - '433'
+        - '868'
+        - '915'
+        - '923'
+      txPowerDbm: 33
+      antenna: IPEX-1.0
   display:
-    status: unknown
+    status: present
+    technology: oled
+    controller: SSD1306
+    size: 0.96
+    colors: monochrome
   gnss:
-    status: unknown
+    status: none
+  input:
+    - type: button
+      description: D0 button
+  power:
+    batterySupported: true
+    charging: true
 interfaces:
   usb:
-    connector: unknown
+    connector: USB-C
     capabilities:
       - power
       - serial
       - flashing
   bluetooth:
-    version: unknown
+    version: '5.0'
     ble: true
   wifi:
-    status: unknown
+    status: none

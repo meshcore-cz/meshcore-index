@@ -265,7 +265,7 @@ devices:
     status: supported
     target: rak3112
     platformio_board: esp32-s3-devkitc-1
-  - id: rak-3401
+  - id: rak-13302
     status: supported
     target: rak3401
     platformio_board: rak3401

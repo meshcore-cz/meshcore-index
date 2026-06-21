@@ -18,6 +18,7 @@ roles:
   - companion
   - repeater
   - room-server
+  - standalone-ui
 transports:
   - ble
   - usb
@@ -36,10 +37,20 @@ hardware:
       txPowerDbm: 28
       antenna: IPEX-1.0
   display:
-    status: none
+    status: present
+    technology: display
+    controller: ST7735S
+    size: 0.96
+    resolution:
+      width: 80
+      height: 160
+    colors: color
   gnss:
     status: present
     chip: UC6580
+  input:
+    - type: button
+    - type: button
   power:
     batterySupported: true
     batteryBuiltIn: false

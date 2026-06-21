@@ -1,20 +1,36 @@
 # Source: meshcore-dev/MeshCore variants/rak11310/platformio.ini
+# Source: https://docs.rakwireless.com/product-categories/wisblock/rak11310/datasheet/
 name: RAK 11310
 vendorId: rak
 kind: product
 lifecycle: active
 familyId: rak-11310
 official: true
+transports:
+  - usb
 hardware:
   mcu:
     model: rp2040
   radios:
     - technology: lora
       chip: sx1262
+      frequencyVariants:
+        - '865'
+        - '868'
+        - '915'
+        - '920'
+        - '923'
+      antenna: IPEX-1.0
   display:
-    status: unknown
+    status: none
   gnss:
-    status: unknown
+    status: none
 interfaces:
+  usb:
+    connector: unknown
+    capabilities:
+      - power
+      - serial
+      - flashing
   wifi:
-    status: unknown
+    status: none

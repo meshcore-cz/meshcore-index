@@ -1,4 +1,5 @@
 # Source: meshcore-dev/MeshCore variants/station_g3_esp32/platformio.ini + boards/station-g3-esp32.json
+# Source: https://wiki.bqvoy.com/en/devkits/station-g3
 name: UnitEng Station G3 ESP32
 vendorId: uniteng
 kind: product
@@ -6,13 +7,69 @@ lifecycle: active
 familyId: uniteng-station-g3
 product_url: https://wiki.bqvoy.com/en/devkits/station-g3
 official: true
+roles:
+  - companion
+  - repeater
+  - room-server
+  - standalone-ui
+transports:
+  - ble
+  - usb
+  - wifi
 hardware:
   mcu:
     model: esp32-s3
+    flashMb: 16
+    psramMb: 8
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - '868'
+        - '915'
+      txPowerDbm: 35
+      antenna: SMA
   display:
-    status: unknown
+    status: present
+    technology: oled
+    size: 1.3
+    colors: monochrome
   gnss:
-    status: unknown
+    status: none
+  input:
+    - type: button
+      description: Program
+    - type: button
+      description: Firmware Download
+    - type: button
+      description: Restart
+  physical:
+    dimensionsMm:
+      width: 110
+      height: 58
+      depth: 22
+    weightG: 87.5
+  expansion:
+    - type: grove
+      count: 2
+      interfaces:
+        - I2C
+        - GPIO
+        - UART
+    - type: qwiic
+      count: 1
+      interfaces:
+        - I2C
 interfaces:
   wifi:
     status: present
+    standard: 802.11 b/g/n
+  usb:
+    connector: USB-C
+    capabilities:
+      - power
+      - serial
+      - flashing
+  bluetooth:
+    version: '5.0'
+    ble: true

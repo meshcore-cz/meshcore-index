@@ -43,6 +43,7 @@ hardware:
       width: 17.78
       height: 17.78
       depth: 2.8
+    weightG: 2
 interfaces:
   bluetooth:
     version: '5.0'

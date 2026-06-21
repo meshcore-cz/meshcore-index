@@ -1,4 +1,5 @@
 # Source: meshcore-dev/MeshCore variants/rak3x72/platformio.ini + boards/rak3172.json
+# Source: https://docs.rakwireless.com/product-categories/wisduo/rak3172-module/datasheet/
 name: RAK 3x72
 vendorId: rak
 kind: product
@@ -9,13 +10,22 @@ official: true
 hardware:
   mcu:
     model: stm32wl
+    flashMb: 0.25
   radios:
-    - technology: other
+    - technology: lora
       chip: stm32wl
+      frequencyVariants:
+        - '433'
+        - '470'
+        - '865'
+        - '868'
+        - '915'
+        - '920'
+        - '923'
   display:
-    status: unknown
+    status: none
   gnss:
-    status: unknown
+    status: none
 interfaces:
   wifi:
-    status: unknown
+    status: none

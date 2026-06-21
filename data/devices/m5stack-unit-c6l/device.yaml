@@ -12,6 +12,11 @@ description: >-
   ESP32-C6 LoRa unit with an onboard SX1262 radio, OLED status display, RGB
   indicator, buzzer, and a user button. The official documentation highlights
   Wi-Fi 6, Meshtastic support, and the pair of RP-SMA antenna connectors.
+roles:
+  - companion
+  - repeater
+  - room-server
+  - standalone-ui
 transports:
   - ble
   - usb
