@@ -1,35 +1,94 @@
-# Source: meshcore-dev/flasher.meshcore.io config.json
+# Source: https://heltec.org/project/vision-master-e290/ · https://wiki.heltec.org/docs/devices/open-source-hardware/esp32-series/vision-master/vison-master-e290/
 name: Heltec Vision Master E290
 vendorId: heltec
-kind: product
+kind: dev-board
 lifecycle: active
 familyId: heltec-vision-master-e290
+aliases:
+  - Vision Master E290
+  - HT-VME290
 image: heltec_e290.svg
+datasheet: datasheet.pdf
 official: true
+product_url: https://heltec.org/project/vision-master-e290/
+price:
+  amount: 21
+  currency: USD
+  asOf: 2026-06
+description: >-
+  ESP32-S3R8 E-Ink development board with an optional SX1262 LoRa module,
+  2×20-pin Raspberry Pi-compatible female header, and a QuickLink sensor
+  port. Compatible with Meshtastic/MeshCore; LoRa is a build-time option, not
+  present on every SKU.
 roles:
   - companion
   - repeater
   - room-server
+  - standalone-ui
 transports:
   - ble
   - usb
+  - wifi
 hardware:
   mcu:
-    model: esp32
+    model: esp32-s3
+    flashMb: 16
+    psramMb: 8
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - '470'
+        - '868'
+        - '915'
+      txPowerDbm: 21
+      antenna: IPEX-1.0
   display:
     status: present
     technology: e-paper
+    size: 2.9
+    resolution:
+      width: 296
+      height: 128
+    colors: monochrome
   gnss:
-    status: unknown
+    status: none
+  power:
+    batterySupported: true
+    batteryBuiltIn: false
+    batteryConnector: SH1.25-2
+    charging: true
+  expansion:
+    - type: header-2.54
+      count: 2
+      pins: 20
+    - type: quicklink-sh2.0-4p
+      count: 1
+      interfaces:
+        - I2C
+        - GPIO
+        - UART
+  enclosure:
+    builtIn: false
+  physical:
+    dimensionsMm:
+      width: 87.96
+      height: 36.63
+      depth: 12
+  environmental:
+    operatingTempC:
+      min: -20
+      max: 70
 interfaces:
   usb:
-    connector: unknown
+    connector: USB-C
     capabilities:
       - power
       - serial
       - flashing
   bluetooth:
-    version: unknown
+    version: '5.0'
     ble: true
   wifi:
     status: present
+    standard: 802.11 b/g/n

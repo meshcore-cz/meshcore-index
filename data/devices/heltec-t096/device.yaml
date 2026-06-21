@@ -1,25 +1,63 @@
-# Source: meshcore-dev/MeshCore variants/heltec_t096/platformio.ini + boards/heltec_t096.json
+# Source: https://heltec.org/project/t096/
 name: Heltec T096
 vendorId: heltec
 kind: product
 lifecycle: active
 familyId: heltec-t096
-product_url: https://heltec.org/
+aliases:
+  - Mesh Node T096
+product_url: https://heltec.org/project/t096/
+datasheet: datasheet.pdf
 official: true
+description: >-
+  Low-power nRF52840 + SX1262 LoRa development board with integrated GNSS,
+  Bluetooth LE, USB-C power/serial, and optional solar input. It is built for
+  Meshtastic, MeshCore and LoRaWAN applications with external IPEX LoRa and GNSS
+  antennas.
+roles:
+  - companion
+  - repeater
+  - room-server
+transports:
+  - ble
+  - usb
 hardware:
   mcu:
-    model: nrf52
+    model: nrf52840
   radios:
     - technology: lora
       chip: sx1262
+      frequencyVariants:
+        - '433'
+        - '470'
+        - '868'
+        - '915'
+      txPowerDbm: 28
+      antenna: IPEX-1.0
   display:
-    status: present
-    technology: unknown
+    status: none
   gnss:
-    status: unknown
+    status: present
+    chip: UC6580
+  power:
+    batterySupported: true
+    batteryBuiltIn: false
+    charging: true
+    solarInput: true
+    batteryConnector: SH1.25-2
+  expansion:
+    - type: header-2.54
+      count: 2
+      pins: 13
 interfaces:
+  usb:
+    connector: USB-C
+    capabilities:
+      - power
+      - serial
+      - flashing
   bluetooth:
-    version: unknown
+    version: '5.0'
     ble: true
   wifi:
-    status: unknown
+    status: none

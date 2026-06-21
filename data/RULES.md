@@ -84,6 +84,20 @@ unique (`Heltec V3`, `LilyGo T-Deck`, `Heltec T190`).
 - **`kind`**: `dev-board` for bare development boards; `product` for finished
   handhelds/enclosed products; `kit` for bundled kits (see `heltec-v4-exp`).
 
+### Description
+
+Keep **`description` short** — one or two sentences (~200–350 characters), like
+the hero blurb on the device page. Say **what the product is** and one or two
+distinguishing hooks (outdoor node, kit bundle, optional LoRa SKU).
+
+**Do not repeat structured fields** — battery capacity, IP rating, connector
+types, display size, antenna ports, and USB details belong in the YAML spec
+blocks, not in prose.
+
+**Good examples:** `wio-tracker-l1`, `heltec-v3`, `heltec-t190`
+**Too long:** restating expansion connectors, mAh, certifications, or antenna
+ports already captured elsewhere.
+
 ### URLs & datasheets
 
 - `product_url`: vendor **marketing/product page** (external, may change).
@@ -186,6 +200,7 @@ globals; lookup prefers the **model** entry over the family.
 - [ ] `npm test` passes
 - [ ] Copied structure from a similar enriched device — not a minimal stub
 - [ ] Short `name`; long titles in `aliases`; `kind` set correctly
+- [ ] `description` is 1–2 sentences (~200–350 chars); no duplicate of structured specs
 - [ ] Datasheet PDF downloaded + `datasheet: datasheet.pdf` (when a vendor PDF exists)
 - [ ] No `# Datasheet:` URL comments
 - [ ] MCU flash/PSRAM, radio bands, display specs, USB connector, physical dims filled from datasheet

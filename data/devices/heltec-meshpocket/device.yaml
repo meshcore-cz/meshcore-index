@@ -1,39 +1,76 @@
-# Source: meshcore-dev/flasher.meshcore.io config.json
+# Source: https://heltec.org/project/meshpocket/
+# Source: https://resource.heltec.cn/download/MeshPocket/datasheet
 name: Heltec MeshPocket
 vendorId: heltec
 kind: product
 lifecycle: active
 familyId: heltec-meshpocket
+aliases:
+  - MeshPocket Qi2
+  - MeshPocket Power Bank
 image: heltec_meshpocket.svg
+datasheet: datasheet.pdf
 official: true
+product_url: https://heltec.org/project/meshpocket/
+price:
+  amount: 60
+  currency: USD
+  asOf: 2026-06
+description: >-
+  Heltec MeshPocket is a compact nRF52840 + SX1262 LoRa node integrated into a
+  power bank with Qi2 magnetic wireless charging, dual USB-C (5V input/output),
+  and a small LCD display. Designed for Meshtastic and MeshCore portable mesh
+  networking with 4000+ mAh battery and low-power BLE companion mode.
 roles:
   - companion
   - repeater
   - room-server
+  - standalone-ui
 transports:
   - ble
   - usb
 hardware:
   mcu:
-    model: nrf52
+    model: nrf52840
+    flashMb: 1
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - '433'
+        - '868'
+        - '915'
+      txPowerDbm: 20
+      antenna: IPEX-1.0
   display:
     status: present
     technology: display
+    size: 0.65
+    resolution:
+      width: 64
+      height: 128
+    colors: monochrome
   gnss:
-    status: unknown
+    status: none
   power:
     batterySupported: true
+    batteryBuiltIn: true
+    batteryCapacityMah: 4000
     charging: true
-    solarInput: false
+    pmic: BQ25970
+  expansion:
+    - type: header-2.54
+      count: 1
+      pins: 10
 interfaces:
   usb:
-    connector: unknown
+    connector: USB-C
     capabilities:
       - power
       - serial
       - flashing
   bluetooth:
-    version: unknown
+    version: '5.0'
     ble: true
   wifi:
-    status: unknown
+    status: none

@@ -1,4 +1,4 @@
-# Source: meshcore-dev/flasher.meshcore.io config.json
+# Source: https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series/blob/master/docs/en/t_beam_supreme/t_beam_supreme_hw.md · https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series/blob/master/schematic/T-Beam-S3-Supreme/T-Beam-S3-Supreme-V3.1.pdf
 name: LilyGo T-Beam Supreme (SX1262)
 vendorId: lilygo
 kind: product
@@ -7,39 +7,88 @@ familyId: lilygo-t-beam
 revision: supreme
 aliases:
   - T-Beam Supreme
+  - T-Beam S3 Supreme
 image: lilygo_tbeam_supreme.svg
+datasheet: datasheet.pdf
 official: true
+product_url: https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series
+description: >-
+  ESP32-S3 + SX1262 LoRa tracker with L76K GNSS, SH1106 OLED, and a rich sensor
+  suite (QMI8658 IMU, QMC6310 magnetometer, BME280, PCF8563 RTC). AXP2101 power
+  management, M.2 socket, and micro-SD expansion. USB-C with CH9102 bridge.
 roles:
   - companion
   - repeater
   - room-server
+  - standalone-ui
 transports:
   - ble
   - usb
+  - wifi
 hardware:
   mcu:
-    model: esp32
+    model: esp32-s3
+    flashMb: 8
+    psramMb: 8
   radios:
     - technology: lora
       chip: sx1262
+      frequencyVariants:
+        - '868'
+        - '915'
+      txPowerDbm: 22
+      antenna: IPEX-1.0
   display:
-    status: unknown
+    status: present
+    technology: oled
+    controller: SH1106
+    size: 1.13
+    resolution:
+      width: 128
+      height: 64
+    colors: monochrome
   gnss:
     status: present
-    chip: unknown
+    chip: L76K
+  input:
+    - type: button
+      description: PWR/PMU button (power on/off, customizable)
+    - type: button
+      description: BOOT button (boot mode, customizable)
   power:
     batterySupported: true
+    batteryBuiltIn: false
     charging: true
-    solarInput: false
+    pmic: AXP2101
+  expansion:
+    - type: M.2
+      count: 1
+      interfaces:
+        - USB
+        - UART
+        - I2C
+        - GPIO
+    - type: qwiic
+      count: 1
+      interfaces:
+        - I2C
+    - type: micro-SD
+      count: 1
+  environmental:
+    operatingTempC:
+      min: -40
+      max: 85
 interfaces:
   usb:
-    connector: unknown
+    connector: USB-C
+    bridge: CH9102
     capabilities:
       - power
       - serial
       - flashing
   bluetooth:
-    version: unknown
+    version: '5.0'
     ble: true
   wifi:
     status: present
+    standard: 802.11 b/g/n

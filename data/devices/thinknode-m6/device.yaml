@@ -1,11 +1,24 @@
-# Source: meshcore-dev/flasher.meshcore.io config.json
+# Source: https://www.elecrow.com/thinknode-m6-outdoor-solar-power-for-meshtastic-powered-by-nrf52840-supports-gps.html · https://www.elecrow.com/pub/wiki/ThinkNode_M6_Outdoor_Solar_Power_for_Meshtastic_Powered_By_nRF52840_Supports_GPS.html
 name: Elecrow ThinkNode M6
 vendorId: elecrow
 kind: product
 lifecycle: active
 familyId: elecrow-elecrow-thinknode-m6
+aliases:
+  - ThinkNode M6
+  - ThinkNode M6 Outdoor Solar Power
 image: thinknode_m6.svg
+datasheet: datasheet.pdf
 official: true
+product_url: https://www.elecrow.com/thinknode-m6-outdoor-solar-power-for-meshtastic-powered-by-nrf52840-supports-gps.html
+price:
+  amount: 80
+  currency: USD
+  asOf: 2026-06
+description: >-
+  IP65 outdoor solar Meshtastic/MeshCore node with nRF52840, SX1262 LoRa, and
+  L76K GPS. Integrated 6W panel and ~7000 mAh dual-18650 pack; BLE
+  configuration only — no on-device display.
 roles:
   - companion
   - repeater
@@ -15,20 +28,64 @@ transports:
   - usb
 hardware:
   mcu:
-    model: nrf52
+    model: nrf52840
+    flashMb: 1
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - '868'
+        - '915'
+      antenna: RP-SMA
   display:
-    status: unknown
+    status: none
   gnss:
-    status: unknown
+    status: present
+    chip: L76K
+  input:
+    - type: button
+      description: multifunction power button (power on/off, location update, GPS toggle)
+    - type: button
+      description: reset button (double-click enters DFU/programming mode)
+  power:
+    batterySupported: true
+    batteryBuiltIn: true
+    batteryCapacityMah: 7000
+    charging: true
+    solarInput: true
+    solarPanelBuiltIn: true
+    solarPanelWatts: 6
+  expansion:
+    - type: SP11 aviation
+      count: 2
+      interfaces:
+        - I2C
+        - UART
+  enclosure:
+    builtIn: true
+    ipRating: IP65
+  physical:
+    dimensionsMm:
+      width: 210
+      height: 156
+      depth: 42
+    weightG: 530
+  environmental:
+    operatingTempC:
+      min: -20
+      max: 60
+  certifications:
+    - FCC
+    - CE
 interfaces:
   usb:
-    connector: unknown
+    connector: USB-C
     capabilities:
       - power
       - serial
       - flashing
   bluetooth:
-    version: unknown
+    version: '5.4'
     ble: true
   wifi:
-    status: unknown
+    status: none

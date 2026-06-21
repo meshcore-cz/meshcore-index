@@ -1,35 +1,76 @@
-# Source: meshcore-dev/flasher.meshcore.io config.json
+# Source: https://heltec.org/project/wireless-paper/ · https://wiki.heltec.org/docs/devices/open-source-hardware/esp32-series/lora-32/wireless-paper/
 name: Heltec Wireless Paper
 vendorId: heltec
-kind: product
+kind: dev-board
 lifecycle: active
 familyId: heltec-wireless-paper
+aliases:
+  - Wireless Paper
 image: heltec_paper.svg
+datasheet: datasheet.pdf
 official: true
+product_url: https://heltec.org/project/wireless-paper/
+price:
+  amount: 16
+  currency: USD
+  asOf: 2026-06
+description: >-
+  ESP32-S3FN8 + SX1262 E-Ink development board with a 2.13-inch black-and-white
+  display. USB-C power/programming and SH1.25 battery connector; compatible
+  with Meshtastic/MeshCore.
 roles:
   - companion
   - repeater
   - room-server
+  - standalone-ui
 transports:
   - ble
   - usb
+  - wifi
 hardware:
   mcu:
-    model: esp32
+    model: esp32-s3
+    flashMb: 8
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - '470'
+        - '868'
+        - '915'
+      txPowerDbm: 21
+      antenna: IPEX-1.0
   display:
     status: present
     technology: e-paper
+    size: 2.13
+    resolution:
+      width: 250
+      height: 122
+    colors: monochrome
   gnss:
-    status: unknown
+    status: none
+  power:
+    batterySupported: true
+    batteryBuiltIn: false
+    batteryConnector: SH1.25-2
+    charging: true
+  enclosure:
+    builtIn: false
+  environmental:
+    operatingTempC:
+      min: 0
+      max: 50
 interfaces:
   usb:
-    connector: unknown
+    connector: USB-C
     capabilities:
       - power
       - serial
       - flashing
   bluetooth:
-    version: unknown
+    version: '5.0'
     ble: true
   wifi:
     status: present
+    standard: 802.11 b/g/n

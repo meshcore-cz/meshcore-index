@@ -1,35 +1,93 @@
-# Source: meshcore-dev/flasher.meshcore.io config.json
+# Source: https://heltec.org/project/vision-master-e213/ · https://wiki.heltec.org/docs/devices/open-source-hardware/esp32-series/vision-master/vison-master-e213/
 name: Heltec Vision Master E213
 vendorId: heltec
-kind: product
+kind: dev-board
 lifecycle: active
 familyId: heltec-vision-master-e213
+aliases:
+  - Vision Master E213
+  - HT-VME213
 image: heltec_e213.svg
+datasheet: datasheet.pdf
 official: true
+product_url: https://heltec.org/project/vision-master-e213/
+price:
+  amount: 20
+  currency: USD
+  asOf: 2026-06
+description: >-
+  ESP32-S3R8 E-Ink development board with an optional SX1262 LoRa module and
+  QuickLink sensor ports. Compatible with Meshtastic/MeshCore; LoRa is a
+  build-time option, not present on every SKU.
 roles:
   - companion
   - repeater
   - room-server
+  - standalone-ui
 transports:
   - ble
   - usb
+  - wifi
 hardware:
   mcu:
-    model: esp32
+    model: esp32-s3
+    flashMb: 16
+    psramMb: 8
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - '470'
+        - '868'
+        - '915'
+      txPowerDbm: 21
+      antenna: IPEX-1.0
   display:
     status: present
     technology: e-paper
+    size: 2.13
+    resolution:
+      width: 250
+      height: 122
+    colors: monochrome
   gnss:
-    status: unknown
+    status: none
+  power:
+    batterySupported: true
+    batteryBuiltIn: false
+    batteryConnector: SH1.25-2
+    charging: true
+  expansion:
+    - type: header-2.54
+      count: 2
+      pins: 18
+    - type: quicklink-sh2.0-4p
+      count: 2
+      interfaces:
+        - I2C
+        - GPIO
+        - UART
+  enclosure:
+    builtIn: false
+  physical:
+    dimensionsMm:
+      width: 66.75
+      height: 30.41
+      depth: 10
+  environmental:
+    operatingTempC:
+      min: -20
+      max: 70
 interfaces:
   usb:
-    connector: unknown
+    connector: USB-C
     capabilities:
       - power
       - serial
       - flashing
   bluetooth:
-    version: unknown
+    version: '5.0'
     ble: true
   wifi:
     status: present
+    standard: 802.11 b/g/n

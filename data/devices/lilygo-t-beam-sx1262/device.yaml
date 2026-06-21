@@ -1,44 +1,85 @@
-# Source: meshcore-dev/flasher.meshcore.io config.json
+# Source: https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series/blob/master/docs/en/t_beam/t_beam_hw.md · https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series/blob/master/schematic/LilyGo_TBeam_V1.2.pdf
 name: LilyGo T-Beam (SX1262)
 vendorId: lilygo
 kind: product
 lifecycle: active
 familyId: lilygo-t-beam
+revision: '1.2'
 aliases:
   - T-Beam SX1262
+  - T-Beam V1.2 SX1262
 image: lilygo_tbeam.svg
+datasheet: datasheet.pdf
 official: true
+product_url: https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series
+description: >-
+  ESP32 + SX1262 LoRa tracker with built-in u-blox GNSS, SSD1306 OLED, and
+  AXP2101 power management. USB-C with CH9102 bridge; external IPEX LoRa and
+  Wi-Fi antennas. Widely used for Meshtastic/MeshCore companion and repeater
+  nodes.
 roles:
   - companion
   - repeater
   - room-server
+  - standalone-ui
 transports:
   - ble
   - usb
+  - wifi
 hardware:
   mcu:
     model: esp32
+    flashMb: 4
+    psramMb: 8
   radios:
     - technology: lora
       chip: sx1262
+      frequencyVariants:
+        - '868'
+        - '915'
+      txPowerDbm: 21
+      antenna: IPEX-1.0
   display:
-    status: unknown
+    status: present
+    technology: oled
+    controller: SSD1306
+    size: 0.96
+    resolution:
+      width: 128
+      height: 64
+    colors: monochrome
   gnss:
     status: present
-    chip: unknown
+    chip: NEO-6
+  input:
+    - type: button
+      description: PWR/PMU button (power on/off, customizable)
+    - type: button
+      description: user button (IO38, customizable)
   power:
     batterySupported: true
+    batteryBuiltIn: false
     charging: true
-    solarInput: false
+    pmic: AXP2101
+  expansion:
+    - type: header-2.54
+      count: 2
+      pins: 18
+  environmental:
+    operatingTempC:
+      min: -40
+      max: 85
 interfaces:
   usb:
-    connector: unknown
+    connector: USB-C
+    bridge: CH9102
     capabilities:
       - power
       - serial
       - flashing
   bluetooth:
-    version: unknown
+    version: '4.2'
     ble: true
   wifi:
     status: present
+    standard: 802.11 b/g/n

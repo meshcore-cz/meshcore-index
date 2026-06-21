@@ -1,4 +1,4 @@
-# Source: meshcore-dev/flasher.meshcore.io config.json
+# Source: https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Datasheet/ (RAKWireless/rakwireless-docs GitHub) · https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Overview/
 name: RAK WisBlock / WisMesh (RAK 4631)
 vendorId: rak
 kind: module
@@ -7,8 +7,17 @@ familyId: rak-wisblock
 aliases:
   - RAK4631
   - WisBlock Core RAK4631
+  - RAK4631-R
 image: rak_4631.svg
+datasheet: datasheet.pdf
 official: true
+product_url: https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Overview/
+description: >-
+  WisBlock Core module pairing an nRF52840 MCU with an SX1262 LoRa
+  transceiver (RAK4630 stamp), designed to plug into a WisBlock base board
+  (RAK5005-O / RAK19007). BLE 5.0, 22 dBm LoRa output, and 2.0 µA sleep
+  current. The basis of the RAK WisMesh Base, WisMesh Tap, and Meshtastic
+  Starter Kit.
 roles:
   - companion
   - repeater
@@ -18,20 +27,45 @@ transports:
   - usb
 hardware:
   mcu:
-    model: nrf52
+    model: nrf52840
+    flashMb: 1
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - '433'
+        - '470'
+        - '868'
+        - '915'
+      txPowerDbm: 22
+      antenna: IPEX-1.0
   display:
-    status: unknown
+    status: none
   gnss:
-    status: unknown
+    status: none
+  power:
+    batterySupported: true
+    batteryBuiltIn: false
+    charging: true
+  environmental:
+    operatingTempC:
+      min: -40
+      max: 85
+  certifications:
+    - FCC
+    - CE
+    - ISED
+    - KCC
+    - RCM
 interfaces:
   usb:
-    connector: unknown
+    connector: Micro-USB
     capabilities:
       - power
       - serial
       - flashing
   bluetooth:
-    version: unknown
+    version: '5.0'
     ble: true
   wifi:
-    status: unknown
+    status: none

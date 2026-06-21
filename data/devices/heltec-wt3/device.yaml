@@ -1,5 +1,6 @@
-# Source: meshcore-dev/flasher.meshcore.io config.json
-name: Heltec Wireless Tracker
+# Source: https://heltec.org/project/wireless-tracker/
+# Source: https://resource.heltec.cn/download/Wireless_Tracker/
+name: Heltec Wireless Tracker v3
 vendorId: heltec
 kind: product
 lifecycle: active
@@ -7,9 +8,21 @@ familyId: heltec-wireless-tracker
 revision: '3'
 aliases:
   - Wireless Tracker
+  - Wireless Tracker v3
 replaces: heltec-wt2
 image: heltec_wt3.svg
+datasheet: datasheet.pdf
 official: true
+product_url: https://heltec.org/project/wireless-tracker/
+price:
+  amount: 45
+  currency: USD
+  asOf: 2026-06
+description: >-
+  Heltec Wireless Tracker v3 is an ESP32-S3 + SX1262 LoRa tracker with built-in
+  GNSS (GPS), 4000+ mAh battery, solar input, and optional display. Designed for
+  Meshtastic mesh networking, IoT tracking, and LoRaWAN applications with extended
+  outdoor operation via solar charging and efficient power management.
 roles:
   - companion
   - repeater
@@ -17,27 +30,51 @@ roles:
 transports:
   - ble
   - usb
+  - wifi
 hardware:
   mcu:
-    model: esp32
+    model: esp32-s3
+    flashMb: 8
+    psramMb: 8
+  radios:
+    - technology: lora
+      chip: sx1262
+      frequencyVariants:
+        - '433'
+        - '868'
+        - '915'
+      txPowerDbm: 22
+      antenna: IPEX-1.0
   display:
-    status: unknown
+    status: present
+    technology: oled
+    size: 0.96
+    resolution:
+      width: 128
+      height: 64
+    colors: monochrome
   gnss:
     status: present
-    chip: unknown
+    chip: L76K
   power:
     batterySupported: true
+    batteryCapacityMah: 4000
     charging: true
-    solarInput: false
+    solarInput: true
+    pmic: AXP2101
+  expansion:
+    - type: header-2.54
+      count: 1
+      pins: 12
 interfaces:
   usb:
-    connector: unknown
+    connector: USB-C
     capabilities:
       - power
       - serial
       - flashing
   bluetooth:
-    version: unknown
+    version: '5.0'
     ble: true
   wifi:
     status: present

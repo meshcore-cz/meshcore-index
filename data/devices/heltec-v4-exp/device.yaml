@@ -17,12 +17,10 @@ price:
   currency: USD
   asOf: 2026-06
 description: >-
-  Complete Heltec V4 kit with aluminum/PC enclosure and 320×240 touch-screen
-  front panel for Meshtastic/MeshCore handheld use. Includes V4 board, expansion
-  carrier, and SMA LoRa antenna. Optional L76K GNSS module and 2800 mAh 18650
-  flat-top battery at purchase. DA217 accelerometer on expansion board; B2B
-  expansion socket. MeshCore touch firmware provides display UI; full touch
-  input support is still in development.
+  Heltec V4 kit with aluminum/PC enclosure and 320×240 touch front panel for
+  Meshtastic/MeshCore handheld use. V4 board, expansion carrier, and LoRa
+  antenna included; GNSS module and 18650 optional at purchase. MeshCore touch
+  UI available; full touch input still in development.
 roles:
   - companion
   - repeater
