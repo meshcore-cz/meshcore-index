@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
   import { base } from '$app/paths';
   import { page } from '$app/stores';
+  import { env } from '$env/dynamic/public';
   import { generatedAt } from '$lib/data.js';
   import { REPO_URL, SITE_NAME } from '$lib/seo.js';
   import { searchOpen } from '$lib/search.js';
@@ -35,6 +36,7 @@
         timeZoneName: 'short'
       })
     : null;
+  const plausibleScriptUrl = env.PUBLIC_PLAUSIBLE_SCRIPT_URL;
 
   function onkeydown(e) {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -58,6 +60,43 @@
     return path.startsWith(href);
   }
 </script>
+
+<svelte:head>
+  {#if plausibleScriptUrl}
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script data-plausible-src={plausibleScriptUrl}>
+      {
+        const host = window.location.hostname;
+        const isLocal =
+          host === 'localhost' ||
+          host === '::1' ||
+          host === '0.0.0.0' ||
+          host.startsWith('127.') ||
+          host.endsWith('.localhost');
+        const scriptUrl = document.currentScript?.dataset.plausibleSrc;
+
+        if (scriptUrl && !isLocal) {
+          window.plausible =
+            window.plausible ||
+            function () {
+              (plausible.q = plausible.q || []).push(arguments);
+            };
+          plausible.init =
+            plausible.init ||
+            function (i) {
+              plausible.o = i || {};
+            };
+          plausible.init();
+
+          const script = document.createElement('script');
+          script.async = true;
+          script.src = scriptUrl;
+          document.head.append(script);
+        }
+      }
+    </script>
+  {/if}
+</svelte:head>
 
 <svelte:window {onkeydown} />
 
