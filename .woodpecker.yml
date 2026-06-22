@@ -4,6 +4,7 @@ steps:
     environment:
       SITE_ORIGIN: https://dev.meshcore.ninja
       VITE_SITE_ORIGIN: https://dev.meshcore.ninja
+      VITE_VERSION_SUFFIX: -dev
       VITE_API_BASE: https://api.meshcore.ninja
     commands:
       - npm ci

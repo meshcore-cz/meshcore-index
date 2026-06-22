@@ -35,7 +35,7 @@
   const updatedLabel = recentTimeLabel(generatedAt);
   const updatedTitle = fullDateTime(generatedAt);
   const plausibleScriptUrl = env.PUBLIC_PLAUSIBLE_SCRIPT_URL;
-  const versionLabel = `v${pkg.version}`;
+  const versionLabel = `v${pkg.version}${import.meta.env.VITE_VERSION_SUFFIX}`;
 
   function onkeydown(e) {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {

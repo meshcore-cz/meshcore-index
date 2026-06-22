@@ -49,7 +49,8 @@ export default defineConfig({
         /\/+$/,
         ''
       )
-    )
+    ),
+    'import.meta.env.VITE_VERSION_SUFFIX': JSON.stringify(process.env.VITE_VERSION_SUFFIX ?? '')
   },
   server: {
     // Allow the dev server to serve device images that live under data/.
