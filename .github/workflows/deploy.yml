@@ -76,7 +76,7 @@ jobs:
           BASE_PATH: ${{ steps.pages.outputs.base_path }}
           SITE_ORIGIN: https://meshcore.ninja
           VITE_SITE_ORIGIN: https://meshcore.ninja
-          PUBLIC_PLAUSIBLE_SCRIPT_URL: https://x.pp0.co/js/pa-CELA0z_On7nm-NCODtDZB.js
+          PUBLIC_PLAUSIBLE_SCRIPT_URL: https://x.meshcore.ninja/js/pa-CELA0z_On7nm-NCODtDZB.js
           # Live analyzer metrics come from the Go API (see api/). Setting this
           # enables the pulse UI; leaving it unset disables it gracefully.
           VITE_API_BASE: https://api.meshcore.ninja
