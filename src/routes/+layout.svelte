@@ -180,6 +180,8 @@
       <span class="text-edge">·</span>
       <a class="text-accent2 hover:underline" href="https://analytics.pp0.co/meshcore.ninja" target="_blank" rel="noreferrer">Analytics ↗</a>
       <span class="text-edge">·</span>
+      <a class="text-accent2 hover:underline" href="{REPO_URL}/blob/main/LICENSES.md" target="_blank" rel="noreferrer">Data CC0 · Code MIT</a>
+      <span class="text-edge">·</span>
       <a class="text-accent2 hover:underline" href="{base}/about/">How to contribute</a>
       {#if updatedLabel}
         <span class="text-edge">·</span>

@@ -56,3 +56,11 @@ Tag pushes create a GitHub release and publish the API Docker image to
 ## Contributing
 
 Edits are made by changing the YAML files in `data/`. See [`AGENTS.md`](AGENTS.md) for repo conventions and [`data/RULES.md`](data/RULES.md) for the authoring guide. Spotted something wrong or missing? [Open an issue or PR](https://github.com/meshcore-cz/meshcore-index) — corrections of any size are welcome.
+
+> By contributing database content, you agree to dedicate your contribution to the public domain under CC0 1.0 Universal, and confirm that you have the right to do so. Please don't submit copyrighted descriptions, photographs or logos — link to the source or supply your own.
+
+## Licensing
+
+The MeshCore Ninja database — device, firmware, application, network and compatibility data, schemas, and generated data exports — is dedicated to the public domain under [CC0 1.0 Universal](data/LICENSE). The application source code (`src/`, `scripts/`, `api/`) is licensed under the [MIT License](LICENSE).
+
+Third-party names, trademarks, logos, photographs and other assets remain the property of their respective owners and are not covered by the CC0 dedication unless explicitly stated otherwise. See [`LICENSES.md`](LICENSES.md) for the full breakdown.
