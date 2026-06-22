@@ -6,6 +6,8 @@
   import { METRICS } from '$lib/metrics.js';
   import { favoriteIds } from '$lib/favorites.js';
   import Seo from '$lib/Seo.svelte';
+  import Button from '$lib/Button.svelte';
+  import Tooltip from '$lib/Tooltip.svelte';
   import ArrowUpDown from '@lucide/svelte/icons/arrow-up-down';
 
   let { data } = $props();
@@ -118,14 +120,14 @@
         <th class="w-12 border-b border-edge px-3.5 py-2.5 text-right">#</th>
         <th class="border-b border-edge px-3.5 py-2.5">Device</th>
         <th class="border-b border-edge px-3.5 py-2.5 text-right">
-          <button
-            class="inline-flex items-center gap-1 hover:text-ink"
-            onclick={flipDir}
-            title="Toggle sort direction"
-          >
-            {metric.label}{metric.unit ? ` (${metric.unit})` : ''}
-            <ArrowUpDown class="h-3.5 w-3.5" aria-hidden="true" />
-          </button>
+          <Tooltip text="Toggle sort direction">
+            {#snippet trigger(props)}
+              <Button {...props} variant="" size="none" class="gap-1 hover:text-ink" onclick={flipDir}>
+                {metric.label}{metric.unit ? ` (${metric.unit})` : ''}
+                <ArrowUpDown class="h-3.5 w-3.5" aria-hidden="true" />
+              </Button>
+            {/snippet}
+          </Tooltip>
         </th>
       </tr>
     </thead>

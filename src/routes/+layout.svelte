@@ -8,7 +8,11 @@
   import { fullDateTime, recentTimeLabel } from '$lib/format.js';
   import { REPO_URL, SITE_NAME } from '$lib/seo.js';
   import { searchOpen } from '$lib/search.js';
+  import { Tooltip } from 'bits-ui';
   import CommandPalette from '$lib/CommandPalette.svelte';
+  import Button from '$lib/Button.svelte';
+  import AtlasTooltip from '$lib/Tooltip.svelte';
+  import ShortcutHint from '$lib/ShortcutHint.svelte';
   import pkg from '../../package.json';
   let { children } = $props();
 
@@ -95,6 +99,7 @@
 
 <svelte:window {onkeydown} />
 
+<Tooltip.Provider delayDuration={250} disableHoverableContent>
 <div class="flex min-h-screen flex-col">
   <header
     class="sticky top-0 z-10 flex flex-wrap items-center justify-between gap-4 border-b border-edge bg-elev px-[clamp(1rem,4vw,2rem)] py-[0.9rem]"
@@ -109,6 +114,18 @@
       </span>
     </a>
     <nav class="flex items-center gap-1">
+      <Button
+        variant=""
+        size="none"
+        onclick={() => ($searchOpen = true)}
+        aria-label="Search"
+        class="mr-1 gap-2 rounded-md border border-edge bg-bg px-2.5 py-1.5 text-[0.85rem] text-dim hover:border-accent hover:text-ink"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" stroke-linecap="round" />
+        </svg>
+        <span class="hidden text-[0.72rem] sm:inline"><ShortcutHint /></span>
+      </Button>
       {#each nav as item}
         <a
           href="{base}{item.href}"
@@ -121,37 +138,31 @@
           {item.label}
         </a>
       {/each}
-      <button
-        type="button"
-        onclick={() => ($searchOpen = true)}
-        aria-label="Search"
-        class="ml-1 flex items-center gap-2 rounded-md border border-edge px-2.5 py-1.5 text-[0.85rem] text-dim hover:border-accent hover:text-ink"
-      >
-        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" stroke-linecap="round" />
-        </svg>
-        <span class="hidden font-mono text-[0.72rem] sm:inline">⌘K</span>
-      </button>
-      <button
-        type="button"
-        onclick={toggleTheme}
-        aria-label="Toggle {theme === 'dark' ? 'light' : 'dark'} mode"
-        title="Toggle theme"
-        class="flex h-[34px] w-[34px] items-center justify-center rounded-md border border-edge text-dim hover:border-accent hover:text-ink"
-      >
-        {#if theme === 'dark'}
-          <!-- show sun: clicking switches to light -->
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <circle cx="12" cy="12" r="4.2" />
-            <path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8" stroke-linecap="round" />
-          </svg>
-        {:else}
-          <!-- show moon: clicking switches to dark -->
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
-          </svg>
-        {/if}
-      </button>
+      <AtlasTooltip text="Toggle theme">
+        {#snippet trigger(props)}
+        <Button
+          {...props}
+          variant="subtle"
+          size="icon"
+          onclick={toggleTheme}
+          aria-label="Toggle {theme === 'dark' ? 'light' : 'dark'} mode"
+          class="h-[34px] w-[34px] border-edge text-dim hover:border-accent hover:text-ink"
+        >
+          {#if theme === 'dark'}
+            <!-- show sun: clicking switches to light -->
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="4.2" />
+              <path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8" stroke-linecap="round" />
+            </svg>
+          {:else}
+            <!-- show moon: clicking switches to dark -->
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
+            </svg>
+          {/if}
+        </Button>
+        {/snippet}
+      </AtlasTooltip>
     </nav>
   </header>
 
@@ -188,6 +199,7 @@
     </div>
   </footer>
 </div>
+</Tooltip.Provider>
 
 <style>
   /* The logo is white line-art on a transparent background: crisp on the dark

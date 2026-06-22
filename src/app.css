@@ -55,4 +55,11 @@
     color: inherit;
     text-decoration: none;
   }
+  /* Tailwind v4 follows the browser default (cursor: default) for buttons.
+     Restore v3's pointer so every clickable button — native and bits-ui
+     (Button, Toggle, Select/Collapsible triggers) — reads as interactive. */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
 }

@@ -12,6 +12,10 @@
   import { compareIds, toggleCompare, clearCompare } from '$lib/compare.js';
   import { favoriteIds, toggleFavorite } from '$lib/favorites.js';
   import Seo from '$lib/Seo.svelte';
+  import Select from '$lib/Select.svelte';
+  import Chip from '$lib/Chip.svelte';
+  import Button from '$lib/Button.svelte';
+  import { Collapsible } from 'bits-ui';
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import { get } from 'svelte/store';
@@ -226,6 +230,7 @@
     })
   );
 
+  const sortItems = SORTS.map((s) => ({ value: s.id, label: s.label }));
   let activeSort = $derived(SORTS.find((s) => s.id === sort) ?? SORTS[0]);
   let sorted = $derived([...filtered].sort(activeSort.cmp));
   let favoriteDevices = $derived($favoriteIds.map((id) => data.devices.find((d) => d.id === id)).filter(Boolean));
@@ -243,10 +248,6 @@
   const primaryToggles = TOGGLES.filter((t) => t.primary);
   const advancedToggles = TOGGLES.filter((t) => !t.primary);
 
-  const chipBase =
-    'rounded-full border px-2.5 py-1 text-[0.8rem] transition cursor-pointer select-none';
-  const chipOn = 'border-accent bg-accent/15 text-accent';
-  const chipOff = 'border-edge bg-elev text-dim hover:border-accent/60 hover:text-ink';
   const rowLabel = 'w-14 shrink-0 pt-1 text-[0.7rem] tracking-wide text-dim uppercase';
 
   // Reflect the active filters into the query string so a filtered view is
@@ -315,7 +316,7 @@
   type="search"
   placeholder="Search devices, vendor, MCU, radio…"
   bind:value={query}
-  class="w-full rounded-lg border border-edge bg-elev px-3 py-2.5 text-[0.95rem] outline-none focus:border-transparent focus:ring-2 focus:ring-accent"
+  class="w-full rounded-lg border border-edge bg-bg px-3 py-2.5 text-[0.95rem] outline-none focus:border-transparent focus:ring-2 focus:ring-accent"
 />
 
 <!-- Faceted filters -->
@@ -326,9 +327,9 @@
         <span class={rowLabel}>{f.label}</span>
         <div class="flex flex-1 flex-wrap gap-1.5">
           {#each facetOptions[f.id] as [value, count] (value)}
-            <button class="{chipBase} {sel[f.id].includes(value) ? chipOn : chipOff}" onclick={() => toggleFacet(f.id, value)}>
+            <Chip pressed={sel[f.id].includes(value)} onPressedChange={() => toggleFacet(f.id, value)}>
               {f.fmt ? f.fmt(value) : value} <span class="opacity-60">{count}</span>
-            </button>
+            </Chip>
           {/each}
         </div>
       </div>
@@ -339,26 +340,24 @@
     <span class={rowLabel}>Has</span>
     <div class="flex flex-1 flex-wrap gap-1.5">
       {#each primaryToggles as t (t.id)}
-        <button class="{chipBase} {toggles[t.id] ? chipOn : chipOff}" onclick={() => (toggles[t.id] = !toggles[t.id])}>{t.label}</button>
+        <Chip pressed={toggles[t.id]} onPressedChange={() => (toggles[t.id] = !toggles[t.id])}>{t.label}</Chip>
       {/each}
     </div>
   </div>
 
   <!-- Advanced section -->
-  <div class="border-t border-edge pt-3">
-    <button
-      class="flex items-center gap-1.5 text-[0.8rem] font-medium text-dim hover:text-ink"
-      onclick={() => (advanced = !advanced)}
-      aria-expanded={advanced}
+  <Collapsible.Root bind:open={advanced} class="border-t border-edge pt-3">
+    <Collapsible.Trigger
+      class="flex items-center gap-1.5 text-[0.8rem] font-medium text-dim outline-none hover:text-ink"
     >
       <span class="inline-block transition-transform {advanced ? 'rotate-90' : ''}">▸</span>
       Advanced filters
       {#if advancedActive && !advanced}
         <span class="rounded-full bg-accent/15 px-1.5 text-[0.7rem] text-accent">active</span>
       {/if}
-    </button>
+    </Collapsible.Trigger>
 
-    {#if advanced}
+    <Collapsible.Content>
       <div class="mt-3 space-y-3">
         {#each advancedFacets as f (f.id)}
           {#if facetOptions[f.id].length}
@@ -366,9 +365,9 @@
               <span class={rowLabel}>{f.label}</span>
               <div class="flex flex-1 flex-wrap gap-1.5">
                 {#each facetOptions[f.id] as [value, count] (value)}
-                  <button class="{chipBase} {sel[f.id].includes(value) ? chipOn : chipOff}" onclick={() => toggleFacet(f.id, value)}>
+                  <Chip pressed={sel[f.id].includes(value)} onPressedChange={() => toggleFacet(f.id, value)}>
                     {f.fmt ? f.fmt(value) : value} <span class="opacity-60">{count}</span>
-                  </button>
+                  </Chip>
                 {/each}
               </div>
             </div>
@@ -379,7 +378,7 @@
           <span class={rowLabel}>Has</span>
           <div class="flex flex-1 flex-wrap gap-1.5">
             {#each advancedToggles as t (t.id)}
-              <button class="{chipBase} {toggles[t.id] ? chipOn : chipOff}" onclick={() => (toggles[t.id] = !toggles[t.id])}>{t.label}</button>
+              <Chip pressed={toggles[t.id]} onPressedChange={() => (toggles[t.id] = !toggles[t.id])}>{t.label}</Chip>
             {/each}
           </div>
         </div>
@@ -411,26 +410,19 @@
           </div>
         </div>
       </div>
-    {/if}
-  </div>
+    </Collapsible.Content>
+  </Collapsible.Root>
 </div>
 
 <div class="my-3 flex items-center gap-3 text-[0.85rem] text-dim">
   <span>{filtered.length} device{filtered.length === 1 ? '' : 's'}</span>
   {#if activeCount}
-    <button class="text-accent2 hover:underline" onclick={clearAll}>Clear filters ({activeCount})</button>
+    <Button variant="link" size="sm" class="px-0" onclick={clearAll}>Clear filters ({activeCount})</Button>
   {/if}
-  <label class="ml-auto flex items-center gap-1.5">
+  <div class="ml-auto flex items-center gap-1.5">
     <span class="text-dim">Sort</span>
-    <select
-      bind:value={sort}
-      class="rounded-lg border border-edge bg-elev px-2 py-1 text-ink outline-none focus:border-accent"
-    >
-      {#each SORTS as s (s.id)}
-        <option value={s.id}>{s.label}</option>
-      {/each}
-    </select>
-  </label>
+    <Select items={sortItems} bind:value={sort} placeholder="Sort" class="min-w-44" />
+  </div>
 </div>
 
 {#if filtered.length}
@@ -449,8 +441,9 @@
           {#if !d.official}
             <span class="absolute right-2 bottom-2 rounded bg-accent2/15 px-1.5 py-0.5 text-[0.6rem] font-bold tracking-wide text-accent2 uppercase">Community</span>
           {/if}
-          <button
-            type="button"
+          <Button
+            variant=""
+            size="none"
             aria-label="Compare {d.name}"
             aria-pressed={$compareIds.includes(d.id)}
             onclick={(e) => {
@@ -458,16 +451,17 @@
               e.stopPropagation();
               toggleCompare(d.id);
             }}
-            class="absolute top-2 left-2 flex h-6 items-center gap-1 rounded-md border px-1.5 text-[0.68rem] font-medium transition {$compareIds.includes(
+            class="absolute top-2 left-2 h-6 gap-1 rounded-md border px-1.5 text-[0.68rem] font-medium transition {$compareIds.includes(
               d.id
             )
               ? 'border-accent bg-accent text-bg'
               : 'border-edge bg-elev/80 text-dim opacity-0 group-hover:opacity-100 hover:text-ink'}"
           >
             {$compareIds.includes(d.id) ? '✓ Compare' : '+ Compare'}
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
+            variant=""
+            size="none"
             aria-label="Toggle favourite for {d.name}"
             title={$favoriteIds.includes(d.id) ? 'Remove from favourites' : 'Add to favourites'}
             aria-pressed={$favoriteIds.includes(d.id)}
@@ -476,14 +470,14 @@
               e.stopPropagation();
               toggleFavorite(d.id);
             }}
-            class="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-md border text-[0.95rem] leading-none transition {$favoriteIds.includes(
+            class="absolute top-2 right-2 h-7 w-7 justify-center rounded-md border text-[0.95rem] leading-none transition {$favoriteIds.includes(
               d.id
             )
               ? 'border-accent bg-accent text-bg'
               : 'border-edge bg-elev/80 text-dim opacity-0 group-hover:opacity-100 hover:text-ink'}"
           >
             {$favoriteIds.includes(d.id) ? '★' : '☆'}
-          </button>
+          </Button>
         </div>
 
         <div class="px-1">
@@ -532,7 +526,7 @@
       <span class="text-[0.85rem] text-dim">
         <span class="font-semibold text-ink">{$compareIds.length}</span> selected
       </span>
-      <button class="text-[0.85rem] text-dim hover:text-ink" onclick={clearCompare}>Clear</button>
+      <Button variant="" size="none" class="text-[0.85rem] text-dim hover:text-ink" onclick={clearCompare}>Clear</Button>
       <a
         class="rounded-full bg-accent px-4 py-1.5 text-[0.85rem] font-semibold text-bg hover:opacity-90"
         href="{base}/compare/?ids={$compareIds.join(',')}"

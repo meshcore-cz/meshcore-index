@@ -3,6 +3,8 @@
   import { TYPE_META, FW_STATUS_TW } from '$lib/data.js';
   import Seo from '$lib/Seo.svelte';
   import ReleaseRow from '$lib/ReleaseRow.svelte';
+  import Button from '$lib/Button.svelte';
+  import Chip from '$lib/Chip.svelte';
   import { fwCompareIds, toggleFwCompare, clearFwCompare } from '$lib/fwCompare.js';
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
@@ -63,18 +65,13 @@
     type="search"
     placeholder="Search firmwares, features, maintainers…"
     bind:value={query}
-    class="min-w-[220px] flex-1 rounded-lg border border-edge bg-elev px-3 py-2.5 text-[0.95rem] outline-none focus:border-transparent focus:ring-2 focus:ring-accent"
+    class="min-w-[220px] flex-1 rounded-lg border border-edge bg-bg px-3 py-2.5 text-[0.95rem] outline-none focus:border-transparent focus:ring-2 focus:ring-accent"
   />
   <div class="flex flex-wrap gap-1.5">
     {#each ['all', 'official', 'fork', 'custom'] as t}
-      <button
-        onclick={() => (typeFilter = t)}
-        class="rounded-full border px-3 py-1.5 text-[0.85rem] {typeFilter === t
-          ? 'border-accent bg-accent/15 font-semibold text-accent'
-          : 'border-edge bg-elev text-dim hover:border-accent/60 hover:text-ink'}"
-      >
+      <Chip pressed={typeFilter === t} onPressedChange={() => (typeFilter = t)} class="px-3 py-1.5 text-[0.85rem]">
         {t === 'all' ? 'All' : TYPE_META[t].label}
-      </button>
+      </Chip>
     {/each}
   </div>
 </div>
@@ -92,8 +89,9 @@
           <span class="rounded-md px-2 py-0.5 text-[0.72rem] font-bold tracking-wide uppercase {TYPE_META[fw.type]?.tw}">
             {TYPE_META[fw.type]?.label ?? fw.type}
           </span>
-          <button
-            type="button"
+          <Button
+            variant=""
+            size="none"
             aria-label="Compare {fw.name}"
             aria-pressed={$fwCompareIds.includes(fw.id)}
             onclick={(e) => {
@@ -108,7 +106,7 @@
               : 'border-edge text-dim opacity-0 group-hover:opacity-100 hover:text-ink'}"
           >
             {$fwCompareIds.includes(fw.id) ? '✓ Compare' : '+ Compare'}
-          </button>
+          </Button>
         </div>
         <span class="text-[0.75rem] {FW_STATUS_TW[fw.status] ?? 'text-dim'}">
           {statusLabels[fw.status] ?? fw.status}
@@ -149,7 +147,7 @@
       <span class="text-[0.85rem] text-dim">
         <span class="font-semibold text-ink">{$fwCompareIds.length}</span> selected
       </span>
-      <button class="text-[0.85rem] text-dim hover:text-ink" onclick={clearFwCompare}>Clear</button>
+      <Button variant="" size="none" class="text-[0.85rem] text-dim hover:text-ink" onclick={clearFwCompare}>Clear</Button>
       <a
         class="rounded-full bg-accent px-4 py-1.5 text-[0.85rem] font-semibold text-bg hover:opacity-90"
         href="{base}/compare-firmwares/?ids={$fwCompareIds.join(',')}"

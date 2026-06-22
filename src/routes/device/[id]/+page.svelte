@@ -22,6 +22,8 @@
   import { compareIds } from '$lib/compare.js';
   import { clampDescription, abs, absUrl, ogImageFor } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
+  import Chip from '$lib/Chip.svelte';
+  import { Toggle } from 'bits-ui';
   import { favoriteIds, toggleFavorite } from '$lib/favorites.js';
   // Lucide icons for the hardware spec cards (per-icon imports tree-shake).
   import Radio from '@lucide/svelte/icons/radio';
@@ -684,16 +686,15 @@
       </div>
     {/if}
     <div class="mt-3 flex flex-wrap gap-2">
-      <button
-        type="button"
-        class="rounded-full border px-3 py-1.5 text-[0.85rem] font-medium transition {$favoriteIds.includes(d.id)
+      <Toggle.Root
+        pressed={$favoriteIds.includes(d.id)}
+        onPressedChange={() => toggleFavorite(d.id)}
+        class="rounded-full border px-3 py-1.5 text-[0.85rem] font-medium outline-none transition {$favoriteIds.includes(d.id)
           ? 'border-accent bg-accent text-bg'
           : 'border-edge bg-elev text-dim hover:border-accent/60 hover:text-ink'}"
-        aria-pressed={$favoriteIds.includes(d.id)}
-        onclick={() => toggleFavorite(d.id)}
       >
         {$favoriteIds.includes(d.id) ? '★ Favourite' : '☆ Add to favourites'}
-      </button>
+      </Toggle.Root>
       {#if favoriteCompareIds.length > 1}
         <a
           class="rounded-full border border-edge bg-elev px-3 py-1.5 text-[0.85rem] font-medium text-dim transition hover:border-accent/60 hover:text-ink"
@@ -793,27 +794,23 @@
       </div>
       {#if showVariantRevisionFilter}
         <div class="flex flex-wrap justify-end gap-1.5" aria-label="Filter variants by revision">
-          <button
-            type="button"
-            class="rounded-full border px-2.5 py-1 text-[0.75rem] font-semibold transition {selectedVariantRevision === 'all'
-              ? 'border-accent2 bg-accent2/15 text-accent2'
-              : 'border-edge bg-elev text-dim hover:border-accent2/60 hover:text-ink'}"
-            aria-pressed={selectedVariantRevision === 'all'}
-            onclick={() => (selectedVariantRevision = 'all')}
+          <Chip
+            tone="accent2"
+            pressed={selectedVariantRevision === 'all'}
+            onPressedChange={() => (selectedVariantRevision = 'all')}
+            class="text-[0.75rem] font-semibold"
           >
             All revisions
-          </button>
+          </Chip>
           {#each variantRevisions as revision}
-            <button
-              type="button"
-              class="rounded-full border px-2.5 py-1 text-[0.75rem] font-semibold transition {activeVariantRevision === revision
-                ? 'border-accent2 bg-accent2/15 text-accent2'
-                : 'border-edge bg-elev text-dim hover:border-accent2/60 hover:text-ink'}"
-              aria-pressed={activeVariantRevision === revision}
-              onclick={() => (selectedVariantRevision = revision)}
+            <Chip
+              tone="accent2"
+              pressed={activeVariantRevision === revision}
+              onPressedChange={() => (selectedVariantRevision = revision)}
+              class="text-[0.75rem] font-semibold"
             >
               {variantRevisionLabel(revision)}
-            </button>
+            </Chip>
           {/each}
         </div>
       {/if}

@@ -3,9 +3,14 @@
   import { onMount } from 'svelte';
   import { networkBands, bandLabel } from '$lib/data.js';
   import { LIVE_ENABLED, fmtRate } from '$lib/pulse.js';
+  import { ToggleGroup } from 'bits-ui';
+  import Button from '$lib/Button.svelte';
+  import Tooltip from '$lib/Tooltip.svelte';
   import 'leaflet/dist/leaflet.css';
 
-  let { networks = [], liveById = {} } = $props();
+  // `visibleIds` (a Set of network ids, or null for "show all") filters which
+  // drawn areas are shown without re-fetching/re-drawing — see applyVisibility.
+  let { networks = [], liveById = {}, visibleIds = null } = $props();
 
   // Latest live metrics, read by the popup builder at click/refresh time. A
   // plain holder (not the closure-captured prop) so the once-built click handler
@@ -27,6 +32,12 @@
   let wheelZoomEnabled = $state(false);
   // Restyle drawn layers in place when the mode flips (assigned in init).
   let applyColors = () => {};
+  // Show/hide drawn areas to match the active filter, then refit (assigned in
+  // init). Re-runs whenever the filtered `visibleIds` set changes.
+  let applyVisibility = () => {};
+  $effect(() => {
+    applyVisibility(visibleIds);
+  });
   function setColorMode(mode) {
     if (colorMode === mode) return;
     colorMode = mode;
@@ -205,6 +216,35 @@
         if (map.isPopupOpen?.()) refreshOpenPopup();
       };
 
+      // Tracks the active filter for hit-testing; null means "show all".
+      let visibleSet = null;
+
+      // Add/remove drawn layers so only filtered networks show, then refit the
+      // view to what's visible. `ids` is a Set of network ids, or null for all.
+      applyVisibility = (ids) => {
+        visibleSet = ids ?? null;
+        const b = L.latLngBounds([]);
+        let shown = 0;
+        for (const { network, layer } of drawn) {
+          if (!ids || ids.has(network.id)) {
+            if (!map.hasLayer(layer)) layer.addTo(map);
+            shown++;
+            const lb = layer.getBounds();
+            if (lb.isValid()) b.extend(lb);
+          } else if (map.hasLayer(layer)) {
+            map.removeLayer(layer);
+          }
+        }
+        // An open popup may reference a now-hidden network; close it to be safe.
+        map.closePopup();
+        if (b.isValid()) {
+          // Mirror the initial framing: keep the world view while many areas are
+          // shown, zoom to the selection once it's narrowed down.
+          if (shown >= 3) map.setView([30, 0], 2);
+          else map.fitBounds(b.pad(0.18), { maxZoom: 7 });
+        }
+      };
+
       // --- Click → popup listing every network covering the clicked point -----
       // Reuse each polygon's draw-order color so the popup accent matches the map.
       const drawIndexById = new Map(drawn.map((d) => [d.network.id, d.index]));
@@ -261,6 +301,8 @@
         const lng = ((((latlng.lng + 180) % 360) + 360) % 360) - 180;
         return drawn
           .map((d) => d.network)
+          // Honour the active filter, then keep only areas covering the click.
+          .filter((n) => !visibleSet || visibleSet.has(n.id))
           // Smallest (most specific) area first, so the local network leads.
           .filter((n) => (byNetwork.get(n.id) ?? []).some((f) => inFeature(lng, lat, f)))
           .sort((a, b) => (a.areaKm2 ?? 0) - (b.areaKm2 ?? 0));
@@ -285,11 +327,10 @@
       });
 
       if (bounds.isValid()) {
-        if (areaNetworks.length >= 3) {
-          map.setView([30, 0], 2);
-        } else {
-          map.fitBounds(bounds.pad(0.18), { maxZoom: 7 });
-        }
+        // Apply any filter active at load (e.g. hydrated from the URL): this
+        // hides non-matching areas and frames the view. With no filter every
+        // area shows and it falls back to the default framing.
+        applyVisibility(visibleIds);
       } else {
         status = 'No valid network area shapes found yet.';
       }
@@ -367,38 +408,47 @@
         <p class="text-[0.82rem] text-dim">Published coverage/coordination shapes from network records.</p>
       </div>
       <div class="flex items-center gap-2">
-        <div class="flex overflow-hidden rounded-md border border-edge text-[0.72rem]" role="group" aria-label="Color areas by">
-          <button
-            type="button"
-            onclick={() => setColorMode('network')}
-            class="px-2.5 py-1 transition {colorMode === 'network' ? 'bg-elev2 text-ink' : 'text-dim hover:text-ink'}"
-          >Network</button>
-          <button
-            type="button"
-            onclick={() => setColorMode('band')}
-            class="border-l border-edge px-2.5 py-1 transition {colorMode === 'band' ? 'bg-elev2 text-ink' : 'text-dim hover:text-ink'}"
-          >Band</button>
-        </div>
-        <span class="rounded-md bg-elev2 px-2 py-1 text-[0.72rem] text-dim">
-          {networks.filter((n) => n.areaUrl).length} shaped
-        </span>
-        <button
-          type="button"
-          onclick={toggleFullscreen}
-          aria-label={fullscreen ? 'Exit full screen' : 'Full screen map'}
-          title={fullscreen ? 'Exit full screen (Esc)' : 'Full screen'}
-          class="flex h-[30px] w-[30px] items-center justify-center rounded-md border border-edge text-dim hover:border-accent hover:text-ink"
+        <ToggleGroup.Root
+          type="single"
+          value={colorMode}
+          onValueChange={(v) => v && setColorMode(v)}
+          class="flex overflow-hidden rounded-md border border-edge text-[0.72rem]"
+          aria-label="Color areas by"
         >
-          {#if fullscreen}
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M9 4v3a2 2 0 0 1-2 2H4M20 9h-3a2 2 0 0 1-2-2V4M15 20v-3a2 2 0 0 1 2-2h3M4 15h3a2 2 0 0 1 2 2v3" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          {:else}
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M4 9V6a2 2 0 0 1 2-2h3M20 9V6a2 2 0 0 0-2-2h-3M4 15v3a2 2 0 0 0 2 2h3M20 15v3a2 2 0 0 1-2 2h-3" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          {/if}
-        </button>
+          <ToggleGroup.Item
+            value="network"
+            class="px-2.5 py-1 transition outline-none data-[state=on]:bg-elev2 data-[state=on]:text-ink data-[state=off]:text-dim data-[state=off]:hover:text-ink"
+          >Network</ToggleGroup.Item>
+          <ToggleGroup.Item
+            value="band"
+            class="border-l border-edge px-2.5 py-1 transition outline-none data-[state=on]:bg-elev2 data-[state=on]:text-ink data-[state=off]:text-dim data-[state=off]:hover:text-ink"
+          >Band</ToggleGroup.Item>
+        </ToggleGroup.Root>
+        <span class="rounded-md bg-elev2 px-2 py-1 text-[0.72rem] text-dim">
+          {networks.filter((n) => n.areaUrl && (!visibleIds || visibleIds.has(n.id))).length} shaped
+        </span>
+        <Tooltip text={fullscreen ? 'Exit full screen (Esc)' : 'Full screen'}>
+          {#snippet trigger(props)}
+            <Button
+              {...props}
+              variant="subtle"
+              size="icon"
+              onclick={toggleFullscreen}
+              aria-label={fullscreen ? 'Exit full screen' : 'Full screen map'}
+              class="h-[30px] w-[30px] border-edge text-dim hover:border-accent hover:text-ink"
+            >
+              {#if fullscreen}
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M9 4v3a2 2 0 0 1-2 2H4M20 9h-3a2 2 0 0 1-2-2V4M15 20v-3a2 2 0 0 1 2-2h3M4 15h3a2 2 0 0 1 2 2v3" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              {:else}
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M4 9V6a2 2 0 0 1 2-2h3M20 9V6a2 2 0 0 0-2-2h-3M4 15v3a2 2 0 0 0 2 2h3M20 15v3a2 2 0 0 1-2 2h-3" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              {/if}
+            </Button>
+          {/snippet}
+        </Tooltip>
       </div>
     </div>
     <!-- Size lives on this wrapper; the inner map element keeps a STATIC class

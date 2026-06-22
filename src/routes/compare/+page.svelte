@@ -6,6 +6,7 @@
   import { deviceRadioLabel, devicePriceLabel, resolveMcuInfo, resolveRadio, resolveGnss, stripVendorLabel, bandLabel } from '$lib/data.js';
   import { compareIds } from '$lib/compare.js';
   import Seo from '$lib/Seo.svelte';
+  import Button from '$lib/Button.svelte';
 
   let { data } = $props();
   let byId = $derived(new Map(data.devices.map((d) => [d.id, d])));
@@ -280,10 +281,12 @@
                   {#if d.vendorName}<span class="block text-[0.78rem] font-normal text-dim">{d.vendorName}</span>{/if}
                   {#if i === 0}<span class="mt-1 inline-block rounded bg-accent/15 px-1.5 py-0.5 text-[0.6rem] font-bold tracking-wide text-accent uppercase">Reference</span>{/if}
                 </a>
-                <button
+                <Button
+                  variant=""
+                  size="none"
                   class="shrink-0 rounded p-1 text-dim hover:bg-elev2 hover:text-bad"
                   aria-label="Remove {d.name}"
-                  onclick={() => remove(d.id)}>✕</button>
+                  onclick={() => remove(d.id)}>✕</Button>
               </div>
             </th>
           {/each}

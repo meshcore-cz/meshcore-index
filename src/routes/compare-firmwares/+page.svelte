@@ -7,6 +7,7 @@
   import { fwCompareIds } from '$lib/fwCompare.js';
   import { CAPABILITY_GROUPS } from '$lib/CapabilityMatrix.svelte';
   import Seo from '$lib/Seo.svelte';
+  import Button from '$lib/Button.svelte';
 
   let { data } = $props();
   let byId = $derived(new Map(data.firmwares.map((f) => [f.id, f])));
@@ -151,10 +152,12 @@
                   <span class="block text-[0.95rem] font-semibold group-hover:text-accent">{f.name}</span>
                   {#if f.maintainer}<span class="block text-[0.78rem] font-normal text-dim">{f.maintainer}</span>{/if}
                 </a>
-                <button
+                <Button
+                  variant=""
+                  size="none"
                   class="shrink-0 rounded p-1 text-dim hover:bg-elev2 hover:text-bad"
                   aria-label="Remove {f.name}"
-                  onclick={() => remove(f.id)}>✕</button>
+                  onclick={() => remove(f.id)}>✕</Button>
               </div>
             </th>
           {/each}

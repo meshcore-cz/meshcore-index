@@ -69,6 +69,7 @@ radio:
   bandwidth_khz: 62.5
   spreading_factor: 7
   coding_rate: 4/5
+  path_hash_mode: 2-Byte
   tx_power_dbm: 22
   duty_cycle_pct: 10
   region_code: cz

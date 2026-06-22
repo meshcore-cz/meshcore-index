@@ -5,6 +5,7 @@
   import { goto } from '$app/navigation';
   import { getDevice, deviceMcuLabel, deviceRadioLabel } from '$lib/data.js';
   import Seo from '$lib/Seo.svelte';
+  import Chip from '$lib/Chip.svelte';
   let { data } = $props();
   let selectedRevision = $state('latest');
 
@@ -132,27 +133,23 @@
     </div>
     {#if showRevisionFilter}
       <div class="flex flex-wrap justify-end gap-1.5" aria-label="Filter bands by hardware revision">
-        <button
-          type="button"
-          class="rounded-full border px-2.5 py-1 text-[0.75rem] font-semibold transition {selectedRevision === 'all'
-            ? 'border-accent2 bg-accent2/15 text-accent2'
-            : 'border-edge bg-elev text-dim hover:border-accent2/60 hover:text-ink'}"
-          aria-pressed={selectedRevision === 'all'}
-          onclick={() => (selectedRevision = 'all')}
+        <Chip
+          tone="accent2"
+          pressed={selectedRevision === 'all'}
+          onPressedChange={() => (selectedRevision = 'all')}
+          class="text-[0.75rem] font-semibold"
         >
           All revisions
-        </button>
+        </Chip>
         {#each deviceVariantRevisions as revision}
-          <button
-            type="button"
-            class="rounded-full border px-2.5 py-1 text-[0.75rem] font-semibold transition {activeRevision === revision
-              ? 'border-accent2 bg-accent2/15 text-accent2'
-              : 'border-edge bg-elev text-dim hover:border-accent2/60 hover:text-ink'}"
-            aria-pressed={activeRevision === revision}
-            onclick={() => (selectedRevision = revision)}
+          <Chip
+            tone="accent2"
+            pressed={activeRevision === revision}
+            onPressedChange={() => (selectedRevision = revision)}
+            class="text-[0.75rem] font-semibold"
           >
             {revisionLabel(revision)}
-          </button>
+          </Chip>
         {/each}
       </div>
     {/if}

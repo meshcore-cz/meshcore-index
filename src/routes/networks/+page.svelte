@@ -5,13 +5,19 @@
     NETWORK_SCOPE_META,
     networkFlags,
     networkRadioSettings,
+    networkBands,
     bandLabel,
     isAppPresetNetwork
   } from '$lib/data.js';
   import NetworkAreaMap from '$lib/NetworkAreaMap.svelte';
   import AppPresetBadge from '$lib/AppPresetBadge.svelte';
   import Seo from '$lib/Seo.svelte';
+  import Button from '$lib/Button.svelte';
+  import { Toggle } from 'bits-ui';
   import { onMount } from 'svelte';
+  import { browser } from '$app/environment';
+  import { page } from '$app/stores';
+  import { get } from 'svelte/store';
   import { LIVE_ENABLED, poll, fmtRate } from '$lib/pulse.js';
   let { data } = $props();
 
@@ -77,11 +83,79 @@
   let activeNetworks = $derived(data.networks.filter((n) => !n.deprecated));
   let deprecatedNetworks = $derived(data.networks.filter((n) => n.deprecated));
 
+  // --- Filters --------------------------------------------------------------
+  // Narrow the table (and, via `visibleIds`, the map) by free-text name, scope
+  // and frequency band. Scopes/bands are multi-select: empty means "any".
+  // State is hydrated from / synced to the URL (see the $effect below), so a
+  // filtered view is shareable and bookmarkable — matching the Devices page.
+  const initParams = browser ? get(page).url.searchParams : new URLSearchParams();
+  const csv = (key) => (initParams.get(key) ?? '').split(',').filter(Boolean);
+
+  let query = $state(initParams.get('q') ?? '');
+  let selectedScopes = $state(new Set(csv('scope')));
+  let selectedBands = $state(new Set(csv('band')));
+
+  // Toggling reassigns a fresh Set so Svelte's reactivity picks up the change.
+  function toggleIn(set, value) {
+    const next = new Set(set);
+    next.has(value) ? next.delete(value) : next.add(value);
+    return next;
+  }
+  const toggleScope = (s) => (selectedScopes = toggleIn(selectedScopes, s));
+  const toggleBand = (b) => (selectedBands = toggleIn(selectedBands, b));
+  function clearFilters() {
+    query = '';
+    selectedScopes = new Set();
+    selectedBands = new Set();
+  }
+  let hasFilters = $derived(
+    query.trim() !== '' || selectedScopes.size > 0 || selectedBands.size > 0
+  );
+
+  // Only offer scopes/bands that actually occur, in a stable order.
+  let scopeOptions = $derived(
+    Object.keys(NETWORK_SCOPE_META).filter((s) => activeNetworks.some((n) => n.scope === s))
+  );
+  let bandOptions = $derived.by(() => {
+    const set = new Set();
+    for (const n of activeNetworks) for (const b of networkBands(n)) set.add(b);
+    return [...set].sort((a, b) => Number(a) - Number(b));
+  });
+
+  let filteredNetworks = $derived.by(() => {
+    const q = query.trim().toLowerCase();
+    return activeNetworks.filter((n) => {
+      if (q) {
+        const hay = `${n.name ?? ''} ${n.short_name ?? ''}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      if (selectedScopes.size && !selectedScopes.has(n.scope)) return false;
+      if (selectedBands.size && !networkBands(n).some((b) => selectedBands.has(b))) return false;
+      return true;
+    });
+  });
+
+  // The set of ids the map should keep visible (drives layer show/hide there).
+  let visibleIds = $derived(new Set(filteredNetworks.map((n) => n.id)));
+
+  // Reflect the active filters into the query string so a filtered view is
+  // shareable. Native history.replaceState keeps it a pure URL-bar update — no
+  // navigation, no scroll, no history entries, and no dependence on the router.
+  $effect(() => {
+    if (!browser) return;
+    const p = new URLSearchParams();
+    if (query.trim()) p.set('q', query.trim());
+    if (selectedScopes.size) p.set('scope', [...selectedScopes].join(','));
+    if (selectedBands.size) p.set('band', [...selectedBands].join(','));
+    const qs = p.toString();
+    history.replaceState(history.state, '', qs ? `${location.pathname}?${qs}` : location.pathname);
+  });
+
   let sortedNetworks = $derived.by(() => {
     const get = SORT_ACCESSORS[sortKey];
     const dir = sortDir === 'asc' ? 1 : -1;
     const empty = (v) => v == null || v === '';
-    return [...activeNetworks].sort((a, b) => {
+    return [...filteredNetworks].sort((a, b) => {
       const va = get(a);
       const vb = get(b);
       if (empty(va) && empty(vb)) return 0;
@@ -105,16 +179,73 @@
 </p>
 
 {#if data.networks.length}
-  <NetworkAreaMap networks={activeNetworks} {liveById} />
+  <NetworkAreaMap networks={activeNetworks} {visibleIds} {liveById} />
+
+  <div class="mb-4 flex flex-col gap-3 rounded-xl border border-edge bg-elev p-3 sm:flex-row sm:flex-wrap sm:items-center">
+    <div class="relative sm:w-60">
+      <svg class="pointer-events-none absolute top-1/2 left-2.5 h-4 w-4 -translate-y-1/2 text-dim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="m20 20-3.5-3.5" stroke-linecap="round" />
+      </svg>
+      <input
+        type="search"
+        bind:value={query}
+        placeholder="Filter networks…"
+        aria-label="Filter networks by name"
+        class="w-full rounded-md border border-edge bg-bg py-1.5 pr-3 pl-8 text-[0.85rem] text-ink placeholder:text-dim focus:border-accent focus:outline-none"
+      />
+    </div>
+
+    {#if scopeOptions.length}
+      <div class="flex flex-wrap items-center gap-1.5">
+        <span class="mr-0.5 text-[0.72rem] tracking-wide text-dim uppercase">Scope</span>
+        {#each scopeOptions as scope (scope)}
+          <Toggle.Root
+            pressed={selectedScopes.has(scope)}
+            onPressedChange={() => toggleScope(scope)}
+            class="rounded-md border px-2 py-0.5 text-[0.72rem] font-medium outline-none transition {selectedScopes.has(scope) ? 'border-accent bg-accent/15 text-accent' : 'border-edge text-dim hover:text-ink'}"
+          >{NETWORK_SCOPE_META[scope]?.label ?? scope}</Toggle.Root>
+        {/each}
+      </div>
+    {/if}
+
+    {#if bandOptions.length}
+      <div class="flex flex-wrap items-center gap-1.5">
+        <span class="mr-0.5 text-[0.72rem] tracking-wide text-dim uppercase">Band</span>
+        {#each bandOptions as band (band)}
+          <Toggle.Root
+            pressed={selectedBands.has(band)}
+            onPressedChange={() => toggleBand(band)}
+            class="rounded-md border px-2 py-0.5 text-[0.72rem] font-medium outline-none transition {selectedBands.has(band) ? 'border-accent2 bg-accent2/15 text-accent2' : 'border-edge text-dim hover:text-ink'}"
+          >{bandLabel(band) ?? band}</Toggle.Root>
+        {/each}
+      </div>
+    {/if}
+
+    <div class="flex items-center gap-2 sm:ml-auto">
+      <span class="text-[0.78rem] text-dim tabular-nums">
+        {filteredNetworks.length} of {activeNetworks.length}
+      </span>
+      {#if hasFilters}
+        <Button
+          variant=""
+          size="none"
+          onclick={clearFilters}
+          class="rounded-md border border-edge px-2 py-0.5 text-[0.72rem] text-dim hover:text-ink"
+        >Clear</Button>
+      {/if}
+    </div>
+  </div>
 
   {#snippet sortTh(key, label, alignRight = false, title = null)}
     <th
       class="border-b border-edge px-3.5 py-2.5 {alignRight ? 'text-right' : ''}"
       aria-sort={sortKey === key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
     >
-      <button
-        type="button"
-        class="inline-flex items-center gap-1 tracking-wide uppercase hover:text-ink {alignRight ? 'flex-row-reverse' : ''} {sortKey === key ? 'text-ink' : ''}"
+      <Button
+        variant=""
+        size="none"
+        class="gap-1 tracking-wide uppercase hover:text-ink {alignRight ? 'flex-row-reverse' : ''} {sortKey === key ? 'text-ink' : ''}"
         onclick={() => toggleSort(key)}
         {title}
       >
@@ -122,7 +253,7 @@
         <span class="text-[0.7em] {sortKey === key ? 'text-accent' : 'opacity-30'}" aria-hidden="true">
           {sortKey === key && sortDir === 'asc' ? '▲' : '▼'}
         </span>
-      </button>
+      </Button>
     </th>
   {/snippet}
 
@@ -211,6 +342,12 @@
       </thead>
         {#each sortedNetworks as n (n.id)}{@render networkRow(n)}{/each}
     </table>
+    {#if !sortedNetworks.length}
+      <p class="px-3.5 py-6 text-center text-[0.85rem] text-dim">
+        No networks match these filters.
+        <Button variant="" size="none" onclick={clearFilters} class="text-accent hover:underline">Clear filters</Button>
+      </p>
+    {/if}
   </div>
 
   {#if deprecatedNetworks.length}

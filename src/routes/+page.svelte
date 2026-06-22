@@ -3,6 +3,8 @@
   import { SITE_NAME, REPO_URL, absUrl } from '$lib/seo.js';
   import { searchOpen } from '$lib/search.js';
   import Seo from '$lib/Seo.svelte';
+  import Button from '$lib/Button.svelte';
+  import ShortcutHint from '$lib/ShortcutHint.svelte';
   let { data } = $props();
 
   const homeJsonLd = {
@@ -66,17 +68,18 @@
     <a class="text-accent2 hover:underline" href="{base}/firmwares/">firmwares</a> that power them.
   </p>
 
-  <button
-    type="button"
+  <Button
+    variant=""
+    size="none"
     onclick={() => ($searchOpen = true)}
-    class="mt-5 flex w-full max-w-[460px] items-center gap-3 rounded-xl border border-edge bg-elev px-4 py-3 text-left text-dim transition hover:border-accent hover:text-ink"
+    class="mt-5 w-full max-w-[460px] gap-3 rounded-xl border border-edge bg-bg px-4 py-3 text-left text-dim hover:border-accent hover:text-ink"
   >
     <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
       <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" stroke-linecap="round" />
     </svg>
     <span class="flex-1 text-[0.95rem]">Search networks, devices, firmwares…</span>
-    <span class="hidden rounded border border-edge px-1.5 py-0.5 font-mono text-[0.72rem] sm:inline">⌘K</span>
-  </button>
+    <span class="hidden rounded border border-edge px-1.5 py-0.5 text-[0.72rem] sm:inline"><ShortcutHint /></span>
+  </Button>
 </section>
 
 <section class="mb-8 grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(230px,1fr))]">

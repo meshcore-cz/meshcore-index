@@ -1,29 +1,23 @@
 <script>
   import { base } from '$app/paths';
+  import { tick } from 'svelte';
   import { goto } from '$app/navigation';
+  import { Command, Dialog } from 'bits-ui';
+  import { Search } from '@lucide/svelte';
+  import Avatar from '$lib/Avatar.svelte';
   import { searchAtlas } from '$lib/data.js';
 
   let { open = $bindable(false) } = $props();
 
   let query = $state('');
-  let selected = $state(0);
-  let inputEl = $state(null);
 
+  // Filtering is done by Fuse via searchAtlas, so bits-ui's internal
+  // filtering stays off — we render exactly the results it returns.
   let results = $derived(searchAtlas(query));
 
-  // Keep the highlighted row valid as the result set changes.
+  // Reset the query each time the palette opens.
   $effect(() => {
-    void results;
-    if (selected >= results.length) selected = 0;
-  });
-
-  // Focus the field and reset state whenever the palette opens.
-  $effect(() => {
-    if (open) {
-      query = '';
-      selected = 0;
-      inputEl?.focus();
-    }
+    if (open) query = '';
   });
 
   const TYPE_TW = {
@@ -32,101 +26,89 @@
     Vendor: 'text-warn'
   };
 
-  function close() {
-    open = false;
-  }
-
-  function go(item) {
+  async function go(item) {
     if (!item) return;
-    close();
+    // Close (and let the dialog tear down its scroll-lock) before navigating,
+    // otherwise the teardown races with goto and leaves the body inert.
+    open = false;
+    await tick();
     goto(`${base}${item.href}`);
-  }
-
-  function onkeydown(e) {
-    if (e.key === 'Escape') {
-      e.preventDefault();
-      close();
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      if (results.length) selected = (selected + 1) % results.length;
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      if (results.length) selected = (selected - 1 + results.length) % results.length;
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      go(results[selected]);
-    }
   }
 </script>
 
-{#if open}
-  <!-- Backdrop -->
-  <div
-    class="fixed inset-0 z-50 flex items-start justify-center bg-bg/70 px-4 pt-[12vh] backdrop-blur-sm"
-    role="presentation"
-    onclick={close}
-  >
-    <!-- Palette -->
-    <div
-      class="w-full max-w-[640px] overflow-hidden rounded-xl border border-edge bg-elev shadow-2xl"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Search the atlas"
-      tabindex="-1"
-      onclick={(e) => e.stopPropagation()}
-      {onkeydown}
+<Dialog.Root {open} onOpenChange={(v) => (open = v)}>
+  <Dialog.Portal>
+    <Dialog.Overlay class="fixed inset-0 z-50 bg-bg/70 backdrop-blur-sm" />
+    <Dialog.Content
+      class="fixed top-[12vh] left-1/2 z-50 w-[calc(100%-2rem)] max-w-[640px] -translate-x-1/2 overflow-hidden rounded-xl border border-edge bg-elev shadow-2xl outline-none"
+      onOpenAutoFocus={(e) => {
+        // Let the Command input grab focus instead of the dialog container.
+        e.preventDefault();
+      }}
     >
-      <div class="flex items-center gap-3 border-b border-edge px-4">
-        <svg class="h-4 w-4 shrink-0 text-dim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" stroke-linecap="round" />
-        </svg>
-        <input
-          bind:this={inputEl}
-          bind:value={query}
-          type="text"
-          placeholder="Search…"
-          autocomplete="off"
-          spellcheck="false"
-          class="w-full bg-transparent py-3.5 text-[1rem] outline-none placeholder:text-dim"
-        />
-        <button class="rounded border border-edge px-1.5 py-0.5 text-[0.7rem] text-dim hover:text-ink" onclick={close}>esc</button>
-      </div>
+      <Dialog.Title class="sr-only">Search the atlas</Dialog.Title>
 
-      {#if !query.trim()}
-        <p class="px-4 py-8 text-center text-[0.9rem] text-dim">Search devices, firmwares, vendors…</p>
-      {:else if results.length === 0}
-        <p class="px-4 py-8 text-center text-[0.9rem] text-dim">No matches for “{query}”.</p>
-      {:else}
-        <ul class="max-h-[60vh] overflow-y-auto py-1.5">
-          {#each results as item, i (item.type + item.href + item.title)}
-            <li>
-              <button
-                class="flex w-full items-center gap-3 px-4 py-2.5 text-left {i === selected ? 'bg-elev2' : ''}"
-                onmousemove={() => (selected = i)}
-                onclick={() => go(item)}
-              >
-                <span class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-md border border-edge bg-bg">
-                  {#if item.image}
-                    <img src={item.image} alt="" class="max-h-full max-w-full object-contain p-1" />
-                  {:else if item.type === 'Device'}
-                    <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 text-muted">
-                      <rect x="7" y="4" width="10" height="16" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.8" />
-                      <path d="M10 2.8v2.4M14 2.8v2.4M10 18.8v2.4M14 18.8v2.4M5.2 8h2.4M5.2 12h2.4M5.2 16h2.4M16.4 8h2.4M16.4 12h2.4M16.4 16h2.4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.4" />
-                    </svg>
-                  {:else}
-                    <span class="text-[0.7rem] font-bold {TYPE_TW[item.type] ?? 'text-dim'}">{item.title.slice(0, 1).toUpperCase()}</span>
-                  {/if}
-                </span>
-                <span class="min-w-0 flex-1">
-                  <span class="block truncate text-[0.95rem] text-ink">{item.title}</span>
-                  {#if item.subtitle}<span class="block truncate text-[0.8rem] text-dim opacity-60">{item.subtitle}</span>{/if}
-                </span>
-                <span class="shrink-0 text-[0.68rem] font-semibold tracking-wide uppercase {TYPE_TW[item.type] ?? 'text-dim'}">{item.type}</span>
-              </button>
-            </li>
-          {/each}
-        </ul>
-      {/if}
-    </div>
-  </div>
-{/if}
+      <Command.Root shouldFilter={false} loop label="Search the atlas">
+        <div class="flex items-center gap-3 border-b border-edge px-4">
+          <Search class="size-4 shrink-0 text-dim" />
+          <Command.Input
+            bind:value={query}
+            placeholder="Search devices, firmwares, vendors…"
+            autofocus
+            class="w-full bg-transparent py-3.5 text-[1rem] outline-none placeholder:text-dim"
+          />
+          <Dialog.Close
+            class="rounded border border-edge px-1.5 py-0.5 text-[0.7rem] text-dim hover:text-ink"
+          >
+            esc
+          </Dialog.Close>
+        </div>
+
+        <Command.List class="max-h-[60vh] overflow-y-auto">
+          <Command.Viewport>
+            {#if !query.trim()}
+              <p class="px-4 py-8 text-center text-[0.9rem] text-dim">
+                Search devices, firmwares, vendors…
+              </p>
+            {:else}
+              <Command.Empty class="px-4 py-8 text-center text-[0.9rem] text-dim">
+                No matches for “{query}”.
+              </Command.Empty>
+            {/if}
+
+            <div class="py-1.5">
+              {#each results as item (item.type + item.href + item.title)}
+                <Command.Item
+                  value={item.type + item.href + item.title}
+                  onSelect={() => go(item)}
+                  class="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left outline-none data-[selected]:bg-elev2"
+                >
+                  <Avatar
+                    src={item.image}
+                    alt=""
+                    class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-md border border-edge bg-bg"
+                    imgClass="max-h-full max-w-full object-contain p-1"
+                  >
+                    {#if item.type === 'Device'}
+                      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 text-muted">
+                        <rect x="7" y="4" width="10" height="16" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.8" />
+                        <path d="M10 2.8v2.4M14 2.8v2.4M10 18.8v2.4M14 18.8v2.4M5.2 8h2.4M5.2 12h2.4M5.2 16h2.4M16.4 8h2.4M16.4 12h2.4M16.4 16h2.4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.4" />
+                      </svg>
+                    {:else}
+                      <span class="text-[0.7rem] font-bold {TYPE_TW[item.type] ?? 'text-dim'}">{item.title.slice(0, 1).toUpperCase()}</span>
+                    {/if}
+                  </Avatar>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-[0.95rem] text-ink">{item.title}</span>
+                    {#if item.subtitle}<span class="block truncate text-[0.8rem] text-dim opacity-60">{item.subtitle}</span>{/if}
+                  </span>
+                  <span class="shrink-0 text-[0.68rem] font-semibold tracking-wide uppercase {TYPE_TW[item.type] ?? 'text-dim'}">{item.type}</span>
+                </Command.Item>
+              {/each}
+            </div>
+          </Command.Viewport>
+        </Command.List>
+      </Command.Root>
+    </Dialog.Content>
+  </Dialog.Portal>
+</Dialog.Root>
