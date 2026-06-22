@@ -46,7 +46,8 @@
     { href: '/compare/', label: 'Compare devices' },
     { href: '/compare-firmwares/', label: 'Compare firmwares' },
     { href: '/releases/', label: 'All releases' },
-    { href: '/vendors/', label: 'Vendors' }
+    { href: '/vendors/', label: 'Vendors' },
+    { href: '/bands/', label: 'Frequency bands' }
   ];
 </script>
 

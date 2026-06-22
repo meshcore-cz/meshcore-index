@@ -27,7 +27,7 @@ hardware:
   radios:
     - technology: lora
       chip: stm32wl
-      frequencyVariants:
+      bands:
         - '868'
         - '915'
         - '923'

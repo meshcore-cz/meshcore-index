@@ -32,7 +32,7 @@ hardware:
   radios:
     - technology: lora
       chip: sx1262
-      frequencyVariants:
+      bands:
         - '868'
       txPowerDbm: 22
       antenna: RP-SMA

@@ -39,8 +39,10 @@ hardware:
   radios:
     - technology: lora
       chip: sx1262
-      frequencyVariants:
-        - '902-928'
+      bands:
+        - '915'
+        - '920'
+        - '923'
       txPowerDbm: 30
   display:
     status: none

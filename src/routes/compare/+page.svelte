@@ -3,7 +3,7 @@
   import { page } from '$app/stores';
   import { browser } from '$app/environment';
   import { goto } from '$app/navigation';
-  import { deviceRadioLabel, devicePriceLabel, resolveMcuInfo, resolveRadio, resolveGnss, stripVendorLabel } from '$lib/data.js';
+  import { deviceRadioLabel, devicePriceLabel, resolveMcuInfo, resolveRadio, resolveGnss, stripVendorLabel, bandLabel } from '$lib/data.js';
   import { compareIds } from '$lib/compare.js';
   import Seo from '$lib/Seo.svelte';
 
@@ -134,7 +134,7 @@
     },
     {
       label: 'Frequency',
-      get: (d) => (d.hardware?.radios ?? []).flatMap((r) => r.frequencyVariants ?? []).join(', ') || DASH
+      get: (d) => [...new Set((d.hardware?.radios ?? []).flatMap((r) => r.bands ?? []))].map((b) => bandLabel(b) ?? b).join(', ') || DASH
     },
     {
       label: 'Display',

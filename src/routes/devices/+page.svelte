@@ -6,7 +6,8 @@
     deviceDisplayLabel,
     devicePriceLabel,
     resolveMcuInfo,
-    resolveRadio
+    resolveRadio,
+    bandLabel
   } from '$lib/data.js';
   import { compareIds, toggleCompare, clearCompare } from '$lib/compare.js';
   import { favoriteIds, toggleFavorite } from '$lib/favorites.js';
@@ -68,7 +69,7 @@
     { id: 'roles', label: 'Roles', primary: true, get: (d) => d.roles ?? [], fmt: humanize },
     { id: 'vendor', label: 'Vendor', get: (d) => (d.vendorName ? [d.vendorName] : []) },
     { id: 'arch', label: 'Arch', get: (d) => { const a = resolveMcuInfo(d)?.architecture?.name; return a ? [a] : []; } },
-    { id: 'band', label: 'Band', get: (d) => [...new Set((d.hardware?.radios ?? []).flatMap((r) => r.frequencyVariants ?? []))], fmt: (v) => `${v}` },
+    { id: 'band', label: 'Band', get: (d) => [...new Set((d.hardware?.radios ?? []).flatMap((r) => r.bands ?? []))], fmt: (v) => bandLabel(v) ?? `${v}` },
     { id: 'transports', label: 'Link', get: (d) => d.transports ?? [], fmt: (v) => TRANSPORT_LABELS[v] ?? humanize(v) },
     { id: 'kind', label: 'Kind', get: (d) => (d.kind ? [d.kind] : []), fmt: humanize },
     { id: 'lifecycle', label: 'Status', get: (d) => (d.lifecycle ? [d.lifecycle] : []), fmt: humanize },

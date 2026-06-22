@@ -33,14 +33,14 @@ hardware:
   radios:
     - technology: lora
       chip: sx1262
-      frequencyVariants:
+      bands:
         - '868'
         - '915'
       txPowerDbm: 30
       antenna: SMA
     - technology: lora
       chip: sx1268
-      frequencyVariants:
+      bands:
         - '433'
       txPowerDbm: 30
       antenna: SMA

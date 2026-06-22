@@ -32,6 +32,20 @@ roles:
 transports:
   - ble
   - usb
+# Sold in four per-band options; pick one at purchase (radios.bands is their union).
+variants:
+  - name: 433MHz
+    bands:
+      - '433'
+  - name: 470~510MHz
+    bands:
+      - '470'
+  - name: 863~870MHz
+    bands:
+      - '868'
+  - name: 902~928MHz
+    bands:
+      - '915'
 hardware:
   mcu:
     model: esp32-s3
@@ -40,7 +54,7 @@ hardware:
   radios:
     - technology: lora
       chip: sx1262
-      frequencyVariants:
+      bands:
         - '433'
         - '470'
         - '868'

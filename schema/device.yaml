@@ -105,6 +105,34 @@ properties:
         - wifi
         - ethernet
         - serial
+  variants:
+    type: array
+    description: >-
+      Purchasable SKUs of this board that differ by frequency band. Omit for a
+      device sold as a single board (including single wideband boards). Each
+      variant's `bands` must be a subset of the radios' `bands` union.
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+        - bands
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: Human label for this variant, e.g. "470~510MHz" or "EU868".
+        sku:
+          type: string
+          minLength: 1
+          description: Manufacturer's real SKU / part number, when known.
+        bands:
+          type: array
+          minItems: 1
+          description: Band keys (globals.yaml `frequency`) this SKU operates on.
+          items:
+            type: string
   hardware:
     type: object
     additionalProperties: false
@@ -138,8 +166,16 @@ properties:
                 - other
             chip:
               type: string
-            frequencyVariants:
+            bands:
               type: array
+              description: >-
+                Regional LoRa bands this radio supports — the union of what every
+                purchasable SKU offers. Each entry must be a band key registered
+                in data/globals.yaml `frequency` (e.g. "868", "915"). Drives
+                network compatibility matching, so a single wideband board lists
+                every band it covers, while a board sold in separate per-band SKUs
+                lists each of those bands. The per-SKU breakdown lives in the
+                device-root `variants`.
               items:
                 type: string
             txPowerDbm:

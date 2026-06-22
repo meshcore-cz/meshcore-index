@@ -8,6 +8,7 @@
     resolveMcuInfo,
     resolveRadio,
     resolveFrequency,
+    bandLabel,
     resolveDisplay,
     resolveGnss,
     resolveRefs,
@@ -586,21 +587,21 @@
   </div>
 {/if}
 
-<!-- Other variants in the same family (e.g. Wio Tracker L1 / L1 Pro / L1 e-ink) -->
-{#if data.variants?.length}
+<!-- Other models in the same family (e.g. Wio Tracker L1 / L1 Pro / L1 e-ink) -->
+{#if data.family?.length}
   <section class="mb-8">
     <div class="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-edge pb-1.5">
-      <h2 class="text-[1.1rem] font-semibold">Other variants</h2>
+      <h2 class="text-[1.1rem] font-semibold">Other models</h2>
       <a
         class="text-[0.8rem] text-dim transition hover:text-accent hover:underline"
-        href="{base}/compare/?ids={[d.id, ...data.variants.map((v) => v.id)].join(',')}"
-        onclick={() => compareIds.set([d.id, ...data.variants.map((v) => v.id)])}
+        href="{base}/compare/?ids={[d.id, ...data.family.map((v) => v.id)].join(',')}"
+        onclick={() => compareIds.set([d.id, ...data.family.map((v) => v.id)])}
       >
-        Compare all {data.variants.length + 1} →
+        Compare all {data.family.length + 1} →
       </a>
     </div>
     <div class="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-      {#each data.variants as v (v.id)}
+      {#each data.family as v (v.id)}
         <a
           class="group flex items-center gap-3 rounded-xl border border-edge bg-elev p-3 transition hover:-translate-y-0.5 hover:border-accent"
           href="{base}/device/{v.id}/"
@@ -629,7 +630,7 @@
        no longer leaves its row-mates with empty space. -->
   <div class="gap-4 [columns:280px]">
     <!-- Radio card(s) -->
-    {#each radios as radio}
+    {#each radios as radio, ri}
       <div class="mb-4 break-inside-avoid rounded-xl border border-edge bg-elev p-5">
         <h3 class="mb-3 flex items-center gap-2 text-[0.95rem] font-semibold">
           <Radio class="h-[1.05em] w-[1.05em] text-accent2" aria-hidden="true" /> Radio{radios.length > 1 ? ` · ${(radio.technology ?? '').toUpperCase()}` : ''}
@@ -637,10 +638,16 @@
         <dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-[0.9rem]">
           {#if known(radio.technology)}<dt class="text-dim">Technology</dt><dd class="text-right font-medium">{radio.technology.toUpperCase()}</dd>{/if}
           {#if known(radio.chip)}<dt class="text-dim">Chip</dt><dd class="text-right font-medium">{@render specValue(resolveRadio(radio.chip), radio.chip)}</dd>{/if}
-          {#if radio.frequencyVariants?.length}
-            <dt class="text-dim">Frequency</dt>
+          {#if radio.bands?.length}
+            <dt class="text-dim"><a class="transition hover:text-accent hover:underline" href="{base}/bands/" title="About frequency bands">Bands</a></dt>
             <dd class="text-right font-medium">
-              {#each radio.frequencyVariants as band, i}{@const fp = resolveFrequency(band)}{#if i > 0}, {/if}{#if fp}<span title={[fp.region, fp.range].filter(Boolean).join(' · ')} class="cursor-help underline decoration-dotted decoration-edge underline-offset-2">{fp.name}</span>{:else}{band}{/if}{/each}
+              {#each radio.bands as band, i}{@const fp = resolveFrequency(band)}{#if i > 0}, {/if}<a href="{base}/bands/?device={d.id}" title={[fp ? [fp.name, fp.range].filter(Boolean).join(' · ') : null, 'See all bands for this device'].filter(Boolean).join(' · ')} class="underline decoration-dotted decoration-edge underline-offset-2 transition hover:text-accent">{fp?.region ?? fp?.name ?? band}</a>{/each}
+            </dd>
+          {/if}
+          {#if ri === 0 && d.variants?.length}
+            <dt class="text-dim">Sold as</dt>
+            <dd class="text-right font-medium">
+              {#each d.variants as v, i}{#if i > 0}, {/if}<span title={[v.sku ? `SKU ${v.sku}` : null, v.bands.map((b) => bandLabel(b) ?? b).join(', ')].filter(Boolean).join(' · ')} class="cursor-help underline decoration-dotted decoration-edge underline-offset-2">{v.name}</span>{/each}
             </dd>
           {/if}
           {#if known(radio.txPowerDbm)}<dt class="text-dim">TX power</dt><dd class="text-right font-medium">{@render rankableValue({ value: `${radio.txPowerDbm} dBm`, metric: 'tx-power' })}</dd>{/if}

@@ -13,7 +13,7 @@
 # Keys match the value used in device.yaml:
 #   family / family.models → hardware.mcu.model
 #   radio                  → hardware.radios[].chip
-#   frequency              → hardware.radios[].frequencyVariants[]  (e.g. "868")
+#   frequency              → hardware.radios[].bands[] and variants[].bands[]  (e.g. "868")
 #   display                → hardware.display.technology
 #   gnss                   → hardware.gnss.chip
 
@@ -119,7 +119,7 @@ radio:
     url: https://www.st.com/en/microcontrollers-microprocessors/stm32wl-series.html
 
 # Regional LoRa bands. Referenced from a device by the short key, e.g.
-#   frequencyVariants: ["868", "915"]
+#   bands: ["868", "915"]
 frequency:
   "433":
     name: 433 MHz

@@ -91,7 +91,7 @@ export function devicesForBand(band) {
   if (band == null || band === '') return [];
   const key = String(band);
   return devices.filter((d) =>
-    (d.hardware?.radios ?? []).some((r) => (r.frequencyVariants ?? []).map(String).includes(key))
+    (d.hardware?.radios ?? []).some((r) => (r.bands ?? []).map(String).includes(key))
   );
 }
 
@@ -123,7 +123,7 @@ export function devicesForNetwork(network) {
   if (!bands.length) return [];
   return devices.filter((d) =>
     (d.hardware?.radios ?? []).some((r) => {
-      const variants = (r.frequencyVariants ?? []).map(String);
+      const variants = (r.bands ?? []).map(String);
       return bands.some((band) => variants.includes(band));
     })
   );
@@ -140,7 +140,7 @@ export function devicesIncompatibleWithBand(band) {
   const key = String(band);
   return devices.filter((d) => {
     const radios = d.hardware?.radios ?? [];
-    const variants = radios.flatMap((r) => (r.frequencyVariants ?? []).map(String));
+    const variants = radios.flatMap((r) => (r.bands ?? []).map(String));
     return variants.length > 0 && !variants.includes(key);
   });
 }
@@ -150,7 +150,7 @@ export function devicesIncompatibleWithNetwork(network) {
   const bands = networkBands(network);
   if (!bands.length) return [];
   return devices.filter((d) => {
-    const variants = (d.hardware?.radios ?? []).flatMap((r) => (r.frequencyVariants ?? []).map(String));
+    const variants = (d.hardware?.radios ?? []).flatMap((r) => (r.bands ?? []).map(String));
     return variants.length > 0 && !bands.some((band) => variants.includes(band));
   });
 }
@@ -307,6 +307,41 @@ export function resolveRadio(chip) {
 /** Catalog entry for a LoRa frequency band key (e.g. "868"). */
 export function resolveFrequency(band) {
   return lookupPart('frequency', band);
+}
+
+/**
+ * Standard display label for a band key, leading with the regional code when
+ * the catalog defines one — e.g. "868" → "EU868", "915" → "US915 / AU915".
+ * Falls back to the catalog name ("868 MHz") and finally the raw key.
+ */
+export function bandLabel(band) {
+  const fp = resolveFrequency(band);
+  return fp?.region ?? fp?.name ?? (band != null ? String(band) : null);
+}
+
+/** Region code + MHz name together, e.g. "EU868 · 868 MHz". For tooltips. */
+export function bandLongLabel(band) {
+  const fp = resolveFrequency(band);
+  if (!fp) return band != null ? String(band) : null;
+  return [fp.region, fp.name].filter(Boolean).join(' · ');
+}
+
+/**
+ * Every LoRa band in the catalog, sorted ascending by frequency, with the count
+ * of devices supporting it. Powers the /bands reference page.
+ * @returns {{ key, name, region?, range?, description?, deviceCount }[]}
+ */
+export function allBands() {
+  const cat = globals.frequency ?? {};
+  return Object.entries(cat)
+    .map(([key, part]) => ({
+      key,
+      ...part,
+      deviceCount: devices.filter((d) =>
+        (d.hardware?.radios ?? []).some((r) => (r.bands ?? []).map(String).includes(key))
+      ).length
+    }))
+    .sort((a, b) => Number(a.key) - Number(b.key));
 }
 
 /**
@@ -515,9 +550,9 @@ export const NETWORK_STATUS_META = {
   inactive: { label: 'Inactive', tw: 'text-bad' }
 };
 
-/** Compact band label for a network, e.g. "868 MHz" or "433 MHz, 868 MHz". */
+/** Compact band label for a network, e.g. "EU868" or "EU433 / CN, EU868". */
 export function networkBandLabel(network) {
-  const labels = networkBands(network).map((band) => resolveFrequency(band)?.name ?? `${band} MHz`);
+  const labels = networkBands(network).map((band) => bandLabel(band));
   return labels.length ? labels.join(', ') : null;
 }
 
@@ -527,7 +562,7 @@ export function networkRadioLabel(radio) {
   if (radio.frequency_mhz != null) return `${radio.frequency_mhz} MHz`;
   const band = radio.frequency;
   if (!band) return null;
-  return resolveFrequency(band)?.name ?? `${band} MHz`;
+  return bandLabel(band);
 }
 
 /** Inline SVG markup for a 3:2 country flag, or null. Case-insensitive. */

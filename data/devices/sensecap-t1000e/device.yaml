@@ -38,8 +38,12 @@ hardware:
   radios:
     - technology: lora
       chip: lr1110
-      frequencyVariants:
-        - 863-928MHz
+      bands:
+        - '865'
+        - '868'
+        - '915'
+        - '920'
+        - '923'
       antenna: internal
   display:
     status: none

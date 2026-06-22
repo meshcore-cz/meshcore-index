@@ -31,7 +31,7 @@ hardware:
   radios:
     - technology: lora
       chip: lr1110
-      frequencyVariants:
+      bands:
         - '865'
         - '868'
         - '915'

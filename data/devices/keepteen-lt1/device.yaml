@@ -31,8 +31,8 @@ hardware:
   radios:
     - technology: lora
       chip: sx1262
-      frequencyVariants:
-        - '863'
+      bands:
+        - '865'
         - '868'
         - '915'
         - '920'

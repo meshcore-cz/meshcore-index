@@ -39,8 +39,12 @@ hardware:
   radios:
     - technology: lora
       chip: sx1262
-      frequencyVariants:
-        - '900'
+      bands:
+        - '865'
+        - '868'
+        - '915'
+        - '920'
+        - '923'
       txPowerDbm: 22
       antenna: U.FL/IPEX
   display:

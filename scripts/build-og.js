@@ -418,7 +418,7 @@ async function main() {
     band == null || band === ''
       ? 0
       : data.devices.filter((d) =>
-          (d.hardware?.radios ?? []).some((r) => (r.frequencyVariants ?? []).map(String).includes(String(band)))
+          (d.hardware?.radios ?? []).some((r) => (r.bands ?? []).map(String).includes(String(band)))
         ).length;
   for (const nw of data.networks ?? []) {
     const count = deviceCountForBand(nw.radio?.frequency);

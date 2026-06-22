@@ -44,7 +44,7 @@ hardware:
   radios:
     - technology: lora
       chip: sx1276
-      frequencyVariants:
+      bands:
         - '868'
         - '915'
       txPowerDbm: 20

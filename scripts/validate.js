@@ -233,6 +233,30 @@ for (const n of networks) {
 
 // Referential integrity.
 const vendorIds = new Set(vendors.map((v) => v.id));
+// A device radio's bands must all be band keys registered in globals.frequency
+// — they are matched verbatim against a network's band. A variant SKU's bands
+// must be from the catalog too, and a subset of what the radios support.
+for (const d of devices) {
+  const radioBands = new Set();
+  for (const [index, radio] of (d.data.hardware?.radios ?? []).entries()) {
+    for (const band of radio?.bands ?? []) {
+      radioBands.add(String(band));
+      if (!frequencyKeys.has(String(band))) {
+        err(d.where, `hardware.radios[${index}].bands "${band}" is not a band key in data/globals.yaml frequency`);
+      }
+    }
+  }
+  for (const [index, variant] of (d.data.variants ?? []).entries()) {
+    for (const band of variant?.bands ?? []) {
+      if (!frequencyKeys.has(String(band))) {
+        err(d.where, `variants[${index}].bands "${band}" is not a band key in data/globals.yaml frequency`);
+      } else if (!radioBands.has(String(band))) {
+        err(d.where, `variants[${index}] ("${variant.name}") band "${band}" is not in any radio's bands`);
+      }
+    }
+  }
+}
+
 const deviceIds = new Set(devices.map((d) => d.id));
 const firmwareIds = new Set(firmwares.map((f) => f.id));
 const firmwareDeviceIds = new Map(

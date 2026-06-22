@@ -98,7 +98,7 @@ function completenessPercent(d) {
   for (const radio of radios) {
     add(radio.technology);
     add(radio.chip);
-    addEntries(radio.frequencyVariants);
+    addEntries(radio.bands);
     add(radio.txPowerDbm);
     add(radio.antenna);
   }

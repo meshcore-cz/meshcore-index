@@ -211,6 +211,7 @@ Create `data/devices/<id>/device.yaml`.
 | `datasheet`       | no       | string   | PDF filename in the same directory (e.g. `datasheet.pdf`); immutable copy of the vendor spec sheet. |
 | `roles`           | no       | enum[]   | Canonical roles: `companion`, `repeater`, `room-server`, `observer`, `sensor`, `kiss-modem`, `standalone-ui`. |
 | `transports`      | no       | enum[]   | Canonical transports: `ble`, `usb`, `tcp`, `wifi`, `ethernet`, `serial`. |
+| `variants`        | no       | array    | Purchasable per-band options (`{ name, sku?, bands[] }`); omit for a single-board product. Each `bands[]` must be a subset of `radios[].bands`. |
 | `hardware`        | yes      | object   | Structured hardware details; `hardware.mcu` is required, absent optional values mean unknown. |
 | `interfaces`      | no       | object   | Structured USB/BLE/Wi-Fi interface details. |
 | `description`     | no       | string   | One short paragraph. |
@@ -237,7 +238,7 @@ Use structured fields instead of deprecated flat aliases such as `mcu`, `radio`,
 | `mcu.ramKb` | number | On-chip SRAM in KB. |
 | `radios[]` | array | LoRa / ESP-NOW radios. |
 | `radios[].chip` | string | Catalog key, e.g. `sx1262`. |
-| `radios[].frequencyVariants[]` | string[] | Regional band keys, e.g. `868`, `915`. |
+| `radios[].bands[]` | string[] | Regional band keys the radio supports, e.g. `868`, `915` (union of all SKUs). |
 | `radios[].txPowerDbm` | number | Max TX power in dBm. |
 | `radios[].antenna` | string | Antenna connector or included antenna, e.g. `IPEX-1.0`. |
 | `display` | object | Panel type, controller, size, resolution. |

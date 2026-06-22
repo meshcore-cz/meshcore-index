@@ -34,8 +34,12 @@ hardware:
   radios:
     - technology: lora
       chip: sx1262
-      frequencyVariants:
-        - 862-930MHz
+      bands:
+        - '865'
+        - '868'
+        - '915'
+        - '920'
+        - '923'
   display:
     status: present
     technology: e-ink

@@ -11,6 +11,6 @@ export function load({ params }) {
   return {
     device,
     firmwares: firmwaresForDevice(params.id),
-    variants: familyVariants(device)
+    family: familyVariants(device)
   };
 }

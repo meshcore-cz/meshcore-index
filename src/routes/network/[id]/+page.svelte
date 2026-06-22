@@ -6,6 +6,7 @@
     networkBandLabel,
     networkFlags,
     networkRadioLabel,
+    bandLabel,
     networkRadioSettings,
     networkRegions,
     deviceMcuLabel,
@@ -368,7 +369,7 @@
             <div>
               <span class="block text-[0.9rem]">{d.name}</span>
               <span class="block font-mono text-[0.76rem] text-dim">
-                {(d.hardware?.radios ?? []).flatMap((r) => r.frequencyVariants ?? []).join(', ') || 'No LoRa band'} MHz
+                {[...new Set((d.hardware?.radios ?? []).flatMap((r) => r.bands ?? []))].map((b) => bandLabel(b) ?? b).join(', ') || 'No LoRa band'}
               </span>
             </div>
           </a>
