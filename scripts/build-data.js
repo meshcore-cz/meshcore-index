@@ -196,6 +196,19 @@ function buildRecordJson(root, { devices, firmwares, vendors, networks, compatib
     count += 1;
   }
 
+  // Collection endpoints: the whole array for each kind at the static root, e.g.
+  // /devices.json. Lets consumers grab an entire collection in one request
+  // without downloading and parsing the full data.json.
+  for (const [name, records] of [
+    ['devices', devices],
+    ['firmwares', firmwares],
+    ['vendors', vendors],
+    ['networks', networks],
+    ['compatibility', compatibility]
+  ]) {
+    writeJsonRecord(join(root, 'static', `${name}.json`), records);
+  }
+
   return count;
 }
 
