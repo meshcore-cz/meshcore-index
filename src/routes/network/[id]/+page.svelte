@@ -12,8 +12,10 @@
     networkRegions,
     deviceMcuLabel,
     deviceRadioLabel,
+    isAppPresetNetwork,
     resolveRefs
   } from '$lib/data.js';
+  import AppPresetBadge from '$lib/AppPresetBadge.svelte';
   import { clampDescription, absUrl, ogImageFor } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
   import { onMount } from 'svelte';
@@ -61,9 +63,10 @@
         radio,
         title: radio.name ?? (radioSettings.length > 1 ? `Radio preset ${index + 1}` : 'Radio preset'),
         description: radio.description,
+        appPreset: radio.app_preset,
         specs: radioSpecs(radio)
       }))
-      .filter((preset) => preset.specs.length || preset.description)
+      .filter((preset) => preset.specs.length || preset.description || preset.appPreset)
   );
 
   // Community links (label + url), present ones only. Matrix/contact may be a
@@ -150,12 +153,20 @@
         {NETWORK_STATUS_META[n.status]?.label ?? n.status}
       </span>
     {/if}
+    {#if isAppPresetNetwork(n)}
+      <AppPresetBadge label title="This network uses an official MeshCore app radio preset — selectable by name in the app" />
+    {/if}
   </div>
   {#if n.short_name && n.short_name !== n.name}
     <p class="font-mono text-[0.85rem] text-dim">{n.short_name}</p>
   {/if}
   {#if alternateNames.length}
     <p class="mt-0.5 text-[0.9rem] text-dim">{alternateNames.join(' · ')}</p>
+  {/if}
+  {#if n.areaKm2 != null}
+    <p class="mt-1 text-[0.85rem] text-dim">
+      Coverage area <span class="font-mono text-ink">≈ {n.areaKm2.toLocaleString()} km²</span>
+    </p>
   {/if}
   {#if n.description}<p class="mt-1 max-w-[70ch] text-dim">{n.description}</p>{/if}
   {#if communityLinks.length || refs.length}
@@ -180,9 +191,16 @@
     <div class="grid gap-3 {joinPresets.length > 1 ? '[grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]' : ''}">
       {#each joinPresets as preset}
         <div class="rounded-xl border border-edge bg-elev p-[1.1rem]">
-          {#if joinPresets.length > 1 || preset.radio.name || preset.description}
+          {#if joinPresets.length > 1 || preset.radio.name || preset.description || preset.appPreset}
             <div class="mb-3">
               <h3 class="font-semibold">{preset.title}</h3>
+              {#if preset.appPreset}
+                <p class="mt-1 flex flex-wrap items-center gap-1.5 text-[0.82rem]">
+                  <span class="text-dim">App preset:</span>
+                  <span class="rounded-md border border-accent2/30 bg-accent2/10 px-2 py-0.5 font-mono text-[0.8rem] font-medium text-accent2">{preset.appPreset}</span>
+                  <span class="text-dim">— select this by name in the MeshCore app</span>
+                </p>
+              {/if}
               {#if preset.description}<p class="mt-0.5 text-[0.85rem] text-dim">{preset.description}</p>{/if}
             </div>
           {/if}

@@ -23,6 +23,7 @@ radio:
   coding_rate: 4/8
   tx_power_dbm: 20
   public_channel: Public
+  app_preset: 'EU 433MHz (Narrow)'
 
 community:
   website: https://meshcore-ua.net/

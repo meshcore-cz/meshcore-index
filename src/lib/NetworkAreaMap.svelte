@@ -2,15 +2,29 @@
   import { base } from '$app/paths';
   import { onMount } from 'svelte';
   import { networkBands, bandLabel } from '$lib/data.js';
+  import { LIVE_ENABLED, fmtRate } from '$lib/pulse.js';
   import 'leaflet/dist/leaflet.css';
 
-  let { networks = [] } = $props();
+  let { networks = [], liveById = {} } = $props();
+
+  // Latest live metrics, read by the popup builder at click/refresh time. A
+  // plain holder (not the closure-captured prop) so the once-built click handler
+  // always sees fresh numbers; an open popup re-renders when they change.
+  const liveRef = { current: {} };
+  let refreshPopup = () => {};
+  $effect(() => {
+    liveRef.current = liveById ?? {};
+    refreshPopup();
+  });
 
   // "network" → each area gets a distinct rotating color (default).
   // "band"    → areas are colored by the frequency band the network uses, so
   //             you can see which regions share a band at a glance.
   let colorMode = $state('network');
   let bandLegend = $state([]);
+  // Scroll-wheel zoom starts disabled (so the page can scroll past the map) and
+  // turns on after the first click/drag. A subtle hint advertises that until then.
+  let wheelZoomEnabled = $state(false);
   // Restyle drawn layers in place when the mode flips (assigned in init).
   let applyColors = () => {};
   function setColorMode(mode) {
@@ -159,7 +173,6 @@
         const geojson = { type: 'FeatureCollection', features: byNetwork.get(network.id) };
 
         const color = colorFor(network, index);
-        const band = primaryBand(network);
         const layer = L.geoJSON(geojson, {
           style: {
             color,
@@ -167,13 +180,6 @@
             opacity: 0.5,
             fillColor: color,
             fillOpacity: 0.18
-          },
-          onEachFeature: (_feature, featureLayer) => {
-            featureLayer.bindPopup(
-              `<strong>${escapeHtml(network.name)}</strong>${
-                band ? `<br><span>${escapeHtml(bandLabel(band) ?? band)}</span>` : ''
-              }<br><a href="${base}/network/${network.id}/">Open network</a>`
-            );
           }
         }).addTo(map);
 
@@ -196,7 +202,87 @@
           const c = colorFor(network, index);
           layer.setStyle({ color: c, fillColor: c });
         }
+        if (map.isPopupOpen?.()) refreshOpenPopup();
       };
+
+      // --- Click → popup listing every network covering the clicked point -----
+      // Reuse each polygon's draw-order color so the popup accent matches the map.
+      const drawIndexById = new Map(drawn.map((d) => [d.network.id, d.index]));
+      const networkColor = (n) => colorFor(n, drawIndexById.get(n.id) ?? 0);
+      const radiosOf = (n) => (Array.isArray(n.radios) ? n.radios : n.radio ? [n.radio] : []);
+      const fmtMhz = (v) => (v == null ? '' : `${Number.isInteger(v) ? v : Number(v).toFixed(1)} MHz`);
+
+      function radioRow(r) {
+        const band = r.frequency != null ? String(r.frequency) : null;
+        const c = bandColor.get(band) ?? NO_BAND_COLOR;
+        const label = escapeHtml(bandLabel(band) ?? band ?? '—');
+        const detail = [fmtMhz(r.frequency_mhz), r.spreading_factor ? `SF${r.spreading_factor}` : '', r.bandwidth_khz ? `${r.bandwidth_khz}kHz` : '']
+          .filter(Boolean)
+          .join(' · ');
+        return `<div class="mc-radio"><span class="mc-band" style="color:${c};background:color-mix(in srgb, ${c} 18%, transparent);border-color:color-mix(in srgb, ${c} 42%, transparent)">${label}</span><span class="mc-detail">${escapeHtml(detail)}</span></div>`;
+      }
+
+      function netBlock(n) {
+        const tags =
+          (n.scope ? `<span class="mc-tag">${escapeHtml(n.scope)}</span>` : '') +
+          (n.status && n.status !== 'active' ? `<span class="mc-tag mc-tag-warn">${escapeHtml(n.status)}</span>` : '');
+        const radios = radiosOf(n).map(radioRow).join('');
+        const live = LIVE_ENABLED ? liveRef.current[n.id] : null;
+        const liveCol = LIVE_ENABLED
+          ? `<div class="mc-livecol"><div class="mc-stat"><span class="mc-statnum">${live ? escapeHtml(fmtRate(live.pktPerMin)) : '—'}</span><span class="mc-statlbl">pkt/m</span></div><div class="mc-stat"><span class="mc-statnum">${live && live.nodes != null ? live.nodes.toLocaleString() : '—'}</span><span class="mc-statlbl">nodes</span></div></div>`
+          : '';
+        return `<a class="mc-net" href="${base}/network/${n.id}/"><span class="mc-accent" style="background:${networkColor(n)}"></span><div class="mc-main"><div class="mc-headrow"><span class="mc-name">${escapeHtml(n.name)}</span><span class="mc-tags">${tags}</span></div>${radios ? `<div class="mc-radios">${radios}</div>` : ''}</div>${liveCol}</a>`;
+      }
+
+      const popupHtml = (nets) =>
+        `<div class="mc-popup">${nets.length > 1 ? `<div class="mc-count">${nets.length} networks here</div>` : ''}${nets.map(netBlock).join('')}</div>`;
+
+      // Ray-casting point-in-polygon over the raw GeoJSON, so a click reports
+      // EVERY network whose shape covers it — not just Leaflet's topmost layer.
+      const inRing = (x, y, ring) => {
+        let inside = false;
+        for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+          const xi = ring[i][0], yi = ring[i][1], xj = ring[j][0], yj = ring[j][1];
+          if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+        }
+        return inside;
+      };
+      const inPoly = (x, y, rings) => inRing(x, y, rings[0]) && !rings.slice(1).some((h) => inRing(x, y, h));
+      const inFeature = (x, y, f) => {
+        const g = f.geometry;
+        if (g?.type === 'Polygon') return inPoly(x, y, g.coordinates);
+        if (g?.type === 'MultiPolygon') return g.coordinates.some((p) => inPoly(x, y, p));
+        return false;
+      };
+
+      let lastHits = [];
+      const hitsAt = (latlng) => {
+        const lat = latlng.lat;
+        const lng = ((((latlng.lng + 180) % 360) + 360) % 360) - 180;
+        return drawn
+          .map((d) => d.network)
+          // Smallest (most specific) area first, so the local network leads.
+          .filter((n) => (byNetwork.get(n.id) ?? []).some((f) => inFeature(lng, lat, f)))
+          .sort((a, b) => (a.areaKm2 ?? 0) - (b.areaKm2 ?? 0));
+      };
+      const refreshOpenPopup = () => {
+        const p = map.getPopup?.();
+        if (p && lastHits.length) p.setContent(popupHtml(lastHits));
+      };
+      // Let live-metric updates re-render an open popup (see the top-level $effect).
+      refreshPopup = refreshOpenPopup;
+
+      map.on('click', (e) => {
+        lastHits = hitsAt(e.latlng);
+        if (!lastHits.length) {
+          map.closePopup();
+          return;
+        }
+        L.popup({ maxWidth: 380, minWidth: 300, autoPanPadding: [24, 24] })
+          .setLatLng(e.latlng)
+          .setContent(popupHtml(lastHits))
+          .openOn(map);
+      });
 
       if (bounds.isValid()) {
         if (areaNetworks.length >= 3) {
@@ -251,6 +337,7 @@
     function enableWheelZoom() {
       if (!map) return;
       map.scrollWheelZoom.enable();
+      wheelZoomEnabled = true;
       map.off('click dragstart', enableWheelZoom);
     }
   });
@@ -323,18 +410,35 @@
           : 'h-[360px] md:h-[430px] xl:h-[560px] 2xl:h-[640px]')}
     >
       <div bind:this={mapEl} class="network-area-map bg-bg h-full"></div>
-      {#if loaded && colorMode === 'band' && bandLegend.length}
-        <!-- Floating legend, bottom-left (clear of Leaflet's bottom-right
-             attribution and top-left zoom controls). -->
-        <div
-          class="pointer-events-none absolute bottom-3 left-3 z-[800] flex max-w-[60%] flex-col gap-1 rounded-lg border border-edge bg-elev/90 px-3 py-2 text-[0.75rem] shadow-lg backdrop-blur-sm"
-        >
-          {#each bandLegend as item (item.key ?? 'none')}
-            <span class="inline-flex items-center gap-1.5">
-              <span class="h-2.5 w-2.5 shrink-0 rounded-[3px]" style:background-color={item.color}></span>
-              <span class="text-dim">{item.label}</span>
+      {#if loaded}
+        <!-- Floating legend + scroll-zoom hint, bottom-left (clear of Leaflet's
+             bottom-right attribution and top-left zoom controls). The container
+             is click-through so the hint's click falls onto the map and enables
+             wheel zoom. -->
+        <div class="pointer-events-none absolute bottom-3 left-3 z-[800] flex max-w-[calc(100%-1.5rem)] items-end gap-2">
+          {#if colorMode === 'band' && bandLegend.length}
+            <div
+              class="flex max-w-full flex-col gap-1 rounded-lg border border-edge bg-elev/90 px-3 py-2 text-[0.75rem] shadow-lg backdrop-blur-sm"
+            >
+              {#each bandLegend as item (item.key ?? 'none')}
+                <span class="inline-flex items-center gap-1.5">
+                  <span class="h-2.5 w-2.5 shrink-0 rounded-[3px]" style:background-color={item.color}></span>
+                  <span class="text-dim">{item.label}</span>
+                </span>
+              {/each}
+            </div>
+          {/if}
+          {#if !wheelZoomEnabled}
+            <span
+              class="inline-flex items-center gap-1 whitespace-nowrap rounded-md px-1.5 py-1 text-[0.68rem] text-dim/70"
+            >
+              <svg class="h-3 w-3 shrink-0 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="8" y="3" width="8" height="14" rx="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M12 6v2" stroke-linecap="round" />
+              </svg>
+              Click to scroll-zoom
             </span>
-          {/each}
+          {/if}
         </div>
       {/if}
       {#if !loaded}
@@ -421,6 +525,151 @@
 
   .network-area-map :global(.leaflet-control-zoom) {
     border-color: var(--color-edge);
+  }
+
+  /* --- Network click popup --------------------------------------------- */
+  .network-area-map :global(.leaflet-popup-content-wrapper) {
+    border-radius: 12px;
+    padding: 2px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+  .network-area-map :global(.leaflet-popup-content) {
+    margin: 0;
+    padding: 0;
+  }
+  .network-area-map :global(.mc-popup) {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 6px 11px 8px;
+  }
+  .network-area-map :global(.mc-count) {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--color-dim);
+    padding: 2px 0 5px;
+  }
+  .network-area-map :global(.mc-net) {
+    display: flex;
+    gap: 9px;
+    padding: 8px 6px;
+    border-radius: 7px;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.12s ease;
+  }
+  .network-area-map :global(.mc-net + .mc-net) {
+    border-top: 1px solid var(--color-edge);
+  }
+  .network-area-map :global(.mc-net:hover) {
+    background: color-mix(in srgb, var(--color-elev2) 55%, transparent);
+  }
+  .network-area-map :global(.mc-net:hover .mc-name) {
+    color: var(--color-accent2);
+  }
+  .network-area-map :global(.mc-livecol) {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 22px;
+    padding-left: 16px;
+  }
+  .network-area-map :global(.mc-stat) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.02;
+  }
+  .network-area-map :global(.mc-statnum) {
+    font-size: 1.4rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-ink);
+  }
+  .network-area-map :global(.mc-statlbl) {
+    margin-top: 1px;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-dim);
+  }
+  .network-area-map :global(.mc-accent) {
+    flex: 0 0 auto;
+    width: 3px;
+    border-radius: 3px;
+  }
+  .network-area-map :global(.mc-main) {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .network-area-map :global(.mc-headrow) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .network-area-map :global(.mc-name) {
+    flex: 0 1 auto;
+    min-width: 0;
+    font-weight: 600;
+    font-size: 0.84rem;
+    color: var(--color-ink);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .network-area-map :global(.mc-tags) {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 4px;
+  }
+  .network-area-map :global(.mc-tag) {
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-dim);
+    background: var(--color-elev2);
+    border-radius: 4px;
+    padding: 1px 5px;
+    white-space: nowrap;
+  }
+  .network-area-map :global(.mc-tag-warn) {
+    color: var(--color-warn);
+    background: color-mix(in srgb, var(--color-warn) 16%, transparent);
+  }
+  .network-area-map :global(.mc-radios) {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 5px;
+  }
+  .network-area-map :global(.mc-radio) {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .network-area-map :global(.mc-band) {
+    flex: 0 0 auto;
+    font-size: 0.6rem;
+    font-weight: 700;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 1px 6px;
+  }
+  .network-area-map :global(.mc-detail) {
+    font-size: 0.67rem;
+    color: var(--color-dim);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .network-area-map :global(.leaflet-control-zoom a) {

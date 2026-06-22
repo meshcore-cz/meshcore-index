@@ -556,6 +556,11 @@ export function networkBandLabel(network) {
   return labels.length ? labels.join(', ') : null;
 }
 
+/** True when any of the network's radios maps to an official MeshCore app preset. */
+export function isAppPresetNetwork(network) {
+  return networkRadioSettings(network).some((r) => r?.app_preset);
+}
+
 /** Display label for one network radio preset. */
 export function networkRadioLabel(radio) {
   if (!radio) return null;

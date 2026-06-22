@@ -25,6 +25,7 @@ radio:
   duty_cycle_pct: 10
   path_hash_mode: 2-Byte
   public_channel: Public
+  app_preset: 'Switzerland'
 
 community:
   website: https://www.meshcore.ch

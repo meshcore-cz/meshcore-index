@@ -1,0 +1,69 @@
+name: Check app presets
+
+on:
+  schedule:
+    # Once a day at 05:00 UTC.
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: app-presets
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Compare radio presets vs the official app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # Writes preset-drift.md (empty when in sync) and sets the `drift` output.
+      - name: Compare presets against the official app config
+        id: check
+        run: node scripts/check-app-presets.js --out preset-drift.md
+
+      # Open a single tracking issue on drift, update it while drift persists,
+      # and close it once our networks match upstream again.
+      - name: Open or close the drift issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          TITLE="Radio presets out of sync with the official MeshCore app"
+          LABEL="app-preset-drift"
+
+          gh label create "$LABEL" \
+            --color D93F0B \
+            --description "Drift between our networks and the official app radio presets" \
+            --force >/dev/null 2>&1 || true
+
+          EXISTING=$(gh issue list --label "$LABEL" --state open --json number --jq '.[0].number // empty')
+
+          if [ "${{ steps.check.outputs.drift }}" = "true" ]; then
+            if [ -n "$EXISTING" ]; then
+              echo "Drift persists — updating issue #$EXISTING."
+              gh issue edit "$EXISTING" --body-file preset-drift.md
+            else
+              echo "Drift detected — opening a new issue."
+              gh issue create --title "$TITLE" --label "$LABEL" --body-file preset-drift.md
+            fi
+          else
+            if [ -n "$EXISTING" ]; then
+              echo "Back in sync — closing issue #$EXISTING."
+              gh issue close "$EXISTING" \
+                --comment "Resolved — all network presets match the official MeshCore app config again."
+            else
+              echo "In sync and no open issue. Nothing to do."
+            fi
+          fi

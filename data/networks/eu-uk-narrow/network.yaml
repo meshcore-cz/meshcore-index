@@ -23,3 +23,4 @@ radio:
   tx_power_dbm: 22
   duty_cycle_pct: 10
   public_channel: Public
+  app_preset: 'EU/UK (Narrow)'

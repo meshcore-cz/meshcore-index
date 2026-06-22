@@ -1,0 +1,20 @@
+# Generated from the official MeshCore app radio presets
+# (https://api.meshcore.nz/api/v1/config) and tracked for drift by
+# .github/workflows/app-presets.yml. The radio values mirror upstream —
+# change them there, not here; `app_preset` is the upstream foreign key.
+name: 'Vietnam (Deprecated)'
+scope: general
+status: active
+description: 'Official MeshCore app radio preset — 920.250MHz / SF11 / BW250 / CR5.'
+deprecated: true
+area: area.geojson
+coverage:
+  countries:
+    - VN
+radio:
+  frequency: '920'
+  frequency_mhz: 920.25
+  bandwidth_khz: 250
+  spreading_factor: 11
+  coding_rate: 4/5
+  app_preset: 'Vietnam (Deprecated)'

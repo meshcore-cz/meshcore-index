@@ -23,6 +23,7 @@ radio:
   coding_rate: 4/5
   path_hash_mode: 3-Byte
   public_channel: Public
+  app_preset: 'USA/Canada (Recommended)'
 
 community:
   website: https://meshcore.ca/

@@ -15,23 +15,31 @@ coverage:
   countries:
     - PT
 
+# Radio values published on the 433 MHz & 868 MHz network cards at
+# https://www.meshcore.pt/en/home — they match the official MeshCore app
+# presets, so each radio carries an `app_preset` foreign key tracked for drift
+# by .github/workflows/app-presets.yml.
 radios:
   - name: Popular 433 MHz network
     description: Most-used Portugal mesh; the site recommends 433 MHz hardware for broader existing compatibility.
     frequency: '433'
     frequency_mhz: 433.375
-    bandwidth_khz: 250
+    bandwidth_khz: 62.5
     spreading_factor: 9
-    coding_rate: 4/5
+    coding_rate: 4/6
+    tx_power_dbm: 10
     public_channel: Public
+    app_preset: 'Portugal 433'
   - name: Growing 868 MHz network
-    description: Secondary/growing Portugal mesh using the EU/UK Narrow preset.
+    description: Secondary/growing Portugal mesh on the 868 MHz band.
     frequency: '868'
     frequency_mhz: 869.618
     bandwidth_khz: 62.5
-    spreading_factor: 8
-    coding_rate: 4/8
+    spreading_factor: 7
+    coding_rate: 4/6
+    tx_power_dbm: 27
     public_channel: Public
+    app_preset: 'Portugal 868'
 
 community:
   website: https://www.meshcore.pt/en/home

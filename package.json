@@ -9,6 +9,8 @@
     "build:schema": "node scripts/build-schemas.js",
     "brand": "bash scripts/generate-brand-assets.sh",
     "changelogs": "node scripts/update-changelogs.js",
+    "check:presets": "node scripts/check-app-presets.js",
+    "import:presets": "node scripts/check-app-presets.js --import",
     "enrich:firmwares": "node scripts/enrich-firmwares.js",
     "predev": "node scripts/build-data.js",
     "dev": "vite dev",

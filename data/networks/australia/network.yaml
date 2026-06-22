@@ -1,0 +1,19 @@
+# Generated from the official MeshCore app radio presets
+# (https://api.meshcore.nz/api/v1/config) and tracked for drift by
+# .github/workflows/app-presets.yml. The radio values mirror upstream —
+# change them there, not here; `app_preset` is the upstream foreign key.
+name: 'Australia'
+scope: general
+status: active
+description: 'Official MeshCore app radio preset — 915.800MHz / SF10 / BW250 / CR5.'
+area: area.geojson
+coverage:
+  countries:
+    - AU
+radio:
+  frequency: '915'
+  frequency_mhz: 915.8
+  bandwidth_khz: 250
+  spreading_factor: 10
+  coding_rate: 4/5
+  app_preset: 'Australia'

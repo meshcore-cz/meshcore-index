@@ -51,6 +51,7 @@ radio:
   path_hash_mode: 2-Byte
   region_code: nz
   public_channel: Public
+  app_preset: 'New Zealand (Narrow)'
 
 community:
   website: https://meshed.kiwi/

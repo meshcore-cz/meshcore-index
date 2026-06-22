@@ -1,0 +1,21 @@
+# Generated from the official MeshCore app radio presets
+# (https://api.meshcore.nz/api/v1/config) and tracked for drift by
+# .github/workflows/app-presets.yml. The radio values mirror upstream —
+# change them there, not here; `app_preset` is the upstream foreign key.
+name: 'EU/UK (Deprecated)'
+scope: general
+status: active
+description: 'Official MeshCore app radio preset — 869.525MHz / SF11 / BW250 / CR5.'
+deprecated: true
+area: area.geojson
+coverage:
+  countries:
+    - EU
+    - GB
+radio:
+  frequency: '868'
+  frequency_mhz: 869.525
+  bandwidth_khz: 250
+  spreading_factor: 11
+  coding_rate: 4/5
+  app_preset: 'EU/UK (Deprecated)'

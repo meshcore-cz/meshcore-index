@@ -62,6 +62,7 @@ regions:
     name: Moravskoslezský
     parent: cz
 
+# source: https://meshcore.cz/nastaveni_site_meshcore_cz
 radio:
   frequency: '868'
   frequency_mhz: 869.432
@@ -72,6 +73,7 @@ radio:
   duty_cycle_pct: 10
   region_code: cz
   public_channel: Public
+  app_preset: 'Czech Republic (Narrow)'
 
 community:
   website: https://meshcore.cz

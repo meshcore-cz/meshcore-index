@@ -57,12 +57,13 @@ regions:
 
 radio:
   frequency: '868'
-  frequency_mhz: 868
+  frequency_mhz: 869.618
   bandwidth_khz: 62.5
   spreading_factor: 7
   coding_rate: 4/5
   region_code: nl
   public_channel: Public
+  app_preset: 'Netherlands'
 
 community:
   website: https://www.localmesh.nl/en/

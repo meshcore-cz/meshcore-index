@@ -35,6 +35,12 @@ properties:
   status:
     type: string
     enum: [active, planned, dormant, inactive]
+  deprecated:
+    type: boolean
+    description: >-
+      Superseded by a newer preset/configuration. Deprecated networks are kept
+      for reference but hidden from the coverage map and listed separately from
+      active networks.
   visibility:
     type: string
     enum: [public, private]
@@ -185,6 +191,16 @@ $defs:
         minLength: 1
       description:
         description: Short note explaining when/why to use this preset.
+        type: string
+        minLength: 1
+      app_preset:
+        description: >-
+          Foreign key to the matching preset in the official MeshCore app config
+          (https://api.meshcore.nz/api/v1/config →
+          config.suggested_radio_settings.entries[].title). The value is that
+          entry's exact `title`. A daily workflow (.github/workflows/app-presets.yml)
+          verifies this network's frequency_mhz / bandwidth_khz / spreading_factor /
+          coding_rate still match the upstream preset and opens an issue on drift.
         type: string
         minLength: 1
       frequency:
