@@ -29,3 +29,28 @@ export function relativeTime(dt) {
   if (mo < 12) return u(mo, 'month');
   return u(Math.round(d / 365), 'year');
 }
+
+/** Full localized date/time for hover text and other precise timestamps. */
+export function fullDateTime(dt) {
+  if (!dt) return '';
+  const d = new Date(dt);
+  if (Number.isNaN(+d)) return '';
+  return d.toLocaleString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZoneName: 'short'
+  });
+}
+
+/** Use relative time only for fresh timestamps, falling back to a full date. */
+export function recentTimeLabel(dt, maxAgeDays = 7) {
+  if (!dt) return '';
+  const then = new Date(dt).getTime();
+  if (Number.isNaN(then)) return '';
+  const age = Date.now() - then;
+  if (age >= 0 && age < maxAgeDays * 24 * 60 * 60 * 1000) return relativeTime(dt);
+  return fullDateTime(dt);
+}

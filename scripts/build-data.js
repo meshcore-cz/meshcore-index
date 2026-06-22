@@ -10,9 +10,11 @@ import {
   existsSync,
   writeFileSync,
   mkdirSync,
-  rmSync
+  rmSync,
+  statSync
 } from 'node:fs';
 import { join, dirname } from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { load } from 'js-yaml';
 import { latestReleaseSummary } from '../src/lib/releases.js';
@@ -21,9 +23,56 @@ import { METRICS } from '../src/lib/metrics.js';
 const here = dirname(fileURLToPath(import.meta.url));
 const defaultRoot = join(here, '..');
 
+// Map of `data/<kind>/<id>` → ISO date of the most recent git commit that
+// touched anything in that record's directory. Built in one `git log` pass
+// (newest-first, so the first time a directory appears is its latest edit).
+// Empty when git/history is unavailable (e.g. a shallow CI clone) — callers
+// then fall back to filesystem mtime.
+function gitDirLastModified(root) {
+  const dirDate = new Map();
+  let out;
+  try {
+    out = execFileSync('git', ['-C', root, 'log', '--name-only', '--format=%cI', '--', 'data'], {
+      encoding: 'utf8',
+      maxBuffer: 64 * 1024 * 1024
+    });
+  } catch {
+    return dirDate;
+  }
+  let date = null;
+  for (const line of out.split('\n')) {
+    if (/^\d{4}-\d{2}-\d{2}T/.test(line)) {
+      date = line.trim();
+      continue;
+    }
+    const parts = line.trim().split('/');
+    if (parts.length >= 3 && parts[0] === 'data' && date) {
+      const dir = parts.slice(0, 3).join('/');
+      if (!dirDate.has(dir)) dirDate.set(dir, date);
+    }
+  }
+  return dirDate;
+}
+
+// `source` metadata for a record: the canonical YAML path (for a "view source"
+// link) and when it was last edited. Prefers the git commit date; falls back to
+// the file's mtime so freshly-added, not-yet-committed records still show a date.
+function recordSource(root, kind, id, file, dirDate) {
+  const relPath = `data/${kind}/${id}/${file}`;
+  let updatedAt = dirDate.get(`data/${kind}/${id}`) ?? null;
+  if (!updatedAt) {
+    try {
+      updatedAt = statSync(join(root, relPath)).mtime.toISOString();
+    } catch {
+      updatedAt = null;
+    }
+  }
+  return { path: relPath, updatedAt };
+}
+
 // Read a collection of `data/<kind>/<id>/<file>`. The record `id` is the
 // directory name (never specified in the YAML itself).
-function readDir(root, kind, file) {
+function readDir(root, kind, file, dirDate) {
   const base = join(root, 'data', kind);
   const out = [];
   for (const d of readdirSync(base, { withFileTypes: true })) {
@@ -35,7 +84,11 @@ function readDir(root, kind, file) {
     const overlay = existsSync(overlayPath)
       ? stripOverlayMeta(JSON.parse(readFileSync(overlayPath, 'utf8')))
       : {};
-    out.push({ id: d.name, ...deepMerge(authored, overlay) });
+    out.push({
+      id: d.name,
+      ...deepMerge(authored, overlay),
+      source: recordSource(root, kind, d.name, file, dirDate ?? new Map())
+    });
   }
   return out;
 }
@@ -294,17 +347,19 @@ export async function buildData(root = defaultRoot) {
   // Dynamically imported so the markdown libs stay out of the Vite config bundle.
   const { renderMarkdown } = await import('./lib/markdown.js');
 
-  const vendors = readDir(root, 'vendors', 'vendor.yaml').sort((a, b) =>
+  const dirDate = gitDirLastModified(root);
+
+  const vendors = readDir(root, 'vendors', 'vendor.yaml', dirDate).sort((a, b) =>
     a.name.localeCompare(b.name)
   );
   const vendorById = new Map(vendors.map((v) => [v.id, v]));
 
-  const networks = readDir(root, 'networks', 'network.yaml').sort((a, b) =>
+  const networks = readDir(root, 'networks', 'network.yaml', dirDate).sort((a, b) =>
     a.name.localeCompare(b.name)
   );
   const networkAreas = publishNetworkAreas(root, networks);
 
-  const devices = readDir(root, 'devices', 'device.yaml')
+  const devices = readDir(root, 'devices', 'device.yaml', dirDate)
     .map((d) => ({ ...d, vendorName: vendorById.get(d.vendorId)?.name ?? null }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -316,7 +371,7 @@ export async function buildData(root = defaultRoot) {
   const typeRank = { official: 0, fork: 1, custom: 2 };
   // Active firmwares first, then everything else; ties broken by type, then name.
   const statusRank = (s) => (s === 'active' ? 0 : 1);
-  const rawFirmwares = readDir(root, 'firmwares', 'firmware.yaml');
+  const rawFirmwares = readDir(root, 'firmwares', 'firmware.yaml', dirDate);
   const compatibility = readCompatibility(root);
   const globals = readGlobals(root);
 

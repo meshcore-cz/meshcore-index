@@ -655,10 +655,13 @@ const fuse = new Fuse(searchItems, {
     { name: 'subtitle', weight: 0.25 },
     { name: 'text', weight: 0.15 }
   ],
+  includeScore: true,
   threshold: 0.4,
   ignoreLocation: true,
   minMatchCharLength: 1
 });
+
+const SEARCH_IMAGE_TIE_EPSILON = 0.02;
 
 /**
  * Fuzzy-search the atlas with Fuse.js. Returns at most `limit` items, best
@@ -668,5 +671,17 @@ const fuse = new Fuse(searchItems, {
 export function searchAtlas(query, limit = 12) {
   const q = query.trim();
   if (!q) return [];
-  return fuse.search(q, { limit }).map((r) => r.item);
+  return fuse
+    .search(q, { limit: limit * 3 })
+    .sort((a, b) => {
+      const scoreDelta = (a.score ?? 0) - (b.score ?? 0);
+      if (Math.abs(scoreDelta) > SEARCH_IMAGE_TIE_EPSILON) return scoreDelta;
+
+      const imageDelta = Number(Boolean(b.item.image)) - Number(Boolean(a.item.image));
+      if (imageDelta) return imageDelta;
+
+      return scoreDelta;
+    })
+    .slice(0, limit)
+    .map((r) => r.item);
 }

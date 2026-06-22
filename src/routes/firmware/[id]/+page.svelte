@@ -1,5 +1,6 @@
 <script>
   import { base } from '$app/paths';
+  import RecordFooter from '$lib/RecordFooter.svelte';
   import { STATUS_META, TYPE_META, FW_STATUS_TW, groupReleases, getFirmware, deviceMcuLabel, deviceRadioLabel, resolveRefs } from '$lib/data.js';
   import { clampDescription, absUrl, ogImageFor } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
@@ -318,3 +319,5 @@
     </div>
   </section>
 {/if}
+
+<RecordFooter source={fw.source} jsonPath="{base}/firmware/{fw.id}.json" />

@@ -1,5 +1,6 @@
 <script>
   import { base } from '$app/paths';
+  import RecordFooter from '$lib/RecordFooter.svelte';
   import { deviceMcuLabel, deviceRadioLabel, resolveRefs } from '$lib/data.js';
   import { clampDescription, abs, absUrl, ogImageFor } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
@@ -70,3 +71,5 @@
     <p class="mt-3 text-dim">No devices recorded for this vendor yet.</p>
   {/if}
 </section>
+
+<RecordFooter source={v.source} jsonPath="{base}/vendor/{v.id}.json" />

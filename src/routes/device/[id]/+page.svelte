@@ -1,5 +1,6 @@
 <script>
   import { base } from '$app/paths';
+  import RecordFooter from '$lib/RecordFooter.svelte';
   import {
     STATUS_META,
     TYPE_META,
@@ -914,3 +915,5 @@
     <p class="text-dim">No firmware in the atlas lists this device yet.</p>
   {/if}
 </section>
+
+<RecordFooter source={d.source} jsonPath="{base}/device/{d.id}.json" />

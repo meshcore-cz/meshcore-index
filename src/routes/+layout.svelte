@@ -5,9 +5,11 @@
   import { page } from '$app/stores';
   import { env } from '$env/dynamic/public';
   import { generatedAt } from '$lib/data.js';
+  import { fullDateTime, recentTimeLabel } from '$lib/format.js';
   import { REPO_URL, SITE_NAME } from '$lib/seo.js';
   import { searchOpen } from '$lib/search.js';
   import CommandPalette from '$lib/CommandPalette.svelte';
+  import pkg from '../../package.json';
   let { children } = $props();
 
   // Theme is bootstrapped before paint in app.html; mirror it into state and
@@ -26,17 +28,10 @@
     }
   }
 
-  const updatedLabel = generatedAt
-    ? new Date(generatedAt).toLocaleString(undefined, {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        timeZoneName: 'short'
-      })
-    : null;
+  const updatedLabel = recentTimeLabel(generatedAt);
+  const updatedTitle = fullDateTime(generatedAt);
   const plausibleScriptUrl = env.PUBLIC_PLAUSIBLE_SCRIPT_URL;
+  const versionLabel = `v${pkg.version}`;
 
   function onkeydown(e) {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -181,6 +176,8 @@
       <span>Contribute on GitHub</span>
     </a>
     <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5">
+      <span>{versionLabel}</span>
+      <span class="text-edge">·</span>
       <a class="text-accent2 hover:underline" href="{base}/about/">About</a>
       <span class="text-edge">·</span>
       <a class="text-accent2 hover:underline" href="{base}/status/">API status</a>
@@ -188,7 +185,7 @@
       <a class="text-accent2 hover:underline" href="{base}/about/">How to contribute</a>
       {#if updatedLabel}
         <span class="text-edge">·</span>
-        <span>Last updated at {updatedLabel}</span>
+        <span>Last updated <time datetime={generatedAt} title={updatedTitle}>{updatedLabel}</time></span>
       {/if}
     </div>
   </footer>

@@ -1,5 +1,6 @@
 <script>
   import { base } from '$app/paths';
+  import RecordFooter from '$lib/RecordFooter.svelte';
   import {
     NETWORK_SCOPE_META,
     NETWORK_STATUS_META,
@@ -378,3 +379,5 @@
     </details>
   </section>
 {/if}
+
+<RecordFooter source={n.source} jsonPath="{base}/network/{n.id}.json" />
