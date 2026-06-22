@@ -10,6 +10,9 @@ API_ADDR   ?= :8089
 DATA_DIR   ?= data
 GO         ?= go
 NPM        ?= npm
+REMOTE     ?= origin
+RELEASE_BRANCH ?= main
+RELEASE_VERSION := $(patsubst v%,%,$(VERSION))
 
 # Pretty-print: every target with a `## comment` shows up in `make help`.
 .DEFAULT_GOAL := help
@@ -30,6 +33,42 @@ test: test-api test-web ## Run all tests (Go + data validation)
 
 .PHONY: clean
 clean: clean-api clean-web ## Remove all build artifacts
+
+.PHONY: release
+release: ## Check, commit, tag, and push a release, for example make release VERSION=v0.2.0
+	@test -n "$(VERSION)" || { \
+		echo "Missing VERSION. Example: make release VERSION=v0.2.0"; \
+		exit 1; \
+	}
+	@echo "$(VERSION)" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$$' || { \
+		echo "Invalid VERSION: $(VERSION). Expected format: v0.2.0"; \
+		exit 1; \
+	}
+	@test "$$(git branch --show-current)" = "$(RELEASE_BRANCH)" || { \
+		echo "Release must be created from the $(RELEASE_BRANCH) branch"; \
+		exit 1; \
+	}
+	@test -z "$$(git status --porcelain)" || { \
+		echo "Working tree is not clean"; \
+		exit 1; \
+	}
+	@git fetch --quiet $(REMOTE) $(RELEASE_BRANCH) --tags
+	@test "$$(git rev-parse HEAD)" = "$$(git rev-parse $(REMOTE)/$(RELEASE_BRANCH))" || { \
+		echo "Local $(RELEASE_BRANCH) is not synchronized with $(REMOTE)/$(RELEASE_BRANCH)"; \
+		exit 1; \
+	}
+	@! git rev-parse "$(VERSION)" >/dev/null 2>&1 || { \
+		echo "Tag $(VERSION) already exists"; \
+		exit 1; \
+	}
+	$(NPM) version --no-git-tag-version "$(RELEASE_VERSION)"
+	$(MAKE) --no-print-directory fmt tidy
+	$(MAKE) --no-print-directory vet test build
+	git add -u
+	git commit -m "chore: release $(VERSION)"
+	git tag -a "$(VERSION)" -m "meshcore-ninja $(VERSION)"
+	git push $(REMOTE) "$(RELEASE_BRANCH)" "$(VERSION)"
+	@echo "Released $(VERSION). GitHub Actions will publish the release and API image."
 
 # --- web (SvelteKit) ---------------------------------------------------------
 

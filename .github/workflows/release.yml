@@ -1,0 +1,61 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to release, e.g. v0.2.0'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Publish GitHub release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref_name }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: api/go.mod
+          cache-dependency-path: api/go.sum
+
+      - name: Verify package version matches Git tag
+        run: |
+          tag_version="${{ github.event.inputs.tag || github.ref_name }}"
+          npm_version="$(node -p "require('./package.json').version")"
+          if [ "${tag_version#v}" != "$npm_version" ]; then
+            echo "Version mismatch: Git tag is $tag_version, package.json is $npm_version"
+            exit 1
+          fi
+          echo "package.json version $npm_version matches $tag_version"
+
+      - name: Validate web data
+        run: |
+          npm ci
+          npm test
+
+      - name: Validate API
+        working-directory: api
+        run: |
+          go vet ./...
+          go test ./...
+          CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o bin/meshcore-ninja-api .
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
+          generate_release_notes: true

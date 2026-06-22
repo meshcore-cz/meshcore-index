@@ -15,6 +15,13 @@ npm run build      # production build
 npm run preview    # preview the production build
 ```
 
+The Go metrics API lives in [`api/`](api/):
+
+```bash
+make run-api       # run the API against ./data
+make test          # validate data and run API tests
+```
+
 ## Working with the data
 
 All content lives as YAML under [`data/`](data/):
@@ -32,6 +39,19 @@ npm run build:data # regenerate data.json and static/schema/*.json
 ```
 
 Run `npm test` after every data change. Before authoring or editing data, read [`data/RULES.md`](data/RULES.md) (the authoring guide) and [`data/SCHEMA.md`](data/SCHEMA.md) (the field reference). Machine-readable contracts live in [`schema/`](schema/).
+
+## Releases
+
+Releases are cut from `main` with a clean, up-to-date working tree:
+
+```bash
+make release VERSION=v0.2.0
+```
+
+The release helper bumps `package.json` / `package-lock.json`, runs checks,
+commits the version bump, creates an annotated tag, and pushes the branch + tag.
+Tag pushes create a GitHub release and publish the API Docker image to
+`ghcr.io/meshcore-cz/meshcore-ninja-api`.
 
 ## Contributing
 

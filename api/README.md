@@ -73,6 +73,17 @@ cd api
 go run . --data ../data --addr :8080
 ```
 
+Or run the published container image:
+
+```bash
+docker run --rm -p 8080:8080 -v meshcore-ninja-api:/app/state \
+  ghcr.io/meshcore-cz/meshcore-ninja-api:latest
+```
+
+The image bakes in the repo `data/` tree at `/app/data`, listens on `:8080`,
+and stores SQLite state at `/app/state/meshcore.db` by default. Override the
+command arguments to use a mounted data directory or different flags.
+
 Flags:
 
 | flag | default | meaning |

@@ -1,0 +1,45 @@
+name: API
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - 'api/**'
+      - 'data/networks/**'
+      - '.github/workflows/api.yml'
+      - 'Dockerfile.api'
+  pull_request:
+    branches: [master, main]
+    paths:
+      - 'api/**'
+      - 'data/networks/**'
+      - '.github/workflows/api.yml'
+      - 'Dockerfile.api'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test API
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: api/go.mod
+          cache-dependency-path: api/go.sum
+
+      - name: Vet
+        working-directory: api
+        run: go vet ./...
+
+      - name: Test
+        working-directory: api
+        run: go test ./...
+
+      - name: Build
+        working-directory: api
+        run: CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o bin/meshcore-ninja-api .
