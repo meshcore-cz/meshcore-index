@@ -189,7 +189,7 @@
     <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5">
       <span>{versionLabel}</span>
       <span class="text-edge">·</span>
-      <a class="text-accent2 hover:underline" href="https://analytics.pp0.co/meshcore.ninja" target="_blank" rel="noreferrer">Analytics ↗</a>
+      <a class="text-accent2 hover:underline" href="https://analytics.meshcore.ninja/meshcore.ninja" target="_blank" rel="noreferrer">Analytics ↗</a>
       <span class="text-edge">·</span>
       <a class="text-accent2 hover:underline" href="{base}/about/">How to contribute</a>
       {#if updatedLabel}
