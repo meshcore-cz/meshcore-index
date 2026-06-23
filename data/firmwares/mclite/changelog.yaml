@@ -1,7 +1,23 @@
 source: github
 repo: laserir/MCLite
-updatedAt: '2026-06-21T09:55:30.520Z'
+updatedAt: '2026-06-23T09:49:37.827Z'
 releases:
+  - version: v0.4.0
+    name: v0.4.0 — on-device editing, contact sharing, permissions
+    datetime: '2026-06-22T14:47:00Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.4.0
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * Chat screen header buttons: contact's map, requesting telemetry, and info dialog. by
+      @jason-s13r in https://github.com/laserir/MCLite/pull/30
+
+      * Add more radio presets by @jason-s13r in https://github.com/laserir/MCLite/pull/29
+
+
+
+      **Full Changelog**: https://github.com/laserir/MCLite/compare/v0.3.9...v0.4.0
   - version: v0.3.9
     name: 0.3.9
     datetime: '2026-06-21T08:09:35Z'
@@ -810,36 +826,3 @@ releases:
       esptool.py write_flash 0x0 mclite-v0.1.1.bin
 
       ```
-  - version: v0.1.0
-    name: MCLite v0.1.0
-    datetime: '2026-03-27T06:34:31Z'
-    url: https://github.com/laserir/MCLite/releases/tag/v0.1.0
-    prerelease: false
-    notes: >-
-      ## MCLite v0.1.0
-
-
-      Purpose-built MeshCore companion firmware for LilyGo T-Deck Plus.
-
-
-      ### Highlights
-
-      - MeshCore mesh messaging (DM + channels)
-
-      - SOS alert system with long-press trigger
-
-      - GPS location sharing (decimal, MGRS, or both)
-
-      - On-demand telemetry (battery, location, environment)
-
-      - Multi-language support (EN/DE/FR/IT)
-
-      - SD card message history with ACK persistence
-
-      - Offline config tool (HTML)
-
-
-      ### Install
-
-      Flash `mclite-v0.1.0.bin` via the [web
-      flasher](https://laserir.github.io/MCLite/tools/web-flasher/) or esptool.

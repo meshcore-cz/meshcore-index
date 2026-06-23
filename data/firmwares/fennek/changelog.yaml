@@ -1,7 +1,26 @@
 source: github
 repo: danst0/fennek
-updatedAt: '2026-06-22T12:12:05.972Z'
+updatedAt: '2026-06-23T09:49:37.083Z'
 releases:
+  - version: v2.6.0
+    name: v2.6.0
+    datetime: '2026-06-22T16:46:35Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.6.0
+    prerelease: false
+    notes: >-
+      ## Änderungen
+
+
+      - **Tic-Tac-Toe**: Fennek macht mit 20 % Wahrscheinlichkeit einen zufälligen Zug statt Minimax
+      — der Spieler hat jetzt eine echte Chance zu gewinnen
+
+      - **Adaptives Polling**: Eingabe-Polling drosselt sich nach 3 s Leerlauf von ~100 Hz auf ~30
+      Hz (spart Core-1-Wachzeit ohne spürbare Latenz)
+
+      - **Tap-Log-Drossel**: Gehaltener Finger flutete Serial-Konsole mit Dauer-Taps — jetzt max. 1
+      Log-Zeile alle 400 ms
+
+      - **`power::idleMs()`**: Neue Funktion gibt Millisekunden seit letzter Aktivität zurück
   - version: v2.5.9
     name: Fennek v2.5.9
     datetime: '2026-06-21T19:36:11Z'
@@ -373,22 +392,3 @@ releases:
 
 
       📋 Full history: [CHANGELOG.md](https://github.com/danst0/fennek/blob/main/CHANGELOG.md)
-  - version: v1.6.3
-    name: v1.6.3
-    datetime: '2026-06-13T04:03:32Z'
-    url: https://github.com/danst0/fennek/releases/tag/v1.6.3
-    prerelease: false
-    notes: >-
-      ## 📡 Mesh SD persistence & clock hardening
-
-      - Contact mirror (`/meshcore/contacts.bin`, SD takes load priority over SPIFFS, deferred write
-      from `loop()`) and joined hashtag channels (`/meshcore/channels.txt`, re-joined on boot).
-
-      - RTC sync guard against future-clock outliers (bootstrap + forward jumps < 1 h, backward only
-      on a 3× advert consensus).
-
-      - Contact overflow fix: overwrite the oldest non-favorite when the table (64) is full instead
-      of dropping new adverts.
-
-      - Console hashtag commands `join` / `chan`, plus a new `i2cscan` command. Verified on device:
-      the T-Deck Pro V1.1 has **no hardware RTC** (0x51 empty).

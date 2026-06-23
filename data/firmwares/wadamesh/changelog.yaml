@@ -1,7 +1,131 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-06-22T12:12:18.187Z'
+updatedAt: '2026-06-23T09:49:46.812Z'
 releases:
+  - version: beta_12
+    name: wadamesh beta_12
+    datetime: '2026-06-23T06:52:16Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_12
+    prerelease: false
+    notes: >-
+      ## wadamesh beta_12 — GPS hotfix
+
+
+      A focused hotfix for the GPS slowdown several of you reported. Everything else from
+      **beta_11** is unchanged — this release is GPS-only.
+
+
+      ### 🛰️ GPS fix
+
+      On the T-Deck, getting a position fix had gone slow — minutes instead of about a minute — and
+      for some it wouldn't acquire at all. The GPS streams its data over a small serial buffer, and
+      on the busy touch UI a single heavy screen redraw could stall long enough to overflow that
+      buffer and drop the satellite data mid-stream, forcing the receiver to start the fix over. The
+      buffer is now **16× larger**, so redraws no longer cost you the fix. Confirmed on-device —
+      acquisition is back to normal.
+
+
+      ### 💬 A note from Kaj
+
+      More and more people are picking up wadamesh lately — which is genuinely awesome — and it's
+      surfacing feature requests and bug reports fast, in big numbers. I can't get back to every
+      post in every channel, but I'm on it: I'm prioritising the fixes and quality-of-life
+      improvements, and I'll be working through them later today. Thanks for all the reports and for
+      the patience! 🙏
+
+
+      ---
+
+
+      **Install:** [flasher.wadamesh.com](https://flasher.wadamesh.com) · grab the bins below ·
+      update on-device (Settings → check for update) · or via the Launcher store.
+
+
+      | Board | Web-flash / fresh install | OTA / app-only |
+
+      |---|---|---|
+
+      | LilyGo T-Deck | `wadamesh-tdeck-merged.bin` | `wadamesh-tdeck.bin` |
+
+      | Heltec V4 TFT | `wadamesh-heltec-v4-tft-merged.bin` | `wadamesh-heltec-v4-tft.bin` |
+  - version: beta_11
+    name: wadamesh beta_11
+    datetime: '2026-06-22T17:17:51Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_11
+    prerelease: false
+    notes: >-
+      ## wadamesh beta_11
+
+
+      **Flash it:** [flasher.wadamesh.com](https://flasher.wadamesh.com) (Chrome/Edge, USB) · or
+      pull it on-device via **Settings → About → Check for updates** · or side-load through the
+      **Launcher** store.
+
+
+      The headline this round is **full keyboard navigation** — and every key is hotkey-bindable.
+      This is the foundation for upcoming keyboard-first devices like the **Tanmatsu T-Pager** that
+      have no touchscreen, and it already gives every **T-Deck** a fast, reliable way to drive
+      wadamesh entirely from the keyboard.
+
+
+      ---
+
+
+      ### ⌨️ Keyboard navigation (new — on by default)
+
+      - Drive the whole UI without the touchscreen: the **WASDZ** cluster moves the on-screen
+      selection in the *actual direction* you press (W up, A left, Z down, D right), **S** selects,
+      **Q** goes back.
+
+      - Each bottom tab has its own hotkey — **E** Messages, **R** Contacts, **T** Home, **U** Map,
+      **I** Settings — shown as a small letter on the tab icon. The Home hotkey mirrors tapping
+      Home: press again to flip between Commander and the app drawer.
+
+      - New **scroll up / down** keys (default **F / C**).
+
+      - **Everything is remappable** — directions, select, back, the per-tab hotkeys, and the scroll
+      keys — under **Settings → Keyboard**. Toggle the whole feature off there too (the choice
+      persists).
+
+      - Cleaner focus: the selected item shows as reverse-video (a bright outline for switches)
+      instead of a coloured border, and the highlight only appears while you're actually navigating
+      with the keys.
+
+
+      ### 🛡️ Stability
+
+      - Fixed a reboot that could occur when **receiving a message**, especially during
+      advert/message floods — a use-after-free while a list rebuilt mid-scroll (**#27**).
+
+      - After a crash, the device now **detects it on the next boot** and offers to save the crash
+      report so you can send it in — no more digging through Settings.
+
+
+      ### 🗺️ Map
+
+      - Map options can now switch the zoom control between the **slider** and a **+/- button
+      pair**, like older builds (**#26**).
+
+      - **Route replay** now opens on a wide overview so you can see where the hops start and the
+      whole path at a glance — and you can **pan and zoom freely while it plays**.
+
+
+      ### 🏠 Home
+
+      - New **"App drawer as home"** option (in the app drawer's cog) makes the launcher your home
+      screen instead of the Commander view.
+
+
+      ### 🔓 Open source
+
+      - The in-progress **Tanmatsu (ESP32-P4)** port source is now part of the public tree.
+
+
+      ---
+
+
+      **Boards:** LilyGo T-Deck · Heltec V4 TFT. Use `*-merged.bin` for a fresh full-flash at `0x0`;
+      the plain `.bin` is the app-only OTA/Launcher image.
   - version: beta_10
     name: wadamesh beta_10
     datetime: '2026-06-21T22:08:55Z'
