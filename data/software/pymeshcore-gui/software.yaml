@@ -1,0 +1,68 @@
+name: PyMeshCore GUI
+kind: client
+status: active
+maturity: alpha
+description: >-
+  Experimental cross-platform Qt desktop client built with PySide6 and
+  meshcore-py, focused on MeshCore chat, prototyping and an extensible
+  open-source development workflow.
+
+maintainers:
+  - name: Bliksem Labs
+    url: https://github.com/bliksemlabs
+  - name: Stefan de Konink
+    url: https://github.com/skinkie
+
+repository: https://github.com/bliksemlabs/PyMeshCoreGUI
+license: GPL-3.0-only
+
+languages:
+  - python
+
+platforms:
+  - linux
+  - macos
+  - windows
+interfaces:
+  - gui
+connections:
+  - ble
+  - serial
+  - usb
+node_roles:
+  - companion
+capabilities:
+  - messaging
+  - contacts
+  - channels
+
+install:
+  - type: source
+    url: https://github.com/bliksemlabs/PyMeshCoreGUI
+    command: uv sync && uv run meshcore-gui
+
+popularity:
+  githubStars: 23
+  githubForks: 0
+  githubWatchers: 1
+  githubOpenIssues: 1
+  githubContributors: 1
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: false
+  signedReleases: false
+  ciBuilds: false
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - The project explicitly describes itself as an early experimental release with unstable APIs and internal structure.
+
+tags:
+  - qt
+  - pyside6
+  - desktop
+  - experimental
+
+last_reviewed: 2026-06-23

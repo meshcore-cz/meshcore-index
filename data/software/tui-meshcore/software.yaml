@@ -1,0 +1,64 @@
+name: TUI MeshCore
+kind: client
+status: active
+maturity: alpha
+description: >-
+  Linux terminal client built with Textual and pyMC_core, providing onboarding,
+  regional and hardware presets, encrypted direct and channel messaging, contact
+  discovery and persistent SQLite history.
+
+image: screenshot.png
+
+maintainers:
+  - name: guax
+    url: https://github.com/guax
+
+repository: https://github.com/guax/tui-meshcore
+license: GPL-3.0-only
+
+languages:
+  - python
+
+platforms:
+  - linux
+interfaces:
+  - tui
+connections:
+  - serial
+  - usb
+node_roles:
+  - companion
+capabilities:
+  - messaging
+  - contacts
+  - channels
+  - node-configuration
+
+install:
+  - type: source
+    url: https://github.com/guax/tui-meshcore
+    command: pip install -e . && tui-meshcore
+
+popularity:
+  githubStars: 20
+  githubForks: 2
+  githubWatchers: 3
+  githubOpenIssues: 2
+  githubContributors: 1
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: false
+  signedReleases: false
+  ciBuilds: false
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+
+tags:
+  - terminal
+  - textual
+  - linux
+  - direct-radio
+
+last_reviewed: 2026-06-23

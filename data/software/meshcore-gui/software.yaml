@@ -1,0 +1,90 @@
+name: MeshCore GUI
+kind: client
+status: active
+maturity: stable
+description: >-
+  Self-hosted desktop and headless MeshCore platform with messaging, maps,
+  archives, BBS and bot automation, a REST API, packet decoding and an optional
+  cross-frequency bridge between two companion radios.
+
+image: icon.svg
+
+maintainers:
+  - name: PE1HVH
+    url: https://github.com/pe1hvh
+
+repository: https://github.com/pe1hvh/meshcore-gui
+website: https://www.domca.nl/
+documentation: https://github.com/pe1hvh/meshcore-gui#readme
+license: MIT
+
+languages:
+  - python
+  - javascript
+
+platforms:
+  - linux
+  - macos
+  - windows
+  - raspberry-pi
+  - web
+interfaces:
+  - web
+  - gui
+  - api
+  - headless
+connections:
+  - ble
+  - serial
+  - usb
+  - http
+node_roles:
+  - companion
+  - room-server
+capabilities:
+  - messaging
+  - contacts
+  - channels
+  - node-configuration
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - mapping
+  - automation
+  - notifications
+  - bridging
+
+install:
+  - type: bare-metal
+    package: Python 3.10+
+    url: https://github.com/pe1hvh/meshcore-gui#5-installation
+  - type: source
+    url: https://github.com/pe1hvh/meshcore-gui
+
+popularity:
+  githubStars: 23
+  githubForks: 1
+  githubWatchers: 2
+  githubOpenIssues: 2
+  githubContributors: 1
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: false
+  signedReleases: false
+  ciBuilds: false
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - USB serial is the most broadly supported transport; BLE is tested only on Linux with BlueZ and D-Bus.
+    - Designed for local operation and exposes a read-only REST API without authentication.
+
+tags:
+  - nicegui
+  - bbs
+  - bot
+  - cross-frequency
+  - self-hosted
+
+last_reviewed: 2026-06-23

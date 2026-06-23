@@ -1,0 +1,370 @@
+source: github
+repo: jkingsman/Remote-Terminal-for-MeshCore
+updatedAt: '2026-06-23T20:09:30.759Z'
+releases:
+  - version: 3.15.1
+    name: 3.15.1
+    datetime: '2026-06-21T05:43:50Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.15.1
+    prerelease: false
+    notes: |-
+      ## [3.15.1] - 2026-06-20
+
+      * Feature: Per-message + analyzer region tag support
+      * Feature: Sortable neighbor list in repeater pane
+      * Feature: Option to disable autoscroll on packet feed
+      * Feature: Bot globals
+      * Feature: Add draft support for Open gifs + reactions
+      * Bugfix: Use correct last-heard time for repeater recency
+      * Bugfix: Configurable VAPID subject for iOS web push
+      * Misc: Library updates, logging, test
+  - version: 3.15.0
+    name: 3.15.0
+    datetime: '2026-06-12T05:31:41Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.15.0
+    prerelease: false
+    notes: |-
+      ## [3.15.0] - 2026-06-11
+
+      * Feature: Enhanced repeater telemetry with scrubbing and better extents
+      * Feature: Outbound message opt-in for Apprise
+      * Feature: Reverse-link button on trace pane
+      * Feature: Add recently traced contacts as own category in repeater pane
+      * Feature: More compact trace pane display
+      * Bugfix: Scavenge ACK codes for standalone acks, resolving issues with DM ack detection
+      * Bugfix: Proper timestamps for community MQTT
+      * Bugfix: Clearer packet history legend in packet view
+      * Misc: Add pubkey suffix to repeater neighbors
+      * Misc: Dependency bumps & test fixes
+  - version: 3.14.1
+    name: 3.14.1
+    datetime: '2026-06-02T02:34:07Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.14.1
+    prerelease: false
+    notes: |-
+      ## [3.14.1] - 2026-06-01
+
+      * Feature: Enhance online documentation
+      * Feature: Chain nav to browser history state
+      * Feature: Add packet_hash to bot kwargs
+      * Bug: Fix amp/ma units for HA integration of LPP sensors
+      * Bug: Don't display blocked contacts on the map
+      * Bug: Don't trim trailing space from repeater console commands
+      * Bug: Make the trace pane not unusable with a bunch of hops or a bunch of recents
+      * Misc: Dependency bumps + test updates
+  - version: 3.14.0
+    name: 3.14.0
+    datetime: '2026-05-14T01:20:20Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.14.0
+    prerelease: false
+    notes: |-
+      ## [3.14.0] - 2026-05-13
+
+      * Feature: Support active/intervalized contact telemetry gathering + HA forwarding
+      * Feature: Stable packet analyzer chart coloring
+      * Feature: Add packet scope to inscpection
+      * Feature: Support websocket path config for community mqtt
+      * Bugfix: Drop token renewal time to 1hr for more sensitive services
+      * Bugfix: Don't forward unparseable packets to communitya ggregators
+      * Bugfix: Persist login status for rooms
+      * Bugfix: Fix gap in repeater/contact/sensor non-ingest logic
+      * Misc: Revise hop-length buckets to reflect path bit width
+      * Misc: Remove autocomplete from textarea
+      * Misc: Test & Dependency updates
+  - version: 3.13.0
+    name: 3.13.0
+    datetime: '2026-05-01T03:35:15Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.13.0
+    prerelease: false
+    notes: |-
+      ## [3.13.0] - 2026-04-30
+
+      * Feature: Error counts included in repeater telemetry
+      * Feature: RX error rate + percentage surfaced and tracked for repeaters
+      * Feature: Dynamic as-you-type text replacement for Cyrillic byte optimization
+      * Feature: Permit hourly checks for direct/routed repeaters
+      * Feature: Allow newlines in input
+      * Feature: Packet-send radio time added to packet analyzer
+      * Feature: Enable forced plaintext for Apprise
+      * Bugfix: Less annoying MQTT failure notifications with backoff
+      * Bugfis: Don't obscure input; use dvh everywhere
+      * Bugfix: Clearer save button for advert interval
+      * Misc: Library updates
+      * Misc: Rewrite 5xx to 4xx to avoid issues with proxies that don't react well to 503/504
+  - version: 3.12.3
+    name: 3.12.3
+    datetime: '2026-04-24T21:07:13Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.12.3
+    prerelease: false
+    notes: |-
+      ## [3.12.3] - 2026-04-24
+
+      * Feature: Customizable Apprise strings
+      * Feature: Choose contact addition type
+      * Featuer: Make bulk-delete sortable by last-heard
+      * Misc: Bypass error on fail-to-unload-contact when it's not there
+      * Misc: Docs & test updates
+  - version: 3.12.2
+    name: 3.12.2
+    datetime: '2026-04-21T20:14:04Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.12.2
+    prerelease: false
+    notes: |-
+      ## [3.12.2] - 2026-04-21
+
+      * Feature: Auto-disambiguate colliding LPP sensor names
+      * Feature: Radio config import/export
+      * Bugfix: Don't push stale firmware version/model on community MQTT
+      * Misc: Expose env vars in debug blob
+      * Misc: Longer linger for web push error
+      * Misc: Docs, test, & CI/CD improvements
+  - version: 3.12.1
+    name: 3.12.1
+    datetime: '2026-04-20T04:21:56Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.12.1
+    prerelease: false
+    notes: |-
+      ## [3.12.1] - 2026-04-19
+
+      * Feature: Auto-evict/circular-buffer contact load mode (solves potential T-Beam issues)
+      * Feature: Channel mute
+      * Misc: HA Documentation improvements
+      * Misc: Bump deps & update tests
+      * Misc: Improve warnings around web push in untrusted contexts
+  - version: 3.12.0
+    name: 3.12.0
+    datetime: '2026-04-17T19:25:18Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.12.0
+    prerelease: false
+    notes: >-
+      ## [3.12.0] - 2026-04-17
+
+
+      * Feature: Web Push -- get your mesh notifications on a locked phone or when your browser is
+      closed!
+
+      * Feature: Add link to node from map display
+
+      * Feature: Map layers
+
+      * Feature: Better contact/channel selection for fanout
+
+      * Feature: Add glittering status dot option
+
+      * Feature: Add airtime math and average packets/min for repeater info displays
+
+      * Feature: Offer multiple timing intervals for repeater telemetry aurofetch
+
+      * Feature: Add ability to follow OS light/dark mode
+
+      * Bugfix: Clear 100% of messages from radio in fallback mode; don't stop at 100
+
+      * Bugfix: Don't stop DM retry just because the radio did not provide a radio ack on the wire
+
+      * Bugfix: Don't strip outgoing colons on DMs or room servers
+
+      * Bugfix: Patch statusbar overlap on PWA
+
+      * Bugfix: Patch default map upload URL
+
+      * Bugfix: Show learned path in routing override
+
+      * Bugfix: Centralize on "only means RF heard" for first_seen/last_seen
+
+      * Misc: Reduce frequency of time set failure chirping
+
+      * Misc: QoL improvements for Home Assistant integration
+
+      * Misc: Overhaul settings styling
+
+      * Misc: Documentation + tests updates
+  - version: 3.11.3
+    name: 3.11.3
+    datetime: '2026-04-13T06:58:09Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.11.3
+    prerelease: false
+    notes: >-
+      ## [3.11.3] - 2026-04-12
+
+
+      * Bugfix: Add icons and screenshots for webmanifest
+
+      * Bugfix: Use incoming DMs, not just outgoing, for recency ranking for preferential radio
+      contact load
+  - version: 3.11.2
+    name: 3.11.2
+    datetime: '2026-04-13T05:48:19Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.11.2
+    prerelease: false
+    notes: |-
+      ## [3.11.2] - 2026-04-12
+
+      * Feature: Unread DMs are always at the top of the DM list no matter what
+      * Bugfix: Webmanifest needs withCredentials
+  - version: 3.11.1
+    name: 3.11.1
+    datetime: '2026-04-13T03:53:40Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.11.1
+    prerelease: false
+    notes: |-
+      ## [3.11.1] - 2026-04-12
+
+      * Feature: Home Assistant MQTT fanout
+      * Feature: Add dummy service worker to enable PWA
+      * Bugfix: DB connection plurality issues
+      * Misc: Migration improvements
+      * Misc: Search keys from beginning
+  - version: 3.11.0
+    name: 3.11.0
+    datetime: '2026-04-10T23:16:05Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.11.0
+    prerelease: false
+    notes: >-
+      ## [3.11.0] - 2026-04-10
+
+
+      * Feature: Radio health and contact data accessible on fanout bus
+
+      * Feature: Local node radio stats (voltage etc.) on WS health bus
+
+      * Feature: Battery indicator optional in status bar (configured in Local Settings)
+
+      * Bugfix: Fix same-second same-message collision in room servers
+
+      * Bugfix: Don't consume DM resend attempt if the radio was just busy
+
+      * Bugfix: Assume that a same-second same-message same-first-byte-key DM is more likely an echo
+      than them sending the same message
+
+      * Bugfix: Multi-retry for flood scope restoration
+
+      * Misc: Testing & documentation improvements
+  - version: 3.10.0
+    name: 3.10.0
+    datetime: '2026-04-10T18:20:07Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.10.0
+    prerelease: false
+    notes: |-
+      ## [3.10.0] - 2026-04-10
+
+      * Feature: Add Arch AUR package
+      * Feature: 72hr packet density view in statistics
+      * Feature: Add warnings for event loop selection for MQTT on Windows startup
+      * Bufix: Bump Apprise to 1.9.9 to fix Matrix bug
+      * Misc: More memory-conscious on recent contact fetch
+      * Misc: Fix statistics pane e2e test
+  - version: 3.9.0
+    name: 3.9.0
+    datetime: '2026-04-07T05:13:53Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.9.0
+    prerelease: false
+    notes: |-
+      ## [3.9.0] - 2026-04-06
+
+      * Feature: Add hop counts to hop-width selection options
+      * Feature: Show cached repeater telemetry inline in settings
+      * Feature: Retain recent traces and make them click-to-re-run
+      * Feature: Autofocus channel/DM textbox on desktop
+      * Feature: Favorites on the radio are now imported as favorites
+      * Bugfix: Be clearer on issue identification for missing HTTPS context in channel finder
+      * Bugfix: Don't use sender timestamp for message sequence display
+      * Bugfix: Function on subdomains happily
+      * Misc: Be gentler, room s/cracker/finder/
+      * Misc: Test and frontend correctness & test fixes
+      * Misc: Don't repeat clock sync failure logs
+      * Misc: Make warning in readme clearer about taking over the radio
+      * Misc: Improve readme phrasings
+      * Misc: Better y-axis selection for battery read-out
+      * Misc: Provide clearer warning on docker setup without docker installed
+      * Misc: Default visualizer stale pruning to on/5 minutes
+      * Misc: Migrate favorites to better storage pattern
+      * Misc: Provide dumper script for API + WS interfaces for prep for HA integration
+  - version: 3.8.0
+    name: 3.8.0
+    datetime: '2026-04-04T02:40:09Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.8.0
+    prerelease: false
+    notes: |-
+      ## [3.8.0] - 2026-04-03
+
+      * Feature: Per-channel hop width override
+      * Feature: Intervalized repeater telemetry collection
+      * Feature: Auto-resend option for byte-perfect resends on no repeater echo
+      * Feature: Attach RSSI/SNR to received packets
+      * Feature: Add motion packet display to map
+      * Feature: Map dark mode
+      * Bugfix: Make DB indices more useful around capitalization
+      * Misc: Bump required Python to 3.11
+      * Misc: Performance, documentation, and test improvements
+      * Misc: More yields during long radio operations
+      * Misc: Dead code & crufty test removal
+      * Misc: Remove all but stub frontend favorites migration for very very old versions
+  - version: 3.7.1
+    name: 3.7.1
+    datetime: '2026-04-03T01:05:00Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.7.1
+    prerelease: false
+    notes: |-
+      ## [3.7.1] - 2026-04-02
+
+      * Feature: Redact Apprise URLs to prevent sensitive information disclosure
+  - version: 3.7.0
+    name: 3.7.0
+    datetime: '2026-04-03T00:33:53Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.7.0
+    prerelease: false
+    notes: >-
+      ## [3.7.0] - 2026-04-02
+
+
+      * Feature: Repeater battery tracking
+
+      * Feature: Repeater info pane just like contacts
+
+      * Feature: Make repeaters blockable
+
+      * Feature: Add new-node advert blocking
+
+      * Feature: Add bulk deletion interface
+
+      * Feature: Bulk room add on alt+click of new channel button
+
+      * Feature: More info in debug endpoint
+
+      * Bugfix: Be more conservative around radio load limits and don't exceed radio-reported
+      capacity
+
+      * Misc: Default auto-DM decrypt to true
+
+      * Misc: Reorganize some settings panes
+
+      * Misc: Enable FK pragma
+
+      * Misc: Various performance and correctness fixes
+
+      * Misc: Correct TCP default port
+  - version: 3.6.7
+    name: 3.6.7
+    datetime: '2026-04-01T06:05:03Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.6.7
+    prerelease: false
+    notes: |-
+      ## [3.6.7] - 2026-03-31
+
+      * Misc: Remove armv7 (for now)
+  - version: 3.6.3
+    name: 3.6.3
+    datetime: '2026-03-31T04:58:24Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.6.3
+    prerelease: false
+    notes: |-
+      ## [3.6.3] - 2026-03-30
+
+      Feature: Add multi-byte trace
+      Feature: Show node name on discovered node if we know it
+      Feature: Add docker installation script
+      Feature: Add historical noise floor to stats
+      Feature: Add trace tool
+      Bugfix: 100x performance on statistics endpoint with indices and better queries
+      Misc: Performance and correctness improvements for backend-of-the-frontend
+      Misc: Reorganize scripts

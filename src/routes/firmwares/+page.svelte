@@ -1,6 +1,6 @@
 <script>
   import { base } from '$app/paths';
-  import { TYPE_META, FW_STATUS_TW, LICENSE_TYPE_META, licenseType } from '$lib/data.js';
+  import { TYPE_META, FW_STATUS_TW, LICENSE_TYPE_META, licenseType, descriptionToPlain } from '$lib/data.js';
   import { pluralize } from '$lib/format.js';
   import Seo from '$lib/Seo.svelte';
   import ReleaseRow from '$lib/ReleaseRow.svelte';
@@ -128,7 +128,7 @@
         </span>
       </div>
       <h2 class="text-[1.15rem] font-semibold">{fw.name}</h2>
-      <p class="line-clamp-3 text-[0.9rem] text-dim">{fw.description}</p>
+      <p class="line-clamp-3 text-[0.9rem] text-dim">{descriptionToPlain(fw.description)}</p>
       <div class="mt-auto flex flex-wrap gap-1.5">
         {#each fw.roles ?? [] as role}
           <span class="rounded bg-elev2 px-2 py-0.5 text-[0.72rem] text-dim">{role}</span>

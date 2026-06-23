@@ -1,0 +1,118 @@
+name: RemoteTerm for MeshCore
+short_name: RemoteTerm
+kind: tool
+status: active
+maturity: stable
+description: >-
+  Self-hosted MeshCore power-user terminal with remote messaging, server-side
+  packet capture and decryption, radio administration, bots, maps, repeater
+  telemetry and integrations including MQTT and Home Assistant.
+
+image: remoteterm.svg
+screenshots:
+  - file: desktop.png
+    caption: Desktop terminal and mesh management interface
+  - file: mobile.png
+    caption: Mobile messaging interface
+  - file: mobile-map.png
+    caption: Mobile mesh map and node details
+
+maintainers:
+  - name: Josh Kingsman
+    url: https://github.com/jkingsman
+
+repository: https://github.com/jkingsman/Remote-Terminal-for-MeshCore
+license: MIT
+
+languages:
+  - python
+  - typescript
+
+latest_version: 3.15.1
+released: 2026-06-21
+
+platforms:
+  - docker
+  - linux
+  - macos
+  - windows
+  - web
+interfaces:
+  - web
+  - api
+  - headless
+connections:
+  - ble
+  - serial
+  - usb
+  - tcp
+  - mqtt
+  - http
+node_roles:
+  - companion
+  - repeater
+  - room-server
+capabilities:
+  - messaging
+  - contacts
+  - channels
+  - node-configuration
+  - remote-administration
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - mapping
+  - automation
+  - notifications
+  - bridging
+  - key-management
+
+install:
+  - type: bare-metal
+    package: Python 3.11+ / uv
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore#install-path-1-clone-and-build
+    command: uv sync
+  - type: docker-compose
+    package: jkingsman/remoteterm-meshcore
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore#install-path-2-docker
+    command: sudo docker compose up -d
+  - type: aur
+    package: remoteterm-meshcore
+    url: https://aur.archlinux.org/packages/remoteterm-meshcore
+    command: yay -S remoteterm-meshcore
+  - type: github-release
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases
+  - type: source
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore
+
+popularity:
+  githubStars: 261
+  githubForks: 37
+  githubWatchers: 6
+  githubOpenIssues: 10
+  githubContributors: 15
+  releaseDownloads: 670
+  latestReleaseDownloads: 22
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Intended for trusted networks; its bot system can execute arbitrary Python and must not be exposed publicly without stronger access controls.
+    - Native installation is recommended because Docker can have intermittent serial event-subscription issues.
+    - Home Assistant integration uses MQTT Discovery and does not require a custom component.
+
+tags:
+  - remote-terminal
+  - packet-capture
+  - bots
+  - home-assistant
+  - mqtt
+  - self-hosted
+
+last_reviewed: 2026-06-23

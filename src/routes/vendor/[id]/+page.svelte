@@ -3,15 +3,16 @@
   import RecordFooter from '$lib/RecordFooter.svelte';
   import BackLink from '$lib/BackLink.svelte';
   import { pluralize } from '$lib/format.js';
-  import { deviceMcuLabel, deviceRadioLabel, resolveRefs } from '$lib/data.js';
+  import { deviceMcuLabel, deviceRadioLabel, resolveRefs, descriptionToPlain } from '$lib/data.js';
   import { clampDescription, abs, absUrl, ogImageFor } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
+  import RichText from '$lib/RichText.svelte';
   let { data } = $props();
   let v = $derived(data.vendor);
 
   let vendorDescription = $derived(
     clampDescription(
-      v.description ||
+      descriptionToPlain(v.description) ||
         `${v.name}${v.country ? ` (${v.country})` : ''} — ${pluralize(data.devices.length, 'MeshCore-compatible device')}.`
     )
   );
@@ -42,7 +43,7 @@
   </div>
   <div class="min-w-[240px] flex-1">
     <h1 class="mb-1 text-[clamp(1.5rem,5vw,2rem)] font-bold">{v.name}</h1>
-    {#if v.description}<p class="mb-1 max-w-[70ch] text-dim">{v.description}</p>{/if}
+    {#if v.description}<RichText class="mb-1 max-w-[70ch] text-dim" text={v.description} />{/if}
     <div class="flex flex-wrap gap-x-4 gap-y-1 text-[0.92rem]">
       {#if v.country}<span class="text-dim">{v.country}</span>{/if}
       {#if v.website}<a class="text-accent2 hover:underline" href={v.website} target="_blank" rel="noreferrer">{v.website} ↗</a>{/if}

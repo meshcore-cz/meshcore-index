@@ -1,0 +1,91 @@
+name: MeshCore One
+short_name: MC1
+kind: client
+status: active
+maturity: beta
+description: >-
+  Native MeshCore client and network toolkit for iPhone, iPad and Apple Silicon
+  Macs, combining messaging with offline maps, path tracing, RF line-of-sight
+  analysis, packet capture and remote node administration.
+
+image: icon.png
+
+maintainers:
+  - name: Avi0n
+    url: https://github.com/Avi0n
+
+repository: https://github.com/Avi0n/MeshCoreOne
+license: GPL-3.0-only
+
+languages:
+  - swift
+
+latest_version: v1.0.1
+released: 2026-06-18
+
+platforms:
+  - ios
+  - ipados
+  - macos
+interfaces:
+  - mobile
+  - gui
+connections:
+  - ble
+  - tcp
+node_roles:
+  - companion
+  - repeater
+  - room-server
+capabilities:
+  - messaging
+  - contacts
+  - channels
+  - node-configuration
+  - remote-administration
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - mapping
+  - notifications
+  - key-management
+
+install:
+  - type: app-store
+    package: TestFlight
+    url: https://testflight.apple.com/join/YjGNDTaE
+  - type: github-release
+    package: unsigned IPA
+    url: https://github.com/Avi0n/MeshCoreOne/releases
+  - type: source
+    url: https://github.com/Avi0n/MeshCoreOne
+
+popularity:
+  githubStars: 101
+  githubForks: 16
+  githubWatchers: 6
+  githubOpenIssues: 38
+  githubContributors: 6
+  releaseDownloads: 170
+  latestReleaseDownloads: 4
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Requires iOS or iPadOS 18 or an Apple Silicon Mac.
+    - GitHub releases provide unsigned IPA files; TestFlight is the simpler beta installation path.
+
+tags:
+  - apple
+  - native
+  - offline
+  - rf-analysis
+  - remote-terminal
+
+last_reviewed: 2026-06-23

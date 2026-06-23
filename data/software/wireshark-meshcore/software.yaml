@@ -1,0 +1,70 @@
+name: Wireshark MeshCore Dissector
+short_name: Wireshark MeshCore
+kind: tool
+status: active
+maturity: beta
+description: >-
+  Wireshark Lua protocol dissector and dependency-free Python converter for
+  turning MeshCore JSON radio logs into pcapng captures with packet trees,
+  radio metadata, display filters and tshark support.
+
+screenshots:
+  - file: packet-tree.png
+    caption: MeshCore packet tree and decrypted group message
+  - file: io-graph.png
+    caption: MeshCore traffic visualized with Wireshark I/O graphs
+
+maintainers:
+  - name: Aaron Brown
+    url: https://github.com/aaronb
+
+repository: https://github.com/aaronb/wireshark-meshcore
+license: GPL-2.0-only
+
+languages:
+  - lua
+  - python
+
+platforms:
+  - linux
+  - macos
+  - windows
+interfaces:
+  - gui
+  - cli
+capabilities:
+  - packet-analysis
+
+install:
+  - type: manual
+    package: meshcore_dissector.lua
+    url: https://github.com/aaronb/wireshark-meshcore#installation
+  - type: source
+    url: https://github.com/aaronb/wireshark-meshcore
+
+popularity:
+  githubStars: 15
+  githubForks: 0
+  githubWatchers: 1
+  githubOpenIssues: 0
+  githubContributors: 0
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: false
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - The converter currently uses temporary DLT_USER0 link-layer type 147; captures will need regeneration if an official LINKTYPE is assigned.
+    - The converter requires Python 3.6+ and has no external runtime dependencies.
+
+tags:
+  - wireshark
+  - pcapng
+  - dissector
+  - protocol-analysis
+
+last_reviewed: 2026-06-23

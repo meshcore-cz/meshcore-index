@@ -1,0 +1,65 @@
+name: PicoMeshCore
+kind: client
+status: active
+maturity: experimental
+description: >-
+  Lightweight MMBasic MeshCore companion client for Raspberry Pi Pico running
+  PicoMite, with a terminal menu for messages, contacts, adverts, radio
+  configuration and diagnostics over UART.
+
+maintainers:
+  - name: Vigoleis912
+    url: https://github.com/Vigoleis912
+
+repository: https://github.com/Vigoleis912/PicoMeshCore
+license: GPL-3.0-only
+
+languages:
+  - basic
+
+platforms:
+  - raspberry-pi-pico
+  - picomite
+interfaces:
+  - tui
+connections:
+  - serial
+node_roles:
+  - companion
+capabilities:
+  - messaging
+  - contacts
+  - channels
+  - node-configuration
+  - monitoring
+
+install:
+  - type: source
+    url: https://github.com/Vigoleis912/PicoMeshCore
+
+popularity:
+  githubStars: 17
+  githubForks: 0
+  githubWatchers: 1
+  githubOpenIssues: 0
+  githubContributors: 1
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: false
+  signedReleases: false
+  ciBuilds: false
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Requires custom UART companion firmware on the attached MeshCore radio.
+    - Contacts and messages are not persisted across Pico restarts.
+
+tags:
+  - raspberry-pi-pico
+  - mmbasic
+  - uart
+  - embedded-client
+
+last_reviewed: 2026-06-23

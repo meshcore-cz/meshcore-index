@@ -1,0 +1,86 @@
+name: MeshCore MQTT Live Map
+kind: tool
+status: active
+maturity: stable
+description: >-
+  Self-hosted real-time MeshCore traffic map that decodes MQTT packet feeds and
+  visualizes nodes, routes, peers, activity heat, coverage, line-of-sight and
+  propagation data in an installable web app.
+
+screenshots:
+  - file: live-map.png
+    caption: Live nodes, routes and mesh activity
+  - file: route-history.png
+    caption: Route history and network analysis tools
+
+maintainers:
+  - name: yellowcooln
+    url: https://github.com/yellowcooln
+
+repository: https://github.com/yellowcooln/meshcore-mqtt-live-map
+website: https://live.bostonme.sh/
+documentation: https://github.com/yellowcooln/meshcore-mqtt-live-map/blob/main/howto.md
+license: GPL-3.0-only
+
+languages:
+  - python
+  - javascript
+
+latest_version: v1.9.3
+released: 2026-06-09
+
+platforms:
+  - docker
+  - web
+interfaces:
+  - web
+  - api
+  - headless
+connections:
+  - mqtt
+  - websocket
+  - http
+capabilities:
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - mapping
+
+install:
+  - type: web
+    url: https://live.bostonme.sh/
+  - type: docker-compose
+    package: yellowcooln/meshcore-mqtt-live-map
+    url: https://github.com/yellowcooln/meshcore-mqtt-live-map#quick-start
+    command: docker compose up -d --build
+  - type: source
+    url: https://github.com/yellowcooln/meshcore-mqtt-live-map
+
+popularity:
+  githubStars: 74
+  githubForks: 13
+  githubWatchers: 1
+  githubOpenIssues: 0
+  githubContributors: 8
+  latestReleaseDownloads: 0
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Supports MQTT over TCP or WebSockets with optional TLS and production token protection.
+    - The Greater Boston deployment is the reference instance; several community meshes operate independent deployments.
+
+tags:
+  - live-map
+  - mqtt
+  - self-hosted
+  - pwa
+  - propagation
+
+last_reviewed: 2026-06-23

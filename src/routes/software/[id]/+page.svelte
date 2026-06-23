@@ -2,11 +2,13 @@
   import { base } from '$app/paths';
   import RecordFooter from '$lib/RecordFooter.svelte';
   import BackLink from '$lib/BackLink.svelte';
-  import { SOFTWARE_KIND_META, SOFTWARE_STATUS_META, LICENSE_TYPE_META, licenseType, groupReleases } from '$lib/data.js';
+  import { SOFTWARE_KIND_META, SOFTWARE_STATUS_META, LICENSE_TYPE_META, licenseType, groupReleases, descriptionToPlain } from '$lib/data.js';
   import { clampDescription } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
   import ReleaseGroupList from '$lib/ReleaseGroupList.svelte';
   import ScreenshotGallery from '$lib/ScreenshotGallery.svelte';
+  import RichText from '$lib/RichText.svelte';
+  import SoftwareIcon from '$lib/SoftwareIcon.svelte';
   let { data } = $props();
   let s = $derived(data.software);
   let meta = $derived(SOFTWARE_KIND_META[s.kind]);
@@ -32,10 +34,10 @@
     proxying: 'Proxying', 'key-management': 'Key management', simulation: 'Simulation'
   };
   const INSTALL_LABELS = {
-    'app-store': 'App Store', 'play-store': 'Play Store', 'github-release': 'GitHub release',
+    'app-store': 'App Store', 'play-store': 'Play Store', zapstore: 'Zapstore', 'github-release': 'GitHub release',
     docker: 'Docker', 'docker-compose': 'Docker Compose', desktop: 'Desktop app', helm: 'Kubernetes / Helm',
     'proxmox-lxc': 'Proxmox LXC', nixos: 'NixOS Flake', 'bare-metal': 'Bare metal',
-    flatpak: 'Flatpak', homebrew: 'Homebrew', npm: 'npm', pypi: 'PyPI', cargo: 'Cargo',
+    aur: 'AUR', flatpak: 'Flatpak', homebrew: 'Homebrew', npm: 'npm', pypi: 'PyPI', cargo: 'Cargo',
     'go-install': 'go install', hacs: 'HACS', esphome: 'ESPHome', source: 'Source', web: 'Web', manual: 'Manual'
   };
   const POPULARITY_LABELS = {
@@ -109,7 +111,7 @@
   );
 
   let description = $derived(
-    clampDescription(s.description || `${s.name} — a MeshCore ${meta?.singular ?? 'software'}.`)
+    clampDescription(descriptionToPlain(s.description) || `${s.name} — a MeshCore ${meta?.singular ?? 'software'}.`)
   );
 </script>
 
@@ -118,11 +120,7 @@
 <BackLink href="{base}/software/">All software</BackLink>
 
 <header class="mb-6 flex flex-wrap items-start gap-5">
-  {#if s.imageUrl}
-    <div class="flex h-24 w-24 shrink-0 overflow-hidden rounded-2xl border border-edge bg-elev2">
-      <img src={s.imageUrl} alt={s.name} class="h-full w-full object-cover" />
-    </div>
-  {/if}
+  <SoftwareIcon src={s.imageUrl} name={s.name} kind={s.kind} class="h-24 w-24 rounded-2xl" />
   <div class="min-w-[260px] flex-1">
     <div class="flex flex-wrap items-center gap-3">
       <h1 class="text-[clamp(1.5rem,5vw,2rem)] font-bold">{s.name}</h1>
@@ -148,7 +146,7 @@
     {#if s.also_known_as?.length}
       <p class="mt-0.5 text-[0.9rem] text-dim">{s.also_known_as.join(' · ')}</p>
     {/if}
-    {#if s.description}<p class="mt-1 max-w-[70ch] text-dim">{s.description}</p>{/if}
+    {#if s.description}<RichText class="mt-1 max-w-[70ch] text-dim" text={s.description} />{/if}
     {#if links.length}
       <div class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[0.92rem]">
         {#each links as link (link.label)}

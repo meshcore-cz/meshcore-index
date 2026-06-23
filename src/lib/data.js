@@ -4,6 +4,7 @@ import dataset from '$lib/generated/data.json';
 import Fuse from 'fuse.js';
 import * as countryFlags from 'country-flag-icons/string/3x2';
 import { groupReleases } from '$lib/releases.js';
+import { richTextToPlain } from '$lib/richtext.js';
 
 export { groupReleases } from '$lib/releases.js';
 
@@ -111,6 +112,39 @@ const softwareById = new Map(software.map((s) => [s.id, s]));
 
 export function getSoftware(id) {
   return softwareById.get(id);
+}
+
+// Wikilink type → lookup, used by RichText to resolve [[type:id]] references.
+// The route segment equals the type (all entity routes are singular).
+const WIKILINK_RESOLVERS = {
+  device: getDevice,
+  software: getSoftware,
+  firmware: getFirmware,
+  network: getNetwork,
+  vendor: getVendor
+};
+
+/**
+ * Resolve an Obsidian-style wikilink target (`type:id`) against the dataset.
+ * Returns the display text plus the route parts; the caller builds the href
+ * (with the SvelteKit base path). Unknown types/ids come back `missing`.
+ *
+ * @param {string} target e.g. "device:xiao-nrf52"
+ * @param {string|null} [label] optional custom visible label
+ */
+export function resolveWikilink(target, label) {
+  const colon = target.indexOf(':');
+  const type = colon === -1 ? '' : target.slice(0, colon).toLowerCase();
+  const id = colon === -1 ? target : target.slice(colon + 1).trim();
+  const entity = WIKILINK_RESOLVERS[type]?.(id);
+  if (!entity) return { missing: true, type, id, text: label || id || target };
+  return { missing: false, type, id, text: label || entity.name || id };
+}
+
+/** Flatten a rich-text description to a single plain line for SEO meta / card
+ * clamps, resolving wikilinks to their entity names. */
+export function descriptionToPlain(text) {
+  return richTextToPlain(text, (target, label) => resolveWikilink(target, label).text);
 }
 
 /**
@@ -784,6 +818,30 @@ export const searchItems = [
       ...networkBands(n),
       ...networkRadioSettings(n).flatMap((r) => [r.name, r.description, r.frequency_mhz]),
       ...(n.regions ?? []).flatMap((r) => [r.code, r.name])
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase()
+  })),
+  ...software.map((s) => ({
+    type: 'Software',
+    title: s.name,
+    subtitle: [SOFTWARE_KIND_META[s.kind]?.singular ?? s.kind, (s.maintainers ?? [])[0]?.name]
+      .filter(Boolean)
+      .join(' · '),
+    href: `/software/${s.id}/`,
+    image: s.imageUrl,
+    kind: s.kind,
+    text: [
+      s.name,
+      s.short_name,
+      ...(s.also_known_as ?? []),
+      SOFTWARE_KIND_META[s.kind]?.label ?? s.kind,
+      s.description,
+      ...(s.tags ?? []),
+      ...(s.languages ?? []),
+      ...(s.platforms ?? []),
+      ...(s.maintainers ?? []).map((m) => m.name)
     ]
       .filter(Boolean)
       .join(' ')

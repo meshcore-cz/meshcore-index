@@ -1,0 +1,85 @@
+name: Roadstr
+kind: tool
+status: active
+maturity: alpha
+description: >-
+  Decentralized road-event reporting app for Android and the web using signed
+  Nostr events, geohash queries and OsmAnd integration. Its compact MeshCore
+  transport format is specified but not yet implemented.
+
+screenshots:
+  - file: web.png
+    caption: Browser road-event map
+  - file: android.png
+    caption: Android and OsmAnd road-event integration
+
+maintainers:
+  - name: Juraj Bednár
+    url: https://github.com/jooray
+
+repository: https://github.com/jooray/roadstr
+website: https://cypherpunk.today/static/roadstr
+documentation: https://github.com/jooray/roadstr/blob/main/SPECIFICATION.md
+license: Unlicense
+
+languages:
+  - kotlin
+  - javascript
+
+latest_version: v0.2.0
+released: 2026-06-16
+
+platforms:
+  - android
+  - web
+interfaces:
+  - mobile
+  - web
+connections:
+  - websocket
+  - http
+capabilities:
+  - mapping
+  - notifications
+
+install:
+  - type: web
+    url: https://cypherpunk.today/static/roadstr
+  - type: zapstore
+    package: com.roadstr
+    url: https://zapstore.dev/apps/com.roadstr
+  - type: github-release
+    package: app-release.apk
+    url: https://github.com/jooray/roadstr/releases
+  - type: source
+    url: https://github.com/jooray/roadstr
+
+popularity:
+  githubStars: 35
+  githubForks: 2
+  githubWatchers: 1
+  githubOpenIssues: 1
+  githubContributors: 1
+  releaseDownloads: 689
+  latestReleaseDownloads: 281
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: false
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Current releases exchange events through Nostr relays; MeshCore transport and mesh-to-internet bridging remain planned.
+    - The Android application integrates with OsmAnd for route display and proximity alerts.
+
+tags:
+  - nostr
+  - road-events
+  - osmand
+  - decentralized
+  - planned-meshcore
+
+last_reviewed: 2026-06-23

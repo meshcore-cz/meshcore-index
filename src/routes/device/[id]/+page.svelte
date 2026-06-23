@@ -18,12 +18,14 @@
     deviceDisplayLabel,
     devicePriceLabel,
     stripVendorLabel,
-    deviceShortName
+    deviceShortName,
+    descriptionToPlain
   } from '$lib/data.js';
   import { metricById } from '$lib/metrics.js';
   import { compareIds } from '$lib/compare.js';
   import { clampDescription, abs, absUrl, ogImageFor } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
+  import RichText from '$lib/RichText.svelte';
   import Chip from '$lib/Chip.svelte';
   import { Toggle } from 'bits-ui';
   import { favoriteIds, toggleFavorite } from '$lib/favorites.js';
@@ -49,7 +51,7 @@
   // Meta description: prefer the authored blurb, else synthesise from specs.
   let metaDescription = $derived(
     clampDescription(
-      d.description ||
+      descriptionToPlain(d.description) ||
         [d.vendorName, deviceMcuLabel(d), deviceRadioLabel(d)]
           .filter((s) => s && s !== 'Unknown')
           .join(' · ') + ` — runs ${pluralize(data.firmwares.length, 'MeshCore firmware')}.`
@@ -61,7 +63,7 @@
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: d.name,
-    ...(d.description ? { description: clampDescription(d.description, 300) } : {}),
+    ...(d.description ? { description: clampDescription(descriptionToPlain(d.description), 300) } : {}),
     ...(d.imageUrl ? { image: abs(d.imageUrl) } : {}),
     ...(d.vendorName ? { brand: { '@type': 'Brand', name: d.vendorName } } : {}),
     category: 'LoRa device',
@@ -675,7 +677,7 @@
     {:else if d.vendorName}
       <p class="mt-1 text-dim">{d.vendorName}</p>
     {/if}
-    {#if d.description}<p class="mt-2 max-w-[70ch] text-dim">{d.description}</p>{/if}
+    {#if d.description}<RichText class="mt-2 max-w-[70ch] text-dim" text={d.description} />{/if}
     {#if devicePriceLabel(d)}
       <p class="mt-3 flex items-baseline gap-2">
         <span class="text-[1.25rem] font-bold">{devicePriceLabel(d)}</span>

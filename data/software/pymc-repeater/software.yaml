@@ -1,0 +1,89 @@
+name: pyMC Repeater
+kind: gateway
+status: active
+maturity: beta
+description: >-
+  Lightweight Python MeshCore repeater daemon for Pi-class and embedded Linux
+  hardware, with direct SX1262 or KISS modem radio backends, packet routing,
+  neighbor discovery and a local monitoring dashboard. Server for [[software:pymc-console|pyMC Console]].
+
+image: logo.png
+screenshots:
+  - file: dashboard.png
+    caption: Repeater status and packet monitoring dashboard
+  - file: statistics.png
+    caption: Repeater traffic and performance statistics
+
+maintainers:
+  - name: Treehouse-00
+    url: https://github.com/Treehouse-00
+  - name: pyMC-dev
+    url: https://github.com/pyMC-dev
+
+repository: https://github.com/rightup/pyMC_Repeater
+license: MIT
+
+languages:
+  - python
+  - shell
+
+platforms:
+  - linux
+  - docker
+  - proxmox
+  - raspberry-pi
+interfaces:
+  - web
+  - headless
+connections:
+  - serial
+  - usb
+  - http
+node_roles:
+  - repeater
+capabilities:
+  - remote-administration
+  - monitoring
+  - telemetry
+  - packet-analysis
+
+install:
+  - type: bare-metal
+    package: Python / systemd
+    url: https://github.com/rightup/pyMC_Repeater#installation
+    command: sudo ./manage.sh
+  - type: docker-compose
+    url: https://github.com/rightup/pyMC_Repeater#docker-compose
+    command: docker compose up -d --force-recreate --build
+  - type: proxmox-lxc
+    url: https://github.com/rightup/pyMC_Repeater#installing-on-proxmox-lxc-container
+  - type: source
+    url: https://github.com/rightup/pyMC_Repeater
+
+popularity:
+  githubStars: 212
+  githubForks: 56
+  githubWatchers: 12
+  githubOpenIssues: 17
+  githubContributors: 18
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: false
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Supports native SPI SX1262 radios, CH341 USB-to-SPI adapters and KISS serial modems; SX1302/SX1303 concentrators are not supported.
+    - The project asks operators to test carefully before production deployment because real-world network coverage is still limited.
+
+tags:
+  - repeater
+  - raspberry-pi
+  - sx1262
+  - kiss
+  - self-hosted
+
+last_reviewed: 2026-06-23

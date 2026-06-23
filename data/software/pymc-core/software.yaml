@@ -1,0 +1,90 @@
+name: pyMC Core
+kind: library
+status: active
+maturity: beta
+description: >-
+  Python implementation of the MeshCore protocol and routing stack for building
+  mesh nodes and applications, with encrypted messaging, identity management,
+  event handling and optional direct SX1262 radio support over SPI.
+
+image: pymc.png
+
+maintainers:
+  - name: pyMC-dev
+    url: https://github.com/pyMC-dev
+  - name: Rightup
+    url: https://github.com/rightup
+
+repository: https://github.com/pyMC-dev/pyMC_core
+documentation: https://pymc-dev.github.io/pyMC_core/
+license: MIT
+
+languages:
+  - python
+
+latest_version: 1.0.12
+released: 2026-05-22
+
+platforms:
+  - linux
+  - raspberry-pi
+interfaces:
+  - api
+  - headless
+connections:
+  - spi
+  - serial
+  - usb
+  - websocket
+node_roles:
+  - companion
+  - repeater
+capabilities:
+  - messaging
+  - contacts
+  - channels
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - key-management
+
+install:
+  - type: pypi
+    package: pymc-core
+    url: https://pypi.org/project/pymc-core/
+    command: pip install pymc-core
+  - type: pypi
+    package: pymc-core[hardware]
+    url: https://pypi.org/project/pymc-core/
+    command: pip install "pymc-core[hardware]"
+  - type: source
+    url: https://github.com/pyMC-dev/pyMC_core
+
+popularity:
+  githubStars: 80
+  githubForks: 33
+  githubWatchers: 5
+  githubOpenIssues: 7
+  githubContributors: 10
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Releases are published to PyPI rather than GitHub Releases.
+    - Direct hardware support targets Raspberry Pi-class systems with SX1262 SPI radios; protocol components can be used without radio extras.
+    - The project describes itself as protocol-compatible but not yet as optimized as the original MeshCore C++ implementation.
+
+tags:
+  - sdk
+  - protocol
+  - routing
+  - sx1262
+  - raspberry-pi
+
+last_reviewed: 2026-06-23

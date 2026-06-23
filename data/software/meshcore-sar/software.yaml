@@ -1,0 +1,96 @@
+name: MeshCore SAR
+kind: client
+status: active
+maturity: beta
+description: >-
+  Offline-first Search and Rescue coordination app for iOS and Android, with
+  MeshCore messaging, low-bandwidth voice and images, tactical maps, live team
+  tracking, incident markers and shared drawings.
+
+image: icon.png
+screenshots:
+  - file: map.png
+    caption: Tactical map with live team context
+  - file: navigation.png
+    caption: Compass and field navigation
+  - file: messages.png
+    caption: Mesh messaging with voice and image cards
+  - file: actions.png
+    caption: SAR, voice and image quick actions
+
+maintainers:
+  - name: dz0ny
+    url: https://github.com/dz0ny
+
+repository: https://github.com/dz0ny/meshcore-sar
+website: https://dz0ny.github.io/meshcore-sar/
+license_type: source-available
+
+languages:
+  - dart
+  - typescript
+
+latest_version: v2026.0613.2
+released: 2026-06-13
+
+platforms:
+  - android
+  - ios
+  - web
+interfaces:
+  - mobile
+  - web
+connections:
+  - ble
+node_roles:
+  - companion
+  - repeater
+  - room-server
+capabilities:
+  - messaging
+  - contacts
+  - channels
+  - monitoring
+  - telemetry
+  - mapping
+  - notifications
+
+install:
+  - type: app-store
+    package: TestFlight
+    url: https://testflight.apple.com/join/tngpPF12
+  - type: github-release
+    package: meshcore-sar-2026.0613.2.apk
+    url: https://github.com/dz0ny/meshcore-sar/releases
+  - type: source
+    url: https://github.com/dz0ny/meshcore-sar
+
+popularity:
+  githubStars: 128
+  githubForks: 19
+  githubWatchers: 8
+  githubOpenIssues: 10
+  githubContributors: 2
+  releaseDownloads: 4102
+  latestReleaseDownloads: 301
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - The repository does not currently declare an SPDX license.
+    - Voice uses Codec2 and images use AVIF to reduce traffic over constrained mesh links.
+
+tags:
+  - search-and-rescue
+  - offline
+  - tactical-mapping
+  - voice
+  - field-tool
+
+last_reviewed: 2026-06-23

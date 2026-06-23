@@ -3,9 +3,10 @@
   import RecordFooter from '$lib/RecordFooter.svelte';
   import BackLink from '$lib/BackLink.svelte';
   import { pluralize } from '$lib/format.js';
-  import { STATUS_META, TYPE_META, FW_STATUS_TW, LICENSE_TYPE_META, licenseType, groupReleases, getFirmware, deviceMcuLabel, deviceRadioLabel, resolveRefs } from '$lib/data.js';
+  import { STATUS_META, TYPE_META, FW_STATUS_TW, LICENSE_TYPE_META, licenseType, groupReleases, getFirmware, deviceMcuLabel, deviceRadioLabel, resolveRefs, descriptionToPlain } from '$lib/data.js';
   import { clampDescription, absUrl, ogImageFor } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
+  import RichText from '$lib/RichText.svelte';
   import ReleaseGroupList from '$lib/ReleaseGroupList.svelte';
   import CapabilityMatrix from '$lib/CapabilityMatrix.svelte';
   let { data } = $props();
@@ -91,7 +92,7 @@
 
   let fwDescription = $derived(
     clampDescription(
-      fw.description ||
+      descriptionToPlain(fw.description) ||
         `${fw.name} — ${TYPE_META[fw.type]?.label ?? fw.type} MeshCore firmware${fw.maintainer ? ` by ${fw.maintainer}` : ''}, supporting ${pluralize(data.devices.length, 'device')}.`
     )
   );
@@ -101,7 +102,7 @@
     name: fw.name,
     applicationCategory: 'Firmware',
     operatingSystem: 'MeshCore',
-    ...(fw.description ? { description: clampDescription(fw.description, 300) } : {}),
+    ...(fw.description ? { description: clampDescription(descriptionToPlain(fw.description), 300) } : {}),
     ...(fw.maintainer ? { author: { '@type': 'Person', name: fw.maintainer } } : {}),
     ...(fw.latest_version ? { softwareVersion: fw.latest_version } : {}),
     url: absUrl(`/firmware/${fw.id}/`),
@@ -120,7 +121,7 @@
       {TYPE_META[fw.type]?.label ?? fw.type}
     </span>
   </div>
-  <p class="max-w-[70ch] text-dim">{fw.description}</p>
+  {#if fw.description}<RichText class="max-w-[70ch] text-dim" text={fw.description} />{/if}
   {#if lineageVerb}
     <p class="mt-1.5 text-[0.9rem] text-dim">
       {lineageVerb}

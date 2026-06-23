@@ -1,0 +1,67 @@
+name: MeshFirmware
+kind: tool
+status: active
+maturity: stable
+description: >-
+  Interactive Windows and Linux scripts for detecting supported USB radios,
+  selecting MeshCore or Meshtastic firmware releases, and installing, updating
+  or locally compiling firmware.
+
+maintainers:
+  - name: Mike Carper
+    url: https://github.com/mikecarper
+
+repository: https://github.com/mikecarper/meshfirmware
+documentation: https://github.com/mikecarper/meshfirmware#readme
+license: LGPL-2.1-only
+
+languages:
+  - batchfile
+  - shell
+
+platforms:
+  - linux
+  - windows
+interfaces:
+  - cli
+connections:
+  - usb
+  - serial
+capabilities:
+  - flashing
+  - firmware-update
+
+install:
+  - type: manual
+    package: mtfirmware.cmd
+    url: https://github.com/mikecarper/meshfirmware/blob/main/mtfirmware.cmd
+  - type: source
+    url: https://github.com/mikecarper/meshfirmware
+    command: chmod +x mtfirmware.sh && ./mtfirmware.sh
+
+popularity:
+  githubStars: 54
+  githubForks: 2
+  githubWatchers: 7
+  githubOpenIssues: 4
+  githubContributors: 1
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: false
+  signedReleases: false
+  ciBuilds: false
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Downloads release metadata from the official MeshCore and Meshtastic repositories and keeps a local cache for offline fallback.
+    - Automatically detects matching USB devices and firmware artifacts before flashing.
+
+tags:
+  - firmware
+  - usb
+  - cross-platform
+  - meshtastic
+
+last_reviewed: 2026-06-23

@@ -1,0 +1,106 @@
+name: PotatoMesh
+kind: tool
+status: active
+maturity: beta
+description: >-
+  Federated self-hosted dashboard for local MeshCore and Meshtastic communities,
+  combining node maps, chat, telemetry, neighbors and trace routes with remote
+  radio ingestors and a public API.
+
+image: potatomesh-logo.svg
+screenshots:
+  - file: dashboard.png
+    caption: Community node map, chat and telemetry dashboard
+  - file: matrix-bridge.png
+    caption: Matrix bridge forwarding mesh messages
+
+maintainers:
+  - name: l5yth
+    url: https://github.com/l5yth
+
+repository: https://github.com/l5yth/potato-mesh
+website: https://potatomesh.net/
+license: Apache-2.0
+
+languages:
+  - ruby
+  - python
+  - javascript
+  - dart
+
+latest_version: v0.6.3
+released: 2026-05-03
+
+platforms:
+  - docker
+  - linux
+  - nixos
+  - web
+interfaces:
+  - web
+  - api
+  - headless
+connections:
+  - ble
+  - serial
+  - tcp
+  - http
+node_roles:
+  - companion
+  - repeater
+  - room-server
+  - sensor
+capabilities:
+  - messaging
+  - contacts
+  - channels
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - mapping
+  - notifications
+  - bridging
+
+install:
+  - type: web
+    url: https://potatomesh.net/
+  - type: docker-compose
+    package: ghcr.io/l5yth/potato-mesh-web-linux-amd64
+    url: https://github.com/l5yth/potato-mesh/blob/main/DOCKER.md
+    command: docker compose up -d
+  - type: nixos
+    package: potato-mesh
+    url: https://github.com/l5yth/potato-mesh#nix
+    command: nix run .#web
+  - type: source
+    url: https://github.com/l5yth/potato-mesh
+
+popularity:
+  githubStars: 329
+  githubForks: 41
+  githubWatchers: 8
+  githubOpenIssues: 23
+  githubContributors: 10
+  latestReleaseDownloads: 0
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - MeshCore ingestors connect to companion radios over BLE, serial or TCP and post normalized data to the web service.
+    - Federation is enabled by default but can be disabled for isolated or private deployments.
+    - The mobile reader and Matrix bridge are still described as works in progress.
+
+tags:
+  - federated
+  - community-dashboard
+  - multi-protocol
+  - self-hosted
+  - matrix
+
+last_reviewed: 2026-06-23

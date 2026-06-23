@@ -1,0 +1,65 @@
+name: MeshCore Web Key Generator
+short_name: Web Keygen
+kind: tool
+status: active
+maturity: stable
+description: >-
+  Browser-only Ed25519 key generator for creating MeshCore identities with
+  custom hexadecimal public-key prefixes, helping operators avoid short-prefix
+  collisions without sending private keys to a server.
+
+maintainers:
+  - name: agessaman
+    url: https://github.com/agessaman
+
+repository: https://github.com/agessaman/meshcore-web-keygen
+website: https://agessaman.github.io/meshcore-web-keygen/
+license_type: source-available
+
+languages:
+  - javascript
+  - rust
+
+latest_version: v0.4
+released: 2025-12-27
+
+platforms:
+  - web
+interfaces:
+  - web
+capabilities:
+  - key-management
+
+install:
+  - type: web
+    url: https://agessaman.github.io/meshcore-web-keygen/
+  - type: source
+    url: https://github.com/agessaman/meshcore-web-keygen
+
+popularity:
+  githubStars: 33
+  githubForks: 8
+  githubWatchers: 0
+  githubOpenIssues: 1
+  githubContributors: 3
+  latestReleaseDownloads: 0
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Key generation runs locally in browser workers and does not transmit generated keys.
+    - The repository does not currently declare an SPDX license.
+
+tags:
+  - key-generator
+  - privacy
+  - ed25519
+  - browser-only
+
+last_reviewed: 2026-06-23

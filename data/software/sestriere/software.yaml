@@ -1,0 +1,94 @@
+name: Sestriere
+kind: client
+status: active
+maturity: beta
+description: >-
+  Native Haiku OS MeshCore client with encrypted messaging, voice, images,
+  topology and geographic maps, packet analysis, telemetry, repeater
+  administration and an optional MQTT bridge.
+
+screenshots:
+  - file: messaging.png
+    caption: Native Haiku messaging interface
+  - file: topology.png
+    caption: Mesh topology and packet-flow visualization
+  - file: map.png
+    caption: Geographic map and line-of-sight tools
+  - file: telemetry.png
+    caption: Node telemetry and network health
+
+maintainers:
+  - name: atomozero
+    url: https://github.com/atomozero
+
+repository: https://github.com/atomozero/Sestriere
+documentation: https://github.com/atomozero/Sestriere/blob/main/docs/MANUAL.md
+license_type: source-available
+
+languages:
+  - cpp
+
+latest_version: '1.8'
+released: 2026-03-15
+
+platforms:
+  - haiku
+interfaces:
+  - gui
+connections:
+  - serial
+  - usb
+  - mqtt
+node_roles:
+  - companion
+  - repeater
+  - room-server
+capabilities:
+  - messaging
+  - contacts
+  - channels
+  - node-configuration
+  - remote-administration
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - mapping
+  - notifications
+  - bridging
+
+install:
+  - type: github-release
+    package: Sestriere-1.8-haiku.zip
+    url: https://github.com/atomozero/Sestriere/releases
+  - type: source
+    url: https://github.com/atomozero/Sestriere
+
+popularity:
+  githubStars: 33
+  githubForks: 0
+  githubWatchers: 2
+  githubOpenIssues: 13
+  githubContributors: 2
+  releaseDownloads: 35
+  latestReleaseDownloads: 12
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: false
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - The repository does not currently declare an SPDX license.
+    - Requires Haiku system libraries plus Mosquitto, libcurl, giflib and Codec2.
+
+tags:
+  - haiku
+  - native
+  - voice
+  - image-messaging
+  - mqtt
+
+last_reviewed: 2026-06-23

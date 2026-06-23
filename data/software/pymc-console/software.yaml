@@ -1,0 +1,96 @@
+name: pyMC Console
+kind: tool
+status: active
+maturity: beta
+description: >-
+  Web dashboard for [[software:pymc-repeater|pyMC Repeater]] with live packet inspection, topology and
+  path analysis, RF statistics, terrain mapping, link-quality radar, system
+  monitoring and an interactive repeater terminal.
+
+image: logo.svg
+screenshots:
+  - file: topology.png
+    caption: Deep topology analysis and terrain mapping
+  - file: link-quality.png
+    caption: Directional link-quality radar
+  - file: statistics.png
+    caption: RF and airtime statistics
+  - file: terminal.png
+    caption: Repeater terminal, logs and themes
+
+maintainers:
+  - name: Treehouse-00
+    url: https://github.com/Treehouse-00
+  - name: pyMC-dev
+    url: https://github.com/pyMC-dev
+
+repository: https://github.com/dmduran12/pymc_console-dist
+documentation: https://docs.pymc.dev/
+license: MIT
+
+languages:
+  - javascript
+  - typescript
+  - shell
+
+latest_version: v0.9.329
+released: 2026-05-07
+
+platforms:
+  - linux
+  - raspberry-pi
+  - web
+interfaces:
+  - web
+connections:
+  - http
+  - websocket
+node_roles:
+  - repeater
+capabilities:
+  - node-configuration
+  - remote-administration
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - mapping
+
+install:
+  - type: github-release
+    package: pymc-ui-latest.tar.gz
+    url: https://github.com/dmduran12/pymc_console-dist/releases
+  - type: manual
+    url: https://github.com/dmduran12/pymc_console-dist#install-the-console
+    command: sudo bash manage.sh install
+  - type: source
+    url: https://github.com/dmduran12/pymc_console-dist
+
+popularity:
+  githubStars: 53
+  githubForks: 7
+  githubWatchers: 2
+  githubOpenIssues: 13
+  githubContributors: 3
+  releaseDownloads: 2609
+  latestReleaseDownloads: 535
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Requires an existing pyMC Repeater installation and replaces only its web dashboard assets.
+    - Repeater service lifecycle and radio configuration remain owned by pyMC Repeater.
+
+tags:
+  - repeater
+  - topology
+  - rf-analysis
+  - raspberry-pi
+  - dashboard
+
+last_reviewed: 2026-06-23

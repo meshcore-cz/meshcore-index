@@ -1,0 +1,95 @@
+name: MeshCore Hub
+kind: gateway
+status: active
+maturity: beta
+description: >-
+  Self-hosted MeshCore network collection platform that ingests decoded packet
+  events over MQTT, persists messages and telemetry, and provides a web
+  dashboard, REST API, authentication, metrics and remote observer support.
+
+image: logo.svg
+screenshots:
+  - file: dashboard.png
+    caption: MeshCore Hub network dashboard
+
+maintainers:
+  - name: IPNet Mesh
+    url: https://github.com/ipnet-mesh
+
+repository: https://github.com/ipnet-mesh/meshcore-hub
+website: https://ipnt.uk/
+documentation: https://github.com/ipnet-mesh/meshcore-hub/tree/main/docs
+license: GPL-3.0-only
+
+languages:
+  - python
+  - javascript
+
+latest_version: v0.14.0
+released: 2026-06-19
+
+platforms:
+  - docker
+  - linux
+  - web
+interfaces:
+  - web
+  - api
+  - headless
+connections:
+  - mqtt
+  - serial
+  - usb
+  - http
+  - websocket
+node_roles:
+  - companion
+  - repeater
+  - room-server
+capabilities:
+  - messaging
+  - contacts
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - mapping
+  - automation
+  - notifications
+  - bridging
+
+install:
+  - type: docker-compose
+    package: ghcr.io/ipnet-mesh/meshcore-hub
+    url: https://github.com/ipnet-mesh/meshcore-hub#getting-started
+    command: docker compose -f docker-compose.yml -f docker-compose.dev.yml --profile all up -d
+  - type: source
+    url: https://github.com/ipnet-mesh/meshcore-hub
+
+popularity:
+  githubStars: 52
+  githubForks: 9
+  githubWatchers: 2
+  githubOpenIssues: 3
+  githubContributors: 6
+  latestReleaseDownloads: 0
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Uses meshcore-packet-capture observers to decode RF traffic and publish normalized events to MQTT.
+    - PostgreSQL is becoming the required database backend; SQLite remains temporarily supported during migration.
+
+tags:
+  - collector
+  - mqtt
+  - self-hosted
+  - observability
+  - multi-observer
+
+last_reviewed: 2026-06-23

@@ -1,0 +1,124 @@
+source: github
+repo: ipnet-mesh/meshcore-hub
+updatedAt: '2026-06-23T20:38:33.516Z'
+releases:
+  - version: v0.14.0
+    name: v0.14.0
+    datetime: '2026-06-19T18:22:39Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.14.0
+    prerelease: false
+    notes: "## What's Changed\r\n* ci: prune old untagged GHCR package versions by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/256\r\n* Add optional PostgreSQL backend (v0.14.0) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/243\r\n* Added migrate service to overlay network by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/259\r\n* chore(deps): update postgres docker tag to v18 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/258\r\n* Reverted to Postgres 17 by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/260\r\n* fix: sink NULL last_seen nodes to bottom of node list by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/263\r\n* fix: normalize date-bucket keys for Postgres dashboard charts by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/264\r\n* fix: normalize packets feature flag check to !== false by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/265\r\n* Added explicit pull policies for core services by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/266\r\n* fix: ensure CI required checks run on all PRs by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/268\r\n* docs: tidy database docs and deprecate SQLite by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/267\r\n* chore(deps): update anomalyco/opencode action to v1.17.8 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/269\r\n* docs: centralise env vars and split deployment/observer/maintenance docs by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/271\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.4...v0.14.0"
+  - version: v0.13.4
+    name: v0.13.4
+    datetime: '2026-06-14T22:39:25Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.4
+    prerelease: false
+    notes: "## What's Changed\r\n* Added nix-shell support by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/250\r\n* chore(tests): speed up pytest from >2min to ~12s by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/251\r\n* chore(ci): optimise GitHub workflows by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/252\r\n* fix(docker): correct OCI source label to ipnet-mesh/meshcore-hub by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/254\r\n* chore(deps): update actions/cache action to v5 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/253\r\n* fix: forward/cache repeated query params (observer filters) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/255\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.3...v0.13.4"
+  - version: v0.13.3
+    name: v0.13.3
+    datetime: '2026-06-14T19:10:34Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.3
+    prerelease: false
+    notes: "## What's Changed\r\n* fix(web): collapse newlines in rendered message text by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/249\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.2...v0.13.3"
+  - version: v0.13.2
+    name: v0.13.2
+    datetime: '2026-06-14T18:14:14Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.2
+    prerelease: false
+    notes: "## What's Changed\r\n* feat(web): system announcement banner and maintenance mode by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/245\r\n* Updated Python Requirements by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/247\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.1...v0.13.2"
+  - version: v0.13.1
+    name: v0.13.1
+    datetime: '2026-06-14T12:11:45Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.1
+    prerelease: false
+    notes: "## What's Changed\r\n* feat(web): observer filter as toggle badges on adverts/messages by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/244\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.0...v0.13.1"
+  - version: v0.13.0
+    name: v0.13.0
+    datetime: '2026-06-14T09:27:31Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.0
+    prerelease: false
+    notes: "## What's Changed\r\n* feat: Raw Packets — capture, browse, classify, and link wire packets (v0.13.0) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/237\r\n* Update tailwindcss monorepo to v4.3.1 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/236\r\n* chore(deps): update dependency esbuild to v0.28.1 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/235\r\n* Add packet-groups API endpoint for deduplicated packet list by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/238\r\n* Packet-detail page with path-hash node lookup by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/240\r\n* Updated Agent instructions by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/241\r\n* Fix observed_by filter to use event_observers junction table by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/242\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.12.3...v0.13.0"
+  - version: v0.12.3
+    name: v0.12.3
+    datetime: '2026-06-11T22:26:37Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.12.3
+    prerelease: false
+    notes: "## What's Changed\r\n* fix(web): show node last_seen instead of adopted_at on profile by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/232\r\n* fix(web): resolve TDZ error on profile page from shadowed signal var by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/234\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.12.2...v0.12.3"
+  - version: v0.12.2
+    name: v0.12.2
+    datetime: '2026-06-11T12:40:56Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.12.2
+    prerelease: false
+    notes: "## What's Changed\r\n* perf(web): cancel in-flight requests on navigation; consolidate dashboard stats by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/231\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.12.1...v0.12.2"
+  - version: v0.12.1
+    name: v0.12.1
+    datetime: '2026-06-11T11:33:50Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.12.1
+    prerelease: false
+    notes: "## What's Changed\r\n* perf(api): batch N+1 dashboard and message sender queries by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/229\r\n* feat(api): configurable worker processes via API_WORKERS by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/230\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.12.0...v0.12.1"
+  - version: v0.12.0
+    name: v0.12.0
+    datetime: '2026-06-11T09:33:03Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.12.0
+    prerelease: false
+    notes: "## What's Changed\r\n* feat: add optional Redis caching layer for API endpoints by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/226\r\n* perf(api): threadpool handlers, SQLite concurrency tuning, precomputed is_observer by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/228\r\n* Update redis Docker tag to v8 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/227\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.11.1...v0.12.0"
+  - version: v0.11.1
+    name: v0.11.1
+    datetime: '2026-06-07T16:21:08Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.11.1
+    prerelease: false
+    notes: "## What's Changed\r\n* Split NETWORK_RADIO_CONFIG into individual env vars and add FEATURE_R… by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/225\r\n* Update codecov/codecov-action action to v7 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/224\r\n* Update dependency daisyui to v5.5.23 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/223\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.11.0...v0.11.1"
+  - version: v0.11.0
+    name: v0.11.0
+    datetime: '2026-06-04T13:58:45Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.11.0
+    prerelease: false
+    notes: "## What's Changed\r\n* feat: add sqlite3 CLI to Docker image for database debugging by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/214\r\n* Updated meshcore-packet-capture contrib example to support MeshRank by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/215\r\n* Updates by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/216\r\n* Updates by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/217\r\n* Updated gitignore by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/218\r\n* Added default Compose vars by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/219\r\n* chore(deps): update dependency daisyui to v5.5.20 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/220\r\n* chore(deps): update dependency lit-html to v3.3.3 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/209\r\n* Update README observer section to match current packetcapture config by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/221\r\n* Add database-backed channels with role-based visibility and web dashboard by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/222\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.10.5...v0.11.0"
+  - version: v0.10.5
+    name: v0.10.5
+    datetime: '2026-05-15T20:53:40Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.10.5
+    prerelease: false
+    notes: "## What's Changed\r\n* fix: add public_key filter to advertisements API by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/212\r\n* feat: add route type tracking and flood-only defaults for advertisements by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/213\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.10.4...v0.10.5"
+  - version: v0.10.4
+    name: v0.10.4
+    datetime: '2026-05-15T15:58:04Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.10.4
+    prerelease: false
+    notes: "## What's Changed\r\n* fix: enable async SQLite FK enforcement and clean up orphaned node relations by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/211\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.10.3...v0.10.4"
+  - version: v0.10.3
+    name: v0.10.3
+    datetime: '2026-05-11T21:19:39Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.10.3
+    prerelease: false
+    notes: "## What's Changed\r\n* fix: member count badge and operator-only filter dropdowns by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/207\r\n* chore(deps): update tailwindcss monorepo to v4.3.0 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/203\r\n* docs: add MeshCore Hub Networks section and reorder translation alert by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/208\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.10.2...v0.10.3"
+  - version: v0.10.2
+    name: v0.10.2
+    datetime: '2026-05-11T08:30:21Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.10.2
+    prerelease: false
+    notes: "## What's Changed\r\n* feat: add network announcement flash banner by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/206\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.10.1...v0.10.2"
+  - version: v0.10.1
+    name: v0.10.1
+    datetime: '2026-05-09T10:27:57Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.10.1
+    prerelease: false
+    notes: "## What's Changed\r\n* fix: allow role-less OIDC users to save their own profile by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/204\r\n* feat: hide users with test OIDC role from public views by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/205\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.10.0...v0.10.1"
+  - version: v0.10.0
+    name: v0.10.0
+    datetime: '2026-05-06T18:35:51Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.10.0
+    prerelease: false
+    notes: "## What's Changed\r\n* Remove header-based auth (ProxyHeadersMiddleware, is_authenticated config, OAuth2 SPA flows) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/177\r\n* Add OIDC/OAuth2 authentication for web dashboard by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/178\r\n* Auth improvements: OIDC-gated member filter, profile page fixes, members refactor by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/179\r\n* Refactor SPA frontend: eliminate inline SVGs, extract shared components by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/180\r\n* feat: add description and url fields to user profiles, fix nullable field clearing by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/181\r\n* feat: user profile description/url + members hero link + profile layout fix by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/182\r\n* feat: replace role=infra tag with adoption-based infrastructure detection by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/183\r\n* feat: replace admin tag page with inline node tag editor by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/184\r\n* fix: resolve mobile UI issues on members page and node detail by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/185\r\n* feat: add observer multi-select and collapsible filters to list pages by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/186\r\n* fix: migrate form classes to DaisyUI v5 and redesign home hero buttons by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/187\r\n* fix: correct NODE_CLEANUP_DAYS default and add missing env vars to docs by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/188\r\n* feat: add clickable sort controls to list pages + alpha sort default for nodes by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/189\r\n* feat: add esbuild bundling with content-hash cache busting by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/190\r\n* chore(deps): update node.js to v24 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/192\r\n* chore(deps): update dependency esbuild to ^0.28.0 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/191\r\n* feat: default nodes sort by last_seen + mobile sort controls by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/193\r\n* feat: restructure mobile navbar and increase dropdown sizes by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/195\r\n* fix: increase mobile dropdown z-index to render above QR code on node detail page by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/196\r\n* feat: replace flat radio config list with icon tile grid on homepage by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/197\r\n* feat: replace MeshCore card with Members widget and add footer branding by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/198\r\n* fix: include operators in members count widget by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/199\r\n* feat: improve markdown prose styling, map popup overlay, and collapsible filters by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/200\r\n* docs: sync documentation with source code before release by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/201\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.9.2...v0.10.0"
+  - version: v0.9.2
+    name: v0.9.2
+    datetime: '2026-04-26T14:03:34Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.9.2
+    prerelease: false
+    notes: "## What's Changed\r\n* Add observer detail rows with SNR/path data and UI polish by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/174\r\n* Preserve table content on API errors with header warning badge by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/175\r\n* Update observer table: SNR/Path headers and value suffix cleanup by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/176\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.9.1...v0.9.2"
+  - version: v0.9.1
+    name: v0.9.1
+    datetime: '2026-04-24T10:36:41Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.9.1
+    prerelease: false
+    notes: "## What's Changed\r\n* Update tailwindcss monorepo to v4.2.4 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/165\r\n* Fix markdown table borders in custom content pages by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/171\r\n* Update MeshCore URLs to meshcore.io and tagline by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/172\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.9.0...v0.9.1"

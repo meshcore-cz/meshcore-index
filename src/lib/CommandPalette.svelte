@@ -5,6 +5,7 @@
   import { Command, Dialog } from 'bits-ui';
   import { Search } from '@lucide/svelte';
   import Avatar from '$lib/Avatar.svelte';
+  import SoftwareIcon from '$lib/SoftwareIcon.svelte';
   import { searchAtlas } from '$lib/data.js';
 
   let { open = $bindable(false) } = $props();
@@ -23,7 +24,8 @@
   const TYPE_TW = {
     Device: 'text-accent',
     Firmware: 'text-accent2',
-    Vendor: 'text-warn'
+    Vendor: 'text-warn',
+    Software: 'text-ok'
   };
 
   async function go(item) {
@@ -83,21 +85,25 @@
                   onSelect={() => go(item)}
                   class="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left outline-none data-[selected]:bg-elev2"
                 >
-                  <Avatar
-                    src={item.image}
-                    alt=""
-                    class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-md border border-edge bg-bg"
-                    imgClass="max-h-full max-w-full object-contain p-1"
-                  >
-                    {#if item.type === 'Device'}
-                      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 text-muted">
-                        <rect x="7" y="4" width="10" height="16" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.8" />
-                        <path d="M10 2.8v2.4M14 2.8v2.4M10 18.8v2.4M14 18.8v2.4M5.2 8h2.4M5.2 12h2.4M5.2 16h2.4M16.4 8h2.4M16.4 12h2.4M16.4 16h2.4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.4" />
-                      </svg>
-                    {:else}
-                      <span class="text-[0.7rem] font-bold {TYPE_TW[item.type] ?? 'text-dim'}">{item.title.slice(0, 1).toUpperCase()}</span>
-                    {/if}
-                  </Avatar>
+                  {#if item.type === 'Software'}
+                    <SoftwareIcon src={item.image} name={item.title} kind={item.kind} class="h-9 w-9 rounded-md" iconClass="h-4 w-4" />
+                  {:else}
+                    <Avatar
+                      src={item.image}
+                      alt=""
+                      class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-md border border-edge bg-bg"
+                      imgClass="max-h-full max-w-full object-contain p-1"
+                    >
+                      {#if item.type === 'Device'}
+                        <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 text-muted">
+                          <rect x="7" y="4" width="10" height="16" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.8" />
+                          <path d="M10 2.8v2.4M14 2.8v2.4M10 18.8v2.4M14 18.8v2.4M5.2 8h2.4M5.2 12h2.4M5.2 16h2.4M16.4 8h2.4M16.4 12h2.4M16.4 16h2.4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.4" />
+                        </svg>
+                      {:else}
+                        <span class="text-[0.7rem] font-bold {TYPE_TW[item.type] ?? 'text-dim'}">{item.title.slice(0, 1).toUpperCase()}</span>
+                      {/if}
+                    </Avatar>
+                  {/if}
                   <span class="min-w-0 flex-1">
                     <span class="block truncate text-[0.95rem] text-ink">{item.title}</span>
                     {#if item.subtitle}<span class="block truncate text-[0.8rem] text-dim opacity-60">{item.subtitle}</span>{/if}

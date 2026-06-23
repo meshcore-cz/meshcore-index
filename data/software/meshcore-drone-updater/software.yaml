@@ -1,0 +1,67 @@
+name: MeshCore Drone Updater
+kind: tool
+status: active
+maturity: experimental
+description: >-
+  Automated Raspberry Pi service for updating physically inaccessible
+  nRF52-based MeshCore nodes over Bluetooth DFU, designed for drive-by or
+  drone-assisted rooftop and tower maintenance.
+
+maintainers:
+  - name: lucidnx
+    url: https://github.com/lucidnx
+
+repository: https://github.com/lucidnx/meshcore-drone-updater
+license_type: source-available
+
+languages:
+  - python
+  - shell
+
+platforms:
+  - linux
+  - raspberry-pi
+interfaces:
+  - headless
+connections:
+  - ble
+capabilities:
+  - flashing
+  - firmware-update
+  - automation
+
+install:
+  - type: bare-metal
+    package: Python / systemd
+    url: https://github.com/lucidnx/meshcore-drone-updater#installation
+    command: sudo ./install.sh
+  - type: source
+    url: https://github.com/lucidnx/meshcore-drone-updater
+
+popularity:
+  githubStars: 21
+  githubForks: 3
+  githubWatchers: 0
+  githubOpenIssues: 0
+  githubContributors: 1
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: false
+  signedReleases: false
+  ciBuilds: false
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Supports nRF52 devices that expose Bluetooth DFU mode and relies on operator-maintained device-to-firmware mapping files.
+    - The repository does not currently declare an SPDX license.
+
+tags:
+  - drone
+  - bluetooth-dfu
+  - nrf52
+  - unattended
+  - field-maintenance
+
+last_reviewed: 2026-06-23

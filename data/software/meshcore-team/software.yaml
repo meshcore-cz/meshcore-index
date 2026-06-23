@@ -1,0 +1,74 @@
+name: MeshCore TEAM
+kind: client
+status: dormant
+maturity: beta
+description: >-
+  Android group-tracking and messaging client for hunters and backcountry teams,
+  using MeshCore telemetry for off-grid positions, team maps and coordination.
+
+screenshots:
+  - file: home.jpg
+    caption: Team status and navigation
+  - file: map.jpg
+    caption: Off-grid team position map
+  - file: messages.jpg
+    caption: Team messaging
+  - file: settings.jpg
+    caption: Application and radio settings
+
+maintainers:
+  - name: tmacinc
+    url: https://github.com/tmacinc
+
+repository: https://github.com/tmacinc/meshcore-team-alpha
+website: https://tmacinc.github.io/meshcore-team-alpha/
+license: LicenseRef-Evaluation-Only
+license_type: proprietary
+
+platforms:
+  - android
+interfaces:
+  - mobile
+connections:
+  - ble
+node_roles:
+  - companion
+capabilities:
+  - messaging
+  - contacts
+  - monitoring
+  - telemetry
+  - mapping
+  - notifications
+
+install:
+  - type: play-store
+    package: closed test
+    url: https://groups.google.com/g/meshcore-team-beta
+
+popularity:
+  githubStars: 16
+  githubForks: 1
+  githubWatchers: 1
+  githubOpenIssues: 0
+  githubContributors: 1
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: false
+  releasesAvailable: false
+  signedReleases: false
+  ciBuilds: false
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - This repository is deprecated; current testing moved to a closed Google Play track accessed through the linked Google Group.
+    - The repository contains documentation and screenshots but distributes no source code.
+
+tags:
+  - team-tracking
+  - backcountry
+  - hunting
+  - closed-beta
+
+last_reviewed: 2026-06-23

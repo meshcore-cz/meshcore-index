@@ -193,6 +193,7 @@ properties:
       type: string
       enum:
         - ble
+        - spi
         - serial
         - usb
         - tcp
@@ -249,6 +250,7 @@ properties:
           enum:
             - app-store
             - play-store
+            - zapstore
             - github-release
             - docker
             - docker-compose
@@ -257,6 +259,7 @@ properties:
             - proxmox-lxc
             - nixos
             - bare-metal
+            - aur
             - flatpak
             - homebrew
             - npm

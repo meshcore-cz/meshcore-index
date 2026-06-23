@@ -1,0 +1,91 @@
+name: MeshCore Wardrive
+kind: tool
+status: active
+maturity: beta
+description: >-
+  Android coverage-mapping app that pairs GPS tracks with automatic MeshCore
+  repeater pings, visualizes response rates and signal quality, exports survey
+  data and can contribute results to a community web map.
+
+image: icon.png
+screenshots:
+  - file: coverage-map.jpeg
+    caption: Color-coded MeshCore coverage survey
+  - file: tracking.jpeg
+    caption: Live GPS tracking and automatic ping controls
+  - file: repeaters.jpeg
+    caption: Repeater discovery and signal results
+  - file: statistics.jpeg
+    caption: Wardrive sample and success-rate statistics
+
+maintainers:
+  - name: mintylinux
+    url: https://github.com/mintylinux
+
+repository: https://github.com/mintylinux/Meshcore-Wardrive-Android
+website: https://meshwar-map.pages.dev/
+documentation: https://github.com/mintylinux/Meshcore-Wardrive-Android#readme
+license: GPL-3.0-only
+
+languages:
+  - dart
+
+latest_version: 1.0.40
+released: 2026-06-09
+
+platforms:
+  - android
+  - web
+interfaces:
+  - mobile
+  - web
+connections:
+  - ble
+  - usb
+node_roles:
+  - companion
+  - repeater
+capabilities:
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - mapping
+
+install:
+  - type: github-release
+    package: Meshcore-Wardrive-Android-1.0.40.apk
+    url: https://github.com/mintylinux/Meshcore-Wardrive-Android/releases
+  - type: web
+    url: https://meshwar-map.pages.dev/
+  - type: source
+    url: https://github.com/mintylinux/Meshcore-Wardrive-Android-Source
+
+popularity:
+  githubStars: 92
+  githubForks: 9
+  githubWatchers: 1
+  githubOpenIssues: 10
+  githubContributors: 2
+  releaseDownloads: 3712
+  latestReleaseDownloads: 257
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: false
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Application releases and GPL-3.0 source code are maintained in separate GitHub repositories.
+    - GPS survey data remains local unless the operator explicitly uploads it to the community map.
+
+tags:
+  - wardriving
+  - coverage
+  - gps
+  - field-tool
+  - community-map
+
+last_reviewed: 2026-06-23

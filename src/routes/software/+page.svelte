@@ -1,9 +1,10 @@
 <script>
   import { base } from '$app/paths';
-  import { SOFTWARE_KIND_META, softwareKindsInUse, LICENSE_TYPE_META, licenseType } from '$lib/data.js';
+  import { SOFTWARE_KIND_META, softwareKindsInUse, LICENSE_TYPE_META, licenseType, descriptionToPlain } from '$lib/data.js';
   import Seo from '$lib/Seo.svelte';
   import PageHeader from '$lib/PageHeader.svelte';
   import Card from '$lib/Card.svelte';
+  import SoftwareIcon from '$lib/SoftwareIcon.svelte';
   import { onMount } from 'svelte';
   import { browser } from '$app/environment';
   let { data } = $props();
@@ -16,12 +17,14 @@
   // so the first client render matches the prerendered (unfiltered) HTML; the URL
   // is read in onMount, after hydration — reading it at init would diverge from
   // the prerendered list and corrupt hydration.
+  let query = $state('');
   let activeKind = $state('all');
   let activeTags = $state([]);
   let hydrated = $state(false);
 
   onMount(() => {
     const p = new URLSearchParams(location.search);
+    query = p.get('q') ?? '';
     const kind = p.get('kind');
     if (kind && kinds.includes(kind)) activeKind = kind;
     activeTags = (p.get('tags') ?? '').split(',').filter((t) => allTags.includes(t));
@@ -33,6 +36,7 @@
     // immediately overwrite the incoming query string with empty defaults.
     if (!browser || !hydrated) return;
     const p = new URLSearchParams();
+    if (query.trim()) p.set('q', query.trim());
     if (activeKind !== 'all') p.set('kind', activeKind);
     if (activeTags.length) p.set('tags', activeTags.join(','));
     const qs = p.toString();
@@ -43,12 +47,31 @@
     activeTags = activeTags.includes(t) ? activeTags.filter((x) => x !== t) : [...activeTags, t];
   }
 
+  // Lowercased searchable blob per item; matches name, aliases, description,
+  // tags, languages, platforms and maintainers — same fields as the Cmd+K index.
+  function searchText(s) {
+    return [
+      s.name,
+      s.short_name,
+      ...(s.also_known_as ?? []),
+      descriptionToPlain(s.description),
+      ...(s.tags ?? []),
+      ...(s.languages ?? []),
+      ...(s.platforms ?? []),
+      ...(s.maintainers ?? []).map((m) => m.name)
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+  }
+
   let filtered = $derived(
-    data.software.filter(
-      (s) =>
-        (activeKind === 'all' || s.kind === activeKind) &&
-        activeTags.every((t) => (s.tags ?? []).includes(t))
-    )
+    data.software.filter((s) => {
+      if (activeKind !== 'all' && s.kind !== activeKind) return false;
+      if (!activeTags.every((t) => (s.tags ?? []).includes(t))) return false;
+      const q = query.trim().toLowerCase();
+      return !q || searchText(s).includes(q);
+    })
   );
 
   let groups = $derived(
@@ -67,6 +90,14 @@
   MeshCore-related software — clients, integrations, gateways &amp; bridges, tools, libraries and
   apps that run on the network. Filter by kind or tag.
 </PageHeader>
+
+<!-- Search -->
+<input
+  type="search"
+  placeholder="Search software, tags, languages, maintainers…"
+  bind:value={query}
+  class="mb-3 w-full rounded-lg border border-edge bg-bg px-3 py-2.5 text-[0.95rem] outline-none focus:border-transparent focus:ring-2 focus:ring-accent"
+/>
 
 <!-- Kind filter -->
 <div class="mb-2 flex flex-wrap gap-1.5">
@@ -116,14 +147,12 @@
           <Card href="{base}/software/{s.id}/" class="flex flex-col p-4">
             <div class="flex items-start justify-between gap-2">
               <span class="flex min-w-0 gap-2">
-                {#if s.imageUrl}
-                  <img
-                    src={s.imageUrl}
-                    alt=""
-                    loading="lazy"
-                    class="h-10 w-10 shrink-0 rounded-md border border-edge bg-elev2 object-cover"
-                  />
-                {/if}
+                <SoftwareIcon
+                  src={s.imageUrl}
+                  name={s.name}
+                  kind={s.kind}
+                  class="h-10 w-10 rounded-md"
+                />
                 <span class="min-w-0">
                   <span class="font-semibold group-hover:text-accent">{s.name}</span>
                   {#if s.short_name && s.short_name !== s.name}
@@ -143,7 +172,7 @@
               </span>
             </div>
             {#if s.description}
-              <p class="mt-1.5 line-clamp-3 text-[0.85rem] text-dim">{s.description}</p>
+              <p class="mt-1.5 line-clamp-3 text-[0.85rem] text-dim">{descriptionToPlain(s.description)}</p>
             {/if}
             {#if s.tags?.length}
               <div class="mt-2.5 flex flex-wrap gap-1">

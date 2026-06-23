@@ -1,0 +1,96 @@
+name: mc-webui
+kind: client
+status: active
+maturity: stable
+description: >-
+  Self-hosted mobile-first MeshCore web client with channel and direct
+  messaging, contact management, full-text search, maps, device configuration,
+  an interactive console and persistent SQLite archives.
+
+image: icon.png
+screenshots:
+  - file: main-window.png
+    caption: Channel messaging and desktop sidebar
+  - file: direct-messages.png
+    caption: Direct messages and delivery tracking
+  - file: map.png
+    caption: MeshCore contact map
+  - file: console.png
+    caption: Interactive MeshCore command console
+
+maintainers:
+  - name: MarekWo
+    url: https://github.com/MarekWo
+
+repository: https://github.com/MarekWo/mc-webui
+documentation: https://github.com/MarekWo/mc-webui/blob/main/docs/user-guide.md
+license: MIT
+
+languages:
+  - python
+  - javascript
+
+platforms:
+  - docker
+  - linux
+  - web
+interfaces:
+  - web
+  - api
+  - headless
+connections:
+  - ble
+  - serial
+  - usb
+  - tcp
+  - websocket
+node_roles:
+  - companion
+  - repeater
+capabilities:
+  - messaging
+  - contacts
+  - channels
+  - node-configuration
+  - remote-administration
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - mapping
+  - notifications
+
+install:
+  - type: docker-compose
+    package: mawoj/mc-webui
+    url: https://github.com/MarekWo/mc-webui#option-a-docker-hub-recommended
+    command: docker compose up -d
+  - type: source
+    url: https://github.com/MarekWo/mc-webui
+
+popularity:
+  githubStars: 53
+  githubForks: 4
+  githubWatchers: 6
+  githubOpenIssues: 1
+  githubContributors: 1
+  lastChecked: 2026-06-23
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: false
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-06-23
+  notes:
+    - Designed for trusted local networks and does not provide authentication; it should not be exposed directly to the internet.
+    - Multi-architecture images are published for amd64, arm64 and armv7.
+
+tags:
+  - web-client
+  - self-hosted
+  - docker
+  - pwa
+  - remote-terminal
+
+last_reviewed: 2026-06-23
