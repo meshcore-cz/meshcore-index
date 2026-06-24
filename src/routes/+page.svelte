@@ -16,7 +16,7 @@
     name: SITE_NAME,
     url: absUrl('/'),
     description:
-      'An open catalog of the MeshCore ecosystem — networks, devices and firmwares.'
+      'An open catalog of the MeshCore ecosystem — networks, software, devices and firmwares.'
   };
 
   // The primary collections, in headline order. `n` is read from the
@@ -43,7 +43,7 @@
 </script>
 
 <Seo
-  description="An open catalog of the MeshCore ecosystem — the regional networks people run, the LoRa devices that join them, and the firmwares that power them."
+  description="An open catalog of the MeshCore ecosystem — the regional networks people run, the LoRa devices that join them, the firmwares that power them, and the software that connects it all."
   jsonLd={homeJsonLd}
 />
 
@@ -52,8 +52,9 @@
   <p class="max-w-[62ch] text-[1.05rem] text-dim">
     An open catalog of the MeshCore ecosystem — the regional
     <a class="text-accent2 hover:underline" href="{base}/networks/">networks</a> people run, the LoRa
-    <a class="text-accent2 hover:underline" href="{base}/devices/">devices</a> that join them, and the
-    <a class="text-accent2 hover:underline" href="{base}/firmwares/">firmwares</a> that power them.
+    <a class="text-accent2 hover:underline" href="{base}/devices/">devices</a> that join them, the
+    <a class="text-accent2 hover:underline" href="{base}/firmwares/">firmwares</a> that power them, and the
+    <a class="text-accent2 hover:underline" href="{base}/software/">software</a> that connects it all.
   </p>
 
   <Button
@@ -65,7 +66,7 @@
     <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
       <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" stroke-linecap="round" />
     </svg>
-    <span class="flex-1 text-[0.95rem]">Search networks, devices, firmwares…</span>
+    <span class="flex-1 text-[0.95rem]">Search networks, software, devices, firmwares…</span>
     <span class="hidden rounded border border-edge px-1.5 py-0.5 text-[0.72rem] sm:inline"><ShortcutHint /></span>
   </Button>
 </section>
