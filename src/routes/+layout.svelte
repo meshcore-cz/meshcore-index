@@ -1,6 +1,8 @@
 <script>
   import '../app.css';
   import { onMount } from 'svelte';
+  import { slide } from 'svelte/transition';
+  import { quintOut } from 'svelte/easing';
   import { base } from '$app/paths';
   import { page } from '$app/stores';
   import { env } from '$env/dynamic/public';
@@ -17,6 +19,15 @@
   import { TOOLS } from '$lib/tools.js';
   import pkg from '../../package.json';
   let { children } = $props();
+
+  // Mobile nav: the full link row only fits on wide screens, so below `lg` it
+  // collapses into a hamburger-toggled panel. Close it whenever the route
+  // changes so it never lingers over a freshly navigated page.
+  let menuOpen = $state(false);
+  $effect(() => {
+    $page.url.pathname;
+    menuOpen = false;
+  });
 
   // Theme is bootstrapped before paint in app.html; mirror it into state and
   // let the user flip it (persisted to localStorage).
@@ -101,9 +112,8 @@
 
 <Tooltip.Provider delayDuration={250} disableHoverableContent>
 <div class="flex min-h-screen flex-col">
-  <header
-    class="sticky top-0 z-10 flex flex-wrap items-center justify-between gap-4 border-b border-edge bg-elev px-[clamp(1rem,4vw,2rem)] py-[0.9rem]"
-  >
+  <header class="sticky top-0 z-10 border-b border-edge bg-elev">
+    <div class="flex items-center justify-between gap-4 px-[clamp(1rem,4vw,2rem)] py-[0.9rem]">
     <a class="flex items-center gap-2.5 text-[1.05rem] font-bold" href="{base}/">
       <img src="{base}/logo.png" alt="" class="site-logo h-8 w-8 shrink-0" width="32" height="32" />
       <span>{SITE_NAME}</span>
@@ -126,18 +136,21 @@
         </svg>
         <span class="hidden text-[0.72rem] sm:inline"><ShortcutHint /></span>
       </Button>
-      {#each nav as item}
-        <a
-          href="{base}{item.href}"
-          class="rounded-md px-3 py-1.5 text-[0.92rem] hover:bg-elev2 hover:text-ink {isActive(
-            item.href
-          )
-            ? 'bg-elev2 text-ink'
-            : 'text-dim'}"
-        >
-          {item.label}
-        </a>
-      {/each}
+      <div class="hidden items-center gap-1 lg:flex">
+        {#each nav as item}
+          <a
+            href="{base}{item.href}"
+            class="rounded-md px-3 py-1.5 text-[0.92rem] hover:bg-elev2 hover:text-ink {isActive(
+              item.href
+            )
+              ? 'bg-elev2 text-ink'
+              : 'text-dim'}"
+          >
+            {item.label}
+          </a>
+        {/each}
+      </div>
+      <div class="hidden lg:block">
       <AtlasTooltip text="Toggle theme">
         {#snippet trigger(props)}
         <Button
@@ -163,7 +176,63 @@
         </Button>
         {/snippet}
       </AtlasTooltip>
+      </div>
+      <Button
+        variant="subtle"
+        size="icon"
+        onclick={() => (menuOpen = !menuOpen)}
+        aria-label="{menuOpen ? 'Close' : 'Open'} menu"
+        aria-expanded={menuOpen}
+        class="h-[34px] w-[34px] border-edge text-dim hover:border-accent hover:text-ink lg:hidden"
+      >
+        {#if menuOpen}
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round" />
+          </svg>
+        {:else}
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round" />
+          </svg>
+        {/if}
+      </Button>
     </nav>
+    </div>
+    {#if menuOpen}
+      <div transition:slide={{ duration: 250, easing: quintOut }} class="overflow-hidden border-t border-edge lg:hidden">
+      <nav class="flex flex-col px-[clamp(1rem,4vw,2rem)] py-2">
+        {#each nav as item}
+          <a
+            href="{base}{item.href}"
+            class="rounded-md px-3 py-2.5 text-[0.95rem] hover:bg-elev2 hover:text-ink {isActive(
+              item.href
+            )
+              ? 'bg-elev2 text-ink'
+              : 'text-dim'}"
+          >
+            {item.label}
+          </a>
+        {/each}
+        <button
+          type="button"
+          onclick={toggleTheme}
+          class="mt-1 flex items-center gap-2 rounded-md px-3 py-2.5 text-left text-[0.95rem] text-dim hover:bg-elev2 hover:text-ink"
+        >
+          {#if theme === 'dark'}
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="4.2" />
+              <path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8" stroke-linecap="round" />
+            </svg>
+            Light mode
+          {:else}
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
+            </svg>
+            Dark mode
+          {/if}
+        </button>
+      </nav>
+      </div>
+    {/if}
   </header>
 
   <CommandPalette bind:open={$searchOpen} />
