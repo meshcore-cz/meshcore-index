@@ -1,0 +1,29 @@
+name: Heltec V4.2 Multi-Boot
+type: custom
+maintainer: Finmacjones
+description: >
+  Boot selector firmware for Heltec WiFi LoRa 32 V4.2 that installs and switches
+  among MeshCore, Meshtastic, RNode or other firmware images while preserving
+  separate settings and filesystem data for each slot.
+repository: https://github.com/Finmacjones/HeltecV4.2MultiBoot
+license: MIT
+status: maintenance
+lifecycle: active
+maturity: beta
+distribution: community
+runtime:
+  framework: esp-idf
+  language: C++
+features:
+  - Four configurable firmware slots
+  - Per-firmware NVS and filesystem isolation
+  - OLED boot menu and remembered selection
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    usbSerial: true
+devices:
+  - id: heltec-v4
+    status: supported
+    notes: Targets the 16 MB Heltec WiFi LoRa 32 V4.2 hardware revision.

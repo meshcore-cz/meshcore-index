@@ -1,0 +1,34 @@
+name: BlackJackOS
+type: custom
+maintainer: Robert-Proaps
+description: >
+  Open-source portable MeshCore toolbox and standalone interface for LilyGo
+  T-Deck hardware, with an application-oriented UI and direct radio operation.
+repository: https://github.com/Robert-Proaps/BlackJackOS-BJOS-
+license: MIT
+status: active
+lifecycle: active
+maturity: alpha
+distribution: community
+runtime:
+  framework: arduino
+  language: C++
+roles:
+  - companion
+  - standalone-ui
+features:
+  - Standalone T-Deck interface
+  - Application launcher architecture
+  - On-device MeshCore messaging
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+  hardware:
+    display: true
+devices:
+  - id: lilygo-t-deck
+    status: supported
+    notes: The project states that firmware committed to the repository is hardware-tested.

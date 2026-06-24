@@ -46,6 +46,7 @@
     "@lucide/svelte": "^1.21.0",
     "bits-ui": "^2.18.1",
     "country-flag-icons": "^1.6.18",
+    "devicon": "^2.17.0",
     "fuse.js": "^7.4.2",
     "leaflet": "^1.9.4"
   }

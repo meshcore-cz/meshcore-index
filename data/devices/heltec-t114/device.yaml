@@ -108,3 +108,22 @@ interfaces:
     ble: true
   wifi:
     status: none
+# Community 3D-printable enclosures hosted on Printables. `image` is the model's
+# social cover thumbnail (remote URL); `url` links to the printable.
+cases:
+  - name: H2T - Case for Heltec T114 with GPS
+    author: muzi.works
+    url: https://www.printables.com/model/1163494-h1-case-for-heltec-t114-with-gps-running-meshtastic
+    image: https://media.printables.com/media/prints/1163494/images/8767069_dad9f4ba-75ed-4747-b007-7b9fe8f48232_226292ca-3a0b-4778-826e-cb51d632a630/thumbs/cover/1200x630/png/capture1.png
+  - name: Bender Battery Case for Heltec V3 & T114
+    author: zerofox3D
+    url: https://www.printables.com/model/797822-bender-battery-case-for-the-heltec-v3-heltec-t114
+    image: https://media.printables.com/media/prints/797822/images/6176327_c19844ef-a0b9-40bf-8097-a23667be90bc_042cd5cc-7025-4faf-a451-812fbf721175/thumbs/cover/1200x630/webp/ikb3d00501_01.webp
+  - name: Heltec T114 21700 Mesh Node Case
+    author: mattnv
+    url: https://www.printables.com/model/1650412-heltec-t114-21700-mesh-node-case-for-meshcore-or-m
+    image: https://media.printables.com/media/prints/bde6e282-c4b6-46b5-a4c6-4acb6b6daaf7/images/12464222_b4a6ee08-c282-45e8-a5d8-1292e8173725_641ca4c6-07fe-4a29-b0a6-6e777fcc6b14/thumbs/cover/1200x630/jpg/1.jpg
+  - name: Heltec T114 Case
+    author: 3dMikL
+    url: https://www.printables.com/model/1732324-heltec-t114-case
+    image: https://media.printables.com/media/prints/702885d8-4215-41f7-9780-c6b36ed44aea/images/12989798_1f4f4b10-1f04-46a1-9348-d28f1e83dfd1_59023379-ead0-424e-9645-246381e4f0e0/thumbs/cover/1200x630/jpg/img20260524171923.jpg

@@ -1,0 +1,52 @@
+name: InkCore
+type: fork
+maintainer: todd-herbert
+description: >
+  MeshCore-based BLE companion firmware for small e-paper devices, with
+  configurable applets, multilingual fonts, emoji, display rotation and
+  periodic full refresh.
+repository: https://codeberg.org/todd-herbert/InkCore
+license: GPL-3.0
+status: active
+lifecycle: active
+maturity: stable
+distribution: community
+lineage:
+  kind: fork
+  upstreamFirmwareId: meshcore-official
+runtime:
+  framework: arduino
+  language: C++
+roles:
+  - companion
+  - standalone-ui
+features:
+  - Configurable e-paper applets
+  - Multilingual font and emoji support
+  - Display rotation
+  - Periodic full refresh
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+  hardware:
+    display: true
+devices:
+  - id: thinknode-m1
+    status: supported
+  - id: lilygo-techo
+    status: supported
+  - id: heltec-meshpocket
+    status: supported
+  - id: heltec-e290
+    status: supported
+  - id: heltec-e213
+    status: supported
+  - id: heltec-paper
+    status: supported
+  - id: wio-tracker-l1-eink
+    status: supported
+latest_version: v1.16.1
+released: 2026-06-23

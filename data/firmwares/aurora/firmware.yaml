@@ -1,0 +1,39 @@
+name: Aurora
+type: custom
+maintainer: Wrewdison
+description: >
+  Standalone MeshCore text-communication firmware for the LilyGo T-Deck, with
+  public, private and direct messaging, contact management, radio configuration
+  and BLE companion-app support.
+repository: https://forge.hackers.town/Wrewdison/Aurora
+license: MIT
+status: maintenance
+lifecycle: active
+maturity: alpha
+distribution: community
+runtime:
+  framework: arduino
+  language: C++
+roles:
+  - companion
+  - standalone-ui
+features:
+  - Public, private and direct messaging
+  - On-device contacts and radio configuration
+  - Configuration import and export
+  - BLE companion-app support
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+  operations:
+    configurationBackup: true
+  hardware:
+    display: true
+devices:
+  - id: lilygo-t-deck
+    status: supported
+latest_version: v0.0.6-alpha
+released: 2026-01-07

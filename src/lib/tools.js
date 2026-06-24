@@ -1,6 +1,7 @@
 // Utility / tool pages — labels, routes, icons and where each appears in the UI.
 import Grid2X2Check from '@lucide/svelte/icons/grid-2x2-check';
 import Trophy from '@lucide/svelte/icons/trophy';
+import Code from '@lucide/svelte/icons/code';
 import Radio from '@lucide/svelte/icons/radio';
 import GitCompareArrows from '@lucide/svelte/icons/git-compare-arrows';
 import GitCompare from '@lucide/svelte/icons/git-compare';
@@ -9,7 +10,7 @@ import Braces from '@lucide/svelte/icons/braces';
 import Activity from '@lucide/svelte/icons/activity';
 import Info from '@lucide/svelte/icons/info';
 
-/** @typedef {'matrix' | 'device-rank' | 'compare' | 'compare-firmwares' | 'releases' | 'bands' | 'schemas' | 'status' | 'about'} ToolId */
+/** @typedef {'matrix' | 'device-rank' | 'compare' | 'compare-firmwares' | 'releases' | 'languages' | 'bands' | 'schemas' | 'status' | 'about'} ToolId */
 
 /** @type {Record<ToolId, { id: ToolId, label: string, href: string, icon: import('svelte').Component, home?: boolean, homeLabel?: string }>} */
 export const TOOLS = {
@@ -49,6 +50,13 @@ export const TOOLS = {
     icon: Tags,
     home: true
   },
+  languages: {
+    id: 'languages',
+    label: 'Language leaderboard',
+    href: '/languages/',
+    icon: Code,
+    home: true
+  },
   bands: {
     id: 'bands',
     label: 'Frequency bands',
@@ -85,6 +93,7 @@ export const HOME_TOOL_IDS = [
   'compare',
   'compare-firmwares',
   'releases',
+  'languages',
   'bands',
   'schemas',
   'status'

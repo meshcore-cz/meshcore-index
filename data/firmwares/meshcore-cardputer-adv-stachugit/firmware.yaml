@@ -1,0 +1,44 @@
+name: MeshCore Cardputer ADV (Stachugit)
+type: fork
+maintainer: Stachugit
+description: >
+  MeshCore fork with a standalone TFT and keyboard interface for the M5Stack
+  Cardputer ADV fitted with the Cap LoRa-1262 radio module.
+repository: https://github.com/Stachugit/MeshCore-Cardputer-ADV
+website: https://meshcorecardputeradv.vercel.app/
+license: MIT
+status: maintenance
+lifecycle: active
+maturity: beta
+distribution: community
+lineage:
+  kind: fork
+  upstreamFirmwareId: meshcore-official
+runtime:
+  framework: arduino
+  language: C++
+roles:
+  - companion
+  - standalone-ui
+features:
+  - On-device contacts and channel messaging
+  - Hardware keyboard and TFT interface
+  - GPS and QR key sharing
+  - Browser-based flasher
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+  operations:
+    webFlasher: true
+  hardware:
+    gps: true
+    display: true
+devices:
+  - id: m5stack-cardputer-adv
+    status: supported
+    notes: Requires the M5Stack Cap LoRa-1262 module.
+latest_version: Meshcore-Cardputerv1.10
+released: 2026-01-27

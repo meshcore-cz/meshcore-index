@@ -1,0 +1,41 @@
+name: LunarCore
+type: custom
+maintainer: STCisGOOD
+description: >
+  Multi-protocol ESP32-S3 LoRa firmware combining MeshCore, Meshtastic and
+  RNode/KISS operation, with a built-in MeshCore repeater mode.
+repository: https://github.com/STCisGOOD/lunarcore
+license: MIT
+status: maintenance
+lifecycle: active
+maturity: beta
+distribution: community
+runtime:
+  framework: esp-idf
+  language: Rust
+roles:
+  - companion
+  - repeater
+  - kiss-modem
+features:
+  - MeshCore, Meshtastic and RNode/KISS protocols
+  - Built-in MeshCore repeater mode
+  - BLE, Wi-Fi and USB serial
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+    wifiAp: true
+  networking:
+    repeater: true
+    kissModem: true
+  hardware:
+    display: true
+devices:
+  - id: heltec-v3
+    status: supported
+    notes: The project README names the Heltec WiFi LoRa 32 V3 as its hardware target.
+latest_version: v1.1.0
+released: 2026-02-06

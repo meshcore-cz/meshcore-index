@@ -1,0 +1,47 @@
+name: MeshCore Wio Tracker L1 Pro (sosprz)
+type: fork
+maintainer: sosprz
+description: >
+  Binary-distributed MeshCore fork for the Seeed Studio Wio Tracker L1 Pro,
+  adding a substantial on-device companion UI for messaging, contacts, radio
+  configuration and repeater administration.
+repository: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro
+license_type: proprietary
+status: active
+lifecycle: active
+maturity: beta
+distribution: personal
+lineage:
+  kind: fork
+  upstreamFirmwareId: meshcore-official
+roles:
+  - companion
+  - standalone-ui
+features:
+  - On-device direct and channel messaging
+  - Contacts, adverts and message history
+  - Radio and repeater administration
+  - UF2 and browser-assisted flashing
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+  operations:
+    webFlasher: true
+  hardware:
+    gps: true
+    display: true
+devices:
+  - id: wio-tracker-l1-pro
+    status: supported
+verification:
+  sourceAvailable: false
+  releasesAvailable: true
+  hasDocumentation: false
+  lastChecked: 2026-06-24
+  notes:
+    - The repository contains release binaries and usage notes but no firmware source or license.
+latest_version: v1.16.86
+released: 2026-06-21

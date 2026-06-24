@@ -1,0 +1,36 @@
+name: Trail Mate
+type: custom
+maintainer: vicliu624
+description: >
+  Offline-first handheld firmware for navigation and LoRa communication with
+  native MeshCore and Meshtastic packet paths, maps, team coordination and
+  field-oriented device tools.
+repository: https://github.com/vicliu624/trail-mate
+website: https://vicliu624.github.io/trail-mate/
+license: AGPL-3.0
+status: active
+lifecycle: active
+maturity: alpha
+distribution: community
+runtime:
+  framework: esp-idf
+  language: C++
+roles:
+  - companion
+  - standalone-ui
+features:
+  - MeshCore and Meshtastic messaging
+  - GPS maps and track recording
+  - Team location and waypoint exchange
+  - USB host-link stream
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+  hardware:
+    gps: true
+    display: true
+    sensors: true
+devices: []

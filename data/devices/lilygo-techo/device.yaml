@@ -91,3 +91,18 @@ interfaces:
     ble: true
   wifi:
     status: none
+# Community 3D-printable enclosures hosted on Printables. `image` is the model's
+# social cover thumbnail (remote URL); `url` links to the printable.
+cases:
+  - name: LilyGo T-Echo Bracket Case
+    author: FrontalDesign
+    url: https://www.printables.com/model/676803-lilygo-t-echo-bracket-case
+    image: https://media.printables.com/media/prints/676803/images/5320210_99fcda1e-3622-4189-8d49-ee46ac146608_43d4cc14-89f3-46be-84f2-7f0c99890d0f/thumbs/cover/1200x630/jpg/t-echo_bracket.jpg
+  - name: Meshtastic T-Echo Compact Case V3
+    author: Tim O'Brien
+    url: https://www.printables.com/model/302924-meshtastic-t-echo-compact-case-new-v3
+    image: https://media.printables.com/media/prints/302924/images/2646397_c2874645-f6ff-4e40-a2fe-dc9fbc227b52/thumbs/cover/1200x630/jpg/meshtastic-t-echo-case-title.jpg
+  - name: LilyGo T-Echo Expanded Case
+    author: itsjusttag
+    url: https://www.printables.com/model/772942-lilygo-t-echo-expanded-case
+    image: https://media.printables.com/media/prints/772942/images/9870974_46140fda-5a5f-4744-84c4-2fb4449cb5fb_4055dd83-979f-4924-b9d4-2584b2891584/thumbs/cover/1200x630/png/holding_front_closer.png

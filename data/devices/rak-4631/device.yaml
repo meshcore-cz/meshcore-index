@@ -95,3 +95,22 @@ interfaces:
     ble: true
   wifi:
     status: none
+# Community 3D-printable enclosures hosted on Printables. `image` is the model's
+# social cover thumbnail (remote URL); `url` links to the printable.
+cases:
+  - name: MagSafe Meshtastic/MeshCore Case for RAK WisBlock Mini
+    author: Alec P
+    url: https://www.printables.com/model/1591447-magsafe-meshtasticmeshcore-case
+    image: https://media.printables.com/media/prints/4175bff2-dd4c-4168-894d-7d1b45e684af/images/11976497_04c99ff5-04e0-40b8-8fd8-f988e465d83f_9a0a0a10-f665-4f02-a6b0-277445f1bc87/thumbs/cover/1200x630/webp/magsafe-node.webp
+  - name: MagSafe LoRa Radio Case - Meshtastic/MeshCore
+    author: shreyashgupta
+    url: https://www.printables.com/model/1540100-magsafe-lora-radio-case-meshtastic-meshcore-rak-wi
+    image: https://media.printables.com/media/prints/e1037617-032e-4b4d-9245-d40e7ad8966e/images/11612796_0a2a768e-928d-4673-af6e-a3809f8fc935_fdbab0fe-ed9a-4e92-8c97-909ee6f4a93f/thumbs/cover/1200x630/jpeg/img_0532.jpg
+  - name: Trace - Tracker Case for WisBlock 19007 / RAK 4631
+    author: MadeBySaints
+    url: https://www.printables.com/model/1600180-trace-the-tracker-case-for-wisblock-19007-rak-4631
+    image: https://media.printables.com/media/prints/7435263e-7b23-4aa0-91a1-fcfdd70d5185/images/12040930_78f16b64-059c-44e1-b97f-4537bf986206_54dfded8-4923-4828-911d-b22c3ff87d41/thumbs/cover/1200x630/png/screenshot-2026-02-13-143048.png
+  - name: Hermes External Solar Node Enclosure for RAK and Heltec
+    author: zerofox3D
+    url: https://www.printables.com/model/1283453-hermes-external-solar-node-enclosure-for-meshcore
+    image: https://media.printables.com/media/prints/087ab57b-956e-4375-b006-35b406a076ba/images/9656322_8a76cb0a-d7ea-4a22-9c92-b125f3f1d5a5_74592dc7-7d23-4b51-ad5a-9650636a8a99/thumbs/cover/1200x630/webp/hermes04new.webp

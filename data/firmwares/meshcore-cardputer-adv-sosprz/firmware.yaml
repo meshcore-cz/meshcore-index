@@ -1,0 +1,41 @@
+name: MeshCore Cardputer ADV (sosprz)
+type: fork
+maintainer: sosprz
+description: >
+  Binary-distributed MeshCore UI fork for the M5Stack Cardputer ADV, packaged
+  as flashable ESP32-S3 images for its keyboard-and-screen interface.
+repository: https://github.com/sosprz/meshcore-cardputer-adv
+license_type: proprietary
+status: active
+lifecycle: active
+maturity: beta
+distribution: personal
+lineage:
+  kind: fork
+  upstreamFirmwareId: meshcore-official
+roles:
+  - companion
+  - standalone-ui
+features:
+  - Cardputer ADV keyboard and display UI
+  - Prebuilt ESP32-S3 firmware images
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+  hardware:
+    display: true
+devices:
+  - id: m5stack-cardputer-adv
+    status: supported
+verification:
+  sourceAvailable: false
+  releasesAvailable: true
+  hasDocumentation: false
+  lastChecked: 2026-06-24
+  notes:
+    - The repository contains release binaries and flashing notes but no firmware source or license.
+latest_version: v1.15.81
+released: 2026-06-05

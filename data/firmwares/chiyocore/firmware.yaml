@@ -1,0 +1,34 @@
+name: chiyocore
+type: custom
+maintainer: kore-signet
+description: >
+  Experimental Rust reimplementation of MeshCore for ESP32 devices, structured
+  as a reusable protocol core with generated board builds and configurable
+  handler layers.
+repository: https://github.com/kore-signet/chiyocore
+license_type: source-available
+status: experimental
+lifecycle: active
+maturity: experimental
+distribution: personal
+lineage:
+  kind: reimplementation
+  upstreamFirmwareId: meshcore-official
+runtime:
+  framework: esp-idf
+  language: Rust
+roles:
+  - companion
+features:
+  - Rust MeshCore protocol implementation
+  - Generated board and handler-layer builds
+  - TCP companion interface
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    nativeTcp: true
+devices:
+  - id: xiao-esp32s3
+    status: partial
+    notes: The maintainer reports successful experimental operation on a XIAO ESP32-S3 radio kit.

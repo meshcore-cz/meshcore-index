@@ -1,0 +1,42 @@
+name: TapTap Firmware
+type: fork
+maintainer: mtoolstec
+description: >
+  MeshCore fork for small tracker-style devices, adding button-driven canned
+  messages, Morse-code entry, audible alerts and remote text commands for
+  screenless operation.
+repository: https://github.com/mtoolstec/TapTapFW
+license: MIT
+status: maintenance
+lifecycle: active
+maturity: stable
+distribution: community
+lineage:
+  kind: fork
+  upstreamFirmwareId: meshcore-official
+runtime:
+  framework: arduino
+  language: C++
+roles:
+  - companion
+features:
+  - Button-driven canned messages
+  - Morse-code message entry
+  - RTTTL and CW buzzer alerts
+  - Remote channel commands
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+  hardware:
+    gps: true
+    display: false
+devices:
+  - id: sensecap-t1000e
+    status: supported
+  - id: rak-wismesh-tag
+    status: supported
+latest_version: v1.0.0
+released: 2026-02-08

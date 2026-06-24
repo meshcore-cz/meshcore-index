@@ -1,7 +1,8 @@
 <script>
   import Icon from '@iconify/svelte';
   import '$lib/platform-icons.js';
-  import { platformMeta, platformIconifyId } from '$lib/platforms.js';
+  import Devicon from '$lib/Devicon.svelte';
+  import { platformMeta, platformIconifyId, platformDeviconId } from '$lib/platforms.js';
 
   let {
     platform,
@@ -12,10 +13,19 @@
   } = $props();
 
   let meta = $derived(platformMeta(platform));
+  let devicon = $derived(platformDeviconId(platform));
   let iconId = $derived(platformIconifyId(platform));
 </script>
 
-{#if iconId}
+{#if devicon}
+  <span
+    class="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap {className}"
+    title={meta.label}
+  >
+    <Devicon icon={devicon} {size} mono />
+    {#if showLabel}<span class="text-[0.78rem]">{meta.label}</span>{/if}
+  </span>
+{:else if iconId}
   <span
     class="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap {className}"
     title={meta.label}

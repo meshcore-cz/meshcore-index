@@ -1,0 +1,44 @@
+name: MeshCore PaperUI
+type: fork
+maintainer: dz0ny
+description: >
+  E-paper-focused MeshCore handheld firmware for the LilyGo T5 ePaper S3 Pro,
+  with standalone messaging, contacts, discovery, GPS, maps and touch-optimized
+  device settings.
+repository: https://github.com/dz0ny/meshcore-paperui
+website: https://dz0ny.github.io/meshcore-paperui/
+license_type: source-available
+status: active
+lifecycle: active
+maturity: beta
+distribution: community
+lineage:
+  kind: fork
+  upstreamFirmwareId: meshcore-official
+runtime:
+  framework: arduino
+  language: C++
+roles:
+  - companion
+  - standalone-ui
+features:
+  - E-paper messaging interface
+  - Contacts and node discovery
+  - GPS, maps and waypoints
+  - Browser-based flasher
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+  operations:
+    webFlasher: true
+  hardware:
+    gps: true
+    display: true
+    sensors: true
+devices:
+  - id: lilygo-t5-pro
+    status: supported
+    notes: Requires the LilyGo T5 ePaper S3 Pro and an SD card for normal use.

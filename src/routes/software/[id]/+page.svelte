@@ -10,6 +10,7 @@
   import RichText from '$lib/RichText.svelte';
   import SoftwareIcon from '$lib/SoftwareIcon.svelte';
   import PlatformIcon from '$lib/PlatformIcon.svelte';
+  import ProgrammingLanguageIcon from '$lib/ProgrammingLanguageIcon.svelte';
   let { data } = $props();
   let s = $derived(data.software);
   let meta = $derived(SOFTWARE_KIND_META[s.kind]);
@@ -78,7 +79,7 @@
       meta ? { label: 'Kind', value: meta.label } : null,
       s.maturity ? { label: 'Maturity', value: MATURITY_META[s.maturity]?.label ?? s.maturity } : null,
       s.languages?.length
-        ? { label: s.languages.length > 1 ? 'Languages' : 'Language', value: s.languages.join(', ') }
+        ? { label: s.languages.length > 1 ? 'Languages' : 'Language', languages: s.languages }
         : null,
       licensing ? { label: 'Licensing', value: LICENSE_TYPE_META[licensing]?.label ?? licensing, tw: LICENSE_TYPE_META[licensing]?.tw } : null,
       s.latest_version
@@ -192,6 +193,12 @@
                   <span class="inline-flex items-center rounded-md bg-elev2 px-2 py-0.5">
                     <PlatformIcon {platform} showLabel size={16} />
                   </span>
+                {/each}
+              </span>
+            {:else if spec.languages}
+              <span class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                {#each spec.languages as language (language)}
+                  <ProgrammingLanguageIcon {language} showLabel size={16} />
                 {/each}
               </span>
             {:else if spec.anchor}

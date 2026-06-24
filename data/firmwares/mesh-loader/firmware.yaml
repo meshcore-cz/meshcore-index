@@ -1,0 +1,33 @@
+name: Mesh Loader
+type: custom
+maintainer: eliahreeves
+description: >
+  Dual-boot loader that installs patched MeshCore and Meshtastic images in
+  separate ESP32 partitions and lets the user switch firmware at startup
+  without reflashing.
+repository: https://github.com/eliahreeves/mesh-loader
+license_type: source-available
+status: active
+lifecycle: active
+maturity: beta
+distribution: community
+runtime:
+  framework: esp-idf
+  language: C++
+features:
+  - MeshCore and Meshtastic dual boot
+  - Separate firmware filesystems
+  - Remembered boot selection
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+devices:
+  - id: heltec-v3
+    status: supported
+  - id: heltec-v4
+    status: supported
+latest_version: v0.1.1
+released: 2026-05-13

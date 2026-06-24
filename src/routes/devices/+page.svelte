@@ -82,7 +82,7 @@
     { id: 'lifecycle', label: 'Status', get: (d) => (d.lifecycle ? [d.lifecycle] : []), fmt: humanize },
     { id: 'display', label: 'Screen', get: displayTech, fmt: (v) => DISPLAY_LABELS[v] ?? humanize(v) },
     { id: 'connector', label: 'USB', get: (d) => { const c = d.interfaces?.usb?.connector; return c ? [c] : []; } },
-    { id: 'source', label: 'Source', get: (d) => [d.official ? 'Official' : 'Community'] }
+    { id: 'source', label: 'Source', get: (d) => (d.official ? ['Official'] : []) }
   ];
 
   // --- Boolean capability toggles --------------------------------------------
@@ -451,9 +451,6 @@
             <img src={d.imageUrl} alt={d.name} loading="lazy" class="max-h-full max-w-full object-contain p-3 transition group-hover:scale-105" />
           {:else}
             <span class="font-mono text-[0.8rem] text-dim">{deviceMcuLabel(d)}</span>
-          {/if}
-          {#if !d.official}
-            <span class="absolute right-2 bottom-2 rounded bg-accent2/15 px-1.5 py-0.5 text-[0.6rem] font-bold tracking-wide text-accent2 uppercase">Community</span>
           {/if}
           <Button
             variant=""

@@ -1,0 +1,40 @@
+name: SigurdOS T-Deck
+type: custom
+maintainer: hermes-gadget
+description: >
+  Standalone off-grid MeshCore messaging firmware for the LilyGo T-Deck, with
+  a launcher-style touch UI, persistent conversations, maps, diagnostics and
+  Wi-Fi or GitHub-based update support.
+repository: https://github.com/hermes-gadget/SigurdOS-tdeck
+license: GPL-3.0
+status: active
+lifecycle: active
+maturity: beta
+distribution: community
+runtime:
+  framework: arduino
+  language: C++
+roles:
+  - companion
+  - standalone-ui
+features:
+  - Standalone direct and channel messaging
+  - Touch, trackball and keyboard controls
+  - Maps, GPS and signal diagnostics
+  - Wi-Fi and GitHub OTA updates
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+    wifiAp: true
+  operations:
+    ota: true
+  hardware:
+    gps: true
+    display: true
+devices:
+  - id: lilygo-t-deck
+    status: supported
+    notes: The project reports successful beta flashes by several users.
