@@ -95,3 +95,17 @@ interfaces:
     ble: true
   wifi:
     status: none
+# Community 3D-printable models. `image` is the model's social cover thumbnail.
+prints:
+  - name: SenseCap T1000-E Case Multiple Styles
+    type: accessory
+    author: SPP
+    url: https://www.printables.com/model/1069177-seeed-studio-sensecap-t1000-e-case-multiple-styles
+    image: https://media.printables.com/media/prints/b26a2e5f-4ab6-4c00-8349-f0eb7389da38/images/9544876_f2504b00-fe8a-4a5b-89ee-34ca16711716_fcc3f6e9-77d3-4695-aeb9-a45bfd115395/thumbs/cover/1200x630/jpg/p_20250420_123544.jpg
+    likes: 47
+  - name: Tough Molle Holster for SenseCap T1000-E
+    type: case
+    author: vidision
+    url: https://www.printables.com/model/1465002-tough-molle-holster-for-seeed-sensecap-t1000-e-mes
+    image: https://media.printables.com/media/prints/ebabc3d2-b4e1-477b-ac59-3c0ee60f17c5/images/11043961_8a0592ac-fcae-4692-9742-25f2a4dd6111_f46a2a7e-af2d-4c18-ab79-746514de43f0/thumbs/cover/1200x630/jpeg/758e6e0f-85d1-40a8-8ddd-a37a912064e1_1_102_o.jpg
+    likes: 58

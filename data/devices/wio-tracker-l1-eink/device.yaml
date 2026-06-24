@@ -84,3 +84,12 @@ interfaces:
     ble: true
   wifi:
     status: none
+# Community 3D-printable enclosures and accessories hosted on Printables.
+# `image` is the model's social cover thumbnail (remote URL); `url` links to the printable.
+prints:
+  - name: Seeed Wio Tracker L1 E-ink Case 3000mAh
+    type: case
+    author: Frey
+    url: https://www.printables.com/model/1565089-seeed-wio-tracker-l1-e-ink-case-3000mah-meshtastic
+    image: https://media.printables.com/media/prints/0e220c3d-118d-4934-bf50-9b2c93f32b45/images/11794311_fdba05ee-469f-4820-bfbf-0b5e74c23433_0103caf3-689c-4cb4-8a28-f5cdfe50781b/thumbs/cover/1200x630/jpeg/img_9325.jpg
+    likes: 32

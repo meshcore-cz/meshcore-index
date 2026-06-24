@@ -1,5 +1,5 @@
 name: MeshCore MQTT Live Map
-kind: tool
+kind: monitoring
 status: active
 maturity: stable
 description: >-

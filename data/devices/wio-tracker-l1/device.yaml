@@ -92,3 +92,35 @@ interfaces:
     ble: true
   wifi:
     status: none
+# Community 3D-printable models. `image` is the model's social cover thumbnail.
+prints:
+  - name: Wio Tracker L1 Case (FDM compatible)
+    type: case
+    author: Jckf
+    url: https://makerworld.com/en/models/1859589-wio-tracker-l1-case-fdm-compatible
+    image: https://makerworld.bblmw.com/makerworld/model/DSM00000001859589/design/2025-11-05_850cb5ba96c868.jpg?x-oss-process=image/resize,w_600/format,webp
+    likes: 57
+  - name: Wio Tracker L1 Pro for Meshtastic Enclosure Casing
+    type: case
+    author: Seeed Studio
+    url: https://www.printables.com/model/1355571-wio-tracker-l1-pro-for-meshtastic-enclosure-casing
+    image: https://media.printables.com/media/prints/302c1a04-ad76-40bf-b0f0-c214eda0a839/images/10236085_990054ee-ab85-4945-9e6d-6815960fbccd_69d9f16c-7360-41d0-867e-5fcbbc4b9178/thumbs/cover/1200x630/png/screenshot-2025-07-15-at-094347.png
+    likes: 111
+  - name: Wio Tracker L1 Pro PLUS Case
+    type: case
+    author: austin g
+    url: https://www.printables.com/model/1398351-wio-tracker-l1-pro-plus-case
+    image: https://media.printables.com/media/prints/01201864-4beb-418a-8e08-c6afcdce38d1/images/11936274_1db31c8f-6bb9-4e0d-a3f7-2568e9954652_b762c928-04c3-4df2-8811-be61c9d21913/thumbs/cover/1200x630/png/screenshot-2026-02-04-202534.png
+    likes: 55
+  - name: Wio Tracker L1 Case with Integrated Clip + 3000 mAh Battery
+    type: case
+    author: Woogies
+    url: https://www.printables.com/model/1636271-case-for-wio-tracker-l1-integrated-clip-3000-mah-b
+    image: https://media.printables.com/media/prints/9979ed6e-dda4-43a1-98f6-936c1676faba/images/12300369_393c89dd-7a78-42ff-9e97-a0919e7ae1be_ceaeacc9-56d8-4f51-9156-654b8ca97946/thumbs/cover/1200x630/jpg/p_20260313_110132.jpg
+    likes: 21
+  - name: Seeed Wio Tracker L1 OLED Enclosure
+    type: case
+    author: Bistro
+    url: https://www.printables.com/model/1728764-seeed-wio-tracker-l1-oled-enclosure
+    image: https://media.printables.com/media/prints/cdba95fc-5616-46a6-ae22-130981450545/images/12963591_8ee08048-bb7e-4167-a9d8-696f3939969e_626421c6-cb13-4fc8-a765-7076a5781ab4/thumbs/cover/1200x630/jpeg/signal-2026-05-21-152717.jpg
+    likes: 3

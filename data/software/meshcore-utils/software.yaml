@@ -1,6 +1,6 @@
 name: MeshCore Utils
 short_name: mc-keygen
-kind: tool
+kind: utility
 status: active
 maturity: stable
 description: >-

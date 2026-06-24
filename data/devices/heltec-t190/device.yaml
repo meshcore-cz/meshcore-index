@@ -122,3 +122,17 @@ interfaces:
   wifi:
     status: present
     standard: 802.11 b/g/n
+# Community 3D-printable models. `image` is the model's social cover thumbnail.
+prints:
+  - name: Heltec Vision Master T190 Case
+    type: case
+    author: JKat3
+    url: https://www.printables.com/model/1424363-heltec-vision-master-t190-case
+    image: https://media.printables.com/media/prints/660c917f-8ba9-4cea-8f0f-cfc9ecb5c1b8/images/11255139_abc4aa20-c219-464e-9289-febb234eaba2_960dfbe4-8331-4150-a590-ae6fda34f9a8/thumbs/cover/1200x630/jpeg/img_5814.jpg
+    likes: 7
+  - name: Heltec T190 Meshtastic Case
+    type: case
+    author: Tony
+    url: https://www.printables.com/model/1491966-heltec-t190-meshtastic
+    image: https://media.printables.com/media/prints/df0f92fd-ebd8-4a81-9658-9eb5b99d4e90/images/11242455_9342e85e-7d47-4c62-9d2b-403f7cce7ace_7e4930c4-4d13-4f96-a41c-edb3e60ffc4e/thumbs/cover/1200x630/jpg/img_20251124_130925301.jpg
+    likes: 6

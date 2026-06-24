@@ -43,10 +43,30 @@
   import Cable from '@lucide/svelte/icons/cable';
   import Info from '@lucide/svelte/icons/info';
   import Box from '@lucide/svelte/icons/box';
+  import Heart from '@lucide/svelte/icons/heart';
   import ChartNoAxesColumn from '@lucide/svelte/icons/chart-no-axes-column';
   let { data } = $props();
   let d = $derived(data.device);
   let selectedVariantRevision = $state('latest');
+
+  // 3D-printable models split by kind and ranked by host popularity (likes).
+  const byLikes = (a, b) => (b.likes ?? 0) - (a.likes ?? 0) || a.name.localeCompare(b.name);
+  let printCases = $derived((d.prints ?? []).filter((p) => (p.type ?? 'case') === 'case').sort(byLikes));
+  let printAccessories = $derived((d.prints ?? []).filter((p) => p.type === 'accessory').sort(byLikes));
+
+  // Friendly label for the host a printable is published on.
+  const PRINT_HOSTS = {
+    'printables.com': 'Printables', 'thingiverse.com': 'Thingiverse', 'makerworld.com': 'MakerWorld',
+    'github.com': 'GitHub', 'heltec.org': 'Heltec', 'lilygo.cc': 'LilyGo', 'docs.rakwireless.com': 'RAKwireless'
+  };
+  function printHost(url) {
+    try {
+      const host = new URL(url).hostname.replace(/^www\./, '');
+      return PRINT_HOSTS[host] ?? host;
+    } catch {
+      return 'Link';
+    }
+  }
 
   // Meta description: prefer the authored blurb, else synthesise from specs.
   let metaDescription = $derived(
@@ -917,37 +937,58 @@
   {/if}
 </section>
 
-<!-- Community 3D-printed cases, linked to Printables. Image is the model's
-     remote cover thumbnail; an icon stands in when one isn't recorded. -->
-{#if d.cases?.length}
+<!-- Community 3D-printable models, split into enclosures and accessories and
+     ranked by host popularity. Image is the model's remote cover thumbnail; an
+     icon stands in when one isn't recorded. -->
+{#snippet printGrid(items)}
+  <div class="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(200px,1fr))]">
+    {#each items as p (p.url)}
+      <a
+        class="group flex flex-col overflow-hidden rounded-xl border border-edge bg-elev transition hover:-translate-y-0.5 hover:border-accent"
+        href={p.url}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-elev2 text-muted">
+          {#if p.image}
+            <img src={p.image} alt={p.name} loading="lazy" class="h-full w-full object-cover transition group-hover:scale-105" />
+          {:else}
+            <Box class="h-12 w-12" aria-hidden="true" />
+          {/if}
+          {#if p.likes != null}
+            <span class="absolute top-1.5 right-1.5 inline-flex items-center gap-1 rounded-full bg-black/65 px-1.5 py-0.5 text-[0.7rem] font-medium text-white backdrop-blur-sm" title="{p.likes.toLocaleString()} likes on {printHost(p.url)}">
+              <Heart class="h-3 w-3 shrink-0" strokeWidth={2} aria-hidden="true" />
+              <span class="tabular-nums">{p.likes.toLocaleString()}</span>
+            </span>
+          {/if}
+        </div>
+        <div class="flex flex-1 flex-col gap-0.5 p-3">
+          <span class="text-[0.9rem] leading-tight font-medium group-hover:text-accent" title={p.name}>{p.name}</span>
+          {#if p.author}<span class="text-[0.78rem] text-dim">by {p.author}</span>{/if}
+          <span class="mt-1.5 text-[0.72rem] text-accent2">{printHost(p.url)} ↗</span>
+        </div>
+      </a>
+    {/each}
+  </div>
+{/snippet}
+
+{#if printCases.length}
   <section class="mb-7">
     <div class="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-edge pb-1.5">
       <h2 class="text-[1.1rem] font-semibold">3D-printed cases</h2>
       <span class="text-[0.8rem] text-dim">Community enclosures you can print yourself</span>
     </div>
-    <div class="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(200px,1fr))]">
-      {#each d.cases as c (c.url)}
-        <a
-          class="group flex flex-col overflow-hidden rounded-xl border border-edge bg-elev transition hover:-translate-y-0.5 hover:border-accent"
-          href={c.url}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <div class="flex aspect-[4/3] items-center justify-center overflow-hidden bg-elev2 text-muted">
-            {#if c.image}
-              <img src={c.image} alt={c.name} loading="lazy" class="h-full w-full object-cover transition group-hover:scale-105" />
-            {:else}
-              <Box class="h-12 w-12" aria-hidden="true" />
-            {/if}
-          </div>
-          <div class="flex flex-1 flex-col gap-0.5 p-3">
-            <span class="text-[0.9rem] leading-tight font-medium group-hover:text-accent" title={c.name}>{c.name}</span>
-            {#if c.author}<span class="text-[0.78rem] text-dim">by {c.author}</span>{/if}
-            <span class="mt-1.5 text-[0.72rem] text-accent2">Printables ↗</span>
-          </div>
-        </a>
-      {/each}
+    {@render printGrid(printCases)}
+  </section>
+{/if}
+
+{#if printAccessories.length}
+  <section class="mb-7">
+    <div class="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-edge pb-1.5">
+      <h2 class="text-[1.1rem] font-semibold">3D-printed accessories</h2>
+      <span class="text-[0.8rem] text-dim">Mounts, brackets and add-ons you can print yourself</span>
     </div>
+    {@render printGrid(printAccessories)}
   </section>
 {/if}
 

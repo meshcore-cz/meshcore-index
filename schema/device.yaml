@@ -156,8 +156,8 @@ properties:
           description: Band keys (globals.yaml `frequency`) this SKU operates on.
           items:
             type: string
-  cases:
-    description: Community or vendor 3D-printable enclosures for this device.
+  prints:
+    description: Community or vendor 3D-printable models for this device — enclosures and accessories.
     type: array
     items:
       type: object
@@ -167,9 +167,16 @@ properties:
         - url
       properties:
         name:
-          description: Case/model title, e.g. "H1 - Case for Heltec V3 running Meshtastic".
+          description: Model title, e.g. "H1 - Case for Heltec V3 running Meshtastic".
           type: string
           minLength: 1
+        type:
+          description: What kind of model this is. Defaults to "case" when omitted.
+          type: string
+          enum:
+            - case
+            - accessory
+          default: case
         author:
           description: Designer or publisher name.
           type: string
@@ -182,6 +189,10 @@ properties:
           description: Optional remote cover thumbnail for the printable model.
           type: string
           pattern: ^https?://
+        likes:
+          description: Popularity on the host platform (e.g. Printables likes), used to sort models.
+          type: integer
+          minimum: 0
   hardware:
     description: Structured hardware details. `hardware.mcu` is required; an absent optional value means unknown.
     type: object

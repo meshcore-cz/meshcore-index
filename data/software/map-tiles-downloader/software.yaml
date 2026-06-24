@@ -1,6 +1,6 @@
 name: Map Tiles Downloader
 short_name: mt-downloader
-kind: tool
+kind: utility
 status: active
 maturity: stable
 description: >-

@@ -1,6 +1,6 @@
 name: Wireshark MeshCore Dissector
 short_name: Wireshark MeshCore
-kind: tool
+kind: monitoring
 status: active
 maturity: beta
 description: >-

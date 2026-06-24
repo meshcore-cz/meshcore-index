@@ -1,5 +1,5 @@
 name: MeshCore Drone Updater
-kind: tool
+kind: utility
 status: active
 maturity: experimental
 description: >-

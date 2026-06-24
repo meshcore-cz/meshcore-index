@@ -90,3 +90,41 @@ interfaces:
     ble: true
   wifi:
     status: none
+# Community 3D-printable models. `image` is the model's social cover thumbnail.
+prints:
+  - name: XIAO nRF52840 Wio-SX1262 Enclosure with 18650 Battery
+    type: case
+    author: Rob W1RCP
+    url: https://www.printables.com/model/1363686-xiao-nrf52840-wio-sx1262-meshtastic-enclosure-with
+    image: https://media.printables.com/media/prints/a6c8bb4e-b187-4b7e-b955-15a5b422e07b/images/10295436_c63378d0-4333-47ea-ad1e-644ce98637dc_296d4990-6ca3-491c-b9f1-df3b334d5093/thumbs/cover/1200x630/jpg/img_2496.jpg
+    likes: 18
+  - name: Meshtastic Seeed XIAO nRF52840 & Wio-SX1262 Kit + 18650
+    type: case
+    author: LadPack91
+    url: https://www.printables.com/model/1328727-meshtastic-seeed-xiao-nrf52840-wio-sx1262-kit-1865
+    image: https://media.printables.com/media/prints/e9d4cba0-055f-4605-822a-bf68968876a7/images/10025749_5ceb9c21-52ce-4304-8c7c-93805cedaa6d_dd18c227-3756-4457-92dd-0f708e97c638/thumbs/cover/1200x630/jpg/pxl_20250615_160159936.jpg
+    likes: 67
+  - name: Meshtastic Seeed Studio XIAO nRF52 / SX1262 Tube Case
+    type: case
+    author: verdi
+    url: https://www.printables.com/model/1346041-meshtastic-seeed-studio-xiao-nrf52-sx1262-case
+    image: https://media.printables.com/media/prints/32d3ddf2-0408-404a-b8f7-9377806c3245/images/10157118_52373642-87c8-481d-9bc4-fc738d3f4573_3578e42d-024a-43af-b248-ec346b037867/thumbs/cover/1200x630/jpeg/img_4952.jpg
+    likes: 130
+  - name: XIAO nRF52840 & Wio-SX1262 Kit Case for 18350 Battery
+    type: case
+    author: Raúl Caro Pastorino
+    url: https://www.printables.com/model/1422893-xiao-nrf52840-wio-sx1262-kit-case-for-meshtastic-a
+    image: https://media.printables.com/media/prints/a4cc11cb-9eb0-4d93-9d9f-ddc2516f8b38/images/10732854_ade898cf-f99d-4a0b-a87a-7284bdda14ce_41f2e7ec-5af8-4b3f-959d-319bd290e562/thumbs/cover/1200x630/jpeg/5.jpg
+    likes: 13
+  - name: Slim XIAO nRF52840 & Wio-SX1262 Kit Case
+    type: case
+    author: write-only
+    url: https://www.printables.com/model/1351183-slim-xiao-nrf52840-wio-sx1262-kit-case
+    image: https://media.printables.com/media/prints/c5664d27-e727-4e03-90dc-e19d3e59d8d1/images/10196860_e7e72207-cde9-48e3-8fcc-c8440c9f8d2f_5d59b50e-dc5a-4da7-845d-ce5753c7c821/thumbs/cover/1200x630/jpg/20250706_182342.jpg
+    likes: 21
+  - name: Tube Case for XIAO nRF52840 & Wio-SX1262
+    type: case
+    author: Stanley
+    url: https://www.printables.com/model/1636351-tube-case-for-seeed-studio-xiao-nrf52840-wio-sx126
+    image: https://media.printables.com/media/prints/1bb1db37-a03e-4ecd-8c1c-d63a85e5c6eb/images/12316319_56f2dd6e-4c1d-409a-b47a-15711cfc33f7_119861b7-68ad-4104-b36a-8d8236e24bc2/thumbs/cover/1200x630/jpg/20260315_153346.jpg
+    likes: 22

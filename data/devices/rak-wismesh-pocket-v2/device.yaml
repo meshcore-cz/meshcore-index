@@ -79,3 +79,23 @@ interfaces:
     ble: true
   wifi:
     status: none
+# Community 3D-printable models. `image` is the model's social cover thumbnail.
+prints:
+  - name: RAKwireless WisMesh Pocket V2 Enclosure
+    type: case
+    author: Bernd Giesecke
+    url: https://www.printables.com/model/1374446-rakwireless-wismesh-pocket-v2
+    image: https://media.printables.com/media/prints/c45f71e6-cd7f-42eb-a6c9-ecbfad636d0d/images/10376569_5130844b-6e13-4b71-9d05-cc6bee534ec9_5a18c090-c060-42c2-b37d-f0507a52d43d/thumbs/cover/1200x630/png/side.png
+    likes: 14
+  - name: RAKwireless WisMesh Pocket MINE (slim alternative)
+    type: case
+    author: Bernd Giesecke
+    url: https://www.printables.com/model/1377679-rakwireless-wismesh-pocket-mine
+    image: https://media.printables.com/media/prints/f1571e0d-eb34-4536-8190-4b459905eed0/images/10399845_5514c90a-de39-4777-9e90-b9341490761a_0415f0f0-8f87-4217-aad4-867d9958d4e4/thumbs/cover/1200x630/jpg/pocket-top.jpg
+    likes: 9
+  - name: WisMesh Pocket V2 Dual 18650 Battery Cover
+    type: accessory
+    author: dflemstr
+    url: https://www.printables.com/model/1289597-rak-wismesh-pocket-v2-rak19026-dual-18650-battery
+    image: https://media.printables.com/media/prints/d60dc58b-7314-41af-8efb-59c2939725da/images/9707963_b9556416-110a-4e18-b964-866f2d28a890_2474283b-4baf-4e69-99ca-54e4c7583b5d/thumbs/cover/1200x630/jpg/20250508_145436.jpg
+    likes: 12

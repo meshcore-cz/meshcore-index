@@ -374,12 +374,23 @@ function buildSitemap(root, { devices, firmwares, vendors, networks, software, g
   const lastmod = (generatedAt ?? new Date().toISOString()).slice(0, 10);
   const prefix = `${SITE_ORIGIN}${BASE_PATH}`;
 
+  // Filtered list views are prerendered as their own pages (one per software
+  // kind / firmware type), so include them for indexing.
+  const softwareKinds = [...new Set(software.map((s) => s.kind))].filter(Boolean);
+  const firmwareTypes = [...new Set(firmwares.map((f) => f.type))].filter((t) =>
+    ['official', 'fork', 'custom'].includes(t)
+  );
+
   const paths = [
     '/',
     '/devices/',
     '/vendors/',
     '/networks/',
     '/software/',
+    ...softwareKinds.map((k) => `/software/${k}/`),
+    '/firmwares/',
+    ...firmwareTypes.map((t) => `/firmwares/${t}/`),
+    '/languages/',
     '/matrix/',
     '/releases/',
     '/schemas/',

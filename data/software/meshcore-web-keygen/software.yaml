@@ -1,6 +1,6 @@
 name: MeshCore Web Key Generator
 short_name: Web Keygen
-kind: tool
+kind: utility
 status: active
 maturity: stable
 description: >-

@@ -92,3 +92,11 @@ interfaces:
   wifi:
     status: present
     standard: 802.11 b/g/n
+# Community 3D-printable models. `image` is the model's social cover thumbnail.
+prints:
+  - name: HT-CT62 Meshtastic Case with Added Battery
+    type: case
+    author: nn
+    url: https://www.printables.com/model/1636637-ht-ct62-meshtastic-case-with-added-battery
+    image: https://media.printables.com/media/prints/f11d3cd3-cff0-4846-87e8-22e62b1deaef/images/12302360_5f34a70e-094d-452f-b6ba-7af5b9579d01_663ae538-df2d-4af5-8c1a-a5ac78ee26a6/thumbs/cover/1200x630/jpg/photo_1_2026-03-13_23-33-01.jpg
+    likes: 2

@@ -23,7 +23,7 @@ export const COLLECTIONS = {
     label: 'Software',
     href: '/software/',
     icon: CodeXml,
-    blurb: 'Clients, integrations, gateways, tools and libraries for the network.',
+    blurb: 'Clients, integrations, gateways, monitoring, utilities, bots and libraries for the network.',
     home: true,
     nav: true
   },

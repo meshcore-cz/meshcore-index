@@ -84,3 +84,46 @@ interfaces:
   wifi:
     status: present
     standard: 802.11 b/g/n
+# Community 3D-printable enclosures and accessories hosted on Printables.
+# `image` is the model's social cover thumbnail (remote URL); `url` links to the printable.
+prints:
+  - name: Meshtastic Seeed Studio XIAO ESP32S3 & Wio SX1262 Case
+    type: case
+    author: unhild
+    url: https://www.printables.com/model/1243157-meshtastic-seeed-studio-xiao-esp32s3-wio-sx1262-ca
+    image: https://media.printables.com/media/prints/56ed6d3f-3ee5-4925-9b7f-c2866d44b956/images/10402462_25cd23b8-4620-4257-aa68-bae0638c5de7_8bf8bccd-9751-4bbc-9482-7ea8749c1442/thumbs/cover/1200x630/jpg/photo_2025-08-07_21-45-50.jpg
+    likes: 107
+  - name: XIAO ESP32S3 Wio-SX1262 Enclosure with 18650 Battery
+    type: case
+    author: Rob W1RCP
+    url: https://www.printables.com/model/1246072-xiao-esp32s3-wio-sx1262-meshtastic-enclosure-with
+    image: https://media.printables.com/media/prints/98ab38d5-e4b4-4534-b927-37ae7b89832f/images/9349962_77228ca9-a0fb-4b65-9603-cad36362a8db_aeb8e5b3-e208-41f1-b628-b5702ceb8611/thumbs/cover/1200x630/jpg/messhy.jpg
+  - name: 3D Casing for XIAO ESP32S3 & Wio-SX1262
+    type: case
+    author: Seeed Studio
+    url: https://www.printables.com/model/1337566-3d-casing-for-xiao-esp32s3-wio-sx1262-meshtastic-l
+    image: https://media.printables.com/media/prints/8d9071bd-48d4-4fcc-9019-e9443e9d4f25/images/10091744_87afb457-1b70-4456-9838-31b95111e547_f98ba7bb-9245-465d-bb28-bc36082724c7/thumbs/cover/1200x630/png/xiao_esp32s3_for_meshtastic_and_lora_kit_3d_casing.png
+    likes: 52
+  - name: ACOS Beacon Enclosure for Seeed Xiao/Wio
+    type: case
+    author: Alley Cat
+    url: https://www.printables.com/model/1325495-acos-beacon-enclosure-for-seeed-xiaowio-beta
+    image: https://media.printables.com/media/prints/b30f83c6-7944-4f0b-8023-b8d740cb63ed/images/10000533_4273c841-65d6-420c-9659-2a3a7a5faddd_eba189d5-b770-4ced-882d-c83ff7ed1f2d/thumbs/cover/1200x630/jpg/img_2384.jpg
+    likes: 19
+  - name: XIAO ESP32S3 & Wio-SX1262 Kit for Meshtastic/MeshCore
+    type: case
+    author: Baris Guler
+    url: https://www.printables.com/model/1564088-xiao-esp32s3-wio-sx1262-kit-for-meshtastic-meshcor
+    image: https://media.printables.com/media/prints/196922ba-eef5-406e-982c-b89352d77d46/images/11785002_d85d9da5-009d-4694-a4f4-a5ecbe9ffa32_b2239455-d5e4-4507-8e36-035abe1c27e0/thumbs/cover/1200x630/jpg/img_20260120_175613.jpg
+    likes: 7
+  - name: Drone Case for XIAO ESP32S3 & Wio-SX1262
+    type: accessory
+    author: Gouldshaw
+    url: https://www.printables.com/model/1501260-drone-case-for-xiao-esp32s3-wio-sx1262-meshtastic
+    image: https://media.printables.com/media/prints/1d560446-5711-437c-a03c-c1e603ebcf91/images/11321317_22e632e1-cf5f-4379-9a9f-2fee0e4c7054_d993db4c-682d-4eae-82ce-770f392bbd8c/thumbs/cover/1200x630/jpeg/img_8140.jpg
+  - name: Meshtastic Xiao ESP32S3 Wio-SX1262 Case with OLED
+    type: case
+    author: Finn
+    url: https://www.printables.com/model/1264151-meshtastic-xiao-esp32s3-wio-sx1262-case
+    image: https://media.printables.com/media/prints/ccb753b1-a73f-435f-8c1b-bd4290adc214/images/9493247_7ba793cb-8fce-4352-91f6-744005c31f48_6a2b1af9-aac9-4462-a6cf-bb69172cf4d5/thumbs/cover/1200x630/jpg/img_20250413_194954_555.jpg
+    likes: 50

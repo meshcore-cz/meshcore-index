@@ -98,16 +98,19 @@ interfaces:
     standard: 802.11 b/g/n
 # Community 3D-printable enclosures hosted on Printables. `image` is the model's
 # social cover thumbnail (remote URL); `url` links to the printable.
-cases:
+prints:
   - name: LilyGo T-Deck TD1 Case
+    type: case
     author: Alley Cat
     url: https://www.printables.com/model/741124-lilygo-t-deck-td1-case
     image: https://media.printables.com/media/prints/741124/images/5836685_5e1663e2-de82-4e65-89bd-bea12ce70f31_0dcada23-8b25-4993-8ee0-9382003cc6ad/thumbs/cover/1200x630/jpg/dji_20240129121353_0197_d.jpg
   - name: Zoidberg LilyGo T-Deck Case
+    type: case
     author: zerofox3D
     url: https://www.printables.com/model/1285162-zoidberg-lilygo-t-deck-tkeyboard-meshtastic-powere
     image: https://media.printables.com/media/prints/8956d33c-f1ca-47b8-bb13-fe1a15248a76/images/9672388_acbdc751-3390-44ff-8740-a75ca006b91b_a671845c-48fa-4997-860c-db656be8a743/thumbs/cover/1200x630/webp/zoidberg_red01.webp
   - name: T-Deck Amped (AirBuddy Amp Enclosure)
+    type: case
     author: Blackout Comms
     url: https://www.printables.com/model/1308645-t-deck-amped-featuring-airbuddy-amp
     image: https://media.printables.com/media/prints/36feb3e5-16e1-4b4a-bc96-c808d9663391/images/9870974_46140fda-5a5f-4744-84c4-2fb4449cb5fb_4055dd83-979f-4924-b9d4-2584b2891584/thumbs/cover/1200x630/png/holding_front_closer.png

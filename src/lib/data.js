@@ -155,10 +155,11 @@ export const SOFTWARE_KIND_META = {
   client: { label: 'Clients', singular: 'Client', order: 0, tw: 'bg-accent/15 text-accent' },
   integration: { label: 'Integrations', singular: 'Integration', order: 1, tw: 'bg-accent2/15 text-accent2' },
   gateway: { label: 'Gateways & Bridges', singular: 'Gateway / Bridge', order: 2, tw: 'bg-warn/15 text-warn' },
-  tool: { label: 'Tools', singular: 'Tool', order: 3, tw: 'bg-ok/15 text-ok' },
-  library: { label: 'Libraries & SDKs', singular: 'Library / SDK', order: 4, tw: 'bg-dim/20 text-dim' },
-  'network-app': { label: 'Network Apps', singular: 'Network App', order: 5, tw: 'bg-accent/15 text-accent' },
-  bot: { label: 'Bots', singular: 'Bot', order: 99, tw: 'bg-accent2/15 text-accent2' }
+  monitoring: { label: 'Monitoring & Management', singular: 'Monitoring / Management', order: 3, tw: 'bg-accent/15 text-accent' },
+  utility: { label: 'Utilities', singular: 'Utility', order: 4, tw: 'bg-ok/15 text-ok' },
+  bot: { label: 'Bots', singular: 'Bot', order: 5, tw: 'bg-accent2/15 text-accent2' },
+  library: { label: 'Libraries & SDKs', singular: 'Library / SDK', order: 6, tw: 'bg-dim/20 text-dim' },
+  'network-app': { label: 'Network Apps', singular: 'Network App', order: 7, tw: 'bg-accent/15 text-accent' }
 };
 
 /** Kinds present in the catalogue, in display order. */

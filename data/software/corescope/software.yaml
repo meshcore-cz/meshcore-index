@@ -1,5 +1,5 @@
 name: CoreScope
-kind: tool
+kind: monitoring
 status: active
 maturity: stable
 description: >-

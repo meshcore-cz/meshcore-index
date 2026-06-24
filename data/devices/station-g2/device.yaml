@@ -86,3 +86,17 @@ interfaces:
   wifi:
     status: present
     standard: 802.11 b/g/n
+# Community 3D-printable models. `image` is the model's social cover thumbnail.
+prints:
+  - name: Station G2 Antenna Mounted Weather Resistant Case
+    type: case
+    author: SubBass100
+    url: https://www.printables.com/model/1207037-station-g2-meshtastic-or-other-antenna-mounted-wea
+    image: https://media.printables.com/media/prints/1207037/images/9069839_b18d67cb-0e1e-4343-869c-a2eaee83868a_8fe11848-7b6f-46d6-b5f4-aa0baf1182cd/thumbs/cover/1200x630/jpg/1.jpg
+    likes: 15
+  - name: Station G2 Mount
+    type: accessory
+    author: Chris L
+    url: https://www.printables.com/model/1156202-station-g2-mount
+    image: https://media.printables.com/media/prints/1156202/images/8720588_5553e94b-7c9f-49db-ba1d-7b6efc5946bc_57490885-3b2e-4650-8c20-b22f5d23d890/thumbs/cover/1200x630/png/g2_mounting_plate_2025-jan-20_02-43-35am-000_customizedview5815954616.png
+    likes: 8

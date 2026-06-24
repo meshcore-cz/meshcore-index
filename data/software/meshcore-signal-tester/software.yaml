@@ -1,5 +1,5 @@
 name: MeshCore Signal Tester
-kind: tool
+kind: monitoring
 status: active
 maturity: stable
 description: >-

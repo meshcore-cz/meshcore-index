@@ -1,0 +1,70 @@
+name: MeshCore Ninja
+kind: utility
+status: active
+maturity: beta
+description: >-
+  Open web catalog of the MeshCore ecosystem, covering hardware, firmware,
+  software, vendors and regional networks with structured specifications,
+  compatibility data, filtering and comparison tools.
+
+image: ninja-logo.png
+
+maintainers:
+  - name: meshcore-cz
+    url: https://github.com/meshcore-cz
+
+repository: https://github.com/meshcore-cz/meshcore-ninja
+website: https://meshcore.ninja
+license: MIT
+
+latest_version: v0.2.0
+released: 2026-06-22
+
+languages:
+  - svelte
+  - javascript
+  - go
+platforms:
+  - web
+  - docker
+interfaces:
+  - web
+  - api
+capabilities:
+  - monitoring
+
+install:
+  - type: web
+    url: https://meshcore.ninja
+  - type: docker
+    package: ghcr.io/meshcore-cz/meshcore-ninja-api
+    url: https://github.com/meshcore-cz/meshcore-ninja/pkgs/container/meshcore-ninja-api
+  - type: source
+    url: https://github.com/meshcore-cz/meshcore-ninja
+
+popularity:
+  githubStars: 2
+  githubForks: 1
+  githubWatchers: 0
+  githubOpenIssues: 1
+  githubContributors: 2
+  lastChecked: 2026-06-24
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: false
+  lastChecked: 2026-06-24
+  notes:
+    - Catalog data and schemas are dedicated to CC0; application code is MIT licensed.
+
+tags:
+  - catalog
+  - compatibility
+  - hardware
+  - firmware
+  - networks
+
+last_reviewed: 2026-06-24

@@ -1,0 +1,72 @@
+name: meshpkt
+kind: library
+status: active
+maturity: alpha
+description: >-
+  Pure Go codec for the MeshCore radio packet wire format, with packet
+  validation, payload encoding and decoding, firmware-compatible identity
+  cryptography, extensible dispatch and TypeScript bindings powered by WASM.
+
+maintainers:
+  - name: meshcore-cz
+    url: https://github.com/meshcore-cz
+
+repository: https://github.com/meshcore-cz/meshpkt
+license: MIT
+
+latest_version: v0.1.14
+released: 2026-06-19
+
+languages:
+  - go
+  - typescript
+platforms:
+  - linux
+  - macos
+  - windows
+  - web
+interfaces:
+  - api
+capabilities:
+  - packet-analysis
+  - key-management
+
+install:
+  - type: go-install
+    package: github.com/meshcore-cz/meshpkt
+    url: https://pkg.go.dev/github.com/meshcore-cz/meshpkt
+    command: go get github.com/meshcore-cz/meshpkt
+  - type: npm
+    package: "@meshcore-cz/meshpkt"
+    url: https://www.npmjs.com/package/@meshcore-cz/meshpkt
+    command: npm install @meshcore-cz/meshpkt
+  - type: source
+    url: https://github.com/meshcore-cz/meshpkt
+
+popularity:
+  githubStars: 1
+  githubForks: 0
+  githubWatchers: 0
+  githubOpenIssues: 0
+  githubContributors: 1
+  lastChecked: 2026-06-24
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: false
+  lastChecked: 2026-06-24
+  notes:
+    - The project is pre-1.0 and recommends pinning a specific version for production use.
+    - The npm package declares MIT; the repository root had no separate license file when reviewed.
+
+tags:
+  - sdk
+  - protocol
+  - codec
+  - cryptography
+  - wasm
+
+last_reviewed: 2026-06-24

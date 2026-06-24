@@ -6,6 +6,7 @@
   import Puzzle from '@lucide/svelte/icons/puzzle';
   import Network from '@lucide/svelte/icons/network';
   import Wrench from '@lucide/svelte/icons/wrench';
+  import Activity from '@lucide/svelte/icons/activity';
   import Library from '@lucide/svelte/icons/library';
   import Globe from '@lucide/svelte/icons/globe';
   import Bot from '@lucide/svelte/icons/bot';
@@ -25,7 +26,8 @@
     client: AppWindow,
     integration: Puzzle,
     gateway: Network,
-    tool: Wrench,
+    monitoring: Activity,
+    utility: Wrench,
     library: Library,
     'network-app': Globe,
     bot: Bot

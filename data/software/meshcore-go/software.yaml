@@ -1,0 +1,93 @@
+name: meshcore-go
+kind: library
+status: active
+maturity: alpha
+description: >-
+  Transport-independent Go SDK for MeshCore companion radios, with high-level
+  messaging, contacts, channels, discovery, repeater administration and raw
+  protocol access over serial, BLE and TCP. It also includes the mc terminal
+  client and an optional multi-session backend.
+
+maintainers:
+  - name: meshcore-cz
+    url: https://github.com/meshcore-cz
+
+repository: https://github.com/meshcore-cz/meshcore-go
+documentation: https://pkg.go.dev/github.com/meshcore-cz/meshcore-go
+license: MIT
+
+latest_version: v0.5.1
+released: 2026-06-19
+
+languages:
+  - go
+platforms:
+  - linux
+  - macos
+  - windows
+interfaces:
+  - api
+  - cli
+  - tui
+  - headless
+connections:
+  - ble
+  - serial
+  - usb
+  - tcp
+node_roles:
+  - companion
+  - repeater
+capabilities:
+  - messaging
+  - contacts
+  - channels
+  - node-configuration
+  - remote-administration
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - bridging
+  - key-management
+
+install:
+  - type: go-install
+    package: github.com/meshcore-cz/meshcore-go
+    url: https://pkg.go.dev/github.com/meshcore-cz/meshcore-go
+    command: go get github.com/meshcore-cz/meshcore-go
+  - type: homebrew
+    package: meshcore-cz/tap/mc
+    url: https://github.com/meshcore-cz/homebrew-tap
+    command: brew install meshcore-cz/tap/mc
+  - type: github-release
+    url: https://github.com/meshcore-cz/meshcore-go/releases
+  - type: source
+    url: https://github.com/meshcore-cz/meshcore-go
+
+popularity:
+  githubStars: 1
+  githubForks: 0
+  githubWatchers: 0
+  githubOpenIssues: 0
+  githubContributors: 1
+  latestReleaseDownloads: 3
+  lastChecked: 2026-06-24
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: false
+  lastChecked: 2026-06-24
+  notes:
+    - Public APIs may change before the first stable release.
+    - No repository license file or SPDX license declaration was present when reviewed.
+
+tags:
+  - sdk
+  - protocol
+  - terminal
+  - daemon
+
+last_reviewed: 2026-06-24

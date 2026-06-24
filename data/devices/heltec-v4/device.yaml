@@ -122,18 +122,25 @@ interfaces:
   wifi:
     status: present
     standard: 802.11 b/g/n
-# Community 3D-printable enclosures hosted on Printables. `image` is the model's
-# social cover thumbnail (remote URL); `url` links to the printable.
-cases:
+# Community 3D-printable models hosted on Printables. `type` is "case" (default)
+# or "accessory"; `likes` is the host's like count, used to rank models. `image`
+# is the model's social cover thumbnail (remote URL); `url` links to the model.
+prints:
   - name: H1+ - Enhanced H1 Case for Heltec V3/V4
+    type: case
     author: muzi.works
     url: https://www.printables.com/model/1326866-h1-enhanced-h1-case-for-heltec-v3heltec-v4-by-muzi
     image: https://media.printables.com/media/prints/45d960ad-97e4-4d33-a9c5-7adf34b0ac63/images/10242951_72a2f619-228e-4ce9-bef9-cb9416bada91_c43824f4-d8cc-4793-95e7-3240eb134c2d/thumbs/cover/1200x630/png/case-thumbnail-h1.png
+    likes: 556
   - name: Heltec MeshCore/Meshtastic Claymore Case
+    type: case
     author: pd7lj
     url: https://www.printables.com/model/1638748-heltec-meshcore-and-or-meshtastic-claymore-case
     image: https://media.printables.com/media/prints/11712d27-0af5-4d40-8771-e3f38b589cd9/images/12317114_64bff7e9-88b3-4081-861a-0ddbf1b5e5a6_7106bb87-1c87-4e1e-9cfe-49cbb4d64666/thumbs/cover/1200x630/jpg/heltec_claymore_case-1.jpg
+    likes: 180
   - name: Hermes External Solar Node Enclosure for RAK and Heltec
+    type: case
     author: zerofox3D
     url: https://www.printables.com/model/1283453-hermes-external-solar-node-enclosure-for-meshcore
     image: https://media.printables.com/media/prints/087ab57b-956e-4375-b006-35b406a076ba/images/9656322_8a76cb0a-d7ea-4a22-9c92-b125f3f1d5a5_74592dc7-7d23-4b51-ad5a-9650636a8a99/thumbs/cover/1200x630/webp/hermes04new.webp
+    likes: 90

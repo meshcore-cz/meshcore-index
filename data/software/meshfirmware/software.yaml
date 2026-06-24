@@ -1,5 +1,5 @@
 name: MeshFirmware
-kind: tool
+kind: utility
 status: active
 maturity: stable
 description: >-

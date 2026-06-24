@@ -1,0 +1,65 @@
+name: MeshCore Packet Tool
+kind: monitoring
+status: active
+maturity: alpha
+description: >-
+  Browser-based workbench for inspecting, decoding and crafting MeshCore radio
+  packets. It provides typed packet editors, identity and key management,
+  shareable workspace URLs and WebAssembly decoding benchmarks.
+
+maintainers:
+  - name: meshcore-cz
+    url: https://github.com/meshcore-cz
+
+repository: https://github.com/meshcore-cz/meshcore-packet-tool
+website: https://meshcore-cz.github.io/meshcore-packet-tool/
+license_type: source-available
+
+latest_version: 1.0.0
+
+languages:
+  - svelte
+  - typescript
+  - go
+platforms:
+  - web
+interfaces:
+  - web
+capabilities:
+  - packet-analysis
+  - key-management
+
+install:
+  - type: web
+    url: https://meshcore-cz.github.io/meshcore-packet-tool/
+  - type: source
+    url: https://github.com/meshcore-cz/meshcore-packet-tool
+
+popularity:
+  githubStars: 0
+  githubForks: 0
+  githubWatchers: 0
+  githubOpenIssues: 0
+  githubContributors: 1
+  lastChecked: 2026-06-24
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: false
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: false
+  lastChecked: 2026-06-24
+  notes:
+    - The application uses the meshpkt codec compiled to WebAssembly.
+    - Version 1.0.0 is declared in package.json; no project release is published.
+    - No repository license file or SPDX license declaration was present when reviewed.
+
+tags:
+  - protocol
+  - packet-editor
+  - decoder
+  - cryptography
+  - wasm
+
+last_reviewed: 2026-06-24

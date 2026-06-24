@@ -4,7 +4,7 @@ $id: https://meshcore.ninja/schema/software.yaml
 title: Software
 description: >-
   A catalogue of MeshCore-related software, differentiated by `kind`
-  (clients, integrations, gateways, tools, libraries and network apps).
+  (clients, integrations, gateways, monitoring, utilities, bots and libraries).
   The directory name is the entry ID in kebab-case and is not repeated
   inside the data file.
 
@@ -37,13 +37,14 @@ properties:
   kind:
     description: >-
       Primary software category: Clients · Integrations · Gateways & Bridges ·
-      Tools · Libraries & SDKs · Network Apps · Bots.
+      Monitoring & Management · Utilities · Bots · Libraries & SDKs.
     type: string
     enum:
       - client
       - integration
       - gateway
-      - tool
+      - monitoring
+      - utility
       - library
       - network-app
       - bot

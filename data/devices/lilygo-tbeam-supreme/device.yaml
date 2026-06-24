@@ -115,20 +115,24 @@ interfaces:
     standard: 802.11 b/g/n
 # Community 3D-printable enclosures hosted on Printables. `image` is the model's
 # social cover thumbnail (remote URL); `url` links to the printable.
-cases:
+prints:
   - name: LilyGo T-Beam Supreme TS1 Case
+    type: case
     author: Alley Cat
     url: https://www.printables.com/model/705817-lilygo-t-beam-supreme-ts1-case-by-alley-cat
     image: https://media.printables.com/media/prints/705817/images/7324348_4563f5a8-6412-42c4-bac0-2162037ab90f_accc4cb1-a2c1-49ab-889a-0d1de002db99/thumbs/cover/1200x630/png/ts1.png
   - name: LilyGo T-Beam Supreme TS2 Case
+    type: case
     author: Alley Cat
     url: https://www.printables.com/model/959441-lilygo-t-beam-supreme-ts2-case-by-alley-cat
     image: https://media.printables.com/media/prints/959441/images/7324691_61922572-99f2-4017-85bf-19dffb8f2ca4_b3c11dc4-4d02-4faf-9a51-a21020e595c7/thumbs/cover/1200x630/png/ts2.png
   - name: T-Beam Supreme Case
+    type: case
     author: TonyG
     url: https://www.printables.com/model/616635-t-beam-supreme-case-for-meshtastic
     image: https://media.printables.com/media/prints/616635/images/4893397_f1e234d7-cbfc-435b-9743-c692570c7057_ea2cda12-98f3-4952-b892-b597349478fb/thumbs/cover/1200x630/jpg/20231007_094632.jpg
   - name: LILYGO TTGO T-Beam Supreme Case
+    type: case
     author: Dekkia
     url: https://www.printables.com/model/565428-lilygo-ttgo-t-beam-supreme-case
     image: https://media.printables.com/media/prints/565428/images/4528196_363cffea-7bd6-4e42-8b48-53b2122d7fb0/thumbs/cover/1200x630/jpg/img_20230827_184938-kopie.jpg

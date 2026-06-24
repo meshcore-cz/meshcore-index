@@ -1,6 +1,6 @@
 name: RemoteTerm for MeshCore
 short_name: RemoteTerm
-kind: tool
+kind: monitoring
 status: active
 maturity: stable
 description: >-

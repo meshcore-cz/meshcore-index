@@ -108,3 +108,17 @@ interfaces:
     ble: true
   wifi:
     status: none
+# Community 3D-printable models. `image` is the model's social cover thumbnail.
+prints:
+  - name: Heltec T096 Case - MeshCore/Meshtastic
+    type: case
+    author: Honey Badger
+    url: https://www.printables.com/model/1757227-heltec-t096-case-meshcore-or-meshtastic
+    image: https://media.printables.com/media/prints/b1041437-fa13-49ac-91bf-122fb96f2002/images/13168903_286ee871-ba8f-4ad9-aee7-e060ce3c8720_026c79de-28c2-41eb-ba55-ef08eae4d692/thumbs/cover/1200x630/jpg/pxl_20260618_151335584_e-copy.jpg
+    likes: 6
+  - name: Heltec Mesh Node T096 Solar Case 1100mAh
+    type: case
+    author: Rinordine
+    url: https://www.printables.com/model/1707209-heltec-mesh-node-t096-solar-case-1100mah
+    image: https://media.printables.com/media/prints/7db02b35-aa08-4001-b65a-a40a9cc5ed21/images/12822294_f828b2d4-a9e9-4b7e-af3c-8dbbff85c12f_19f6a5d9-c4ea-4d48-aa18-6694edf2269e/thumbs/cover/1200x630/jpg/img_20260503_013415.jpg
+    likes: 6
