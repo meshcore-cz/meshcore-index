@@ -92,8 +92,8 @@
   <div class="text-[0.9rem]">
     <p class="font-semibold text-ink">Work in progress</p>
     <p class="mt-1 text-dim">
-      This site is brand new and data is still being ingested, so entries may be incomplete or
-      incorrect. We'd appreciate any corrections — please open an
+      This site is still growing, so some entries may be incomplete or out of date. We'd appreciate
+      any corrections — please open an
       <a class="text-accent2 hover:underline" href="{REPO_URL}/issues" target="_blank" rel="noreferrer">issue</a>
       or
       <a class="text-accent2 hover:underline" href="{REPO_URL}/pulls" target="_blank" rel="noreferrer">pull request</a>
