@@ -68,3 +68,15 @@ interfaces:
   wifi:
     status: present
     standard: 802.11 b/g/n
+
+# Community 3D-printable models hosted on Printables. `type` is "case" (default)
+# or "accessory"; `likes` is the host's like count, used to rank models. `image`
+# is the model's social cover thumbnail (remote URL); `url` links to the model.
+prints:
+  - name: Snap-fit case for Seeed Studio XIAO ESP32S3
+    type: enclosure
+    date: 2025-11-07
+    author: morozgrafix
+    url: https://www.printables.com/model/1143379-snap-fit-case-for-seeed-studio-xiao-esp32s3
+    image: https://media.printables.com/media/prints/1143379/images/8628513_3f1fedf9-309e-49f9-94c5-591be96e6e46_ce103e1c-b3f4-49f9-9291-bb72855ca02b/thumbs/cover/800x800/jpeg/img_3651.jpg
+    likes: 59

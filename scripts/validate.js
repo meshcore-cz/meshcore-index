@@ -288,6 +288,15 @@ for (const d of devices) {
       err(d.where, `datasheet "${d.data.datasheet}" file not found`);
     }
   }
+  const seenPrintUrls = new Set();
+  for (const [index, print] of (d.data.prints ?? []).entries()) {
+    const url = print?.url;
+    if (!url) continue;
+    if (seenPrintUrls.has(url)) {
+      err(d.where, `prints[${index}].url duplicates another print on this device: ${url}`);
+    }
+    seenPrintUrls.add(url);
+  }
 }
 for (const s of software) {
   if (s.data.image) {

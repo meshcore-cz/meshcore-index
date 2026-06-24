@@ -111,3 +111,15 @@ interfaces:
   wifi:
     status: present
     standard: 802.11 b/g/n
+
+# Community 3D-printable models hosted on Printables. `type` is "case" (default)
+# or "accessory"; `likes` is the host's like count, used to rank models. `image`
+# is the model's social cover thumbnail (remote URL); `url` links to the model.
+prints:
+  - name: Case for Heltec WiFi LoRa 32 Expansion Kit with Touchscreen
+    type: case
+    date: 2026-01-23
+    author: Blackout Comms
+    url: https://www.printables.com/model/1524969-case-for-heltec-wifi-lora-32-expansion-kit-with-to
+    image: https://media.printables.com/media/prints/f220a2ac-51cc-41d7-842d-aee74ef66900/images/11490582_56f558ed-7f88-46c0-b009-4d1291e579fe_4a234e4b-834e-4097-8ba3-cfb3cf557fc4/heltec_exp_enclosure_printables.jpg
+    likes: 14

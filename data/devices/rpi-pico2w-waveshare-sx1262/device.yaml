@@ -70,3 +70,15 @@ interfaces:
     ble: true
   wifi:
     status: present
+
+# Community 3D-printable models hosted on Printables. `type` is "case" (default)
+# or "accessory"; `likes` is the host's like count, used to rank models. `image`
+# is the model's social cover thumbnail (remote URL); `url` links to the model.
+prints:
+  - name: Raspberry Pi Pico + Waveshare SX1262 LoRa Node HAT Case
+    type: enclosure
+    date: 2025-08-23
+    author: zoharsf
+    url: https://www.printables.com/model/1392912-raspberry-pi-pico-waveshare-sx1262-lora-node-hat-c
+    image: https://media.printables.com/media/prints/3ffb54a8-fff6-43f1-a1a3-ffd73525e04c/images/10515825_f0d47a3c-c819-439f-912b-b6541103cbcf_649e61f4-a1a9-4dd2-9b6b-655bd2480d69/thumbs/cover/800x800/jpeg/printed_2.jpg
+    likes: 10

@@ -127,9 +127,19 @@ interfaces:
 # Community 3D-printable enclosures and accessories hosted on Printables.
 # `image` is the model's social cover thumbnail (remote URL); `url` links to the printable.
 prints:
-  - name: "Meshtastic Heltec Vision Master E213 Enclosure"
+  - name: Meshtastic Heltec Vision Master E213 case
     type: enclosure
-    author: "Blueskies"
-    url: "https://www.printables.com/model/947568-meshtastic-heltec-vision-master-e213-enclosure"
-    image: "https://media.printables.com/media/prints/947568/images/7234654_47123472-b351-4b17-b2c3-c1c66234b44f_9d0df54a-a7d9-4e95-8596-3b1f79db8cc5/thumbs/cover/1200x630/jpg/img_9966.jpg"
+    date: 2026-04-22
+    author: unhild
+    url: https://www.printables.com/model/1266664-meshtastic-heltec-vision-master-e213-case
+    image: https://media.printables.com/media/prints/72021108-c42d-4f7c-ad71-49a03031e7a2/images/9513330_1bc63196-1b04-41a0-8e51-926d243641bb_3e050792-7c95-4475-9726-f6e1e8f86647/photo_2_2025-04-16_12-18-08.jpg
+    likes: 55
+
+  - name: Meshtastic Heltec Vision Master E213 Enclosure
+    type: enclosure
+    date: 2025-11-29
+    author: Blueskies
+    url: https://www.printables.com/model/947568-meshtastic-heltec-vision-master-e213-enclosure
+    image: https://media.printables.com/media/prints/947568/images/7234654_47123472-b351-4b17-b2c3-c1c66234b44f_9d0df54a-a7d9-4e95-8596-3b1f79db8cc5/img_9966.jpg
     likes: 20
+

@@ -134,7 +134,17 @@ prints:
     likes: 32
   - name: "Heltec VisionMaster E290 LoRa mesh node slipcase, slim and fat designs."
     type: enclosure
-    author: "Easy Target"
-    url: "https://www.printables.com/model/1146246-heltec-visionmaster-e290-lora-mesh-node-slipcase-s"
-    image: "https://media.printables.com/media/prints/1146246/images/8652442_37031338-f2e7-4238-b8d6-c94bb8641537_d57c676e-8c3b-4da9-aae9-56ef8be544ab/thumbs/cover/1200x630/jpg/heltec-visionmaster-e290-1.jpg"
+    date: 2025-01-28
+    author: Easy Target
+    url: https://www.printables.com/model/1146246-heltec-visionmaster-e290-lora-mesh-node-slipcase-s
+    image: https://media.printables.com/media/prints/1146246/images/8652442_37031338-f2e7-4238-b8d6-c94bb8641537_d57c676e-8c3b-4da9-aae9-56ef8be544ab/heltec-visionmaster-e290-1.jpg
     likes: 34
+
+  - name: Heltec Vision Master e290 Enclosure for Blackout Comms
+    type: enclosure
+    date: 2025-12-30
+    author: Blackout Comms
+    url: https://www.printables.com/model/1400710-heltec-vision-master-e290-enclosure-for-blackout-c
+    image: https://media.printables.com/media/prints/22bcf23e-07fb-46ff-bc82-9dd77ac54988/images/10573864_04af5c42-ae53-428f-902f-f503efc99b23_79a383ae-7b5e-44b4-bdce-6190d5c7582d/heltec_v2_blackout_comms_all_angles.jpg
+    likes: 19
+

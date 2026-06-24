@@ -105,7 +105,17 @@ prints:
     image: https://media.printables.com/media/prints/634beca8-e67e-46ba-9ed4-be67b1d78e42/images/11376688_062916ae-89cd-4920-91c8-1653465df020_7dedadb4-1b85-4f63-bed3-19b062bb0fe7/thumbs/cover/1200x630/jpg/printables_lilygo_tbeam_1w.jpg
   - name: Lilygo T-Beam 1w basic case
     type: enclosure
-    date: 2026-03-04
+    date: 2026-05-07
     author: BertUK
     url: https://www.printables.com/model/1625261-lilygo-t-beam-1w-basic-case
-    image: https://media.printables.com/media/prints/9cc7a646-c930-4248-b052-66c01ebda746/images/12223453_69cc8e8b-02fc-4980-b7a7-b32d8b98c2cc_499b060f-ce58-44a1-bf48-24f90bce71e2/thumbs/cover/1200x630/jpeg/img_4962.jpg
+    image: https://media.printables.com/media/prints/9cc7a646-c930-4248-b052-66c01ebda746/images/12223453_69cc8e8b-02fc-4980-b7a7-b32d8b98c2cc_499b060f-ce58-44a1-bf48-24f90bce71e2/thumbs/cover/800x800/jpeg/img_4962.jpg
+    likes: 10
+
+  - name: Lilygo T-Beam 1W case Meshtastic
+    type: enclosure
+    date: 2026-05-25
+    author: Petri
+    url: https://www.printables.com/model/1731165-lilygo-t-beam-1w-case-meshtastic
+    image: https://media.printables.com/media/prints/d906c5bf-30fc-40b8-90e8-37a1764429cd/images/12980759_654c271e-fb32-4e62-bd78-2a0be8223936_e5300497-c068-4ef6-9152-9c51bd905505/chunky2.jpg
+    likes: 2
+

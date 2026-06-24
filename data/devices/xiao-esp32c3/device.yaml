@@ -96,3 +96,11 @@ prints:
     url: "https://www.printables.com/model/539193-seeed-studio-xiao-esp32c3-enclosure"
     image: "https://media.printables.com/media/prints/539193/images/4343951_9aa9716c-87af-401f-9ca4-e7320fefa4c9/thumbs/cover/1200x630/jpeg/img_0137.jpg"
     likes: 60
+  - name: "XIAO ESP32-C6 Zigbee Router Case (Split Lid, SMA External Antenna)"
+    type: enclosure
+    date: 2026-01-05
+    author: G_L
+    url: https://www.printables.com/model/1543275-xiao-esp32-c6-zigbee-router-case-split-lid-sma-ext
+    image: https://media.printables.com/media/prints/8b3c5d0a-57c9-4331-a580-4a39926a24af/images/11636393_7767f0f3-7a59-4784-aa37-0ee1f74353ab_8026be8e-54de-4f87-a8b4-741ab6aaf3dc/xiao-esp32-c6-zigbee-router-case_2.jpg
+    likes: 19
+

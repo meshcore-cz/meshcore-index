@@ -1,7 +1,126 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-06-23T09:49:46.812Z'
+updatedAt: '2026-06-24T03:23:04.375Z'
 releases:
+  - version: beta_14
+    name: wadamesh beta_14
+    datetime: '2026-06-23T22:44:21Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_14
+    prerelease: false
+    notes: >-
+      **wadamesh beta_14 — hotfix** 🩹
+
+
+      Fixes a beta_13 regression: with **keyboard navigation turned off** (Settings → Keyboard), the
+      physical keyboard stopped typing into text fields entirely on the **T-Deck** and **Tanmatsu**.
+      Typing now works again with keyboard-nav off; with it on, behaviour is unchanged. (The Heltec
+      V4 was never affected — it has no keyboard navigation.)
+
+
+      **Everything from [beta_13](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_13) is
+      included** — the community features from **@Yazutsu**, **@tun0**, **@Vybo** and
+      **@samuelcoustet** (room-post author names, the Direct 0-hop filter, beer emoji / status-bar
+      unread tap / new-contact toast toggle / Czech accents, trackball edge-scroll, and the
+      companion/TCP/OTA fixes) plus the keyboard-nav, special-characters picker and 12-hour-clock
+      work. See the [beta_13 notes](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_13)
+      for the full list and credits. 🙏
+
+
+      ▶️ **Flash in the browser:** https://flasher.wadamesh.com — or install via the Launcher /
+      on-device update.
+  - version: beta_13
+    name: wadamesh beta_13
+    datetime: '2026-06-23T22:03:59Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_13
+    prerelease: false
+    notes: >-
+      **wadamesh beta_13 — community drop** 🎉
+
+
+      A big community release: most of the headline features came straight from contributor pull
+      requests, alongside the keyboard, typing and quality-of-life fixes promised after beta_12.
+      Huge thanks to everyone sending PRs, opening issues and reporting bugs — **@Yazutsu**,
+      **@tun0**, **@Vybo** and **@samuelcoustet** all have their work in this build. 🙏
+
+
+      ▶️ **Flash in the browser:** https://flasher.wadamesh.com — or install via the Launcher /
+      on-device update.
+
+
+      ## From contributors
+
+
+      ### Room-server posts show the author — by @Yazutsu (#40, closes #32)
+
+      Room-server messages now show the actual poster's name on each bubble instead of the room's
+      own name.
+
+
+      ### Direct (0-hop) filter — by @tun0 (#39)
+
+      A new "Direct (0-hop)" filter for the contact list and the map: show only the nodes you're
+      hearing directly, with no repeater hops in between.
+
+
+      ### Trackball edge-scroll — by @tun0 (#38)
+
+      Optional "edge scroll" — push the trackball cursor past a screen edge to scroll the list
+      underneath it (off by default, under Settings → Keyboard).
+
+
+      ### Emoji, unread tap, contact toast, Czech accents — by @Vybo (#22)
+
+      Beer emoji baked in colour, tap the status-bar unread badge to jump to your Chats, a new
+      "notify on new contact" toggle, and Czech accents in the accent pop-up.
+
+
+      ### Companion / transport fixes — by @samuelcoustet (#29)
+
+      TCP now restarts immediately after off → on, the OTA action is hidden when there's no update
+      slot to use, and a TCP-toggle alert race is fixed. _(Cherry-picked from #29; the rest of that
+      PR — the EU keyboards and the Expansion-Kit UI — will follow as focused PRs.)_
+
+
+      ## Typing & keyboard navigation (T-Deck + Tanmatsu)
+
+      - Open a chat or channel and the cursor is ready — type straight away. Every other field waits
+      for Enter before it captures the keyboard, so the letter-navigation keys keep working.
+
+      - Enter (or Esc / back) on an empty message box drops the cursor and re-selects the field, so
+      you can navigate away with the buttons again.
+
+      - The menu-bar letter shortcuts no longer jump you to another page while you're typing.
+
+      - New **"Show menu-bar letters"** setting under Settings → Keyboard (off by default).
+
+      - The accent pop-up no longer grabs the keyboard when it appears.
+
+
+      ## Composer & clock
+
+      - New dedicated **"Special characters"** picker for symbols that aren't on the keyboard (`% $
+      @ # & =`, currency, maths, accents) — separate from the emoji picker.
+
+      - **Long-press** one of your sent messages to **Resend** it.
+
+      - The **12-hour clock** setting now applies everywhere — top bar, chat bubbles and lock screen
+      — not just the chat list.
+
+
+      ## Fixes
+
+      - **Heltec V4:** removed the after-crash report prompt — that board has no SD card or
+      reachable storage to save the report to, so it was a dead end. (The T-Deck still offers it.)
+
+      - When both Wi-Fi and GPS are off, the clock now sets itself from the timestamps on messages
+      received over the mesh.
+
+
+      ---
+
+
+      Full notes in [`release-notes/beta_13.txt`](release-notes/beta_13.txt). Thanks again to all
+      contributors and bug reporters — keep it coming! 🚀
   - version: beta_12
     name: wadamesh beta_12
     datetime: '2026-06-23T06:52:16Z'

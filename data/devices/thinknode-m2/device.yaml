@@ -120,9 +120,11 @@ interfaces:
 # Community 3D-printable enclosures and accessories hosted on Printables.
 # `image` is the model's social cover thumbnail (remote URL); `url` links to the printable.
 prints:
-  - name: "Case for Elecrow ThinkNode M2"
+  - name: Case for Elecrow ThinkNode M2
     type: case
-    author: "MakerWerks"
-    url: "https://www.printables.com/model/1614254-case-for-elecrow-thinknode-m2"
-    image: "https://media.printables.com/media/prints/72c2460f-1606-4517-954a-a01f487ff2db/images/12143215_765074a5-b0e1-43d2-9880-31e279fa9580_66c2f544-49dc-4fa9-91da-aa17dded119d/thumbs/cover/1200x630/jpg/20260223_151249.jpg"
+    date: 2026-03-24
+    author: MakerWerks
+    url: https://www.printables.com/model/1614254-case-for-elecrow-thinknode-m2
+    image: https://media.printables.com/media/prints/72c2460f-1606-4517-954a-a01f487ff2db/images/12143215_765074a5-b0e1-43d2-9880-31e279fa9580_66c2f544-49dc-4fa9-91da-aa17dded119d/20260223_151249.jpg
     likes: 10
+

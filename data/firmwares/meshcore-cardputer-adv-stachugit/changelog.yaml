@@ -1,0 +1,16 @@
+source: github
+repo: Stachugit/MeshCore-Cardputer-ADV
+updatedAt: '2026-06-24T03:22:54.336Z'
+releases:
+  - version: Meshcore-Cardputerv1.10
+    name: Meshcore-Cardputer-ADV v1.10
+    datetime: '2026-01-27T20:22:08Z'
+    url: https://github.com/Stachugit/MeshCore-Cardputer-ADV/releases/tag/Meshcore-Cardputerv1.10
+    prerelease: false
+    notes: "MeshCore-Cardputer-ADV v1.1.0\r\nEnhanced mesh networking firmware for M5Stack Cardputer-Adv with Cap LoRa-1262.\r\nNew Features:\r\n\r\n🗑️ Delete contacts/channels with FN+DEL\r\n⚙️ Comprehensive settings menu (Public Info, Radio Setup, Theme, Other, Device Info)\r\n📡 GPS support with 3-minute updates\r\n🔧 Manual radio configuration\r\n📱 QR code sharing for easy pairing\r\n🔋 Power optimization & sleep timeout options\r\n🏭 Factory reset option\r\n\r\nImprovements:\r\n\r\nEnhanced Cap LoRa-1262 stability\r\nBetter UI & Bluetooth pairing\r\nLower power consumption\r\n\r\nFlash via Web: https://meshcorecardputeradv.vercel.app/"
+  - version: Meshcore_Cardputerv1
+    name: Meshcore-Cardputer-ADV v1.0
+    datetime: '2026-01-07T15:58:54Z'
+    url: https://github.com/Stachugit/MeshCore-Cardputer-ADV/releases/tag/Meshcore_Cardputerv1
+    prerelease: false
+    notes: "Cap LoRa868 Edition (firmware_Cap_LoRa868.bin)\r\n\r\nDX-LR30 Edition (firmware_DX-LR30.bin)"

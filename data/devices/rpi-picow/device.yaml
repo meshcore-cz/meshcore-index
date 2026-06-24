@@ -58,3 +58,15 @@ interfaces:
     ble: false
   wifi:
     status: none
+
+# Community 3D-printable models hosted on Printables. `type` is "case" (default)
+# or "accessory"; `likes` is the host's like count, used to rank models. `image`
+# is the model's social cover thumbnail (remote URL); `url` links to the model.
+prints:
+  - name: Box for Raspberry Pi Pico + Waveshare LoRa Module
+    type: enclosure
+    date: 2024-06-08
+    author: sabotrax
+    url: https://www.printables.com/model/906189-box-for-raspberry-pi-pico-waveshare-lora-module
+    image: https://media.printables.com/media/prints/906189/images/6927555_40183f04-46b9-47bf-b5db-a8041d6ee965_00ce769d-a0d8-4e9d-9786-62aa09516ce6/pico_lora_box-2.jpg
+    likes: 23

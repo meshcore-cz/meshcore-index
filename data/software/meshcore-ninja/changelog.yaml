@@ -1,0 +1,10 @@
+source: github
+repo: meshcore-cz/meshcore-ninja
+updatedAt: '2026-06-24T03:23:12.993Z'
+releases:
+  - version: v0.2.0
+    name: v0.2.0
+    datetime: '2026-06-22T17:39:22Z'
+    url: https://github.com/meshcore-cz/meshcore-ninja/releases/tag/v0.2.0
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshcore-ninja/commits/v0.2.0'

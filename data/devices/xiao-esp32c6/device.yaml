@@ -74,3 +74,15 @@ interfaces:
   wifi:
     status: present
     standard: 802.11 ax
+
+# Community 3D-printable models hosted on Printables. `type` is "case" (default)
+# or "accessory"; `likes` is the host's like count, used to rank models. `image`
+# is the model's social cover thumbnail (remote URL); `url` links to the model.
+prints:
+  - name: Box ESP32-C6 XIAO
+    type: enclosure
+    date: 2025-04-27
+    author: Lomax1983
+    url: https://www.printables.com/model/1278374-box-esp32-c6-xiao
+    image: https://media.printables.com/media/prints/5bb8f8d2-a2a3-45a2-9231-36b3bc8f910b/images/9615421_2c817a49-d920-420d-a076-d09893e1d34d_c0ff7391-7015-4cdb-9068-985962b1acbe/20250427_154946.jpg
+    likes: 15

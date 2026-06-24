@@ -319,6 +319,14 @@ export const METRICS = [
     fmt: (v) => `${v}`
   },
   {
+    id: '3d-models',
+    label: 'Number of 3D models',
+    unit: 'models',
+    dir: 'desc',
+    get: (d) => (d.prints ?? []).length,
+    fmt: (v) => `${v}`
+  },
+  {
     id: 'completeness',
     label: 'Catalog completeness',
     unit: '%',

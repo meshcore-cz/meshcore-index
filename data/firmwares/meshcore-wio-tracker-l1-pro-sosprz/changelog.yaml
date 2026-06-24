@@ -1,0 +1,144 @@
+source: github
+repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
+updatedAt: '2026-06-24T03:23:01.141Z'
+releases:
+  - version: v1.16.85
+    name: v1.16.85
+    datetime: '2026-06-12T19:33:32Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.85
+    prerelease: false
+    notes: >-
+      - **Scheduled advert fix** - `Adverts -> Settings -> 0-hop rate` now schedules automatic
+      zero-hop self-adverts at the selected interval.
+  - version: v1.16.84
+    name: v1.16.84
+    datetime: '2026-06-09T13:31:51Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.84
+    prerelease: false
+    notes: '- **Off-grid 869 Repeat menu fix**'
+  - version: v1.16.83
+    name: v1.16.83
+    datetime: '2026-06-08T19:28:32Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.83
+    prerelease: false
+    notes: >-
+      - updated the default EU off-grid repeat frequency from `869.000 MHz` to `869.495 MHz`,
+      completing alignment with companion firmware v1.16.0.
+  - version: v1.16.82
+    name: v1.16.82
+    datetime: '2026-06-07T19:29:58Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.82
+    prerelease: false
+    notes: '**Aligned with latest companion v1.16.0 firmware**'
+  - version: v1.15.81
+    name: v1.15.81
+    datetime: '2026-06-03T13:06:32Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.81
+    prerelease: false
+    notes: "- **Time settings GPS sync now** - Added `Settings -> Time -> Sync now from GPS` to request a one-off GPS time sync on demand, with progress stages.\r\n- **GPS boot time sync** - Added `Settings -> GPS -> Boot time sync`; when enabled, startup temporarily turns GPS on, waits for GPS time to sync the RTC, shows `GPS time synced`, and silently turns GPS back off if it was only enabled for the boot sync attempt."
+  - version: v1.15.80
+    name: v1.15.80
+    datetime: '2026-05-25T13:49:01Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.80
+    prerelease: false
+    notes: >-
+      - **Full sound mute on startup/reset** - Saved `Sound: OFF` is now applied before the startup
+      tone is requested, so rebooting or resetting does not produce audio while muted.
+  - version: v1.15.79
+    name: v1.15.79
+    datetime: '2026-05-22T14:33:07Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.79
+    prerelease: false
+    notes: >-
+      - **Greek text support** - Added `GR` as a message input language with Greek T9 and on-screen
+      keyboard layouts, tonos variants for vowels.
+  - version: v1.15.78
+    name: v1.15.78
+    datetime: '2026-05-22T06:19:30Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.78
+    prerelease: false
+    notes: "- **Off-grid repeat frequency fix** - Client/off-grid repeat now matches upstream MeshCore presets and allows only `433.000`, `869.000`, and `918.000 MHz` instead of incorrectly blocking those bands.\r\n- **Repeat preset assist** - Enabling repeat from the Radio menu now opens an off-grid preset chooser, and disabling repeat restores the previous radio settings when available."
+  - version: v1.15.77
+    name: v1.15.77
+    datetime: '2026-05-22T04:53:46Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.77
+    prerelease: false
+    notes: >-
+      - **Repeater admin blank-password login** - Repeater admin login now opens a choice between
+      `Blank password` and `Enter password`; the blank option sends an empty admin login directly
+      for ACL-only re-login to repeaters that already know the companion device.
+  - version: v1.15.76
+    name: v1.15.76
+    datetime: '2026-05-21T19:03:54Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.76
+    prerelease: false
+    notes: >-
+      - **Repeater blank-password login** - Repeater guest login now opens a choice between `Blank
+      password` and `Enter password`; the blank option sends an empty login directly for ACL-only
+      re-login to repeaters that already know the companion device.
+  - version: v1.15.75
+    name: v1.15.75
+    datetime: '2026-05-17T18:35:35Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.75
+    prerelease: false
+    notes: "- **Mainstream sync (v1.15 backend)** - Integrated upstream companion protocol/backend changes for v1.15 without adding new on-device UI screens.\r\n- **Default flood scope compatibility** - Added persisted default flood scope name/key handling and companion protocol commands for get/set default scope, while keeping scope editing out of the local UI.\r\n- **GROUP_DATA binary packets** - Added backend send/receive support for channel binary datagrams (`CMD_SEND_CHANNEL_DATA` / `RESP_CODE_CHANNEL_DATA_RECV`) so companion apps can use the new group-data protocol.\r\n- **Protocol/version update** - Bumped companion protocol metadata to firmware protocol code `11` / `v1.15.0` and aligned radio frequency validation with upstream lower-frequency support."
+  - version: v1.14.1.73
+    name: v1.14.1.73
+    datetime: '2026-03-27T18:43:07Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.14.1.73
+    prerelease: false
+    notes: "- **Tracker -> phone message replay fix** - Messages sent from the Wio Tracker / companion device are now queued for companion-app sync as well, so outgoing DMs and channels show up in the mobile app and can also be replayed after reconnect.\r\n- **Muted channels survive reboot** - Channel mute/unmute state is now persisted and restored after restart, so accidental Wio Tracker L1 side-button reboots do not clear muted channels.\r\n- **Private/group message mix fix** - Fixed channel history/state corruption where removing or reordering channels could let a different hashtag/private group inherit old slot history, unread state, or mute state from another channel.\r\n- **Channel send text corruption fix** - Fixed channel send/local-echo handling for app-framed messages so private/group messages no longer pick up random garbage characters from non-null-terminated payload bytes."
+  - version: v1.14.0.72
+    name: v1.14.0.72
+    datetime: '2026-03-19T17:34:15Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.14.0.72
+    prerelease: false
+    notes: "- **Wio Tracker L1: OLED invert theme** - Added `System -> Display -> Theme` options `Black/White` and `White/Black` for SH1106 companion-radio builds, so users can switch between normal and inverted monochrome display rendering.\r\n-  **On-screen keyboard: QWERTY layout** - Changed the soft keyboard letter order from alphabetical `ABC` layout to `QWERTY` sequence for companion-radio text entry."
+  - version: v1.14.0.69
+    name: v1.14.0.69
+    datetime: '2026-03-06T17:15:21Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.14.0.69
+    prerelease: false
+    notes: "- **Mainstream sync (v1.14.0)** - Merged upstream \r\n- **Screen lock hardening (3x PREV bug fix)** - Triple-click `PREV` no longer cycles `Sound` levels while `Screen lock` is active."
+  - version: v1.13.0.68
+    name: v1.13.0.68
+    datetime: '2026-03-05T16:50:29Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.13.0.68
+    prerelease: false
+    notes: >-
+      - **Mobile favorites toggle fix** - Favorites can now be added/removed from the mobile app
+      again. External contact updates still keep overwrite protection by default, but explicit app
+      favorite changes are now accepted.
+  - version: v1.13.0.67
+    name: v1.13.0.67
+    datetime: '2026-03-04T06:16:47Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.13.0.67
+    prerelease: false
+    notes: >-
+      - **Channel unread total consistency fix** - Hidden/removed channels no longer inflate visible
+      unread totals. Home `Channels` unread and the shared unread aggregate now count only currently
+      active visible channels, matching the channel list.
+  - version: v1.13.0.66
+    name: v1.13.0.66
+    datetime: '2026-03-02T14:05:11Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.13.0.66
+    prerelease: false
+    notes: "- **ROOM send gate hardening** - Sending to ROOM now requires an active transport session (not only short post-login fallback state), reducing cases where UI showed delivered `*` but the room server did not publish the message.\r\n- **ROOM send/read session alignment** - ROOM send now also accepts recent confirmed ROOM traffic as a valid send-session signal, reducing cases where reading/receiving worked but compose still asked for the password again.\r\n- **ROOM send grace after login** - After a successful ROOM login, compose now gets a short send window immediately, so sending right after auth does not re-prompt for the room password while transport/session flags catch up.\r\n- **Remote Admin (repeaters + rooms)** - Added one shared `Admin` submenu for repeaters and room servers with admin login, remote tools (`Sync time`, `Show time`, `Stats`, `Telemetry`, `Send advert`, `Owner info`, `Neighbours`), saved-password hint, proper scrolling, popup-based progress/results, and clearer neighbour list / empty-state handling.\r\n- **Radio Settings bug fix** - `Power` now changes directly with `LEFT/RIGHT` when highlighted (instead of page up/down taking over)"
+  - version: v1.13.0.65
+    name: v1.13.0.65
+    datetime: '2026-02-28T17:07:15Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.13.0.65
+    prerelease: false
+    notes: "- **Incoming message auto-jump guard** - New DM/channel traffic and serial sync queue updates no longer kick the UI out of active workflows (password entry, settings, contact actions, etc.). Auto-switch / forced Home return is now limited to passive landing screens only.\r\n- **Contact Actions: Reset path (all contacts)** - Added `Reset path` for every contact type (`contacts`, `repeaters`, `rooms`, `sensors`) to clear cached route and force path relearn.\r\n- **Per-contact saved login passwords** - Login passwords are now stored by contact `pubkey` and mode (`guest/admin/room`) instead of one global value per mode.\r\n- **Room auto-login policy update** - Auto-login now uses only saved per-contact password (no automatic `hello` fallback).\r\n- **ROOM history scope clarified** - Opening ROOM shows local cached history plus new traffic; full server-side backfill is not pulled automatically in this build.\r\n- **Contacts load stability fix** - Boot-time contact load now restores all persisted contacts (auto-add type filter no longer drops saved entries), preventing partial/short lists after reboot/sync.\r\n- **Manual contact add/update hardening** - `Add/Update Contact` path now always applies updates/additions from app/UI (not blocked by auto-add type filter), fixing cases where removed contacts could not be added back.\r\n- **Favorites overwrite protection** - Favorite flag is now preserved during external contact updates, reducing accidental eviction when `Overwrite oldest` is enabled.\r\n- **Companion contacts limit (optimization)** - Wio/Cardputer companion builds use `MAX_CONTACTS=200` by design (memory/stability optimization), instead of `350`."
+  - version: v1.13.0
+    name: v1.13.0.64
+    datetime: '2026-02-26T16:33:19Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.13.0
+    prerelease: false
+    notes: "- **Rooms support (new)** - Added full ROOM flow in `Contacts`/`DM`: `Login / Open room`, auto-login with default `hello` + password fallback, reliable send after login, and sender name visibility in room messages.\r\n- **Quick compose safety: Free text first** - In DM/Channel compose quick menu, `Free text` is now always first, so accidental immediate send of newest preset is less likely.\r\n- **Quick compose clarity: Send labels** - Saved quick presets are now shown as `Send: ...`, making it explicit that selecting that row sends immediately.\r\n- **Favorites visibility in type tabs** - Favorited contacts are no longer hidden from `contacts/repeaters/rooms/sensors`; they remain visible both in `favs` and their normal type tab.\r\n- **DM long-press menu stability** - Opening DM action menu from long-press no longer auto-jumps back into conversation on leftover extra `ENTER` press.\r\n- **Channel actions enter-guard** - Entering Channel Actions now has the same short activation guard, so held/extra `ENTER` does not instantly toggle mute or confirm destructive actions.\r\n- **Delete/Clear flow safety** - Contact actions now revalidate contact existence before action and avoid re-running destructive paths on stale/deleted objects.\r\n- **Post-delete navigation hardening** - After `Remove conversation` / `Delete contact`, UI exits through a safe target path to prevent repeated delete prompts on back navigation."
+  - version: v1.13.0.62
+    name: v1.13.0.62
+    datetime: '2026-02-24T19:45:26Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.13.0.62
+    prerelease: false
+    notes: "- **Channels counter clarity (messages vs lines)** - Channel header counter now shows message position within the currently renderable message window (`1/N`), not wrapped-line position. This makes counter behavior easier to understand when long messages consume many screen lines.\r\n- **Counter behavior explained** - Message buffers are still `DM=20` and `Channels=100`, but visible navigation depends on render cache (`160` wrapped lines). With long texts, oldest buffered messages may be outside the current renderable window.\r\n- **Sound popup readability** - Sound level popup shown on quick level cycling now stays longer on screen, so `OFF/ON/LOW/MEDIUM/HIGH` is easier to read.\r\n- **Sound cycle consistency** - Added guard against accidental ultra-fast repeated toggles during triple-click bursts, making sound-level stepping more stable.\r\n- **Cyrillic read fallback** - Incoming `RU/UA/BY` plus selected `SR/MK` Cyrillic text now has readable Latin fallback in UI (instead of disappearing characters), improving message readability on current fonts."

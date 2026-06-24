@@ -76,3 +76,15 @@ interfaces:
   wifi:
     status: present
     standard: 802.11 b/g/n
+
+# Community 3D-printable models hosted on Printables. `type` is "case" (default)
+# or "accessory"; `likes` is the host's like count, used to rank models. `image`
+# is the model's social cover thumbnail (remote URL); `url` links to the model.
+prints:
+  - name: Lilygo T-Deck Meshtastic Slim Case
+    type: case
+    date: 2024-07-02
+    author: Brian Flores
+    url: https://www.printables.com/model/873518-lilygo-t-deck-meshtastic-slim-case
+    image: https://media.printables.com/media/prints/873518/images/6702521_ad8a676b-d22f-415a-9754-9568e23a12ed_e4d4e8e6-55a3-43ac-b7a4-271d20b57d12/pxl_20240509_012908933portrait.jpg
+    likes: 118

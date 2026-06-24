@@ -87,3 +87,15 @@ interfaces:
   wifi:
     status: present
     standard: 802.11 b/g/n
+
+# Community 3D-printable models hosted on Printables. `type` is "case" (default)
+# or "accessory"; `likes` is the host's like count, used to rank models. `image`
+# is the model's social cover thumbnail (remote URL); `url` links to the model.
+prints:
+  - name: Lilygo T5 4.7 S3 E-paper display case
+    type: case
+    date: 2024-04-20
+    author: noti
+    url: https://www.printables.com/model/830842-lilygo-t5-47-s3-e-paper-display-case
+    image: https://media.printables.com/media/prints/830842/images/6541990_f4c8eba5-381d-4a24-956a-cef9bef565bf_5cfe7e43-bf50-4590-9209-edb3e3b4389b/assembled_front_3.jpg
+    likes: 17

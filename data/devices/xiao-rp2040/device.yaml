@@ -62,3 +62,15 @@ interfaces:
       - flashing
   wifi:
     status: none
+
+# Community 3D-printable models hosted on Printables. `type` is "case" (default)
+# or "accessory"; `likes` is the host's like count, used to rank models. `image`
+# is the model's social cover thumbnail (remote URL); `url` links to the model.
+prints:
+  - name: XIAO RP240 Case
+    type: enclosure
+    date: 2024-11-16
+    author: DocBandit
+    url: https://www.printables.com/model/1075711-xiao-rp240-case
+    image: https://media.printables.com/media/prints/1075711/images/8137455_baadb725-8365-44fd-9595-6a936c14d955_3f8712c9-93d6-4cb0-9cae-b0419a67a9d3/img_6862.jpg
+    likes: 6

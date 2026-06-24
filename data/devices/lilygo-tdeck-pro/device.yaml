@@ -80,3 +80,23 @@ interfaces:
   wifi:
     status: present
     standard: 802.11 b/g/n
+
+# Community 3D-printable models hosted on Printables. `type` is "case" (default)
+# or "accessory"; `likes` is the host's like count, used to rank models. `image`
+# is the model's social cover thumbnail (remote URL); `url` links to the model.
+prints:
+  - name: 8000mAh Back for the LilyGo TDeck Plus
+    type: case
+    date: 2025-11-05
+    author: Alley Cat
+    url: https://www.printables.com/model/1345336-8000mah-back-for-the-lilygo-tdeck-plus
+    image: https://media.printables.com/media/prints/5d664a42-78a1-4215-9865-228b149a896c/images/10151851_52f3d858-8183-4daf-a880-5ee5d9d0bb22_d5f6cc52-b05c-4ddd-90e3-b4272f977002/img_1781.jpg
+    likes: 96
+
+  - name: "Slim Meshtastic T Deck 10,000mAh Battery Case"
+    type: case
+    date: 2024-11-11
+    author: simonboydfoley
+    url: https://www.printables.com/model/1057212-slim-meshtastic-t-deck-10000mah-battery-case
+    image: https://media.printables.com/media/prints/1057212/images/8007484_be0214fc-af64-46ed-9cb0-e1052cf13a21_88cae4d2-cbbc-4595-a8ea-982dbb01b246/img_20241030_234255.jpg
+    likes: 12
