@@ -145,6 +145,50 @@ func nodeFeature(n *NodeRecord) geoFeature {
 	})
 }
 
+// importedFeature renders an externally-mirrored node as a GeoJSON point. The
+// imported flag lets the client style it (50% opacity) and toggle it off.
+func importedFeature(n *ImportedNode) geoFeature {
+	t := byte(n.Type)
+	return pointFeature(n.AdvLon, n.AdvLat, map[string]any{
+		"cluster":      false,
+		"pubkey":       n.PublicKey,
+		"name":         n.AdvName,
+		"type":         t,
+		"typeName":     nodeTypeName(t),
+		"lastAdvertAt": n.lastAdvertUnix(),
+		"imported":     true,
+		"source":       n.Source,
+	})
+}
+
+// matchesImported reports whether an imported node passes the (non-spatial)
+// filters. Imported nodes carry no network membership, so a network filter
+// excludes them entirely.
+func (p MapParams) matchesImported(n *ImportedNode) bool {
+	if len(p.Types) > 0 && !p.Types[byte(n.Type)] {
+		return false
+	}
+	if p.Since > 0 && n.lastAdvertUnix() < p.Since {
+		return false
+	}
+	if len(p.Networks) > 0 {
+		return false
+	}
+	if p.Q != "" {
+		q := strings.ToLower(p.Q)
+		if !strings.Contains(strings.ToLower(n.AdvName), q) && !strings.HasPrefix(n.PublicKey, q) {
+			return false
+		}
+	}
+	return true
+}
+
+// hasCoords drops imported nodes pinned at the null island (0,0), which upstream
+// uses for "no location".
+func (n *ImportedNode) hasCoords() bool {
+	return n.AdvLat != 0 || n.AdvLon != 0
+}
+
 // matches reports whether a node passes the (non-spatial) filters.
 func (p MapParams) matches(n *NodeRecord) bool {
 	if len(p.Types) > 0 && !p.Types[n.NodeType] {
@@ -188,14 +232,19 @@ type cell struct {
 	types          map[byte]int
 	minLon, minLat float64
 	maxLon, maxLat float64
-	single         *NodeRecord // valid only while count == 1
+	single         *NodeRecord   // valid only while count == 1 and the lone node is live
+	singleImported *ImportedNode // valid only while count == 1 and the lone node is imported
 }
 
 // MapQuery scans the registry once and returns a GeoJSON FeatureCollection for
 // the viewport. Individual nodes are returned when searching or at high zoom;
 // otherwise dense grid cells collapse into cluster features. Holds the lock only
 // for the scan; the heavy per-node LatestAdverts lists are never touched.
-func (r *NodeRegistry) MapQuery(p MapParams) MapResult {
+//
+// imported holds the externally-mirrored directory (map.meshcore.io). Those
+// nodes are merged in, tagged so the client can style/toggle them, and deduped
+// against the live registry by public key (a live node always wins).
+func (r *NodeRegistry) MapQuery(p MapParams, imported []*ImportedNode) MapResult {
 	limit := p.Limit
 	if limit <= 0 {
 		if p.All {
@@ -213,7 +262,11 @@ func (r *NodeRegistry) MapQuery(p MapParams) MapResult {
 	// Whole-world load, search, or zoomed-in: stream individual nodes. The client
 	// then clusters/filters them locally. Search and all-mode ignore the bbox.
 	if p.All || p.Q != "" || p.Zoom >= nodeZoom {
-		spatial := !p.All && p.Q == ""
+		// Filter by bbox whenever one is supplied (even in all-mode, so the client
+		// can fetch just the current viewport first, then the whole world). Search
+		// stays global and ignores the bbox.
+		spatial := p.Q == "" && p.HasBBox
+		capped := false
 		for _, n := range r.nodes {
 			if !n.HasGPS || !p.matches(n) {
 				continue
@@ -222,11 +275,28 @@ func (r *NodeRegistry) MapQuery(p MapParams) MapResult {
 				continue
 			}
 			if len(res.Features) >= limit {
-				res.Capped = true
+				capped = true
 				break
 			}
 			res.Features = append(res.Features, nodeFeature(n))
 		}
+		for _, in := range imported {
+			if capped {
+				break
+			}
+			if !in.hasCoords() || r.nodes[in.PublicKey] != nil || !p.matchesImported(in) {
+				continue
+			}
+			if spatial && !p.inBBox(in.AdvLon, in.AdvLat) {
+				continue
+			}
+			if len(res.Features) >= limit {
+				capped = true
+				break
+			}
+			res.Features = append(res.Features, importedFeature(in))
+		}
+		res.Capped = capped
 		res.Returned = len(res.Features)
 		return res
 	}
@@ -254,13 +324,39 @@ func (r *NodeRegistry) MapQuery(p MapParams) MapResult {
 		if c.count == 1 {
 			c.single = n
 		} else {
-			c.single = nil
+			c.single, c.singleImported = nil, nil
+		}
+	}
+	for _, in := range imported {
+		if !in.hasCoords() || r.nodes[in.PublicKey] != nil || !p.matchesImported(in) || !p.inBBox(in.AdvLon, in.AdvLat) {
+			continue
+		}
+		key := [2]int{int(math.Floor(in.AdvLon / size)), int(math.Floor(in.AdvLat / size))}
+		c := cells[key]
+		if c == nil {
+			c = &cell{types: map[byte]int{}, minLon: in.AdvLon, minLat: in.AdvLat, maxLon: in.AdvLon, maxLat: in.AdvLat}
+			cells[key] = c
+		}
+		c.count++
+		c.sumLat += in.AdvLat
+		c.sumLon += in.AdvLon
+		c.types[byte(in.Type)]++
+		c.minLon, c.maxLon = math.Min(c.minLon, in.AdvLon), math.Max(c.maxLon, in.AdvLon)
+		c.minLat, c.maxLat = math.Min(c.minLat, in.AdvLat), math.Max(c.maxLat, in.AdvLat)
+		if c.count == 1 {
+			c.singleImported = in
+		} else {
+			c.single, c.singleImported = nil, nil
 		}
 	}
 
 	for _, c := range cells {
 		if c.count == 1 {
-			res.Features = append(res.Features, nodeFeature(c.single))
+			if c.singleImported != nil {
+				res.Features = append(res.Features, importedFeature(c.singleImported))
+			} else {
+				res.Features = append(res.Features, nodeFeature(c.single))
+			}
 			continue
 		}
 		dominant := byte(0)

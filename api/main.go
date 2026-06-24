@@ -24,6 +24,8 @@ func main() {
 	dbPath := flag.String("db", "meshcore.db", "SQLite file for persisting counters across restarts (empty = in-memory only)")
 	persistEvery := flag.Duration("persist-interval", 20*time.Second, "how often to flush counters/nodes to --db")
 	observerPersistEvery := flag.Duration("observer-persist-interval", 12*time.Second, "how often to flush observer activity to --db")
+	importURL := flag.String("import-url", defaultImportURL, "external node directory to mirror hourly (empty = disabled)")
+	importEvery := flag.Duration("import-interval", time.Hour, "how often to sync the external node directory")
 	flag.Parse()
 
 	configs, err := LoadNetworks(*dataDir)
@@ -39,43 +41,82 @@ func main() {
 	store := NewStore(configs)
 	registry := newNodeRegistry(defaultAdvertsPerNode)
 	observers := newObserverRegistry()
+	imported := newImportRegistry()
 
 	// Optional durable counter store. When --db is set we restore the last
 	// persisted snapshot before any collector runs, so totals and the
-	// node/observer gauges continue across restarts.
+	// node/observer gauges continue across restarts. Each restore phase is timed
+	// so a slow startup points at the offending query.
 	var db *DB
+	loadAdverts := false // backfill per-node advert history in the background after startup
 	if *dbPath != "" {
+		bootStart := time.Now()
+		t := time.Now()
 		db, err = OpenDB(*dbPath)
 		if err != nil {
 			log.Fatalf("opening db %s: %v", *dbPath, err)
 		}
+		log.Printf("startup: opened db %s in %s", *dbPath, time.Since(t).Round(time.Millisecond))
 		defer db.Close()
+
+		t = time.Now()
 		if states, err := db.Load(); err != nil {
 			log.Printf("warning: loading persisted counters: %v", err)
 		} else if len(states) > 0 {
 			store.Restore(states)
-			log.Printf("restored counters for %d scope(s) from %s", len(states), *dbPath)
+			log.Printf("startup: restored counters for %d scope(s) in %s", len(states), time.Since(t).Round(time.Millisecond))
 		}
+
+		t = time.Now()
 		if nodes, err := db.LoadNodes(); err != nil {
 			log.Printf("warning: loading persisted nodes: %v", err)
 		} else if len(nodes) > 0 {
-			recent, err := db.LoadRecentAdverts(defaultAdvertsPerNode)
-			if err != nil {
-				log.Printf("warning: loading recent adverts: %v", err)
-			}
-			registry.Restore(nodes, recent)
-			log.Printf("restored %d node(s) from %s", len(nodes), *dbPath)
+			// Restore the node overview rows now (fast); the per-node rolling
+			// advert lists are backfilled asynchronously below — that history scan
+			// is the slow part and the map never needs it.
+			registry.Restore(nodes, nil)
+			log.Printf("startup: restored %d node row(s) in %s", len(nodes), time.Since(t).Round(time.Millisecond))
+			loadAdverts = true
 		}
+
+		t = time.Now()
 		if obs, err := db.LoadObservers(); err != nil {
 			log.Printf("warning: loading persisted observers: %v", err)
 		} else if len(obs) > 0 {
 			observers.Restore(obs)
-			log.Printf("restored %d observer(s) from %s", len(obs), *dbPath)
+			log.Printf("startup: restored %d observer(s) in %s", len(obs), time.Since(t).Round(time.Millisecond))
 		}
+
+		t = time.Now()
+		if imp, err := db.LoadImportedNodes(); err != nil {
+			log.Printf("warning: loading imported nodes: %v", err)
+		} else if len(imp) > 0 {
+			imported.Replace(imp)
+			log.Printf("startup: restored %d imported node(s) in %s", len(imp), time.Since(t).Round(time.Millisecond))
+		}
+
+		log.Printf("startup: db restore complete in %s", time.Since(bootStart).Round(time.Millisecond))
 	}
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
+
+	// Backfill each node's rolling latest-adverts list from the (large) history
+	// table in the background, so the server starts serving immediately. Only
+	// nodes that haven't yet heard a live advert are filled (see
+	// AttachRecentAdverts), so this never clobbers freshly observed data.
+	if db != nil && loadAdverts {
+		go func() {
+			t := time.Now()
+			recent, err := db.LoadRecentAdverts(defaultAdvertsPerNode)
+			if err != nil {
+				log.Printf("warning: backfilling recent adverts: %v", err)
+				return
+			}
+			registry.AttachRecentAdverts(recent)
+			log.Printf("startup: backfilled recent adverts for %d node(s) in %s (background)", len(recent), time.Since(t).Round(time.Millisecond))
+		}()
+	}
 
 	// One collector goroutine per analyzer.
 	for _, ns := range store.Networks {
@@ -87,6 +128,12 @@ func main() {
 			}
 			go col.Run(ctx)
 		}
+	}
+
+	// Mirror the external node directory (map.meshcore.io) on its own schedule
+	// into a separate table/registry, kept apart from our live-observed nodes.
+	if *importURL != "" {
+		go newImporter(*importURL, *importEvery, imported, db).Run(ctx)
 	}
 
 	// Periodic sweep to keep dedup/observer maps bounded.
@@ -160,7 +207,7 @@ func main() {
 
 	srv := &http.Server{
 		Addr:         *addr,
-		Handler:      NewServer(store, registry, observers, *allowOrigin).Handler(),
+		Handler:      NewServer(store, registry, observers, imported, *allowOrigin).Handler(),
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 15 * time.Second,
 	}

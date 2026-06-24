@@ -67,6 +67,24 @@ CREATE TABLE IF NOT EXISTS observers (
 	observations INTEGER NOT NULL DEFAULT 0,
 	networks     TEXT    NOT NULL DEFAULT '[]',
 	updated_at   INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS imported_nodes (
+	public_key      TEXT PRIMARY KEY,
+	type            INTEGER NOT NULL DEFAULT 0,
+	adv_name        TEXT    NOT NULL DEFAULT '',
+	last_advert     TEXT    NOT NULL DEFAULT '',
+	last_advert_at  INTEGER NOT NULL DEFAULT 0,
+	adv_lat         REAL    NOT NULL DEFAULT 0,
+	adv_lon         REAL    NOT NULL DEFAULT 0,
+	inserted_date   TEXT    NOT NULL DEFAULT '',
+	updated_date    TEXT    NOT NULL DEFAULT '',
+	params          TEXT    NOT NULL DEFAULT '{}',
+	link            TEXT    NOT NULL DEFAULT '',
+	source          TEXT    NOT NULL DEFAULT '',
+	inserted_by     TEXT    NOT NULL DEFAULT '',
+	updated_by      TEXT    NOT NULL DEFAULT '',
+	synced_at       INTEGER NOT NULL DEFAULT 0
 );`
 
 // OpenDB opens (creating if needed) the SQLite counter store. WAL mode and a
@@ -307,14 +325,22 @@ func (d *DB) SaveObservers(observers []ObserverRecord, now int64) error {
 // LoadRecentAdverts returns up to perNode most recent adverts per node (newest
 // first), keyed by pubkey, used to repopulate each node's in-memory rolling list
 // on startup.
+//
+// The window function runs over the covering index idx_adverts_pubkey(pubkey,
+// id) alone — selecting only `id` so SQLite never touches the multi-hundred-MB
+// row data for the 2M+ history rows — then joins back to fetch the columns for
+// just the ~perNode×nodes winners. Ordering by id DESC keeps each pubkey's slice
+// newest-first. This turns a ~75s full-table window scan into a sub-second load.
 func (d *DB) LoadRecentAdverts(perNode int) (map[string][]AdvertObservation, error) {
 	rows, err := d.db.Query(`
-		SELECT pubkey, name, node_type, has_gps, lat, lon, advert_time, received_at, network_id, observer_id, observer_name
-		FROM (
-			SELECT *, ROW_NUMBER() OVER (PARTITION BY pubkey ORDER BY id DESC) AS rn FROM adverts
-		)
-		WHERE rn <= ?
-		ORDER BY pubkey ASC, rn ASC`, perNode)
+		SELECT a.pubkey, a.name, a.node_type, a.has_gps, a.lat, a.lon, a.advert_time, a.received_at, a.network_id, a.observer_id, a.observer_name
+		FROM adverts a
+		JOIN (
+			SELECT id FROM (
+				SELECT id, ROW_NUMBER() OVER (PARTITION BY pubkey ORDER BY id DESC) AS rn FROM adverts
+			) WHERE rn <= ?
+		) recent ON recent.id = a.id
+		ORDER BY a.id DESC`, perNode)
 	if err != nil {
 		return nil, err
 	}
@@ -333,4 +359,77 @@ func (d *DB) LoadRecentAdverts(perNode int) (map[string][]AdvertObservation, err
 		out[a.PubKey] = append(out[a.PubKey], a)
 	}
 	return out, rows.Err()
+}
+
+// SaveImportedNodes mirrors the external directory into the imported_nodes table
+// in one transaction, upserting every node by public key. This table is kept
+// entirely separate from the live `nodes` registry.
+func (d *DB) SaveImportedNodes(nodes []*ImportedNode, now int64) error {
+	tx, err := d.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	stmt, err := tx.Prepare(`
+		INSERT INTO imported_nodes (public_key, type, adv_name, last_advert, last_advert_at, adv_lat, adv_lon, inserted_date, updated_date, params, link, source, inserted_by, updated_by, synced_at)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		ON CONFLICT(public_key) DO UPDATE SET
+			type           = excluded.type,
+			adv_name       = excluded.adv_name,
+			last_advert    = excluded.last_advert,
+			last_advert_at = excluded.last_advert_at,
+			adv_lat        = excluded.adv_lat,
+			adv_lon        = excluded.adv_lon,
+			inserted_date  = excluded.inserted_date,
+			updated_date   = excluded.updated_date,
+			params         = excluded.params,
+			link           = excluded.link,
+			source         = excluded.source,
+			inserted_by    = excluded.inserted_by,
+			updated_by     = excluded.updated_by,
+			synced_at      = excluded.synced_at`)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	for _, n := range nodes {
+		if n.PublicKey == "" {
+			continue
+		}
+		params := string(n.Params)
+		if params == "" {
+			params = "{}"
+		}
+		if _, err := stmt.Exec(n.PublicKey, n.Type, n.AdvName, n.LastAdvert, n.lastAdvertUnix(), n.AdvLat, n.AdvLon, n.InsertedDate, n.UpdatedDate, params, n.Link, n.Source, n.InsertedBy, n.UpdatedBy, now); err != nil {
+			return err
+		}
+	}
+	return tx.Commit()
+}
+
+// LoadImportedNodes reads the mirrored directory back into memory so the map has
+// data immediately on startup, before the first sync completes.
+func (d *DB) LoadImportedNodes() ([]*ImportedNode, error) {
+	rows, err := d.db.Query(`SELECT public_key, type, adv_name, last_advert, adv_lat, adv_lon, inserted_date, updated_date, params, link, source, inserted_by, updated_by FROM imported_nodes`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var nodes []*ImportedNode
+	for rows.Next() {
+		var (
+			n      ImportedNode
+			params string
+		)
+		if err := rows.Scan(&n.PublicKey, &n.Type, &n.AdvName, &n.LastAdvert, &n.AdvLat, &n.AdvLon, &n.InsertedDate, &n.UpdatedDate, &params, &n.Link, &n.Source, &n.InsertedBy, &n.UpdatedBy); err != nil {
+			return nil, err
+		}
+		n.Params = json.RawMessage(params)
+		n.cacheDerived()
+		nodes = append(nodes, &n)
+	}
+	return nodes, rows.Err()
 }

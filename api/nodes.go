@@ -258,6 +258,26 @@ func (r *NodeRegistry) Export() []NodeRecord {
 	return out
 }
 
+// AttachRecentAdverts fills each node's rolling latest-adverts list from a
+// background load that runs after startup (the history scan is slow, so it must
+// not block the server coming up). It only populates nodes that have not yet
+// heard a live advert — LatestAdverts still empty — so adverts observed in the
+// meantime are never clobbered. Trimmed to the current cap.
+func (r *NodeRegistry) AttachRecentAdverts(recent map[string][]AdvertObservation) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	for pk, adv := range recent {
+		n := r.nodes[pk]
+		if n == nil || len(n.LatestAdverts) > 0 || len(adv) == 0 {
+			continue
+		}
+		if len(adv) > r.maxAdverts {
+			adv = adv[:r.maxAdverts]
+		}
+		n.LatestAdverts = append([]AdvertObservation(nil), adv...)
+	}
+}
+
 // Restore seeds the registry from persisted state at startup, before any
 // collector runs. nodes are the overview rows; recent maps each node's pubkey to
 // its most recent adverts (newest first) reloaded from the history table, used to

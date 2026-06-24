@@ -12,11 +12,12 @@ type Server struct {
 	store       *Store
 	nodes       *NodeRegistry
 	observers   *ObserverRegistry
+	imported    *ImportRegistry
 	allowOrigin string
 }
 
-func NewServer(store *Store, nodes *NodeRegistry, observers *ObserverRegistry, allowOrigin string) *Server {
-	return &Server{store: store, nodes: nodes, observers: observers, allowOrigin: allowOrigin}
+func NewServer(store *Store, nodes *NodeRegistry, observers *ObserverRegistry, imported *ImportRegistry, allowOrigin string) *Server {
+	return &Server{store: store, nodes: nodes, observers: observers, imported: imported, allowOrigin: allowOrigin}
 }
 
 func (s *Server) Handler() http.Handler {
@@ -222,8 +223,13 @@ func (s *Server) handleMap(w http.ResponseWriter, r *http.Request) {
 		p.Since = nowUnix() - int64(d.Seconds())
 	}
 
+	var imported []*ImportedNode
+	if s.imported != nil {
+		imported = s.imported.Records()
+	}
+
 	w.Header().Set("Cache-Control", "public, max-age=30")
-	writeJSON(w, http.StatusOK, s.nodes.MapQuery(p))
+	writeJSON(w, http.StatusOK, s.nodes.MapQuery(p, imported))
 }
 
 // handleObservers serves the global observer activity table, most recently

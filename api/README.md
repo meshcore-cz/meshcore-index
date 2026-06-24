@@ -96,6 +96,8 @@ Flags:
 | `--db` | `meshcore.db` | SQLite file for persisting counters across restarts; empty = in-memory only |
 | `--persist-interval` | `20s` | how often to flush counters/nodes to `--db` |
 | `--observer-persist-interval` | `12s` | how often to flush observer activity to `--db` |
+| `--import-url` | `https://map.meshcore.io/api/v1/nodes?binary=0&short=0` | external node directory to mirror; empty disables |
+| `--import-interval` | `1h` | how often to sync the external node directory |
 
 Dedup/observer/node maps are swept every minute to stay bounded. Analyzer
 connections reconnect with exponential backoff (1s→30s); non-CoreScope or
@@ -149,6 +151,24 @@ lets the client zoom to the cluster's extent on click). **Node** features carry
 `{cluster: false, pubkey, name, type, typeName, lastAdvertAt, advertCount, networks}`.
 The collection also reports `zoom`, `returned`, and `capped` (true when `limit`
 truncated the result).
+
+### Imported nodes (external directory mirror)
+
+Separately from the live-observed registry, the service mirrors the public
+[map.meshcore.io](https://map.meshcore.io) node directory (~50k
+manually-submitted / scanned nodes) every `--import-interval` into its own
+`imported_nodes` SQLite table, storing every upstream field verbatim
+(`public_key`, `type`, `adv_name`, `last_advert`, `adv_lat`/`adv_lon`, `params`,
+`link`, `source`, `inserted_by`/`updated_by`, …). This third-party data is kept
+**strictly separate** from the live `nodes` registry — it never feeds the
+counters, observers, or advert history.
+
+These nodes are merged into `/api/map` results, tagged `imported: true` (with the
+upstream `source`) so the frontend can render them at reduced opacity and toggle
+them off. They are deduped against the live registry by public key — a
+live-observed node always wins — and null-island (`0,0`) entries are dropped. The
+mirror is restored from `--db` on startup so the map has data before the first
+sync completes; pass `--import-url ""` to disable the mirror entirely.
 
 `networkSummary`:
 
