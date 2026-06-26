@@ -42,6 +42,11 @@ community:
   discord: https://discord.com/invite/wcmesh
   contact: https://discord.com/invite/wcmesh
 
+analyzers:
+  # Source: CoreScope instance found via subdomain probe 2026-06-26
+  - name: CoreScope
+    url: https://analyzer.wcmesh.com/
+
 maps:
   - name: WCMesh live map
     url: https://map.wcmesh.com/

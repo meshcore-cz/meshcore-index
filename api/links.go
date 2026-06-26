@@ -114,6 +114,11 @@ type linkShard struct {
 type LinkRegistry struct {
 	shards   [linkShards]linkShard
 	halfLife float64 // seconds
+
+	// Routing reuses a briefly-cached snapshot of the whole link graph so a burst
+	// of hovers doesn't rebuild adjacency from every shard each time. See route.go.
+	routeMu  sync.Mutex
+	routeAdj *routeAdjacency
 }
 
 func newLinkRegistry(halfLifeSeconds float64) *LinkRegistry {

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"container/heap"
 	"encoding/hex"
 	"math"
 )
@@ -36,6 +35,9 @@ func edgeCost(recentActivity float64, lastSeen, now int64) float64 {
 
 // routeEdge is one adjacency entry: the neighbor plus the link's stats, copied
 // out of the registry so the Dijkstra search runs without holding shard locks.
+// cost is precomputed at build time; the active/network filters are applied per
+// edge during the search (using lastSeen/networks) so one cached graph serves
+// every filter combination.
 type routeEdge struct {
 	to             pubKey
 	packetCount    uint64
@@ -44,6 +46,19 @@ type routeEdge struct {
 	lastSeen       int64
 	networks       []string
 	cost           float64
+}
+
+// routeCacheTTL is how long a built adjacency snapshot is reused before a rebuild.
+// Routes are themselves cached for 15s at the HTTP layer and link stats change
+// slowly, so a short in-memory reuse window turns a burst of hovers into a single
+// graph build without noticeably staling the result.
+const routeCacheTTL = 15
+
+// routeAdjacency is a cached, immutable snapshot of the whole link graph. Once
+// published it is only ever read, so concurrent searches share it lock-free.
+type routeAdjacency struct {
+	builtAt int64
+	graph   map[pubKey][]routeEdge
 }
 
 // RouteHop is one leg of a computed route, described independently of direction
@@ -68,66 +83,116 @@ type RouteResult struct {
 	Hops  []RouteHop
 }
 
-// buildAdjacency materializes the link graph once, applying the same recency and
-// network filters as the links endpoint. Only edges that pass the filters are
-// kept, so the search never traverses a link the caller asked to exclude. Each
-// edge is stored on both endpoints (the graph is undirected).
-func (r *LinkRegistry) buildAdjacency(now, since int64, netFilter map[string]bool) map[pubKey][]routeEdge {
+// adjacency returns the cached graph snapshot, rebuilding it only when the cache
+// is empty or older than routeCacheTTL. The whole (unfiltered) graph is cached;
+// the active/network filters are cheap per-edge checks applied later during the
+// search, so a single snapshot serves every request regardless of filters.
+func (r *LinkRegistry) adjacency(now int64) map[pubKey][]routeEdge {
+	r.routeMu.Lock()
+	defer r.routeMu.Unlock()
+	if r.routeAdj != nil && now-r.routeAdj.builtAt < routeCacheTTL {
+		return r.routeAdj.graph
+	}
+	graph := r.buildAdjacency(now)
+	r.routeAdj = &routeAdjacency{builtAt: now, graph: graph}
+	return graph
+}
+
+// buildAdjacency materializes the full link graph once. Each undirected link
+// becomes two directed edges (one per endpoint), with the recency-weighted cost
+// precomputed. The networks slice is built once and shared by both directions.
+func (r *LinkRegistry) buildAdjacency(now int64) map[pubKey][]routeEdge {
 	adj := make(map[pubKey][]routeEdge)
-	add := func(from, to pubKey, rec *LinkRecord, nets []string) {
+	add := func(from, to pubKey, rec *LinkRecord, nets []string, activity float64) {
 		adj[from] = append(adj[from], routeEdge{
 			to:             to,
 			packetCount:    rec.PacketCount,
-			recentActivity: decayedScore(rec.Score, rec.ScoreUpdatedAt, now, r.halfLife),
+			recentActivity: activity,
 			firstSeen:      rec.FirstSeen,
 			lastSeen:       rec.LastSeen,
 			networks:       nets,
-			cost:           edgeCost(decayedScore(rec.Score, rec.ScoreUpdatedAt, now, r.halfLife), rec.LastSeen, now),
+			cost:           edgeCost(activity, rec.LastSeen, now),
 		})
 	}
 	for i := range r.shards {
 		sh := &r.shards[i]
 		sh.mu.Lock()
 		for key, rec := range sh.links {
-			if since > 0 && rec.LastSeen < since {
-				continue
-			}
 			nets := make([]string, len(rec.Networks))
 			for j, n := range rec.Networks {
 				nets[j] = n.NetworkID
 			}
-			if len(netFilter) > 0 && !anyInSet(nets, netFilter) {
-				continue
-			}
+			activity := decayedScore(rec.Score, rec.ScoreUpdatedAt, now, r.halfLife)
 			var a, b pubKey
 			copy(a[:], key[:32])
 			copy(b[:], key[32:])
-			add(a, b, rec, nets)
-			add(b, a, rec, nets)
+			add(a, b, rec, nets, activity)
+			add(b, a, rec, nets, activity)
 		}
 		sh.mu.Unlock()
 	}
 	return adj
 }
 
-// pqItem / priorityQueue back the Dijkstra frontier (min-heap on tentative cost).
+// edgePasses reports whether an edge survives the active/network filters.
+func edgePasses(e routeEdge, since int64, netFilter map[string]bool) bool {
+	if since > 0 && e.lastSeen < since {
+		return false
+	}
+	if len(netFilter) > 0 && !anyInSet(e.networks, netFilter) {
+		return false
+	}
+	return true
+}
+
+// pqItem is one entry on the Dijkstra frontier. The heap is a hand-rolled typed
+// binary heap rather than container/heap: the standard library's interface-based
+// API boxes every Push/Pop into an `any`, which on a large mesh component means
+// millions of allocations. A typed heap keeps the hot loop allocation-free.
 type pqItem struct {
 	node pubKey
 	cost float64
 }
 
-type priorityQueue []pqItem
+type minHeap []pqItem
 
-func (pq priorityQueue) Len() int           { return len(pq) }
-func (pq priorityQueue) Less(i, j int) bool { return pq[i].cost < pq[j].cost }
-func (pq priorityQueue) Swap(i, j int)      { pq[i], pq[j] = pq[j], pq[i] }
-func (pq *priorityQueue) Push(x any)        { *pq = append(*pq, x.(pqItem)) }
-func (pq *priorityQueue) Pop() any {
-	old := *pq
-	n := len(old)
-	it := old[n-1]
-	*pq = old[:n-1]
-	return it
+func (h *minHeap) push(it pqItem) {
+	*h = append(*h, it)
+	i := len(*h) - 1
+	a := *h
+	for i > 0 {
+		parent := (i - 1) / 2
+		if a[parent].cost <= a[i].cost {
+			break
+		}
+		a[parent], a[i] = a[i], a[parent]
+		i = parent
+	}
+}
+
+func (h *minHeap) pop() pqItem {
+	a := *h
+	n := len(a)
+	top := a[0]
+	a[0] = a[n-1]
+	a = a[:n-1]
+	*h = a
+	i, sz := 0, len(a)
+	for {
+		l, rgt, smallest := 2*i+1, 2*i+2, i
+		if l < sz && a[l].cost < a[smallest].cost {
+			smallest = l
+		}
+		if rgt < sz && a[rgt].cost < a[smallest].cost {
+			smallest = rgt
+		}
+		if smallest == i {
+			break
+		}
+		a[i], a[smallest] = a[smallest], a[i]
+		i = smallest
+	}
+	return top
 }
 
 // RouteBetween finds the lowest-cost path from `from` to `to` over the observed
@@ -139,21 +204,23 @@ func (r *LinkRegistry) RouteBetween(from, to pubKey, now, since int64, netFilter
 	if from == to {
 		return RouteResult{Found: true, Nodes: []string{hex.EncodeToString(from[:])}}
 	}
-	adj := r.buildAdjacency(now, since, netFilter)
+	adj := r.adjacency(now)
 	if len(adj[from]) == 0 || len(adj[to]) == 0 {
 		return RouteResult{Found: false}
 	}
 
-	dist := map[pubKey]float64{from: 0}
-	prev := map[pubKey]pubKey{}
-	prevEdge := map[pubKey]routeEdge{}
-	done := map[pubKey]bool{}
+	// Size the maps to the graph so the hot loop never rehashes/grows.
+	n := len(adj)
+	dist := make(map[pubKey]float64, n)
+	prev := make(map[pubKey]pubKey, n)
+	prevEdge := make(map[pubKey]routeEdge, n)
+	done := make(map[pubKey]bool, n)
+	dist[from] = 0
 
-	pq := &priorityQueue{{node: from, cost: 0}}
-	heap.Init(pq)
+	pq := minHeap{{node: from, cost: 0}}
 
-	for pq.Len() > 0 {
-		cur := heap.Pop(pq).(pqItem)
+	for len(pq) > 0 {
+		cur := pq.pop()
 		if done[cur.node] {
 			continue
 		}
@@ -162,7 +229,7 @@ func (r *LinkRegistry) RouteBetween(from, to pubKey, now, since int64, netFilter
 			break
 		}
 		for _, e := range adj[cur.node] {
-			if done[e.to] {
+			if done[e.to] || !edgePasses(e, since, netFilter) {
 				continue
 			}
 			nd := cur.cost + e.cost
@@ -170,7 +237,7 @@ func (r *LinkRegistry) RouteBetween(from, to pubKey, now, since int64, netFilter
 				dist[e.to] = nd
 				prev[e.to] = cur.node
 				prevEdge[e.to] = e
-				heap.Push(pq, pqItem{node: e.to, cost: nd})
+				pq.push(pqItem{node: e.to, cost: nd})
 			}
 		}
 	}
