@@ -25,6 +25,7 @@ func nodeTypeName(t byte) string {
 // AdvertObservation is one decoded ADVERT packet seen on the mesh. It upserts the
 // node's overview row and is pushed onto that node's rolling latest-adverts list.
 type AdvertObservation struct {
+	Hash         string  // content hash of the advert packet (for live-feed dedup)
 	PubKey       string  // 32-byte Ed25519 public key, lowercase hex
 	Name         string  // advertised node name ("" if not advertised)
 	NodeType     byte    // 0=unknown,1=chat,2=repeater,3=room,4=sensor
@@ -150,6 +151,7 @@ func (r *NodeRegistry) Observe(a AdvertObservation) {
 	// but JSON marshaling shouldn't hold up the hot advert path.
 	if hook != nil {
 		hook(LiveAdvert{
+			Hash:      a.Hash,
 			PubKey:    a.PubKey,
 			Name:      a.Name,
 			Type:      a.NodeType,

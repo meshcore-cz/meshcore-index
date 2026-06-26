@@ -28,9 +28,9 @@ community:
 
 analyzers:
   # Source: Shodan/Censys scan 2026-06-26 — meshcore-edge.meshat.se DNS no longer resolves;
-  # meshcore.meshat.se is the current working CoreScope (185.57.105.35, 50 nodes)
+  # meshcore.meshat.se is the current working CoreScope (1,452 nodes, 69 observers)
   - name: meshcore.meshat.se
-    url: http://meshcore.meshat.se
+    url: https://meshcore.meshat.se
 
 resources:
   status_page: https://status.meshat.se/

@@ -216,13 +216,13 @@ func (c *Collector) handle(data []byte) {
 	// ADVERT packets carry node identity. Decode the wire bytes locally and feed
 	// the node registry + rolling latest-adverts feed.
 	if c.nodes != nil && p.PayloadType != nil && meshpkt.PayloadType(byte(*p.PayloadType)) == meshpkt.PayloadAdvert {
-		c.collectAdvert(p, now)
+		c.collectAdvert(p, hash, now)
 	}
 }
 
 // collectAdvert decodes an ADVERT's raw wire bytes and records the node. Bad or
 // truncated packets are silently dropped — the analyzer stream is best-effort.
-func (c *Collector) collectAdvert(p wsPacket, now int64) {
+func (c *Collector) collectAdvert(p wsPacket, hash string, now int64) {
 	raw, err := hex.DecodeString(strings.TrimSpace(p.RawHex))
 	if err != nil || len(raw) == 0 {
 		c.metrics.recordDecodeError("advert_hex")
@@ -239,6 +239,7 @@ func (c *Collector) collectAdvert(p wsPacket, now int64) {
 		return
 	}
 	c.nodes.Observe(AdvertObservation{
+		Hash:         hash,
 		PubKey:       hex.EncodeToString(adv.PublicKey),
 		Name:         adv.Name,
 		NodeType:     adv.NodeType,

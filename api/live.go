@@ -16,6 +16,7 @@ import (
 // GPS; the frontend falls back to the node's last known position otherwise.
 type LiveAdvert struct {
 	Kind      string  `json:"kind"` // always "advert" (room for future frame types)
+	Hash      string  `json:"-"`    // packet content hash, used only for server-side dedup
 	PubKey    string  `json:"pubkey"`
 	Name      string  `json:"name,omitempty"`
 	Type      byte    `json:"type"`
@@ -35,6 +36,10 @@ const (
 	liveWriteWait    = 10 * time.Second
 	livePongWait     = 60 * time.Second
 	livePingInterval = 30 * time.Second
+	// liveDedupWindow collapses the same advert packet (identical content hash)
+	// reported by multiple observers on one network into a single pulse. Scoped
+	// per network, so a node genuinely heard on two networks still pulses for each.
+	liveDedupWindow = 600 // seconds
 )
 
 // Hub fans out live adverts to every connected browser. Broadcast is called on
@@ -44,6 +49,10 @@ type Hub struct {
 	mu       sync.RWMutex
 	clients  map[*liveClient]struct{}
 	upgrader websocket.Upgrader
+
+	dedupMu   sync.Mutex
+	seen      map[string]int64 // "networkID:hash" -> unix expiry
+	nextSweep int64            // next time expired dedup entries are purged
 }
 
 type liveClient struct {
@@ -68,20 +77,54 @@ func newHub() *Hub {
 func (h *Hub) Broadcast(a LiveAdvert) {
 	a.Kind = "advert"
 	h.mu.RLock()
-	defer h.mu.RUnlock()
-	if len(h.clients) == 0 {
+	n := len(h.clients)
+	h.mu.RUnlock()
+	if n == 0 {
+		return // no subscribers — nothing to dedup or send
+	}
+	// Drop near-duplicate sightings (same packet, same network) so a node heard by
+	// several observers pulses once. Different networks dedup independently.
+	if a.Hash != "" && !h.markSeen(a.NetworkID, a.Hash) {
 		return
 	}
 	msg, err := json.Marshal(a)
 	if err != nil {
 		return
 	}
+	h.mu.RLock()
 	for c := range h.clients {
 		select {
 		case c.send <- msg:
 		default: // client is behind — drop this frame rather than stall the mesh
 		}
 	}
+	h.mu.RUnlock()
+}
+
+// markSeen records a (network, hash) pair and reports whether it is the first
+// time it has been seen within the dedup window. Expired entries are swept
+// opportunistically so the map stays bounded.
+func (h *Hub) markSeen(network, hash string) bool {
+	key := network + ":" + hash
+	now := nowUnix()
+	h.dedupMu.Lock()
+	defer h.dedupMu.Unlock()
+	if h.seen == nil {
+		h.seen = make(map[string]int64)
+	}
+	if exp, ok := h.seen[key]; ok && exp > now {
+		return false
+	}
+	h.seen[key] = now + liveDedupWindow
+	if now >= h.nextSweep {
+		for k, exp := range h.seen {
+			if exp <= now {
+				delete(h.seen, k)
+			}
+		}
+		h.nextSweep = now + liveDedupWindow
+	}
+	return true
 }
 
 func (h *Hub) add(c *liveClient) {
