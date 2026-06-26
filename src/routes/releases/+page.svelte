@@ -1,6 +1,7 @@
 <script>
   import { base } from '$app/paths';
   import Seo from '$lib/Seo.svelte';
+  import { SITE_NAME } from '$lib/seo.js';
   import PageHeader from '$lib/PageHeader.svelte';
   import Pagination from '$lib/Pagination.svelte';
   import Chip from '$lib/Chip.svelte';
@@ -104,8 +105,24 @@
   description={`${data.releases.length} MeshCore firmware and software releases across all projects, newest first.`}
 />
 
+<svelte:head>
+  <link rel="alternate" type="application/rss+xml" title={`${SITE_NAME} — Releases`} href="{base}/releases.xml" />
+</svelte:head>
+
 <PageHeader tool="releases" subtitleClass="mb-4">
   Releases across all firmwares and software, newest first.
+  <a
+    href="{base}/releases.xml"
+    class="ml-2 inline-flex items-center gap-1 text-accent hover:underline"
+    title="RSS feed"
+  >
+    <svg viewBox="0 0 24 24" class="size-4 fill-current" aria-hidden="true">
+      <path
+        d="M6.18 17.82a2.18 2.18 0 1 1 0 4.36 2.18 2.18 0 0 1 0-4.36ZM4 11.43a8.57 8.57 0 0 1 8.57 8.57h-3a5.57 5.57 0 0 0-5.57-5.57v-3ZM4 4a16 16 0 0 1 16 16h-3A13 13 0 0 0 4 7V4Z"
+      />
+    </svg>
+    RSS
+  </a>
 </PageHeader>
 
 <div class="mb-4 flex flex-wrap items-center gap-3">

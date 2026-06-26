@@ -21,6 +21,7 @@ node_modules
 /static/software/
 /static/sitemap.xml
 /static/robots.txt
+/static/releases.xml
 /static/schemas.json
 /src/lib/generated/
 /package

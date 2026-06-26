@@ -18,7 +18,7 @@ import { join, dirname } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { load } from 'js-yaml';
-import { latestReleaseSummary } from '../src/lib/releases.js';
+import { latestReleaseSummary, groupReleases } from '../src/lib/releases.js';
 import { METRICS } from '../src/lib/metrics.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -369,6 +369,7 @@ const SITE_ORIGIN = (process.env.SITE_ORIGIN ?? 'https://meshcore.ninja').replac
   ''
 );
 const BASE_PATH = (process.env.BASE_PATH ?? '').replace(/\/+$/, '');
+const SITE_NAME = 'MeshCore Ninja';
 
 /** Write sitemap.xml + robots.txt from the compiled dataset. */
 function buildSitemap(root, { devices, firmwares, vendors, networks, software, generatedAt }) {
@@ -428,6 +429,70 @@ function buildSitemap(root, { devices, firmwares, vendors, networks, software, g
   writeFileSync(join(root, 'static', 'sitemap.xml'), sitemap);
   writeFileSync(join(root, 'static', 'robots.txt'), robots);
   return paths.length;
+}
+
+const xmlEscape = (s) =>
+  String(s ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+
+/** Write releases.xml: an RSS 2.0 feed of the newest releases across all firmwares + software. */
+function buildReleaseFeed(root, { firmwares, software, generatedAt }, limit = 60) {
+  const prefix = `${SITE_ORIGIN}${BASE_PATH}`;
+
+  const items = [];
+  for (const fw of firmwares) {
+    for (const g of groupReleases(fw.releases)) {
+      items.push({ name: fw.name, href: `/firmware/${fw.id}/releases/`, kind: 'firmware', ...g });
+    }
+  }
+  for (const s of software) {
+    for (const g of groupReleases(s.releases)) {
+      items.push({ name: s.name, href: `/software/${s.id}/releases/`, kind: 'software', ...g });
+    }
+  }
+  items.sort((a, b) => (b.datetime ?? '').localeCompare(a.datetime ?? ''));
+
+  const entries = items
+    .slice(0, limit)
+    .map((it) => {
+      const link = `${prefix}${it.href}#release-${it.version}`;
+      const pubDate = it.datetime ? new Date(it.datetime).toUTCString() : null;
+      const title = `${it.name} ${it.version}`;
+      return [
+        '  <item>',
+        `    <title>${xmlEscape(title)}</title>`,
+        `    <link>${link}</link>`,
+        `    <guid isPermaLink="false">${it.kind}-${it.name}-${it.version}</guid>`,
+        pubDate ? `    <pubDate>${pubDate}</pubDate>` : '',
+        `    <category>${it.kind}</category>`,
+        it.notesHtml ? `    <description><![CDATA[${it.notesHtml}]]></description>` : '',
+        '  </item>'
+      ]
+        .filter(Boolean)
+        .join('\n');
+    })
+    .join('\n');
+
+  const lastBuildDate = (generatedAt ? new Date(generatedAt) : new Date()).toUTCString();
+  const feed = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>${xmlEscape(SITE_NAME)} — Releases</title>
+  <link>${prefix}/releases/</link>
+  <description>Newest MeshCore firmware and software releases across all projects.</description>
+  <language>en</language>
+  <lastBuildDate>${lastBuildDate}</lastBuildDate>
+  <atom:link xmlns:atom="http://www.w3.org/2005/Atom" href="${prefix}/releases.xml" rel="self" type="application/rss+xml" />
+${entries}
+</channel>
+</rss>
+`;
+
+  writeFileSync(join(root, 'static', 'releases.xml'), feed);
+  return items.length;
 }
 
 /** Compile the YAML sources and write both data.json copies. Returns counts. */
@@ -570,10 +635,13 @@ export async function buildData(root = defaultRoot) {
     generatedAt: dataset.generatedAt
   });
 
+  const releaseFeedItems = buildReleaseFeed(root, { firmwares, software, generatedAt: dataset.generatedAt });
+
   return {
     ...dataset.counts,
     recordsJson: buildRecordJson(root, { devices, firmwares, vendors, networks, software, compatibility }),
     sitemapUrls,
+    releaseFeedItems,
     bundleBytes
   };
 }
@@ -590,11 +658,12 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     networkAreas,
     recordsJson,
     sitemapUrls,
+    releaseFeedItems,
     bundleBytes
   } = await buildData();
   const kb = (n) => `${(n / 1024).toFixed(1)} KB`;
   console.log(
-    `✓ Wrote data.json — ${firmwares} firmware(s), ${devices} device(s), ${vendors} vendor(s), ${networks} network(s), ${networkAreas} network area(s), ${software} software, ${compatibility} compatibility report(s); ${recordsJson} record JSON file(s); ${sitemapUrls} sitemap URL(s).`
+    `✓ Wrote data.json — ${firmwares} firmware(s), ${devices} device(s), ${vendors} vendor(s), ${networks} network(s), ${networkAreas} network area(s), ${software} software, ${compatibility} compatibility report(s); ${recordsJson} record JSON file(s); ${sitemapUrls} sitemap URL(s); ${releaseFeedItems} release feed item(s).`
   );
   console.log(
     `✓ Wrote data.min.json — ${kb(bundleBytes.min)} minified, ${kb(bundleBytes.gzip)} gzip, ${kb(bundleBytes.zstd)} zstd.`
