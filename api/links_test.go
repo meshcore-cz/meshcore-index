@@ -272,7 +272,7 @@ func seedLinkEnv(t *testing.T) (*Server, string, map[byte]string) {
 	nodes.nodes[d] = &NodeRecord{PubKey: d, Name: "Delta", NodeType: 3, HasGPS: true, Lat: 52, Lon: 16}
 	nodes.nodes[e] = &NodeRecord{PubKey: e, Name: "Echo", NodeType: 4, HasGPS: false}
 
-	srv := NewServer(NewStore(nil), nodes, newObserverRegistry(), reg, newImportRegistry(), "*")
+	srv := NewServer(NewStore(nil), nodes, newObserverRegistry(), reg, newImportRegistry(), nil, "*")
 	return srv, a, map[byte]string{0xb0: b, 0xc0: c, 0xd0: d, 0xe0: e}
 }
 

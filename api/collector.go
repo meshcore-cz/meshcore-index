@@ -49,6 +49,7 @@ type Collector struct {
 	nodes      *NodeRegistry     // global node/advert registry (nil disables advert collection)
 	observers  *ObserverRegistry // global observer activity registry (nil disables it)
 	links      *LinkRegistry     // global observed-link registry (nil disables it)
+	metrics    *Metrics          // Prometheus telemetry (nil disables it)
 	origin     string
 	candidates []string // ws(s) URLs to try, in preference order
 }
@@ -58,7 +59,7 @@ type Collector struct {
 // https — which looks like a "bad handshake"), and try the reverse-proxy root
 // before CoreScope's registered /ws path. This makes us robust even when the
 // data file declares http:// for a host that actually serves over https.
-func NewCollector(net *NetworkState, az *AnalyzerState, nodes *NodeRegistry, observers *ObserverRegistry, links *LinkRegistry) (*Collector, error) {
+func NewCollector(net *NetworkState, az *AnalyzerState, nodes *NodeRegistry, observers *ObserverRegistry, links *LinkRegistry, metrics *Metrics) (*Collector, error) {
 	u, err := url.Parse(az.URL)
 	if err != nil {
 		return nil, err
@@ -78,6 +79,7 @@ func NewCollector(net *NetworkState, az *AnalyzerState, nodes *NodeRegistry, obs
 		nodes:      nodes,
 		observers:  observers,
 		links:      links,
+		metrics:    metrics,
 		origin:     "https://" + u.Host,
 		candidates: candidates,
 	}, nil
@@ -116,8 +118,13 @@ func (c *Collector) connectAndRead(ctx context.Context) error {
 	defer conn.Close()
 
 	c.az.setConnected(nowUnix())
+	c.metrics.setAnalyzerConnected(c.net.ID, c.az.Name, true)
+	c.metrics.incAnalyzerReconnect(c.net.ID, c.az.Name)
 	log.Printf("[%s/%s] connected %s", c.net.ID, c.az.Name, dialed)
-	defer c.az.setDisconnected("")
+	defer func() {
+		c.az.setDisconnected("")
+		c.metrics.setAnalyzerConnected(c.net.ID, c.az.Name, false)
+	}()
 
 	// Close the connection when the context is cancelled so ReadMessage unblocks.
 	go func() {
@@ -158,6 +165,7 @@ func (c *Collector) dial(ctx context.Context) (*websocket.Conn, string, error) {
 func (c *Collector) handle(data []byte) {
 	var env wsEnvelope
 	if err := json.Unmarshal(data, &env); err != nil {
+		c.metrics.recordDecodeError("envelope_json")
 		return
 	}
 	if env.Type != "packet" || len(env.Data) == 0 {
@@ -165,10 +173,12 @@ func (c *Collector) handle(data []byte) {
 	}
 	var p wsPacket
 	if err := json.Unmarshal(env.Data, &p); err != nil {
+		c.metrics.recordDecodeError("packet_json")
 		return
 	}
 	hash := strings.ToLower(strings.TrimSpace(p.Hash))
 	if hash == "" {
+		c.metrics.recordDecodeError("empty_hash")
 		return
 	}
 	typeName := ""
@@ -176,6 +186,8 @@ func (c *Collector) handle(data []byte) {
 		typeName = meshpkt.PayloadType(byte(*p.PayloadType)).String()
 	}
 	now := nowUnix()
+	c.metrics.recordPacket(c.net.ID, typeName)
+	c.metrics.setAnalyzerLastPacket(c.net.ID, c.az.Name, now)
 	c.net.Observe(c.az, Event{
 		Hash:         hash,
 		ObserverID:   p.ObserverID,
@@ -213,14 +225,17 @@ func (c *Collector) handle(data []byte) {
 func (c *Collector) collectAdvert(p wsPacket, now int64) {
 	raw, err := hex.DecodeString(strings.TrimSpace(p.RawHex))
 	if err != nil || len(raw) == 0 {
+		c.metrics.recordDecodeError("advert_hex")
 		return
 	}
 	pkt, err := meshpkt.DecodePacket(raw)
 	if err != nil || pkt.Type != meshpkt.PayloadAdvert {
+		c.metrics.recordDecodeError("advert_packet")
 		return
 	}
 	adv, err := meshpkt.DecodeAdvertPayload(pkt.Payload)
 	if err != nil {
+		c.metrics.recordDecodeError("advert_payload")
 		return
 	}
 	c.nodes.Observe(AdvertObservation{

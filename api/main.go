@@ -44,6 +44,16 @@ func main() {
 	observers := newObserverRegistry()
 	links := newLinkRegistry(linkHalfLife.Seconds())
 	imported := newImportRegistry()
+	metrics := NewMetrics()
+
+	// Pre-create the analyzer gauges so every configured analyzer reports
+	// "disconnected" (0) immediately, rather than appearing only after its first
+	// connection attempt.
+	for _, ns := range store.Networks {
+		for _, az := range ns.Analyzers {
+			metrics.initAnalyzer(ns.ID, az.Name)
+		}
+	}
 
 	// Optional durable counter store. When --db is set we restore the last
 	// persisted snapshot before any collector runs, so totals and the
@@ -131,7 +141,7 @@ func main() {
 	// One collector goroutine per analyzer.
 	for _, ns := range store.Networks {
 		for _, az := range ns.Analyzers {
-			col, err := NewCollector(ns, az, registry, observers, links)
+			col, err := NewCollector(ns, az, registry, observers, links, metrics)
 			if err != nil {
 				log.Printf("[%s/%s] bad analyzer URL %q: %v", ns.ID, az.Name, az.URL, err)
 				continue
@@ -170,21 +180,38 @@ func main() {
 			defer ticker.Stop()
 			flush := func() {
 				now := nowUnix()
-				if err := db.Save(store.Export(), now); err != nil {
+
+				counters := store.Export()
+				t := time.Now()
+				err := db.Save(counters, now)
+				metrics.observeDBFlush("counters", len(counters), time.Since(t), err)
+				if err != nil {
 					log.Printf("counter flush: %v", err)
 				}
-				if err := db.SaveNodes(registry.Export(), now); err != nil {
+
+				nodes := registry.Export()
+				t = time.Now()
+				err = db.SaveNodes(nodes, now)
+				metrics.observeDBFlush("nodes", len(nodes), time.Since(t), err)
+				if err != nil {
 					log.Printf("node flush: %v", err)
 				}
+
 				if pending := registry.PendingAdverts(); len(pending) > 0 {
-					if err := db.AppendAdverts(pending); err != nil {
+					t = time.Now()
+					err = db.AppendAdverts(pending)
+					metrics.observeDBFlush("adverts", len(pending), time.Since(t), err)
+					if err != nil {
 						log.Printf("advert flush: %v", err)
 					} else {
 						registry.ClearPending(len(pending))
 					}
 				}
 				if dirty := links.TakeDirty(); len(dirty) > 0 {
-					if err := db.SaveLinks(dirty, now); err != nil {
+					t = time.Now()
+					err = db.SaveLinks(dirty, now)
+					metrics.observeDBFlush("links", len(dirty), time.Since(t), err)
+					if err != nil {
 						log.Printf("link flush: %v", err)
 						links.Requeue(dirty) // retry next cycle
 					}
@@ -207,7 +234,11 @@ func main() {
 			ticker := time.NewTicker(*observerPersistEvery)
 			defer ticker.Stop()
 			flush := func() {
-				if err := db.SaveObservers(observers.Export(), nowUnix()); err != nil {
+				obs := observers.Export()
+				t := time.Now()
+				err := db.SaveObservers(obs, nowUnix())
+				metrics.observeDBFlush("observers", len(obs), time.Since(t), err)
+				if err != nil {
 					log.Printf("observer flush: %v", err)
 				}
 			}
@@ -225,7 +256,7 @@ func main() {
 
 	srv := &http.Server{
 		Addr:         *addr,
-		Handler:      NewServer(store, registry, observers, links, imported, *allowOrigin).Handler(),
+		Handler:      NewServer(store, registry, observers, links, imported, metrics, *allowOrigin).Handler(),
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 15 * time.Second,
 	}

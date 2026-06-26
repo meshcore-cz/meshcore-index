@@ -206,6 +206,60 @@ Each `latestAdverts` entry is one advert for that node (newest first, capped at
 10), where `advertTime` is the advert's own broadcast timestamp and `at` is when
 we received it.
 
+## Metrics (Prometheus / VictoriaMetrics)
+
+The service exposes operational telemetry in Prometheus text exposition format at:
+
+- `GET /metrics`
+
+It scrapes identically under VictoriaMetrics (`vmagent`/`vmscrape`) — no
+Prometheus server required. The endpoint reports the **health of the collector
+and the API itself**, not individual packets, so labels are deliberately
+low-cardinality: per-packet identifiers (pubkey, content hash, observer id,
+packet id, resolved path) are never used as labels.
+
+Service metrics:
+
+| metric | type | labels | meaning |
+|--------|------|--------|---------|
+| `meshcore_packets_received_total` | counter | `network`, `payload_type` | packets received from analyzers (pre-dedup) |
+| `meshcore_observations_total` | counter | `network` | packet observations processed |
+| `meshcore_packets_decode_errors_total` | counter | `reason` | packets dropped as undecodable (`envelope_json`, `packet_json`, `empty_hash`, `advert_hex`, `advert_packet`, `advert_payload`) |
+| `meshcore_analyzer_connected` | gauge | `network`, `analyzer` | analyzer WebSocket connected (1) / not (0) |
+| `meshcore_analyzer_reconnects_total` | counter | `network`, `analyzer` | times the connection was (re)established |
+| `meshcore_analyzer_last_packet_timestamp_seconds` | gauge | `network`, `analyzer` | unix time of the last packet from the analyzer |
+| `meshcore_db_flush_duration_seconds` | histogram | `op` | SQLite flush latency (`counters`, `nodes`, `adverts`, `links`, `observers`) |
+| `meshcore_db_flush_errors_total` | counter | `op` | SQLite flush errors |
+| `meshcore_db_rows_written_total` | counter | `op` | rows written to SQLite |
+| `meshcore_api_requests_total` | counter | `route`, `method`, `code` | HTTP API requests by normalized route and status |
+| `meshcore_api_request_duration_seconds` | histogram | `route`, `method` | HTTP API request latency |
+| `meshcore_api_response_size_bytes` | histogram | `route` | HTTP API response body size (uncompressed) |
+| `meshcore_api_requests_in_flight` | gauge | — | API requests currently in flight |
+| `meshcore_build_info` | gauge | `version` | constant `1`, build version marker |
+
+The `route` label is the normalized path template (e.g. `/api/networks/:id`,
+`/api/nodes/:pubkey`), never the raw request path, so path variables can't
+explode cardinality. The `/metrics` endpoint itself is not instrumented, so a
+scraper polling it does not pollute the API latency histograms.
+
+The standard Go runtime and process collectors are also registered, so you get
+`go_*` (goroutines, GC, heap) and `process_*` (CPU, RSS, open FDs) for free.
+
+Example scrape config (Prometheus or VictoriaMetrics `vmagent`):
+
+```yaml
+scrape_configs:
+  - job_name: meshcore-ninja-api
+    static_configs:
+      - targets: ["localhost:8080"]
+```
+
+The `version` label can be stamped at build time:
+
+```bash
+go build -ldflags "-X main.version=$(git describe --tags --always)" -o bin/meshcore-ninja-api .
+```
+
 ## Frontend wiring
 
 The static site polls this API when `PUBLIC_API_BASE` is set (e.g.

@@ -15,22 +15,30 @@ type Server struct {
 	observers   *ObserverRegistry
 	links       *LinkRegistry
 	imported    *ImportRegistry
+	metrics     *Metrics
 	allowOrigin string
 }
 
-func NewServer(store *Store, nodes *NodeRegistry, observers *ObserverRegistry, links *LinkRegistry, imported *ImportRegistry, allowOrigin string) *Server {
-	return &Server{store: store, nodes: nodes, observers: observers, links: links, imported: imported, allowOrigin: allowOrigin}
+func NewServer(store *Store, nodes *NodeRegistry, observers *ObserverRegistry, links *LinkRegistry, imported *ImportRegistry, metrics *Metrics, allowOrigin string) *Server {
+	return &Server{store: store, nodes: nodes, observers: observers, links: links, imported: imported, metrics: metrics, allowOrigin: allowOrigin}
 }
 
 func (s *Server) Handler() http.Handler {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/api/health", s.handleHealth)
-	mux.HandleFunc("/api/networks", s.handleNetworks)
-	mux.HandleFunc("/api/networks/", s.handleNetworkDetail)
-	mux.HandleFunc("/api/nodes", s.handleNodes)
-	mux.HandleFunc("/api/nodes/", s.handleNodeSub)
-	mux.HandleFunc("/api/map", s.handleMap)
-	mux.HandleFunc("/api/observers", s.handleObservers)
+	// Each route is instrumented under a fixed, normalized label so path
+	// variables (network id, pubkey) never inflate metric cardinality.
+	mux.HandleFunc("/api/health", s.instrument("/api/health", s.handleHealth))
+	mux.HandleFunc("/api/networks", s.instrument("/api/networks", s.handleNetworks))
+	mux.HandleFunc("/api/networks/", s.instrument("/api/networks/:id", s.handleNetworkDetail))
+	mux.HandleFunc("/api/nodes", s.instrument("/api/nodes", s.handleNodes))
+	mux.HandleFunc("/api/nodes/", s.instrument("/api/nodes/:pubkey", s.handleNodeSub))
+	mux.HandleFunc("/api/map", s.instrument("/api/map", s.handleMap))
+	mux.HandleFunc("/api/observers", s.instrument("/api/observers", s.handleObservers))
+	// Prometheus/VictoriaMetrics scrape endpoint. Left un-instrumented to avoid
+	// the scraper polluting the API latency histograms.
+	if s.metrics != nil {
+		mux.Handle("/metrics", s.metrics.handler())
+	}
 	return s.withCORS(gzipMiddleware(mux))
 }
 

@@ -8,7 +8,8 @@ WORKDIR /src
 COPY api/go.mod api/go.sum ./api/
 RUN cd api && go mod download
 COPY api ./api
-RUN cd api && CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/meshcore-ninja-api .
+ARG VERSION=docker
+RUN cd api && CGO_ENABLED=0 go build -trimpath -ldflags "-s -w -X main.version=${VERSION}" -o /out/meshcore-ninja-api .
 
 FROM debian:bookworm-slim AS runtime
 RUN apt-get update \

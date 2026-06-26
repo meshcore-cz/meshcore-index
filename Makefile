@@ -105,9 +105,12 @@ clean-web: ## Remove web build output
 
 # --- Go API ------------------------------------------------------------------
 
+# Build version stamped into meshcore_build_info (falls back to git describe).
+API_VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
+
 .PHONY: build-api
 build-api: ## Compile the Go API to api/bin/
-	cd $(API_DIR) && $(GO) build -o bin/meshcore-ninja-api .
+	cd $(API_DIR) && $(GO) build -ldflags "-X main.version=$(API_VERSION)" -o bin/meshcore-ninja-api .
 
 .PHONY: run-api
 run-api: ## Run the Go API (override DATA_DIR/API_ADDR as needed)
