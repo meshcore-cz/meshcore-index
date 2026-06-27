@@ -1,7 +1,55 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-06-26T19:52:23.275Z'
+updatedAt: '2026-06-27T13:48:21.270Z'
 releases:
+  - version: beta_19
+    name: wadamesh beta_19
+    datetime: '2026-06-27T13:10:46Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_19
+    prerelease: false
+    notes: >-
+      **wadamesh beta_19** — touch firmware for the LilyGo T-Deck and Heltec V4 TFT.
+
+
+      Flash it in your browser at **https://flasher.wadamesh.com**, install it from the Launcher
+      store, or use the on-device update check (Settings → About → Check for updates).
+
+
+      ## New
+
+      - **Airtime / duty-cycle readout** in Radio & Mesh settings — see roughly how much of the
+      airtime budget your current spreading factor, bandwidth and coding rate use, plus the
+      time-on-air per packet, so you can stay inside regional limits like EU 868.
+
+      - **"Answer telemetry requests" toggle** in Radio & Mesh settings — control whether other
+      nodes can pull your battery and environment telemetry.
+
+      - The Radio & Mesh settings page is now grouped into clear **RADIO / MESH / SIGNAL** sections
+      so the options are easier to find.
+
+
+      ## Fixed
+
+      - **Fixed a reboot** that could happen when you closed a scrollable popup — the emoji picker,
+      quick replies, the Wi-Fi scan list, the app drawer and similar — while it was still coasting
+      from a flick. Thanks to everyone who sent in crash reports.
+
+      - The **accent popup** no longer lingers on screen after you send a message on the T-Deck
+      keyboard.
+
+      - **Heltec V4:** the Expansion Kit environment line and mini chart on the Home screen no
+      longer overlap the status text or run off the bottom of the display.
+
+
+      _Everything from beta_18 is included._
+
+
+      ## Assets
+
+      - `wadamesh-tdeck.bin` / `wadamesh-heltec-v4-tft.bin` — app-only image (OTA update / Launcher
+      side-load)
+
+      - `*-merged.bin` — full image (flash @ `0x0` + erase, e.g. the web flasher)
   - version: beta_18
     name: wadamesh beta_18
     datetime: '2026-06-26T17:55:17Z'

@@ -1,7 +1,60 @@
 source: github
 repo: Meshcore-Portugal/lusofw
-updatedAt: '2026-06-25T18:51:06.654Z'
+updatedAt: '2026-06-27T13:48:08.982Z'
 releases:
+  - version: 2026.6.1-rc2-a3dce74
+    name: 2026.6.1-rc2-a3dce74
+    datetime: '2026-06-27T13:27:48Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/2026.6.1-rc2-a3dce74
+    prerelease: true
+    notes: >-
+      Automated dev prerelease of dev@a3dce74 for 2026.6.1-rc2.
+
+
+
+      Based on MeshCore v1.16.0
+
+      main@e8d3c53ba1ea863937081cd0caad759b832f3028
+
+
+      ### Features
+
+
+      - Added SHTC3 sensor support and updated the PlatformIO build flags.
+
+      - Drop stale packets from TX queue to prevent late/duplicate delivery
+
+      - Enabled loop detection sensitivity with the minimum setting.
+
+      - Reverted the airtime factor to 50% to address internationalization-related issues.
+
+      - Set the repeater advert path hash size to 2 bytes.
+
+
+      ### Security
+
+
+      - Fixed network time replay vulnerability; reject time-source timestamps not newer than the
+      last accepted one.
+
+      - Enforce initial sync (forward-only) vs maintenance sync (±60s), replacing the symmetric ±30s
+      logic that allowed backward clock moves.
+
+
+      ### Improvements
+
+
+      - Updated MeshCore website links and logo placement across the UI and splash screens.
+
+
+      ### KTLO
+
+
+      - Added a `build_upload.sh` wrapper to compile and upload firmware in a single command.
+
+      - Increased the GitHub Actions parallel job limit and updated the PlatformIO dependencies.
+
+      - Removed the `ENABLE_CONSENSUS_TIME_SYNC` feature from the codebase.
   - version: v2026.5.2
     name: v2026.5.2
     datetime: '2026-05-27T15:22:12Z'
