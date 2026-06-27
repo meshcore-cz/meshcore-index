@@ -37,6 +37,7 @@
     "@sveltejs/kit": "^2.66.0",
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
     "@tailwindcss/vite": "^4.3.1",
+    "@vite-pwa/sveltekit": "^1.1.0",
     "ajv": "^8.20.0",
     "js-yaml": "^5.0.0",
     "marked": "^18.0.5",

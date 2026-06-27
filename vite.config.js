@@ -1,4 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
+import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import tailwindcss from '@tailwindcss/vite';
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import { defineConfig } from 'vite';
@@ -43,7 +44,11 @@ function yamlDataPlugin() {
   };
 }
 
+const pwaStartUrl = BASE_PATH ? `${BASE_PATH}/` : '/';
+const pwaScope = pwaStartUrl;
+
 export default defineConfig({
+  base: BASE_PATH ? `${BASE_PATH}/` : '/',
   plugins: [
     yamlDataPlugin(),
     paraglideVitePlugin({
@@ -53,7 +58,45 @@ export default defineConfig({
       urlPatterns: paraglideUrlPatterns
     }),
     tailwindcss(),
-    sveltekit()
+    sveltekit(),
+    SvelteKitPWA({
+      registerType: 'autoUpdate',
+      kit: {
+        adapterFallback: '404.html'
+      },
+      workbox: {
+        // The app bundle includes a large tools/devicon chunk (~5.3 MB).
+        maximumFileSizeToCacheInBytes: 6 * 1024 * 1024
+      },
+      manifest: {
+        name: 'MeshCore Ninja',
+        short_name: 'MeshCore Ninja',
+        description: 'MeshCore devices, firmware, software and networks.',
+        start_url: pwaStartUrl,
+        scope: pwaScope,
+        display: 'standalone',
+        background_color: '#ffffff',
+        theme_color: '#111111',
+        icons: [
+          {
+            src: `${BASE_PATH}/pwa-192.png`,
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: `${BASE_PATH}/pwa-512.png`,
+            sizes: '512x512',
+            type: 'image/png'
+          },
+          {
+            src: `${BASE_PATH}/pwa-maskable-512.png`,
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
+          }
+        ]
+      }
+    })
   ],
   // Expose the deploy base path to app code for building absolute (canonical /
   // OG / JSON-LD) URLs. SvelteKit's $app/paths `base` is relative in this static

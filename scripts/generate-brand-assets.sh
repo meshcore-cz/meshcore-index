@@ -30,8 +30,15 @@ magick "$out/favicon-16x16.png" "$out/favicon-32x32.png" \
   -background none -define icon:auto-resize=16,32 "$out/favicon.ico"
 cp "$out/favicon-180x180.png" "$out/apple-touch-icon.png"
 
+cp "$out/favicon-192x192.png" "$out/pwa-192.png"
+cp "$out/favicon-512x512.png" "$out/pwa-512.png"
+# Maskable icon: solid background with logo in the ~80% safe zone.
+magick -size 512x512 xc:"$bg" \
+  \( "$src" -resize 410x410 \) -gravity center -composite \
+  "$out/pwa-maskable-512.png"
+
 magick -size 1200x630 xc:"$bg" \
   \( "$src" -resize 420x420 \) -gravity center -composite \
   "$out/og.png"
 
-echo "✓ Wrote logo, favicons, apple-touch-icon, and og.png under static/"
+echo "✓ Wrote logo, favicons, apple-touch-icon, PWA icons, and og.png under static/"

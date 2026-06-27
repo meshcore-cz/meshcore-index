@@ -6,6 +6,7 @@
   import { base } from '$app/paths';
   import { page } from '$app/stores';
   import { env } from '$env/dynamic/public';
+  import { pwaInfo } from 'virtual:pwa-info';
   import { generatedAt, repoGithubStars } from '$lib/data.js';
   import { fullDateTime, recentTimeLabel, fmtStars } from '$lib/format.js';
   import { REPO_URL, SITE_NAME } from '$lib/seo.js';
@@ -37,6 +38,12 @@
   let theme = $state('dark');
   onMount(() => {
     theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+
+    if (pwaInfo) {
+      import('virtual:pwa-register').then(({ registerSW }) => {
+        registerSW({ immediate: true });
+      });
+    }
   });
   function toggleTheme() {
     theme = theme === 'dark' ? 'light' : 'dark';
@@ -52,6 +59,7 @@
   const updatedTitle = fullDateTime(generatedAt);
   const plausibleScriptUrl = env.PUBLIC_PLAUSIBLE_SCRIPT_URL;
   const versionLabel = `v${pkg.version}${import.meta.env.VITE_VERSION_SUFFIX}`;
+  const webManifestLink = $derived(pwaInfo ? pwaInfo.webManifest.linkTag : '');
 
   function onkeydown(e) {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -79,6 +87,8 @@
 </script>
 
 <svelte:head>
+  {@html webManifestLink}
+  <meta name="theme-color" content="#111111" />
   {#if plausibleScriptUrl}
     <!-- Privacy-friendly analytics by Plausible -->
     <script data-plausible-src={plausibleScriptUrl}>
