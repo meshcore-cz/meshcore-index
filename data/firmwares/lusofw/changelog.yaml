@@ -1,14 +1,14 @@
 source: github
 repo: Meshcore-Portugal/lusofw
-updatedAt: '2026-06-27T13:48:08.982Z'
+updatedAt: '2026-06-27T15:17:41.780Z'
 releases:
-  - version: 2026.6.1-rc2-a3dce74
-    name: 2026.6.1-rc2-a3dce74
-    datetime: '2026-06-27T13:27:48Z'
-    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/2026.6.1-rc2-a3dce74
+  - version: v2026.6.1-rc2-0579efe
+    name: v2026.6.1-rc2-0579efe
+    datetime: '2026-06-27T14:40:57Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.6.1-rc2-0579efe
     prerelease: true
     notes: >-
-      Automated dev prerelease of dev@a3dce74 for 2026.6.1-rc2.
+      Automated dev prerelease of dev@0579efe for v2026.6.1-rc2.
 
 
 
