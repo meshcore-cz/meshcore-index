@@ -8,6 +8,8 @@ description: >
   input, and GNSS support.
 repository: https://github.com/MultiMote/meshcore-cardputer-adv
 status: experimental
+scope: device-specific
+scopeCategory: M5Stack Cardputer
 lifecycle: active
 maturity: alpha
 distribution: community

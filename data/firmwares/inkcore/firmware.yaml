@@ -8,6 +8,8 @@ description: >
 repository: https://codeberg.org/todd-herbert/InkCore
 license: GPL-3.0
 status: active
+scope: function-specific
+scopeCategory: E-Paper UI
 lifecycle: active
 maturity: stable
 distribution: community

@@ -9,4 +9,4 @@
   description="MeshCore firmwares — the reference build plus community forks and custom variants, with node roles and supported devices."
 />
 
-<FirmwareList firmwares={data.firmwares} latest={data.latest} />
+<FirmwareList firmwares={data.firmwares} />

@@ -9,6 +9,7 @@ repository: https://github.com/dz0ny/meshcore-paperui
 website: https://dz0ny.github.io/meshcore-paperui/
 license_type: source-available
 status: active
+scope: device-specific
 lifecycle: active
 maturity: beta
 distribution: community

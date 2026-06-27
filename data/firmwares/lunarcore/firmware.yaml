@@ -7,6 +7,8 @@ description: >
 repository: https://github.com/STCisGOOD/lunarcore
 license: MIT
 status: maintenance
+scope: function-specific
+scopeCategory: Multi-protocol
 lifecycle: active
 maturity: beta
 distribution: community

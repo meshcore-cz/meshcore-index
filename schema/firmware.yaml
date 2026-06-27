@@ -10,6 +10,7 @@ required:
   - maintainer
   - description
   - status
+  - scope
   - devices
 properties:
   name:
@@ -91,6 +92,27 @@ properties:
       - vendor
       - community
       - personal
+  scope:
+    description: >-
+      How broadly the firmware is meant to be used — the primary axis the
+      firmware list is grouped by. `universal` runs across many boards;
+      `platform-specific` targets a chip/platform family; `function-specific` is
+      built around a particular use case or interface; `device-specific` is built
+      for a single device or board family.
+    enum:
+      - universal
+      - platform-specific
+      - function-specific
+      - device-specific
+  scopeCategory:
+    description: >-
+      Sub-group this firmware falls under within its `scope` section, used as the
+      heading label, e.g. "ESP32" for a platform or "Tracker"/"Touch UI" for a
+      function. Required for `platform-specific` and `function-specific`. Ignored
+      for `universal`. Optional for `device-specific` — when omitted, the primary
+      device family (derived from `devices`) is used.
+    type: string
+    minLength: 1
   lineage:
     description: Where this firmware came from relative to upstream MeshCore.
     type: object
@@ -361,3 +383,15 @@ properties:
         notes:
           description: Free-form notes about this board's support.
           type: string
+
+allOf:
+  # platform/function scopes must name their sub-group; the heading needs it.
+  - if:
+      properties:
+        scope:
+          enum:
+            - platform-specific
+            - function-specific
+    then:
+      required:
+        - scopeCategory

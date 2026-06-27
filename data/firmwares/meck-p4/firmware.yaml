@@ -9,6 +9,7 @@ description: >
 repository: https://github.com/pelgraine/Meck-P4
 license: GPL-3.0
 status: active
+scope: device-specific
 lifecycle: active
 maturity: alpha
 distribution: community

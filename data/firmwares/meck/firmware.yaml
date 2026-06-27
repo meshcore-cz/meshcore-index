@@ -9,6 +9,8 @@ description: >
 repository: https://github.com/pelgraine/Meck
 license: MIT
 status: active
+scope: function-specific
+scopeCategory: Touch UI
 lifecycle: active
 maturity: beta
 distribution: community

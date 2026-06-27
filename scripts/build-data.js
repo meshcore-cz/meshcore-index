@@ -377,11 +377,9 @@ function buildSitemap(root, { devices, firmwares, vendors, networks, software, g
   const prefix = `${SITE_ORIGIN}${BASE_PATH}`;
 
   // Filtered list views are prerendered as their own pages (one per software
-  // kind / firmware type / print type), so include them for indexing.
+  // kind / print type), so include them for indexing. The firmwares list filters
+  // by scope client-side, so it's a single page.
   const softwareKinds = [...new Set(software.map((s) => s.kind))].filter(Boolean);
-  const firmwareTypes = [...new Set(firmwares.map((f) => f.type))].filter((t) =>
-    ['reference', 'fork', 'custom'].includes(t)
-  );
   const printTypes = [
     ...new Set(devices.flatMap((d) => (d.prints ?? []).map((p) => p.type ?? 'case')))
   ].filter((t) => ['enclosure', 'case', 'accessory'].includes(t));
@@ -394,7 +392,6 @@ function buildSitemap(root, { devices, firmwares, vendors, networks, software, g
     '/software/',
     ...softwareKinds.map((k) => `/software/${k}/`),
     '/firmwares/',
-    ...firmwareTypes.map((t) => `/firmwares/${t}/`),
     '/prints/',
     ...printTypes.map((t) => `/prints/${t}/`),
     '/languages/',
@@ -495,6 +492,66 @@ ${entries}
   return items.length;
 }
 
+/**
+ * Longest common leading run of words shared by every name, used as a device
+ * family's display label (e.g. "LilyGo T-Deck", "LilyGo T-Deck Pro", … collapse
+ * to "LilyGo T-Deck"). Falls back to the alphabetically-first name when the
+ * members share no leading word.
+ */
+function commonNamePrefix(names) {
+  if (names.length === 1) return names[0];
+  const wordLists = names.map((n) => n.split(/\s+/));
+  const [first] = wordLists;
+  let i = 0;
+  for (; i < first.length; i++) {
+    if (!wordLists.every((ws) => ws[i]?.toLowerCase() === first[i].toLowerCase())) break;
+  }
+  return i > 0 ? first.slice(0, i).join(' ') : [...names].sort()[0];
+}
+
+/**
+ * Attach grouping info used by the firmware list. The `scope` axis itself is
+ * authored in firmware.yaml; here we only derive the device families a firmware
+ * targets (from `fw.devices` + each device's `familyId`, so it never drifts from
+ * the device list) and resolve `scopeGroup` — the heading the firmware sits under
+ * within its scope section. Universal is a flat section (no sub-group);
+ * platform/function scopes use their authored `scopeCategory`; device-specific
+ * falls back to its primary device family. Mutates in place.
+ */
+function attachFirmwareGrouping(firmwares, devices) {
+  const familyOf = new Map(devices.map((d) => [d.id, d.familyId || d.id]));
+  // Per-family display label, derived once from the member device names.
+  const namesByFamily = new Map();
+  for (const d of devices) {
+    const key = d.familyId || d.id;
+    if (!namesByFamily.has(key)) namesByFamily.set(key, []);
+    namesByFamily.get(key).push(d.name || d.id);
+  }
+  const labelOf = new Map(
+    [...namesByFamily].map(([key, names]) => [key, commonNamePrefix(names)])
+  );
+
+  for (const fw of firmwares) {
+    // Distinct families this firmware targets, ordered by how many of its
+    // devices fall in each so the dominant family leads.
+    const counts = new Map();
+    for (const dev of fw.devices ?? []) {
+      const fam = familyOf.get(dev.id);
+      if (fam) counts.set(fam, (counts.get(fam) ?? 0) + 1);
+    }
+    const families = [...counts.entries()]
+      .sort(
+        (a, b) =>
+          b[1] - a[1] || (labelOf.get(a[0]) ?? a[0]).localeCompare(labelOf.get(b[0]) ?? b[0])
+      )
+      .map(([id]) => ({ id, label: labelOf.get(id) ?? id }));
+    fw.deviceFamilies = families;
+    fw.primaryFamily = families[0] ?? null;
+    fw.scopeGroup =
+      fw.scope === 'universal' ? null : (fw.scopeCategory ?? fw.primaryFamily?.label ?? null);
+  }
+}
+
 /** Compile the YAML sources and write both data.json copies. Returns counts. */
 export async function buildData(root = defaultRoot) {
   // Dynamically imported so the markdown libs stay out of the Vite config bundle.
@@ -548,6 +605,8 @@ export async function buildData(root = defaultRoot) {
       const rb = typeRank[b.type] ?? 9;
       return ra !== rb ? ra - rb : a.name.localeCompare(b.name);
     });
+
+  attachFirmwareGrouping(firmwares, devices);
 
   // The global data.json is imported into every page's shared bundle, so it must
   // stay lean. A record's releases carry the rendered changelog HTML

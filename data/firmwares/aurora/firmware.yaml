@@ -8,6 +8,7 @@ description: >
 repository: https://forge.hackers.town/Wrewdison/Aurora
 license: MIT
 status: maintenance
+scope: device-specific
 lifecycle: active
 maturity: alpha
 distribution: community

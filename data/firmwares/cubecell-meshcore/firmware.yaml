@@ -8,6 +8,7 @@ description: >
 repository: https://github.com/atomozero/CubeCellMeshCore
 license: MIT
 status: active
+scope: device-specific
 lifecycle: active
 maturity: beta
 distribution: community

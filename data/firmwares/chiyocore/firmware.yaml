@@ -8,6 +8,8 @@ description: >
 repository: https://github.com/kore-signet/chiyocore
 license_type: source-available
 status: experimental
+scope: platform-specific
+scopeCategory: ESP32
 lifecycle: active
 maturity: experimental
 distribution: personal

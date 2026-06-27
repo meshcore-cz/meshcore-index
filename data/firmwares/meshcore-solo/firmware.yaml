@@ -18,6 +18,7 @@ description: >
   screen lock, auto-reply bot, repeater mode with diagnostics, and more — all optimized for
   joystick-only navigation on small displays.
 status: active
+scope: universal
 lifecycle: active
 maturity: stable
 distribution: community

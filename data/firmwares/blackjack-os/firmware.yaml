@@ -7,6 +7,7 @@ description: >
 repository: https://github.com/Robert-Proaps/BlackJackOS-BJOS-
 license: MIT
 status: active
+scope: device-specific
 lifecycle: active
 maturity: alpha
 distribution: community

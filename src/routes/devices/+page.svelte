@@ -73,7 +73,7 @@
   const FACETS = [
     { id: 'mcu', label: 'MCU', primary: true, get: (d) => { const f = deviceFamily(d); return f && f !== 'Unknown' ? [f] : []; } },
     { id: 'radio', label: 'Radio', primary: true, get: deviceChips, fmt: (v) => v.toUpperCase() },
-    { id: 'roles', label: 'Roles', primary: true, get: (d) => d.roles ?? [], fmt: humanize },
+    { id: 'roles', label: 'Roles', get: (d) => d.roles ?? [], fmt: humanize },
     { id: 'vendor', label: 'Vendor', get: (d) => (d.vendorName ? [d.vendorName] : []) },
     { id: 'arch', label: 'Arch', get: (d) => { const a = resolveMcuInfo(d)?.architecture?.name; return a ? [a] : []; } },
     { id: 'band', label: 'Band', get: (d) => [...new Set((d.hardware?.radios ?? []).flatMap((r) => r.bands ?? []))], fmt: (v) => bandLabel(v) ?? `${v}` },
@@ -87,11 +87,11 @@
 
   // --- Boolean capability toggles --------------------------------------------
   const TOGGLES = [
-    { id: 'gps', label: 'GPS', primary: true, test: (d) => d.hardware?.gnss?.status === 'present' },
-    { id: 'screen', label: 'Display', primary: true, test: (d) => d.hardware?.display?.status === 'present' },
-    { id: 'battery', label: 'Battery', primary: true, test: (d) => d.hardware?.power?.batterySupported === true },
-    { id: 'solarPanel', label: 'Solar Panel', primary: true, test: (d) => d.hardware?.power?.solarPanelBuiltIn === true },
-    { id: 'solarInput', label: 'Solar Input', primary: true, test: (d) => d.hardware?.power?.solarInput === true },
+    { id: 'gps', label: 'GPS', test: (d) => d.hardware?.gnss?.status === 'present' },
+    { id: 'screen', label: 'Display', test: (d) => d.hardware?.display?.status === 'present' },
+    { id: 'battery', label: 'Battery', test: (d) => d.hardware?.power?.batterySupported === true },
+    { id: 'solarPanel', label: 'Solar Panel', test: (d) => d.hardware?.power?.solarPanelBuiltIn === true },
+    { id: 'solarInput', label: 'Solar Input', test: (d) => d.hardware?.power?.solarInput === true },
     { id: 'charging', label: 'Charging', test: (d) => d.hardware?.power?.charging === true },
     { id: 'touch', label: 'Touch', test: (d) => d.hardware?.display?.touch === true },
     { id: 'wifi', label: 'Wi-Fi', test: (d) => d.interfaces?.wifi?.status === 'present' },
@@ -353,14 +353,16 @@
     {/if}
   {/each}
 
-  <div class="flex flex-wrap items-start gap-x-3 gap-y-2">
-    <span class={rowLabel}>Has</span>
-    <div class="flex flex-1 flex-wrap gap-1.5">
-      {#each primaryToggles as t (t.id)}
-        <Chip pressed={toggles[t.id]} onPressedChange={() => (toggles[t.id] = !toggles[t.id])}>{t.label}</Chip>
-      {/each}
+  {#if primaryToggles.length}
+    <div class="flex flex-wrap items-start gap-x-3 gap-y-2">
+      <span class={rowLabel}>Has</span>
+      <div class="flex flex-1 flex-wrap gap-1.5">
+        {#each primaryToggles as t (t.id)}
+          <Chip pressed={toggles[t.id]} onPressedChange={() => (toggles[t.id] = !toggles[t.id])}>{t.label}</Chip>
+        {/each}
+      </div>
     </div>
-  </div>
+  {/if}
 
   <!-- Advanced section -->
   <Collapsible.Root bind:open={advanced} class="border-t border-edge pt-3">

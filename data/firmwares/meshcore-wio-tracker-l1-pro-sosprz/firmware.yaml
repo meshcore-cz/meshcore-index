@@ -8,6 +8,7 @@ description: >
 repository: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro
 license_type: proprietary
 status: active
+scope: device-specific
 lifecycle: active
 maturity: beta
 distribution: personal

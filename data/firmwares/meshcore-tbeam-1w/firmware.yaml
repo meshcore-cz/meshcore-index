@@ -7,6 +7,7 @@ description: >
 repository: https://github.com/mintylinux/Meshcore-T-beam-1W-Firmware
 license: MIT
 status: maintenance
+scope: device-specific
 lifecycle: maintenance
 maturity: stable
 distribution: community

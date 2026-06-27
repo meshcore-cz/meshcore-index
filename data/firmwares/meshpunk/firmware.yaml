@@ -11,6 +11,7 @@ description: >-
 repository: https://github.com/PhilMo6/meshpunk
 license: MIT
 status: active
+scope: device-specific
 lifecycle: active
 maturity: alpha
 distribution: community

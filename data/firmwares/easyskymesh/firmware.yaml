@@ -9,6 +9,7 @@ repository: https://github.com/IoTThinks/EasySkyMesh
 website: https://iotthinks.com
 license: MIT
 status: active
+scope: universal
 lifecycle: active
 maturity: beta
 distribution: community

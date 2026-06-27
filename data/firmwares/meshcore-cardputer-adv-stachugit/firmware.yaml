@@ -8,6 +8,8 @@ repository: https://github.com/Stachugit/MeshCore-Cardputer-ADV
 website: https://meshcorecardputeradv.vercel.app/
 license: MIT
 status: maintenance
+scope: device-specific
+scopeCategory: M5Stack Cardputer
 lifecycle: active
 maturity: beta
 distribution: community

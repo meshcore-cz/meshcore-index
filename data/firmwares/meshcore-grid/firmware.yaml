@@ -7,6 +7,8 @@ description: >
 repository: https://github.com/Quark1980/MeshcoreGRID
 license: MIT
 status: maintenance
+scope: function-specific
+scopeCategory: Touch UI
 lifecycle: active
 maturity: beta
 distribution: community

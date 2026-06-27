@@ -9,6 +9,7 @@ repository: https://github.com/ALLFATHER-BV/meshcomod
 website: https://meshcomod.com
 license: MIT
 status: active
+scope: universal
 lifecycle: active
 maturity: stable
 distribution: community

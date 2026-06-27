@@ -8,6 +8,8 @@ description: >
 repository: https://github.com/mtoolstec/TapTapFW
 license: MIT
 status: maintenance
+scope: function-specific
+scopeCategory: Tracker
 lifecycle: active
 maturity: stable
 distribution: community

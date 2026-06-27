@@ -8,6 +8,8 @@ description: >
 repository: https://github.com/ALLFATHER-BV/wadamesh
 license: GPL-3.0
 status: active
+scope: function-specific
+scopeCategory: Touch UI
 lifecycle: active
 maturity: beta
 distribution: community

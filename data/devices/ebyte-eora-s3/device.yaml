@@ -49,14 +49,7 @@ hardware:
       txPowerDbm: 22
       antenna: U.FL/IPEX
   display:
-    status: present
-    technology: oled
-    controller: SSD1306
-    size: 0.96
-    resolution:
-      width: 128
-      height: 64
-    colors: monochrome
+    status: none
   leds:
     status: present
     description: Status LEDs

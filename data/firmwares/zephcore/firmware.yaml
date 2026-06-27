@@ -9,6 +9,7 @@ repository: https://github.com/liquidraver/ZephCore
 website: ''
 license: MIT
 status: active
+scope: universal
 lifecycle: active
 maturity: beta
 distribution: community

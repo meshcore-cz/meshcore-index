@@ -49,14 +49,7 @@ hardware:
       txPowerDbm: 21
       antenna: IPEX-1.0
   display:
-    status: present
-    technology: oled
-    controller: SSD1306
-    size: 0.96
-    resolution:
-      width: 128
-      height: 64
-    colors: monochrome
+    status: none
   gnss:
     status: present
     chip: NEO-6

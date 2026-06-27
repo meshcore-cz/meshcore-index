@@ -9,6 +9,7 @@ repository: https://github.com/mattzzw/MeshCore-Evo
 website: https://meshcore.io
 license: MIT
 status: maintenance
+scope: universal
 lifecycle: maintenance
 maturity: beta
 distribution: community

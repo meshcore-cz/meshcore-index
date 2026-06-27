@@ -8,6 +8,8 @@ description: >
 repository: https://github.com/xJARiD/MeshCore-EastMesh
 license: MIT
 status: active
+scope: platform-specific
+scopeCategory: ESP32
 lifecycle: active
 maturity: beta
 distribution: community

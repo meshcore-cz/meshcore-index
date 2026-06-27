@@ -18,6 +18,7 @@ changelog:
   source: script
   script: fetch-changelog.js
 status: active
+scope: universal
 lifecycle: active
 maturity: stable
 distribution: community

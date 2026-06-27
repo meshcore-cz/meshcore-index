@@ -16,6 +16,8 @@ description: >
   message history with RAM ring buffer, and text input/send on joystick-equipped devices.
   Designed to be field-ready: put it in your backpack and trust it's doing its job.
 status: active
+scope: function-specific
+scopeCategory: Tracker
 lifecycle: active
 maturity: stable
 distribution: community

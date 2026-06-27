@@ -12,6 +12,7 @@ repository: https://github.com/MichTronics/MeshCoreNG
 website: https://michtronics.github.io/MeshCoreNG/
 license: MIT
 status: active
+scope: universal
 lifecycle: active
 maturity: beta
 distribution: community

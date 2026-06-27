@@ -9,6 +9,7 @@ description: >
 repository: https://github.com/dt267/MeshCore-Low-Power-Firmware-For-Heltec-V3-V4
 license: MIT
 status: active
+scope: universal
 lifecycle: active
 maturity: beta
 distribution: community

@@ -20,9 +20,6 @@ hardware:
     model: esp32-c3
     # Inferred from the ESP32-C3 family
     ramKb: 400
-  radios:
-    - technology: esp-now
-      chip: esp32-c3
   display:
     status: none
   leds:

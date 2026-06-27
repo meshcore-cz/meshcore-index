@@ -8,6 +8,7 @@ description: >
 repository: https://github.com/OffbandMesh/meshcore-firmware
 license: MIT
 status: active
+scope: universal
 lifecycle: active
 maturity: beta
 distribution: community

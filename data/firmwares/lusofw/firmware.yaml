@@ -10,6 +10,7 @@ repository: https://github.com/Meshcore-Portugal/lusofw
 website: https://meshcore.pt
 license: MIT
 status: active
+scope: universal
 lifecycle: active
 maturity: stable
 distribution: community

@@ -9,6 +9,8 @@ repository: https://github.com/vicliu624/trail-mate
 website: https://vicliu624.github.io/trail-mate/
 license: AGPL-3.0
 status: active
+scope: function-specific
+scopeCategory: Navigation
 lifecycle: active
 maturity: alpha
 distribution: community

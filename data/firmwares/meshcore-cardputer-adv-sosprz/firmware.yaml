@@ -7,6 +7,8 @@ description: >
 repository: https://github.com/sosprz/meshcore-cardputer-adv
 license_type: proprietary
 status: active
+scope: device-specific
+scopeCategory: M5Stack Cardputer
 lifecycle: active
 maturity: beta
 distribution: personal

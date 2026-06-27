@@ -8,6 +8,7 @@ description: >
 repository: https://github.com/danst0/fennek
 license: GPL-3.0
 status: active
+scope: device-specific
 lifecycle: active
 maturity: beta
 distribution: community

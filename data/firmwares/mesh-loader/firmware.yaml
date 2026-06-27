@@ -8,6 +8,8 @@ description: >
 repository: https://github.com/eliahreeves/mesh-loader
 license_type: source-available
 status: active
+scope: function-specific
+scopeCategory: Multi-boot
 lifecycle: active
 maturity: beta
 distribution: community
