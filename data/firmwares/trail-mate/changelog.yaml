@@ -1,7 +1,19 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-06-26T19:52:22.864Z'
+updatedAt: '2026-06-28T08:56:44.703Z'
 releases:
+  - version: v0.1.33-alpha
+    name: v0.1.33-alpha
+    datetime: '2026-06-28T06:24:08Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.33-alpha
+    prerelease: true
+    notes: "## [0.1.33-alpha] - 2026-06-28\r\n### Fixed / 修复\r\n- Fixed Meshtastic Android/iOS peer identity projection for MQTT map-report nodes by decoding `MAP_REPORT_APP` through the shared node metadata path, preserving public-key state correctly, and preventing map reports from being retransmitted as normal LoRa downlink packets. / 修复 Meshtastic Android/iOS 中 MQTT 地图上报节点的对方身份展示：通过共享节点元数据路径解析 `MAP_REPORT_APP`，正确保留公钥状态，并防止地图上报被当成普通 LoRa 下行包转发。\r\n- Fixed route/track file loading so GPX and KML files are parsed through bounded streaming readers, including KML `<coordinates>` token parsing and active route overlay loading from `route_path`. / 修复路线/轨迹文件加载：GPX 与 KML 均通过有界流式读取解析，包括 KML `<coordinates>` token 流式解析，以及从 `route_path` 加载活动路线 overlay。\r\n\r\n\n\n## What's Changed\n* fix gpx track crash by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/65\n* Fix pager lr1121 by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/66\n* Prepare nRF52 BLE and UF2 prerelease by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/67\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.30-alpha...v0.1.33-alpha"
+  - version: v0.1.32-alpha
+    name: v0.1.32-alpha
+    datetime: '2026-06-28T05:37:25Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.32-alpha
+    prerelease: true
+    notes: "## [0.1.32-alpha] - 2026-06-27\n### Added / 新增\n- Added verified UF2 manual-flash release artifacts for both nRF52840 manual targets, `gat562_mesh_evb_pro` and `t-echo-lite`, checking the UF2 family ID `0xADA52840` while keeping `.hex` and `.zip` outputs as fallback/diagnostic assets alongside the existing ESP32 firmware targets. / 为两个 nRF52840 手动刷写目标 `gat562_mesh_evb_pro` 与 `t-echo-lite` 新增经过校验的 UF2 发布产物，检查 UF2 family ID `0xADA52840`，同时保留 `.hex` 与 `.zip` 作为备用和诊断产物，并随既有 ESP32 固件目标一起发布。\n- Added the T-Echo-Lite-KeyShield target to the project site device list so pre-release users can identify the matching manual firmware package from the latest GitHub Release. / 将 T-Echo-Lite-KeyShield 目标加入项目站设备列表，使预发布用户能从最新 GitHub Release 中识别匹配的手动刷写固件包。\n\n### Fixed / 修复\n- Fixed the T-LoRa Pager LR1121 MeshCore discovery/contact path from `459e8f52`, aligning MeshCore path descriptor handling and Android app contact/adverts projection with the shared protocol rules. / 修复 `459e8f52` 中 T-LoRa Pager LR1121 MeshCore 发现/联系人路径，统一 MeshCore path descriptor 处理，并让 Android app 联系人/advert 投影遵循共享协议规则。\r\n- Stabilized nRF52 local persistence for the pre-release by limiting node storage pressure, recovering UI settings writes when volatile cache files fill LittleFS, and adding a Settings action that clears local node/contact/message cache while preserving device and radio settings. / 为本次预发布稳定 nRF52 本地持久化：限制节点存储压力，在易失缓存文件占满 LittleFS 时恢复 UI 设置写入，并新增 Settings 动作，在保留设备与无线设置的同时清理本地节点、联系人和消息缓存。\n- Tightened the nRF52 Meshtastic BLE path for iOS by aligning fromRadio notification timing, restart state, and stale-consume recovery with the app protocol sequence. / 收紧 nRF52 Meshtastic BLE 的 iOS 路径，使 fromRadio 通知时序、重启状态和陈旧消费恢复与 App 协议时序对齐。\n\n\n\n## What's Changed\n* fix gpx track crash by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/65\n* Fix pager lr1121 by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/66\n* Prepare nRF52 BLE and UF2 prerelease by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/67\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.30-alpha...v0.1.32-alpha"
   - version: v0.1.31-alpha
     name: v0.1.31-alpha
     datetime: '2026-06-26T19:05:53Z'
@@ -594,23 +606,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/vicliu624/trail-mate/compare/v0.1.13-alpha...v0.1.14-alpha
-  - version: v0.1.13-alpha
-    name: v0.1.13-alpha
-    datetime: '2026-03-06T13:23:25Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.13-alpha
-    prerelease: true
-    notes: >-
-      ## What's Changed
-
-      * Feature ble by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/10
-
-
-
-      **Full Changelog**:
-      https://github.com/vicliu624/trail-mate/compare/v0.1.12-alpha...v0.1.13-alpha
-  - version: v0.1.12-alpha
-    name: v0.1.12-alpha
-    datetime: '2026-02-22T01:47:57Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.12-alpha
-    prerelease: true
-    notes: "**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.11-alpha...v0.1.12-alpha\r\n\r\n## [0.1.12-alpha] - 2026-02-22\r\n### Added / 新增\r\n- MeshCore identity module with Ed25519 + ECDH key material handling and persistent peer-key storage path / 新增 MeshCore 身份模块，支持 Ed25519 + ECDH 密钥材料处理与对端公钥持久化存储\r\n- Independent `team::proto` payloads for Team Position and Team Waypoint, decoupled from Meshtastic envelope path / 新增独立 `team::proto` 的 Team Position 与 Team Waypoint 报文，解耦 Meshtastic 信封路径\r\n- Contacts \"Discover\" mode with inline actions (`Scan Local`, `Send ID Local`, `Send ID Broadcast`, `Cancel`) and MeshCore-only guard / 联系人页新增 Discover 模式，内置 `Scan Local`、`Send ID Local`、`Send ID Broadcast`、`Cancel` 动作，并带 MeshCore 协议保护\r\n\r\n### Changed / 变更\r\n- MeshCore adapter behavior aligned further with native protocol semantics, including app-data unicast `dest`, discover/advert/control handling, PATH/trace/multipart plumbing, and route-quality updates / MeshCore 适配器进一步对齐原生协议语义，补齐 app-data 单播 `dest`、discover/advert/control 处理，以及 PATH/trace/multipart 与路由质量链路\r\n- Chat/Contacts protocol presentation is now protocol-aware to reduce cross-protocol reply confusion while keeping mixed history visible for review / Chat 与 Contacts 展示改为协议感知，保留混合历史可查看，同时降低跨协议误回复\r\n- README (EN/CN) updated to explicitly state Meshtastic + MeshCore dual-protocol compatibility / README 中英文版已明确声明 Meshtastic + MeshCore 双协议兼容\r\n\r\n### Fixed / 修复\r\n- Discovery filter-mode focus/highlight consistency in Contacts list navigation / 修复 Contacts 中 Discover 过滤模式在列表导航时的焦点与高亮一致性\r\n- MeshCore peer-key load/persistence wiring and related decrypt-failure diagnostics for interop debugging / 修复 MeshCore 对端密钥加载/持久化链路并补强解密失败诊断日志，便于互通排障\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.11-alpha...v0.1.12-alpha"

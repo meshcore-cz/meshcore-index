@@ -1,7 +1,93 @@
 source: github
 repo: OffbandMesh/meshcore-firmware
-updatedAt: '2026-06-26T08:54:09.258Z'
+updatedAt: '2026-06-28T08:56:43.381Z'
 releases:
+  - version: offband-v1.1.2-rc1
+    name: Offband offband-v1.1.2-rc1
+    datetime: '2026-06-28T08:18:36Z'
+    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v1.1.2-rc1
+    prerelease: true
+    notes: >-
+      Companion **GPS auto-baud + on-demand GPS status**, plus the wedge/time fixes
+
+      found while validating it on real hardware. Still on the **MeshCore 1.16.0** base.
+
+
+      ### Added
+
+      - **GPS auto-baud detection** — the companion now detects the GPS modem's baud rate at
+        runtime (probing 115200 then 9600, validating by a checksum-good NMEA sentence), so one
+        image reads either a standard 9600 module or a 115200 one with no rebuild. It re-probes
+        on a GPS enable and keeps trying if a modem is slow to start at boot. (#216, #233)
+      - **On-demand GPS status to the app (`0xC1`)** — the client can query live GPS state
+        (enabled / detected / fix / baud / lat / lon / alt / sats / time) instead of only seeing
+        position at connect. (#216)
+      - **On-device build identity** — an optional build tag shows on the app device-info
+        field and the OLED splash, so a specific build is identifiable without a serial
+        console. (#222)
+
+      ### Fixed
+
+      - **GPS at high baud could wedge BLE.** An unbounded GPS read loop let a fast modem
+        (e.g. 115200, multi-constellation) monopolize the main loop and starve BLE — the app
+        would slog or stall. GPS ingestion is now bounded per loop. (#231)
+      - **GPS time showed garbage before the date was acquired.** A position fix can arrive
+        before the calendar date; the device now reports `time=0` ("acquiring") until a real
+        date is parsed, instead of a wrapped-garbage timestamp. (#232)
+
+      ### Internal
+
+      - Build/governance tooling + GPS design & diagnostic records — no firmware-behavior
+        change. (#214, #217–#219)
+
+
+      ---
+
+
+      ### Which file do I download?
+
+
+      | File | What it is | When to use it |
+
+      |---|---|---|
+
+      | `*-merged.bin` (ESP32 — Heltec V3/V4, XIAO) | **Full image** — bootloader + partition table
+      + app in one, flashed at `0x0` after a chip erase. Self-contained, works on a blank chip. |
+      **First install / clean setup.** In a web flasher this is the **"Full Firmware"** option. |
+
+      | `*.bin` (ESP32) | **App only** — flashed at the app offset (`0x10000`); the bootloader must
+      already be on the chip. | **Updating** an existing node — OTA / **"Update Only."** Keeps the
+      device identity + WiFi/MQTT config. |
+
+      | `*.uf2` (nRF52 — RAK, T-Echo, XIAO nRF52) | Complete self-contained image. | **First install
+      *and* updates** — double-tap reset, then drag-drop onto the USB drive. (nRF52 has no
+      merged/app split.) |
+
+
+      > ⚠️ **ESP32:** the app-only `*.bin` will **not boot** if flashed at `0x0` — use
+      `*-merged.bin` for a fresh install. A full erase / "Full Firmware" wipes the device's identity
+      + saved config, so use it only for a first install or recovery, **never** a routine update.
+
+
+
+      ## What's Changed
+
+      * fix(hooks): track canonical commit-binding hooks so worktrees resolve the right task (#213)
+      by @Strycher in https://github.com/OffbandMesh/meshcore-firmware/pull/214
+
+      * Epic #216: Companion GPS autobaud + 0xC1 + wedge/time fixes by @Strycher in
+      https://github.com/OffbandMesh/meshcore-firmware/pull/234
+
+      * fix(#233): autobaud re-probes (no 9600 give-up) + CHANGELOG [1.2.0] by @Strycher in
+      https://github.com/OffbandMesh/meshcore-firmware/pull/236
+
+      * chore(#237): retitle CHANGELOG [1.2.0] -> [1.1.2] for the GPS release by @Strycher in
+      https://github.com/OffbandMesh/meshcore-firmware/pull/238
+
+
+
+      **Full Changelog**:
+      https://github.com/OffbandMesh/meshcore-firmware/compare/offband-v1.1.1...offband-v1.1.2-rc1
   - version: offband-v1.1.1
     name: Offband offband-v1.1.1
     datetime: '2026-06-26T05:24:03Z'
