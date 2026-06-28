@@ -95,8 +95,6 @@ analyzers:
     url: https://analyzer.meshcore.cz
   - name: analyzer.meshcore.website
     url: https://analyzer.meshcore.website
-  - name: mc.pp0.co
-    url: https://mc.pp0.co
 
 resources:
   getting_started: https://meshcore.cz/zapojit_do_meshcore

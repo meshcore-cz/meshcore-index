@@ -1,33 +1,24 @@
-# Sources:
-# - https://chicagolandmesh.org/
-# - https://chicagolandmesh.org/guides/meshcore/getting-started/
-# - https://chicagolandmesh.org/guides/meshcore/getting-started/configure/
 name: Chicagoland Mesh
 short_name: Chicagoland Mesh
-description: >-
-  Community network of MeshCore, Meshtastic, Reticulum and LoRa enthusiasts
-  building a sustainable, decentralized off-grid mesh across the Chicagoland
-  area, with a CoreScope-backed analyzer, live map, getting-started guides
-  and Discord coordination.
+description: Community network of MeshCore, Meshtastic, Reticulum and LoRa enthusiasts
+  building a sustainable, decentralized off-grid mesh across the Chicagoland area,
+  with a CoreScope-backed analyzer, live map, getting-started guides and Discord coordination.
 scope: local
 status: active
 visibility: public
 area: area.geojson
-
 coverage:
   countries:
-    - US
-
+  - US
 regions:
-  - code: us
-    name: United States
-  - code: us-il
-    name: Illinois
-    parent: us
-  - code: us-il-chi
-    name: Chicagoland
-    parent: us-il
-
+- code: us
+  name: United States
+- code: us-il
+  name: Illinois
+  parent: us
+- code: us-il-chi
+  name: Chicagoland
+  parent: us-il
 radio:
   frequency: '915'
   frequency_mhz: 910.525
@@ -36,32 +27,35 @@ radio:
   coding_rate: 4/5
   region_code: us-il-chi
   public_channel: Public
-  app_preset: 'USA/Canada (Recommended)'
-
+  app_preset: USA/Canada (Recommended)
 community:
   website: https://chicagolandmesh.org/
   discord: https://discord.gg/sUsTm77rBW
-
 maps:
-  - name: Chicagoland Mesh map
-    url: https://chicagolandmesh.org/map/
-  - name: MeshCore map
-    url: https://chicagolandmesh.org/corescope/map/
-
+- name: Chicagoland Mesh map
+  url: https://chicagolandmesh.org/map/
+- name: MeshCore map
+  url: https://chicagolandmesh.org/corescope/map/
 analyzers:
-  - name: corescope.chicagolandmesh.org
-    url: https://corescope.chicagolandmesh.org
-
+- name: corescope.chicagolandmesh.org
+  url: https://corescope.chicagolandmesh.org
+- name: scope.chicagooffline.com
+  url: https://scope.chicagooffline.com
 resources:
   getting_started: https://chicagolandmesh.org/guides/meshcore/getting-started/
   links:
-    - name: Configure your node
-      url: https://chicagolandmesh.org/guides/meshcore/getting-started/configure/
-    - name: Common mistakes to avoid
-      url: https://chicagolandmesh.org/guides/meshcore/getting-started/avoid-mistakes/
-    - name: MeshCore MQTT setup
-      url: https://chicagolandmesh.org/guides/meshcore/mqtt/
-    - name: Community builds
-      url: https://chicagolandmesh.org/guides/community/builds/
-    - name: Chicagoland Mesh GitHub
-      url: https://github.com/chicagolandmesh/chicagolandmesh.org
+  - name: Configure your node
+    url: https://chicagolandmesh.org/guides/meshcore/getting-started/configure/
+  - name: Common mistakes to avoid
+    url: https://chicagolandmesh.org/guides/meshcore/getting-started/avoid-mistakes/
+  - name: MeshCore MQTT setup
+    url: https://chicagolandmesh.org/guides/meshcore/mqtt/
+  - name: Community builds
+    url: https://chicagolandmesh.org/guides/community/builds/
+  - name: Chicagoland Mesh GitHub
+    url: https://github.com/chicagolandmesh/chicagolandmesh.org
+  - name: Chicago Offline website
+    url: https://chicagooffline.com/
+also_known_as:
+- Chicago Offline
+- ChicagoOffline
