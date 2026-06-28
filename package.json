@@ -1,6 +1,6 @@
 {
   "name": "meshcore-ninja",
-  "version": "2026.6.0",
+  "version": "2026.6.1",
   "description": "A database and compatibility matrix of MeshCore firmwares, built from human-readable YAML files.",
   "type": "module",
   "scripts": {
