@@ -1,7 +1,13 @@
 source: github
 repo: 868meshbot/Saitama
-updatedAt: '2026-06-21T09:55:40.359Z'
+updatedAt: '2026-06-28T23:05:34.795Z'
 releases:
+  - version: v1.0.1
+    name: v1.0.1
+    datetime: '2026-06-28T22:22:56Z'
+    url: https://github.com/868meshbot/Saitama/releases/tag/v1.0.1
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/868meshbot/Saitama/compare/v1.0.0...v1.0.1'
   - version: v1.0.0
     name: v1.0.0
     datetime: '2026-06-12T08:36:39Z'

@@ -1,7 +1,92 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-06-27T13:48:21.270Z'
+updatedAt: '2026-06-28T23:05:36.354Z'
 releases:
+  - version: beta_20
+    name: wadamesh beta_20
+    datetime: '2026-06-28T21:37:20Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_20
+    prerelease: false
+    notes: >-
+      wadamesh **beta_20** for the LilyGo T-Deck and Heltec V4 TFT.
+
+
+      Flash it from your browser at **https://flasher.wadamesh.com**, install it from the Launcher
+      app store, or use the bins below. A device already on beta_11 or later will offer the update
+      on its own.
+
+
+      This is a big one. New apps, custom notification sounds, saved Wi-Fi networks, a single chat
+      settings screen, the Heltec V4.3 high-gain receiver, and fixes for three reported mesh issues.
+
+
+      ## New
+
+
+      - **Spectrum analyzer.** A new app in the drawer that sweeps the LoRa band and draws a live
+      spectrum with a waterfall under it, a colour scale on the side and a peak-frequency readout.
+      Good for spotting interference or finding a quiet part of the band before you settle on a
+      frequency.
+
+      - **Custom notification sounds.** Set your own notification sound from a 16-bit WAV file on
+      the SD card, per event, instead of only the built-in chime. There is a separate switch for the
+      direct-message chime. Contributed by @Yazutsu in #66.
+
+      - **Saved Wi-Fi networks.** The device remembers more than one network now and can auto-join
+      them. Each saved network has its own auto-join switch and can be forgotten on its own.
+
+      - **One chat settings screen.** The gear on a chat or channel row, a long-press on that row,
+      and the cog inside an open chat now all open the same screen. Mark as read, mute messages,
+      mute mentions, region and scope, share secret, blocked users, and remove or delete are all in
+      one place.
+
+      - **Per-channel mute.** Silence the notification sound for a single channel while the rest
+      keep chiming.
+
+      - **High-gain receiver for the Heltec V4.3.** The V4.3 front-end module has a roughly 17 dB
+      receive amplifier that the firmware never switched on, so every V4.3 shipped with it bypassed.
+      There is now a "High-gain receiver (FEM LNA)" toggle under Radio and Mesh, in the Signal
+      section. Turning it on can noticeably improve weak-signal reception in quiet or remote spots;
+      in a noisy area it can overload the front end, so it is off by default. V4.2 boards do not
+      have this amplifier and do not show the toggle. Thanks to Wireless Rocks for the detailed
+      report and measurements.
+
+      - **Apps button on the Heltec V4 home screen.** The V4 home screen now has an Apps button next
+      to Send advert, so the app drawer is one tap away. The T-Deck and Tanmatsu already had this.
+
+      - **Blocked list is easier to reach.** Open it from Contacts (the overflow menu) and from the
+      chat settings screen.
+
+      - **Portuguese (Brazil)** is now a UI language, which brings the total to twelve. Community
+      translation.
+
+
+      ## Fixed
+
+
+      - **Adverts sent from the touch screen are now relayed by region-scoped repeaters.** The
+      advert went out without a region tag, so a repeater set to a single region dropped it, while
+      the same advert sent from the phone app got through. The device now tags its flood advert the
+      same way the phone companion does. Reported by @EricMW61 in #68.
+
+      - **A message could be transmitted on the wrong channel.** After you added or removed channels
+      the cached channel index could drift, so a message typed in one channel was sent on another
+      channel's key. It looked right on your own screen but arrived in the other channel. The send
+      path now matches the target channel by name at the moment of sending, so this can no longer
+      happen.
+
+      - **Room server logins could time out** when the only route to the server was through a
+      region-scoped repeater. A new opt-in toggle, "Scope direct messages to region" under Radio and
+      Mesh in the Signal section, tags your direct, login and admin messages with your region so a
+      region-only repeater will relay them. It is off by default, so cross-region messaging is
+      unchanged for anyone who does not need it. Reported by @randelreiss in #64.
+
+      - **The Wi-Fi scan could come back empty.** If a scan ran while the device was already
+      connected, the automatic reconnect could cancel it mid-sweep and the list returned zero
+      networks. The scan and the reconnect no longer fight over the radio, and the SSID list loads
+      reliably again
+
+      …
   - version: beta_19
     name: wadamesh beta_19
     datetime: '2026-06-27T13:10:46Z'
