@@ -24,13 +24,16 @@ regions:
     name: Southern California
     parent: us-west
 
+community:
+  website: https://socalmesh.org/
+
 radio:
   frequency: '915'
-  frequency_mhz: 910.525
+  frequency_mhz: 927.875
   bandwidth_khz: 62.5
   spreading_factor: 7
   coding_rate: 4/5
-  path_hash_mode: 2-Byte
+  path_hash_mode: 1-Byte
   public_channel: Public
 
 analyzers:
