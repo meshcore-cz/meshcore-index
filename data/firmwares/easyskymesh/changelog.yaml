@@ -1,7 +1,13 @@
 source: github
 repo: IoTThinks/EasySkyMesh
-updatedAt: '2026-06-29T04:24:06.739Z'
+updatedAt: '2026-06-29T15:51:58.367Z'
 releases:
+  - version: PowerSaving16.1
+    name: 'PowerSaving 16.1: Added PowerSaving GPS'
+    datetime: '2026-06-29T14:20:27Z'
+    url: https://github.com/IoTThinks/EasySkyMesh/releases/tag/PowerSaving16.1
+    prerelease: true
+    notes: "## Still in-progress\r\n* Debug log is visible for UART console. It is easy to view the Serial log from a NRF52 repeaters. Serial log for ESP32 repeaters are be cut off in powersaving on.\r\n\r\n### GPS PowerSaving for repeaters:\r\nThis is for repeaters to sync time with GPS while keeping the power consumption low as GPS is off most of the time.\r\n* Activating PowerSaving GPS: `powersaving on` and `gps on`. \r\n* In first GPS lock from boot, GPS will stay on for 15 minutes (long GPS session) then off for 1 hour.\r\n* In subsequent, GPS on, GPS will stay on for 5 minutes (normal GPS session) then off for 1 hour.\r\n* You can check the status and last sync by CLI `gps`.\r\n* You can force gps sync by CLI `gps sync`. The GPS will be on for 15 (long GPS session) and try to sync the time.\r\n\r\n<img width=\"370\" height=\"337\" alt=\"image\" src=\"https://github.com/user-attachments/assets/f55f71a3-d574-4f8f-ba07-10bbd38ad8b7\" />\r\n\r\n### Features:\r\n* Updating..."
   - version: PowerSaving16
     name: 'Power Saving 16: Poweroff at 16uA, T096 at 8.7mA and auto reboot'
     datetime: '2026-06-08T14:58:49Z'
