@@ -18,6 +18,9 @@
 
   const known = (v) => v !== undefined && v !== null && v !== '' && v !== 'unknown';
 
+  let subGhzBands = $derived(data.bands.filter((b) => Number(b.key) < 1000));
+  let otherBands = $derived(data.bands.filter((b) => Number(b.key) >= 1000));
+
   function revisionLabel(revision) {
     if (!known(revision)) return null;
     const value = String(revision);
@@ -100,9 +103,9 @@
   }
 </script>
 
-<Seo title={m.tool_bands_label()} description={m.bands_seo_desc()} />
+<Seo title={m.bands_page_title()} description={m.bands_seo_desc()} />
 
-<PageHeader tool="bands" subtitleClass="mb-5 max-w-2xl">
+<PageHeader tool="bands" title={m.bands_page_title()} subtitleClass="mb-5 max-w-2xl">
   {m.bands_intro()}
 </PageHeader>
 
@@ -153,63 +156,96 @@
   </div>
 {/if}
 
-<div class="overflow-hidden rounded-xl border border-edge">
-  <table class="w-full border-collapse text-[0.92rem]">
-    <thead>
-      <tr class="border-b border-edge bg-elev2 text-left text-[0.8rem] uppercase tracking-wide text-dim">
-        <th class="px-4 py-2.5 font-semibold">{m.bands_col_region()}</th>
-        <th class="px-4 py-2.5 font-semibold">{m.dev_facet_band()}</th>
-        <th class="px-4 py-2.5 font-semibold">{m.bands_col_freq_range()}</th>
-        {#if device}<th class="px-4 py-2.5 font-semibold">{m.bands_col_variants()}</th>{/if}
-        <th class="px-4 py-2.5 text-right font-semibold">{m.collection_devices_label()}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each data.bands as b (b.key)}
-        {@const supported = deviceBands.has(b.key)}
-        {@const variants = device ? variantsForBand(b.key) : []}
-        <tr
-          class="group cursor-pointer border-b border-edge last:border-0 transition hover:bg-elev {supported ? 'bg-accent2/10' : device ? 'opacity-45' : ''}"
-          onclick={(e) => rowClick(e, b.key)}
-        >
-          <td class="px-4 py-3 {supported ? 'border-l-2 border-accent2' : ''}">
-            <a class="font-semibold text-accent2 group-hover:underline" href={href(`/devices/?band=${b.key}`)}>
-              {b.region ?? b.name}
-            </a>
-          </td>
-          <td class="px-4 py-3 font-medium">{b.name}</td>
-          <td class="px-4 py-3 font-mono text-[0.85rem] text-dim">{b.range ?? '—'}</td>
-          {#if device}
-            <td class="px-4 py-3">
-              {#if variants.length}
-                <div class="flex flex-wrap gap-1.5">
-                  {#each variants as variant}
-                    <span
-                      class="rounded-full bg-accent2/10 px-2 py-0.5 text-[0.72rem] font-semibold text-accent2"
-                      title={[revisionLabel(variant.revision), variant.sku ? `SKU ${variant.sku}` : null].filter(Boolean).join(' · ')}
-                    >
-                      {variant.name}{#if variant.sku} · {variant.sku}{/if}
-                    </span>
-                  {/each}
-                </div>
-              {:else if supported}
-                <span class="text-dim">{m.bands_radio_support()}</span>
+{#snippet bandTable(bands)}
+  <div class="overflow-hidden rounded-xl border border-edge">
+    <table class="w-full border-collapse text-[0.92rem]">
+      <thead>
+        <tr class="border-b border-edge bg-elev2 text-left text-[0.8rem] uppercase tracking-wide text-dim">
+          <th class="px-4 py-2.5 font-semibold">{m.bands_col_region()}</th>
+          <th class="px-4 py-2.5 font-semibold">{m.dev_facet_band()}</th>
+          <th class="px-4 py-2.5 font-semibold">{m.bands_col_freq_range()}</th>
+          {#if device}<th class="px-4 py-2.5 font-semibold">{m.bands_col_variants()}</th>{/if}
+          <th class="px-4 py-2.5 text-right font-semibold">{m.collection_networks_label()}</th>
+          <th class="px-4 py-2.5 text-right font-semibold">{m.collection_devices_label()}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each bands as b (b.key)}
+          {@const supported = deviceBands.has(b.key)}
+          {@const variants = device ? variantsForBand(b.key) : []}
+          <tr
+            class="group cursor-pointer border-b border-edge last:border-0 transition hover:bg-elev {supported ? 'bg-accent2/10' : device ? 'opacity-45' : ''}"
+            onclick={(e) => rowClick(e, b.key)}
+          >
+            <td class="px-4 py-3 border-l-2" style:border-color={b.color}>
+              <div class="flex items-center gap-2.5">
+                <span
+                  class="h-3 w-3 shrink-0 rounded-full border"
+                  style:background-color="color-mix(in srgb, {b.color} 22%, transparent)"
+                  style:border-color="color-mix(in srgb, {b.color} 45%, transparent)"
+                  style:color={b.color}
+                  aria-hidden="true"
+                ></span>
+                <a class="font-semibold group-hover:underline" style:color={b.color} href={href(`/devices/?band=${b.key}`)}>
+                  {b.region ?? b.name}
+                </a>
+              </div>
+            </td>
+            <td class="px-4 py-3 font-medium">{b.name}</td>
+            <td class="px-4 py-3 font-mono text-[0.85rem] text-dim">{b.range ?? '—'}</td>
+            {#if device}
+              <td class="px-4 py-3">
+                {#if variants.length}
+                  <div class="flex flex-wrap gap-1.5">
+                    {#each variants as variant}
+                      <span
+                        class="rounded-full bg-accent2/10 px-2 py-0.5 text-[0.72rem] font-semibold text-accent2"
+                        title={[revisionLabel(variant.revision), variant.sku ? `SKU ${variant.sku}` : null].filter(Boolean).join(' · ')}
+                      >
+                        {variant.name}{#if variant.sku} · {variant.sku}{/if}
+                      </span>
+                    {/each}
+                  </div>
+                {:else if supported}
+                  <span class="text-dim">{m.bands_radio_support()}</span>
+                {:else}
+                  <span class="text-muted">—</span>
+                {/if}
+              </td>
+            {/if}
+            <td class="px-4 py-3 text-right tabular-nums">
+              {#if b.networkCount > 0}
+                <a class="text-accent hover:underline" href={href(`/networks/?band=${b.key}`)} onclick={(e) => e.stopPropagation()}>
+                  {b.networkCount}
+                </a>
               {:else}
-                <span class="text-muted">—</span>
+                <span class="text-muted">0</span>
               {/if}
             </td>
-          {/if}
-          <td class="px-4 py-3 text-right tabular-nums">
-            {#if b.deviceCount > 0}
-              <a class="text-accent2 hover:underline" href={href(`/devices/?band=${b.key}`)}>
-                {b.deviceCount}
-              </a>
-            {:else}
-              <span class="text-muted">0</span>
-            {/if}
-          </td>
-        </tr>
-      {/each}
-    </tbody>
-  </table>
-</div>
+            <td class="px-4 py-3 text-right tabular-nums">
+              {#if b.deviceCount > 0}
+                <a class="text-accent2 hover:underline" href={href(`/devices/?band=${b.key}`)} onclick={(e) => e.stopPropagation()}>
+                  {b.deviceCount}
+                </a>
+              {:else}
+                <span class="text-muted">0</span>
+              {/if}
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
+{/snippet}
+
+<section class="mb-8">
+  <h2 class="mb-3 border-b border-edge pb-1.5 text-[1.1rem] font-semibold">{m.bands_section_sub_ghz()}</h2>
+  {@render bandTable(subGhzBands)}
+</section>
+
+{#if otherBands.length}
+  <section>
+    <h2 class="mb-3 border-b border-edge pb-1.5 text-[1.1rem] font-semibold text-dim">{m.bands_section_other()}</h2>
+    {@render bandTable(otherBands)}
+  </section>
+{/if}

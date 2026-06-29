@@ -469,6 +469,13 @@ export function devicesForBand(band) {
   );
 }
 
+/** Non-deprecated networks operating on a LoRa band key. */
+export function networksForBand(band) {
+  if (band == null || band === '') return [];
+  const key = String(band);
+  return networks.filter((n) => !n.deprecated && networkBands(n).includes(key));
+}
+
 /** Radio settings published by a network, supporting both legacy `radio` and `radios[]`. */
 export function networkRadioSettings(network) {
   const radios = Array.isArray(network?.radios) ? network.radios : [];
@@ -700,10 +707,15 @@ export function bandLongLabel(band) {
   return [fp.region, fp.name].filter(Boolean).join(' · ');
 }
 
+/** Canonical fill color for a band key (maps, /bands, chips). */
+export function bandColor(band) {
+  return resolveFrequency(band)?.color ?? null;
+}
+
 /**
  * Every LoRa band in the catalog, sorted ascending by frequency, with the count
  * of devices supporting it. Powers the /bands reference page.
- * @returns {{ key, name, region?, range?, description?, deviceCount }[]}
+ * @returns {{ key, name, color, region?, range?, description?, deviceCount, networkCount }[]}
  */
 export function allBands() {
   const cat = globals.frequency ?? {};
@@ -711,9 +723,8 @@ export function allBands() {
     .map(([key, part]) => ({
       key,
       ...part,
-      deviceCount: devices.filter((d) =>
-        (d.hardware?.radios ?? []).some((r) => (r.bands ?? []).map(String).includes(key))
-      ).length
+      deviceCount: devicesForBand(key).length,
+      networkCount: networksForBand(key).length
     }))
     .sort((a, b) => Number(a.key) - Number(b.key));
 }

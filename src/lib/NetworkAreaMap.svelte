@@ -3,7 +3,7 @@
   import { href } from '$lib/i18n.js';
   import { m } from '$lib/paraglide/messages.js';
   import { onMount } from 'svelte';
-  import { networkBands, bandLabel, networkScopeLabel, networkStatusLabel } from '$lib/data.js';
+  import { networkBands, bandLabel, bandColor, networkScopeLabel, networkStatusLabel } from '$lib/data.js';
   import { LIVE_ENABLED, fmtRate } from '$lib/pulse.js';
   import { ToggleGroup } from 'bits-ui';
   import Button from '$lib/Button.svelte';
@@ -77,7 +77,6 @@
   }
 
   const COLORS = ['#4dd0a7', '#5aa9ff', '#d29922', '#f85149', '#a78bfa', '#f97316'];
-  const BAND_PALETTE = ['#4dd0a7', '#5aa9ff', '#d29922', '#f85149', '#a78bfa', '#f97316', '#34d399', '#e879f9'];
   const NO_BAND_COLOR = '#8b949e';
 
   onMount(() => {
@@ -161,15 +160,17 @@
         .filter((n) => n.areaUrl && byNetwork.has(n.id))
         .sort((a, b) => (b.areaKm2 ?? 0) - (a.areaKm2 ?? 0));
 
-      // Stable band → color map: every band present gets a fixed palette slot in
-      // ascending-frequency order, so the legend and fills stay consistent.
+      // Stable band → color map from the globals catalog so legend and fills
+      // stay consistent regardless of which bands happen to be on the map.
       const presentBands = [...new Set(areaNetworks.map(primaryBand).filter(Boolean))].sort(
         (a, b) => Number(a) - Number(b)
       );
-      const bandColor = new Map(presentBands.map((b, i) => [b, BAND_PALETTE[i % BAND_PALETTE.length]]));
+      const bandColors = new Map(
+        presentBands.map((b) => [b, bandColor(b) ?? NO_BAND_COLOR])
+      );
       const hasUnbanded = areaNetworks.some((n) => !primaryBand(n));
       bandLegend = [
-        ...presentBands.map((b) => ({ key: b, label: bandLabel(b) ?? b, color: bandColor.get(b) })),
+        ...presentBands.map((b) => ({ key: b, label: bandLabel(b) ?? b, color: bandColors.get(b) })),
         ...(hasUnbanded ? [{ key: null, label: m.spec_unknown(), color: NO_BAND_COLOR }] : [])
       ];
 
@@ -177,7 +178,7 @@
       // mode toggle via applyColors().
       const colorFor = (network, index) =>
         colorMode === 'band'
-          ? bandColor.get(primaryBand(network)) ?? NO_BAND_COLOR
+          ? bandColors.get(primaryBand(network)) ?? NO_BAND_COLOR
           : COLORS[index % COLORS.length];
 
       const drawn = [];
@@ -256,7 +257,7 @@
 
       function radioRow(r) {
         const band = r.frequency != null ? String(r.frequency) : null;
-        const c = bandColor.get(band) ?? NO_BAND_COLOR;
+        const c = bandColors.get(band) ?? NO_BAND_COLOR;
         const label = escapeHtml(bandLabel(band) ?? band ?? '—');
         const detail = [fmtMhz(r.frequency_mhz), r.spreading_factor ? `SF${r.spreading_factor}` : '', r.bandwidth_khz ? `${r.bandwidth_khz}kHz` : '']
           .filter(Boolean)

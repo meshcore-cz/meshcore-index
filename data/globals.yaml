@@ -171,39 +171,48 @@ frequency:
   "433":
     name: 433 MHz
     range: 433.05–434.79 MHz
-    region: EU433 / CN
+    region: EU433 / CN433
+    color: "#4dd0a7"
   "470":
     name: 470 MHz
     range: 470–510 MHz
     region: CN470
+    color: "#f97316"
   "780":
     name: 780 MHz
     range: 779–787 MHz
     region: CN779
+    color: "#06b6d4"
   "865":
     name: 865 MHz
     range: 865–867 MHz
     region: IN865
+    color: "#e879f9"
   "868":
     name: 868 MHz
     range: 863–870 MHz
     region: EU868
+    color: "#5aa9ff"
   "915":
     name: 915 MHz
     range: 902–928 MHz
     region: US915 / AU915
+    color: "#d29922"
   "920":
     name: 920 MHz
     range: 920–923 MHz
     region: KR920
+    color: "#f85149"
   "923":
     name: 923 MHz
     range: 920–925 MHz
     region: AS923
+    color: "#a78bfa"
   "2400":
     name: 2.4 GHz
     range: 2.4–2.5 GHz
     region: ISM 2.4 GHz
+    color: "#8b949e"
 
 display:
   oled:

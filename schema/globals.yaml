@@ -138,11 +138,18 @@ $defs:
       additionalProperties: false
       required:
         - name
+        - color
       properties:
         name:
           description: Human label for the band, e.g. "868 MHz (EU)".
           type: string
           minLength: 1
+        color:
+          description: >-
+            Distinct fill color for maps and the /bands reference page
+            (CSS hex, e.g. "#5aa9ff").
+          type: string
+          pattern: ^#[0-9A-Fa-f]{6}$
         range:
           description: Frequency span the band covers, e.g. "863–870 MHz".
           type: string
