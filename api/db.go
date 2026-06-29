@@ -522,6 +522,39 @@ func (d *DB) AdvertsForNode(pubkey string, limit int, before int64) (out []Adver
 	return out, nextBefore, rows.Err()
 }
 
+// NetworkAdvertStat is one node's advert activity on a single network.
+type NetworkAdvertStat struct {
+	NetworkID string `json:"networkId"`
+	Adverts   int64  `json:"adverts"`
+	FirstAt   int64  `json:"firstAt"`
+	LastAt    int64  `json:"lastAt"`
+}
+
+// NetworkAdvertStatsForNode aggregates one node's adverts per network from the
+// history table: how many adverts, and the first/last time one arrived on each
+// network. Ordered most-recently-active first.
+func (d *DB) NetworkAdvertStatsForNode(pubkey string) ([]NetworkAdvertStat, error) {
+	rows, err := d.db.Query(`
+		SELECT network_id, COUNT(*), MIN(received_at), MAX(received_at)
+		FROM adverts WHERE pubkey = ?
+		GROUP BY network_id
+		ORDER BY MAX(received_at) DESC`, pubkey)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var out []NetworkAdvertStat
+	for rows.Next() {
+		var s NetworkAdvertStat
+		if err := rows.Scan(&s.NetworkID, &s.Adverts, &s.FirstAt, &s.LastAt); err != nil {
+			return nil, err
+		}
+		out = append(out, s)
+	}
+	return out, rows.Err()
+}
+
 // SaveImportedNodes mirrors the external directory into the imported_nodes table
 // in one transaction, upserting every node by public key. This table is kept
 // entirely separate from the live `nodes` registry.

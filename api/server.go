@@ -264,9 +264,44 @@ func (s *Server) handleNodeSub(w http.ResponseWriter, r *http.Request) {
 		s.handleNodeAdverts(w, r, pubkey)
 	case "links":
 		s.handleNodeLinks(w, r, pubkey)
+	case "networks":
+		s.handleNodeNetworks(w, r, pubkey)
 	default:
 		writeJSON(w, http.StatusNotFound, map[string]string{"error": "not found"})
 	}
+}
+
+// handleNodeNetworks serves one node's per-network advert activity (count and
+// first/last advert time per network), newest-active first:
+//
+//	GET /api/nodes/{pubkey}/networks
+//
+// Aggregated from the advert history table, so it needs the database; without it
+// the response is an empty list (the directory then shows networks unenriched).
+func (s *Server) handleNodeNetworks(w http.ResponseWriter, r *http.Request, rawPub string) {
+	node, ok := normalizePub(rawPub)
+	if !ok {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "invalid pubkey"})
+		return
+	}
+	pubHex := hex.EncodeToString(node[:])
+
+	stats := []NetworkAdvertStat{}
+	if s.db != nil {
+		rows, err := s.db.NetworkAdvertStatsForNode(pubHex)
+		if err != nil {
+			writeJSON(w, http.StatusInternalServerError, map[string]string{"error": "query failed"})
+			return
+		}
+		if rows != nil {
+			stats = rows
+		}
+	}
+	w.Header().Set("Cache-Control", "public, max-age=15")
+	writeJSON(w, http.StatusOK, map[string]any{
+		"node":     pubHex,
+		"networks": stats,
+	})
 }
 
 // handleNodeDetail serves one node's overview row and its rolling latest-adverts
