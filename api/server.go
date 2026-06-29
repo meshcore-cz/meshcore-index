@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"net/http"
+	"sort"
 	"strings"
 )
 
@@ -253,7 +254,9 @@ type linkView struct {
 //	GET /api/nodes/{pubkey}          node detail (overview + rolling adverts)
 //	GET /api/nodes/{pubkey}/adverts  full advert history (paginated)
 //	GET /api/nodes/{pubkey}/links    observed links
+//	GET /api/nodes/{pubkey}/networks per-network advert activity
 //	GET /api/nodes/{pubkey}/activity advert counts per UTC day
+//	GET /api/nodes/{pubkey}/map      captured map.meshcore.io publishes
 func (s *Server) handleNodeSub(w http.ResponseWriter, r *http.Request) {
 	rest := strings.TrimPrefix(r.URL.Path, "/api/nodes/")
 	pubkey, sub, _ := strings.Cut(rest, "/")
@@ -269,6 +272,8 @@ func (s *Server) handleNodeSub(w http.ResponseWriter, r *http.Request) {
 		s.handleNodeNetworks(w, r, pubkey)
 	case "activity":
 		s.handleNodeActivity(w, r, pubkey)
+	case "map":
+		s.handleNodeMapPublishes(w, r, pubkey)
 	default:
 		writeJSON(w, http.StatusNotFound, map[string]string{"error": "not found"})
 	}
@@ -358,6 +363,48 @@ func (s *Server) handleNodeNetworks(w http.ResponseWriter, r *http.Request, rawP
 	})
 }
 
+// handleNodeMapPublishes serves the captured map.meshcore.io publish history for
+// one node, newest publish first:
+//
+//	GET /api/nodes/{pubkey}/map
+//
+// Each entry is a distinct snapshot of the node's directory metadata we have
+// mirrored over time. Served from the durable history table; without a database
+// it falls back to the current in-memory record so the endpoint still answers.
+func (s *Server) handleNodeMapPublishes(w http.ResponseWriter, r *http.Request, rawPub string) {
+	node, ok := normalizePub(rawPub)
+	if !ok {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "invalid pubkey"})
+		return
+	}
+	pubHex := hex.EncodeToString(node[:])
+
+	publishes := []ImportedSnapshot{}
+	if s.db != nil {
+		rows, err := s.db.ImportedNodeHistory(pubHex)
+		if err != nil {
+			writeJSON(w, http.StatusInternalServerError, map[string]string{"error": "query failed"})
+			return
+		}
+		if rows != nil {
+			publishes = rows
+		}
+	}
+	// No durable history (db disabled, or first sync still pending): surface the
+	// current mirrored record so the node still shows its directory presence.
+	if len(publishes) == 0 && s.imported != nil {
+		for _, in := range s.imported.ForPubKey(pubHex) {
+			publishes = append(publishes, in.snapshot())
+		}
+	}
+
+	w.Header().Set("Cache-Control", "public, max-age=60")
+	writeJSON(w, http.StatusOK, map[string]any{
+		"node":      pubHex,
+		"publishes": publishes,
+	})
+}
+
 // handleNodeDetail serves one node's overview row and its rolling latest-adverts
 // list — the directory profile's primary fetch, avoiding the multi-MB /api/nodes
 // download.
@@ -367,13 +414,49 @@ func (s *Server) handleNodeDetail(w http.ResponseWriter, r *http.Request, rawPub
 		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "invalid pubkey"})
 		return
 	}
-	view, found := s.nodes.GetView(hex.EncodeToString(node[:]))
-	if !found {
-		writeJSON(w, http.StatusNotFound, map[string]string{"error": "unknown node"})
+	pubHex := hex.EncodeToString(node[:])
+	if view, found := s.nodes.GetView(pubHex); found {
+		view.Source = "live"
+		view.OnMap = s.imported != nil && s.imported.Has(pubHex)
+		w.Header().Set("Cache-Control", "public, max-age=15")
+		writeJSON(w, http.StatusOK, view)
 		return
 	}
-	w.Header().Set("Cache-Control", "public, max-age=15")
-	writeJSON(w, http.StatusOK, view)
+
+	// Not observed by our analyzers: fall back to the mirrored directory so a
+	// map-only node still has a profile (built from its imported record).
+	if s.imported != nil {
+		if recs := s.imported.ForPubKey(pubHex); len(recs) > 0 {
+			w.Header().Set("Cache-Control", "public, max-age=15")
+			writeJSON(w, http.StatusOK, importedNodeView(recs[0]))
+			return
+		}
+	}
+	writeJSON(w, http.StatusNotFound, map[string]string{"error": "unknown node"})
+}
+
+// importedNodeView builds a node profile from a directory-only record. It has no
+// observed adverts, networks, or links — those endpoints return empty for it —
+// and is tagged source "map" so the UI can explain the data is mirrored.
+func importedNodeView(n *ImportedNode) NodeView {
+	t := byte(n.Type)
+	v := NodeView{
+		PubKey:        n.PublicKey,
+		Name:          n.AdvName,
+		Type:          t,
+		TypeName:      nodeTypeName(t),
+		LastAdvertAt:  n.lastAdvertUnix(),
+		Networks:      []string{},
+		LatestAdverts: []AdvertView{},
+		Source:        "map",
+		OnMap:         true,
+	}
+	if n.hasCoords() {
+		v.HasGPS = true
+		v.Lat = n.AdvLat
+		v.Lon = n.AdvLon
+	}
+	return v
 }
 
 // advert history endpoint defaults: 50 adverts per page, hard-capped at 500.
@@ -482,7 +565,7 @@ func (s *Server) handleSearch(w http.ResponseWriter, r *http.Request) {
 		limit = maxSearchLimit
 	}
 
-	results, total, capped := s.nodes.Search(p, limit)
+	results, total, capped := s.mergedSearch(p, limit)
 	w.Header().Set("Cache-Control", "public, max-age=15")
 	writeJSON(w, http.StatusOK, map[string]any{
 		"results":  results,
@@ -490,6 +573,82 @@ func (s *Server) handleSearch(w http.ResponseWriter, r *http.Request) {
 		"total":    total,
 		"capped":   capped,
 	})
+}
+
+// mergedSearch ranks live nodes and the mirrored map.meshcore.io directory
+// together so directory-only nodes are findable. Live nodes win on duplicate
+// public keys. Results are ranked by relevance then recency (matching the live
+// registry's own ordering) and capped to limit; total is the full match count.
+func (s *Server) mergedSearch(p MapParams, limit int) (results []SearchResult, total int, capped bool) {
+	q := strings.ToLower(strings.TrimSpace(p.Q))
+
+	// All matching live nodes, already source-tagged. Passing limit 0 keeps every
+	// hit so the merge ranks across both sources before truncating.
+	live, _, _ := s.nodes.Search(p, 0)
+
+	type scored struct {
+		r    SearchResult
+		rank int
+	}
+	all := make([]scored, 0, len(live))
+	seen := make(map[string]bool, len(live))
+	for _, r := range live {
+		seen[r.PubKey] = true
+		all = append(all, scored{r, rankMatch(r.Name, r.PubKey, q)})
+	}
+
+	if s.imported != nil {
+		for _, in := range s.imported.Records() {
+			if seen[in.PublicKey] || !p.matchesImported(in) {
+				continue
+			}
+			seen[in.PublicKey] = true
+			all = append(all, scored{importedSearchResult(in), rankMatch(in.AdvName, in.PublicKey, q)})
+		}
+	}
+
+	sort.Slice(all, func(i, j int) bool {
+		if all[i].rank != all[j].rank {
+			return all[i].rank < all[j].rank
+		}
+		if all[i].r.LastAdvertAt != all[j].r.LastAdvertAt {
+			return all[i].r.LastAdvertAt > all[j].r.LastAdvertAt
+		}
+		return all[i].r.PubKey < all[j].r.PubKey
+	})
+
+	total = len(all)
+	if limit > 0 && len(all) > limit {
+		all = all[:limit]
+		capped = true
+	}
+	results = make([]SearchResult, 0, len(all))
+	for _, s := range all {
+		results = append(results, s.r)
+	}
+	return results, total, capped
+}
+
+// importedSearchResult renders a directory-only node as a search hit. It carries
+// no networks or advert count (the directory tracks neither) and is tagged
+// source "map" so the UI can flag it.
+func importedSearchResult(n *ImportedNode) SearchResult {
+	t := byte(n.Type)
+	r := SearchResult{
+		PubKey:       n.PublicKey,
+		Name:         n.AdvName,
+		Type:         t,
+		TypeName:     nodeTypeName(t),
+		LastAdvertAt: n.lastAdvertUnix(),
+		Networks:     []string{},
+		Source:       "map",
+	}
+	if n.hasCoords() {
+		r.HasGPS = true
+		r.Lat = n.AdvLat
+		r.Lon = n.AdvLon
+	}
+	return r
 }
 
 // handleNodeLinks serves the observed links for one node:

@@ -240,6 +240,11 @@ type NodeView struct {
 	Networks      []string     `json:"networks"`
 	ObserverName  string       `json:"observerName,omitempty"`
 	LatestAdverts []AdvertView `json:"latestAdverts"`
+	// Source is "live" for a node observed by our analyzers or "map" for one we
+	// only know from the mirrored map.meshcore.io directory. OnMap is true when the
+	// node also appears in that directory (regardless of source).
+	Source string `json:"source,omitempty"`
+	OnMap  bool   `json:"onMap"`
 }
 
 func advertViews(adverts []AdvertObservation) []AdvertView {
@@ -330,22 +335,31 @@ type SearchResult struct {
 	LastAdvertAt  int64    `json:"lastAdvertAt"`
 	AdvertCount   uint64   `json:"advertCount"`
 	Networks      []string `json:"networks"`
+	// Source is "live" (observed by our analyzers) or "map" (only known from the
+	// mirrored map.meshcore.io directory). Lets the UI flag directory-only hits.
+	Source string `json:"source,omitempty"`
 }
 
 // searchRank scores how well a node matches the query for ordering: lower is
 // better. With no query every node ranks equally (browse mode) and recency
 // decides. Exact and prefix name matches beat substring and pubkey-prefix hits.
 func searchRank(n *NodeRecord, q string) int {
+	return rankMatch(n.Name, n.PubKey, q)
+}
+
+// rankMatch scores a name/pubkey pair against the (already lower-cased) query, so
+// both live nodes and imported directory entries can be ranked the same way.
+func rankMatch(name, pubkey, q string) int {
 	if q == "" {
 		return 0
 	}
-	name := strings.ToLower(n.Name)
+	name = strings.ToLower(name)
 	switch {
 	case name == q:
 		return 0
 	case strings.HasPrefix(name, q):
 		return 1
-	case strings.HasPrefix(n.PubKey, q):
+	case strings.HasPrefix(pubkey, q):
 		return 2
 	default:
 		return 3 // substring match (matches() already confirmed it hit)
@@ -402,6 +416,7 @@ func (r *NodeRegistry) Search(p MapParams, limit int) (results []SearchResult, t
 			LastAdvertAt:  n.LastAdvertAt,
 			AdvertCount:   n.AdvertCount,
 			Networks:      append([]string(nil), n.Networks...),
+			Source:        "live",
 		})
 	}
 	return results, total, capped

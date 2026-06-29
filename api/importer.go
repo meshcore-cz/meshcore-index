@@ -3,6 +3,8 @@ package main
 import (
 	"compress/gzip"
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -55,6 +57,64 @@ func (n *ImportedNode) cacheDerived() {
 // lastAdvertUnix returns last_advert as unix seconds (precomputed; 0 if absent).
 func (n *ImportedNode) lastAdvertUnix() int64 { return n.lastAt }
 
+// historySig is a content hash over the publish-relevant fields of a node — name,
+// type, location, link, source, who submitted/updated it and when. last_advert is
+// deliberately excluded: it moves on almost every sync and does not represent a
+// new "publish". Two snapshots with the same sig are the same publish.
+func (n *ImportedNode) historySig() string {
+	h := sha256.New()
+	fmt.Fprintf(h, "%d\x1f%s\x1f%.6f\x1f%.6f\x1f%s\x1f%s\x1f%s\x1f%s\x1f%s\x1f%s",
+		n.Type, n.AdvName, n.AdvLat, n.AdvLon, n.InsertedDate, n.UpdatedDate,
+		n.Link, n.Source, n.InsertedBy, n.UpdatedBy)
+	h.Write(n.Params)
+	return hex.EncodeToString(h.Sum(nil))
+}
+
+// ImportedSnapshot is one captured map.meshcore.io publish, as served by the
+// per-node "map publishes" endpoint. It mirrors an ImportedNode row plus the
+// capture timestamps that bound when we observed that exact snapshot.
+type ImportedSnapshot struct {
+	Type            int             `json:"type"`
+	TypeName        string          `json:"typeName"`
+	AdvName         string          `json:"advName"`
+	LastAdvert      string          `json:"lastAdvert,omitempty"`
+	LastAdvertAt    int64           `json:"lastAdvertAt"`
+	AdvLat          float64         `json:"advLat,omitempty"`
+	AdvLon          float64         `json:"advLon,omitempty"`
+	HasGPS          bool            `json:"hasGps"`
+	InsertedDate    string          `json:"insertedDate,omitempty"`
+	UpdatedDate     string          `json:"updatedDate,omitempty"`
+	Params          json.RawMessage `json:"params,omitempty"`
+	Link            string          `json:"link,omitempty"`
+	Source          string          `json:"source,omitempty"`
+	InsertedBy      string          `json:"insertedBy,omitempty"`
+	UpdatedBy       string          `json:"updatedBy,omitempty"`
+	FirstCapturedAt int64           `json:"firstCapturedAt"`
+	LastCapturedAt  int64           `json:"lastCapturedAt"`
+}
+
+// snapshot renders the node's current in-memory record as an ImportedSnapshot,
+// used as a fallback when the durable history table is unavailable.
+func (n *ImportedNode) snapshot() ImportedSnapshot {
+	return ImportedSnapshot{
+		Type:         n.Type,
+		TypeName:     nodeTypeName(byte(n.Type)),
+		AdvName:      n.AdvName,
+		LastAdvert:   n.LastAdvert,
+		LastAdvertAt: n.lastAdvertUnix(),
+		AdvLat:       n.AdvLat,
+		AdvLon:       n.AdvLon,
+		HasGPS:       n.hasCoords(),
+		InsertedDate: n.InsertedDate,
+		UpdatedDate:  n.UpdatedDate,
+		Params:       n.Params,
+		Link:         n.Link,
+		Source:       n.Source,
+		InsertedBy:   n.InsertedBy,
+		UpdatedBy:    n.UpdatedBy,
+	}
+}
+
 // ImportRegistry holds the latest mirror of the external node directory. The
 // record slice is replaced wholesale on each successful sync (copy-on-write), so
 // a reader that captured the previous slice keeps a consistent view without
@@ -87,6 +147,35 @@ func (ir *ImportRegistry) Len() int {
 	ir.mu.Lock()
 	defer ir.mu.Unlock()
 	return len(ir.records)
+}
+
+// ForPubKey returns the current imported record(s) for one public key. Upstream
+// keys nodes uniquely, so this is normally zero or one, but the feed is
+// third-party so duplicates are returned as-is rather than silently collapsed.
+func (ir *ImportRegistry) ForPubKey(pubkey string) []*ImportedNode {
+	ir.mu.Lock()
+	records := ir.records
+	ir.mu.Unlock()
+	var out []*ImportedNode
+	for _, n := range records {
+		if n.PublicKey == pubkey {
+			out = append(out, n)
+		}
+	}
+	return out
+}
+
+// Has reports whether the imported directory currently contains this public key.
+func (ir *ImportRegistry) Has(pubkey string) bool {
+	ir.mu.Lock()
+	records := ir.records
+	ir.mu.Unlock()
+	for _, n := range records {
+		if n.PublicKey == pubkey {
+			return true
+		}
+	}
+	return false
 }
 
 // Importer periodically fetches the external directory and refreshes the
@@ -138,8 +227,12 @@ func (im *Importer) syncOnce(ctx context.Context) error {
 	im.registry.Replace(records)
 	log.Printf("[import] synced %d node(s) from %s", len(records), im.url)
 	if im.db != nil {
-		if err := im.db.SaveImportedNodes(records, nowUnix()); err != nil {
+		now := nowUnix()
+		if err := im.db.SaveImportedNodes(records, now); err != nil {
 			return fmt.Errorf("persisting imported nodes: %w", err)
+		}
+		if err := im.db.SaveImportedNodeHistory(records, now); err != nil {
+			return fmt.Errorf("persisting imported node history: %w", err)
 		}
 	}
 	return nil

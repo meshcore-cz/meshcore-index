@@ -111,7 +111,36 @@ CREATE TABLE IF NOT EXISTS imported_nodes (
 	inserted_by     TEXT    NOT NULL DEFAULT '',
 	updated_by      TEXT    NOT NULL DEFAULT '',
 	synced_at       INTEGER NOT NULL DEFAULT 0
-);`
+);
+
+-- Append-only history of map.meshcore.io "publishes": every distinct snapshot of
+-- a node's published metadata we have ever mirrored. A row is keyed by
+-- (public_key, sig) where sig is a content hash over the publish-relevant fields
+-- (everything except the frequently-changing last_advert), so re-syncs that only
+-- bump last_advert don't create new rows. first_captured_at is when we first saw
+-- that snapshot; last_captured_at is the most recent sync that still matched it.
+CREATE TABLE IF NOT EXISTS imported_node_history (
+	id                INTEGER PRIMARY KEY AUTOINCREMENT,
+	public_key        TEXT    NOT NULL,
+	sig               TEXT    NOT NULL,
+	type              INTEGER NOT NULL DEFAULT 0,
+	adv_name          TEXT    NOT NULL DEFAULT '',
+	last_advert       TEXT    NOT NULL DEFAULT '',
+	last_advert_at    INTEGER NOT NULL DEFAULT 0,
+	adv_lat           REAL    NOT NULL DEFAULT 0,
+	adv_lon           REAL    NOT NULL DEFAULT 0,
+	inserted_date     TEXT    NOT NULL DEFAULT '',
+	updated_date      TEXT    NOT NULL DEFAULT '',
+	params            TEXT    NOT NULL DEFAULT '{}',
+	link              TEXT    NOT NULL DEFAULT '',
+	source            TEXT    NOT NULL DEFAULT '',
+	inserted_by       TEXT    NOT NULL DEFAULT '',
+	updated_by        TEXT    NOT NULL DEFAULT '',
+	first_captured_at INTEGER NOT NULL DEFAULT 0,
+	last_captured_at  INTEGER NOT NULL DEFAULT 0,
+	UNIQUE(public_key, sig)
+);
+CREATE INDEX IF NOT EXISTS idx_imported_history_pubkey ON imported_node_history(public_key, first_captured_at);`
 
 // OpenDB opens (creating if needed) the SQLite counter store. WAL mode and a
 // busy timeout keep the single periodic writer from tripping over readers.
@@ -700,4 +729,75 @@ func (d *DB) LoadImportedNodes() ([]*ImportedNode, error) {
 		nodes = append(nodes, &n)
 	}
 	return nodes, rows.Err()
+}
+
+// SaveImportedNodeHistory appends a history row for every node whose current
+// snapshot we have not recorded before, in one transaction. Dedup is by
+// (public_key, sig): a snapshot already on file just has its last_captured_at
+// (and last_advert) refreshed, so the table grows only when a node is actually
+// re-published with changed metadata.
+func (d *DB) SaveImportedNodeHistory(nodes []*ImportedNode, now int64) error {
+	tx, err := d.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	stmt, err := tx.Prepare(`
+		INSERT INTO imported_node_history (public_key, sig, type, adv_name, last_advert, last_advert_at, adv_lat, adv_lon, inserted_date, updated_date, params, link, source, inserted_by, updated_by, first_captured_at, last_captured_at)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		ON CONFLICT(public_key, sig) DO UPDATE SET
+			last_advert      = excluded.last_advert,
+			last_advert_at   = excluded.last_advert_at,
+			last_captured_at = excluded.last_captured_at`)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	for _, n := range nodes {
+		if n.PublicKey == "" {
+			continue
+		}
+		params := string(n.Params)
+		if params == "" {
+			params = "{}"
+		}
+		if _, err := stmt.Exec(n.PublicKey, n.historySig(), n.Type, n.AdvName, n.LastAdvert, n.lastAdvertUnix(), n.AdvLat, n.AdvLon, n.InsertedDate, n.UpdatedDate, params, n.Link, n.Source, n.InsertedBy, n.UpdatedBy, now, now); err != nil {
+			return err
+		}
+	}
+	return tx.Commit()
+}
+
+// ImportedNodeHistory returns every captured publish for one node, newest
+// publish first (by when we first captured it).
+func (d *DB) ImportedNodeHistory(pubkey string) ([]ImportedSnapshot, error) {
+	rows, err := d.db.Query(`
+		SELECT type, adv_name, last_advert, last_advert_at, adv_lat, adv_lon, inserted_date, updated_date, params, link, source, inserted_by, updated_by, first_captured_at, last_captured_at
+		FROM imported_node_history
+		WHERE public_key = ?
+		ORDER BY first_captured_at DESC, id DESC`, pubkey)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var out []ImportedSnapshot
+	for rows.Next() {
+		var (
+			s      ImportedSnapshot
+			params string
+		)
+		if err := rows.Scan(&s.Type, &s.AdvName, &s.LastAdvert, &s.LastAdvertAt, &s.AdvLat, &s.AdvLon, &s.InsertedDate, &s.UpdatedDate, &params, &s.Link, &s.Source, &s.InsertedBy, &s.UpdatedBy, &s.FirstCapturedAt, &s.LastCapturedAt); err != nil {
+			return nil, err
+		}
+		if params != "" && params != "{}" {
+			s.Params = json.RawMessage(params)
+		}
+		s.TypeName = nodeTypeName(byte(s.Type))
+		s.HasGPS = s.AdvLat != 0 || s.AdvLon != 0
+		out = append(out, s)
+	}
+	return out, rows.Err()
 }
