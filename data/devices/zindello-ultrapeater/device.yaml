@@ -18,6 +18,7 @@ description: >-
   1 W LoRa repeater hat designed to stack on a Luckfox Pico Ultra/W, carrying an
   EBYTE E22/E22P radio with built-in LNA and optional band-pass filter. PoE- or
   USB-C powered, mast-mount ready, and bundled with pyMC_Repeater install scripts.
+image: zindello-ultrapeater.png
 roles:
   - repeater
 transports:

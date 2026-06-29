@@ -18,6 +18,7 @@ description: >-
   carrying an EBYTE E22/E22P radio with integrated LNA and optional band-pass
   filter. Wide-input buck converter and pyMC_Repeater install scripts make it a
   compact, portable MeshCore repeater.
+image: zindello-ultrapeater-zero.png
 roles:
   - repeater
 transports:
