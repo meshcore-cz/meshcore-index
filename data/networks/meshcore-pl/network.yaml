@@ -29,6 +29,8 @@ community:
   facebook: https://www.facebook.com/groups/meshcorepolska
 
 analyzers:
+  - name: meshcorekrk.cma.pl (Kraków)
+    url: https://meshcorekrk.cma.pl/
   - name: jomesh.com
     url: https://jomesh.com
   - name: MeshCore PL Analyzer
