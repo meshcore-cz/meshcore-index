@@ -1,0 +1,51 @@
+{
+  "resource": "software/meshcore-beacon",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "Sada pro sledování sítě LoRa mesh v reálném čase: Backend v Go se přihlašuje k MQTT brokerům MeshCore, dekóduje a odstraňuje duplicitní pakety, ukládá uzly, trasy, stopy a zprávy kanálů do PostgreSQL a streamuje živé události přes WebSocket a REST API — doplněná o webové rozhraní v Reactu pro inspekci paketů, sledování uzlů, zprávy kanálů, statistiky a mapy sítě.",
+      "sourceHash": "sha256:d54cfec05387be97fc44c3cd3da3d0539bbc67268378b7371f4e5232efa958ec",
+      "generatedAt": "2026-06-29T02:22:20.666Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 5205,
+      "promptTokens": 199,
+      "completionTokens": 1681
+    },
+    "tags": {
+      "value": "[\"vlastní hosting\",\"postgresql\",\"redis\",\"rest-api\",\"websocket-api\",\"react\"]",
+      "sourceHash": "sha256:f0c31d47548bffe6d979ac5dcd365fa2580f3e23724e63eb7c5937a42a451d0a",
+      "generatedAt": "2026-06-29T02:22:22.670Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2002,
+      "promptTokens": 146,
+      "completionTokens": 377
+    },
+    "verificationNotes.api-authentication-is-not-yet-implemented-intend": {
+      "value": "Autentizace API zatím není implementována; je určena pro nasazení v důvěryhodném interním prostředí nebo za reverzní proxy.",
+      "sourceHash": "sha256:f8cc4f027bdaa5303e6be777f4de22a459a477d65fc153cb230af6875fd88bf7",
+      "generatedAt": "2026-06-29T02:22:26.231Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3560,
+      "promptTokens": 145,
+      "completionTokens": 953
+    },
+    "verificationNotes.full-stack-docker-compose-configs-server-web-pos": {
+      "value": "Kompletní konfigurace Docker Compose (server + web + PostgreSQL + Redis + Caddy TLS) najdete v repozitáři beacon-docs.",
+      "sourceHash": "sha256:228dde0552cc9dde05bda60c4a8c5836f53f5b962bb7d0b23229046174d8aa32",
+      "generatedAt": "2026-06-29T02:22:29.095Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2863,
+      "promptTokens": 156,
+      "completionTokens": 693
+    },
+    "verificationNotes.swagger-ui-available-at-swagger-index-html-on-a-": {
+      "value": "Swagger UI je dostupné na adrese /swagger/index.html u běžící instance.",
+      "sourceHash": "sha256:d7d3b390fbb9b52f184295336a8099ffbc0ecf4fe0d4f61f5a6efcdb24c318f3",
+      "generatedAt": "2026-06-29T02:22:32.200Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3105,
+      "promptTokens": 142,
+      "completionTokens": 828
+    }
+  }
+}

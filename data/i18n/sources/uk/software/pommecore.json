@@ -1,0 +1,51 @@
+{
+  "resource": "software/pommecore",
+  "locale": "uk",
+  "fields": {
+    "description": {
+      "value": "Рідний додаток SwiftUI для роботи з радіопристроями MeshCore LoRa, що працює на iPhone, iPad, Mac та Apple Watch, з підтримкою обміну повідомленнями, карти mesh-мережі, інструментів RF, аналізу прямої видимості, віддаленого адміністрування та оновлення прошивки OTA.",
+      "sourceHash": "sha256:022bbd998f27d9a1a7e550a77503e97de1a925e833600f142847edc362dc9900",
+      "generatedAt": "2026-06-29T02:25:37.864Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 6364,
+      "promptTokens": 176,
+      "completionTokens": 1862
+    },
+    "tags": {
+      "value": "[\"apple\",\"нативний\",\"офлайн\",\"аналіз-радіочастот\",\"віддалений-термінал\",\"watchos\",\"icloud\"]",
+      "sourceHash": "sha256:10399e9b706fdcef353a1584eb5a805e8f695c16cc076ce5b994313142f0dc7c",
+      "generatedAt": "2026-06-29T02:25:40.206Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2341,
+      "promptTokens": 148,
+      "completionTokens": 472
+    },
+    "verificationNotes.requires-ios-or-ipados-18-0-macos-15-0-apple-sil": {
+      "value": "Потребує iOS або iPadOS 18.0, macOS 15.0 (Apple Silicon або Intel) або watchOS 11.0.",
+      "sourceHash": "sha256:0340214477f77a6425e5e460839cbc0980d83df7c22fcb72e22f3e19f1dc7483",
+      "generatedAt": "2026-06-29T02:25:42.498Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2290,
+      "promptTokens": 158,
+      "completionTokens": 517
+    },
+    "verificationNotes.build-from-source-with-xcode-16-also-available-o": {
+      "value": "Збирайте з вихідного коду за допомогою Xcode 16+; також доступно в App Store.",
+      "sourceHash": "sha256:b38c9d8cb2f392e0e4f3603f2b37347411d1b9af2eec9a9d12c653d926aa4cdc",
+      "generatedAt": "2026-06-29T02:25:46.557Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 4057,
+      "promptTokens": 146,
+      "completionTokens": 925
+    },
+    "verificationNotes.messages-and-contacts-are-interoperable-with-mes": {
+      "value": "Повідомлення та контакти сумісні з MeshCore One.",
+      "sourceHash": "sha256:5c4a6d53ee867a10e9bf88b8f539a799b13b45f0c4904c5c521e705103fa538b",
+      "generatedAt": "2026-06-29T02:25:48.810Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2252,
+      "promptTokens": 140,
+      "completionTokens": 419
+    }
+  }
+}

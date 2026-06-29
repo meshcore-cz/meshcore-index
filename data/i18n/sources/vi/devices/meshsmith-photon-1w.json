@@ -1,0 +1,15 @@
+{
+  "resource": "device/meshsmith-photon-1w",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Bo mạch LoRa 1-watt dành cho hệ sinh thái MCU Seeed Xiao, sử dụng module vô tuyến Ebyte E22P (SX1262) cho công suất đầu ra 30 dBm và tích hợp GPS ATGM336H. Sản phẩm được cung cấp dưới dạng bộ DIY 65 đô la (không kèm MCU), phiên bản lắp ráp 75 đô la kèm Xiao nRF52840 hoặc ESP32-C6, hoặc phiên bản 95 đô la tích hợp quản lý năng lượng mặt trời và khay pin 3×18650 sử dụng Waveshare Solar Power Manager (D). Tương thích mọi nguồn điện: bo mạch chính không có bộ sạc tích hợp — bo mạch được cấp nguồn bằng nguồn 5 V ổn áp bên ngoài. Có cổng kết nối cảm biến pin để theo dõi trạng thái sạc. Tích hợp cổng mở rộng I2C Stemma QT/Qwiic.",
+      "sourceHash": "sha256:35e54ceaaa4d67b7a82e15285b2381412988c1cc452cb9d347db6330827a5d86",
+      "generatedAt": "2026-06-29T02:26:21.559Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 4910,
+      "promptTokens": 272,
+      "completionTokens": 1624
+    }
+  }
+}

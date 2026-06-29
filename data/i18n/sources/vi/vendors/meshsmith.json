@@ -1,0 +1,15 @@
+{
+  "resource": "vendor/meshsmith",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "MeshSmith thiết kế và lắp ráp thủ công phần cứng LoRa 1W công suất cao cho MeshCore và Meshtastic, bao gồm Raspberry Pi HAT, bo mạch nhúng tương thích năng lượng mặt trời và các nút cố định lắp đặt ưu tiên Ethernet.",
+      "sourceHash": "sha256:7ca6aab16f7494e5b969ecad9fa6ae05ccfbe7c3ea94599122880dbb49bd0b10",
+      "generatedAt": "2026-06-29T02:27:05.539Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3113,
+      "promptTokens": 171,
+      "completionTokens": 852
+    }
+  }
+}

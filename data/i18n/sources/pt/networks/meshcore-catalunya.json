@@ -1,0 +1,15 @@
+{
+  "resource": "network/meshcore-catalunya",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Comunidade MeshCore na Catalunha. Rede mesh off-grid operando em rádios LoRa de 868 MHz, com mapa em tempo real, analisador CoreScope, guias de hardware e recursos para ingressar na rede.",
+      "sourceHash": "sha256:72c7246849c83215d443a7306053d4ac903cab8ab4afea1d1679507fafe271a7",
+      "generatedAt": "2026-06-29T02:24:39.984Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2763,
+      "promptTokens": 167,
+      "completionTokens": 714
+    }
+  }
+}

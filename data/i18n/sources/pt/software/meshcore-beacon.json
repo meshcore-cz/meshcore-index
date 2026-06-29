@@ -1,0 +1,51 @@
+{
+  "resource": "software/meshcore-beacon",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Stack de observação de rede mesh LoRa em tempo real: um back-end em Go assina os brokers MQTT do MeshCore, decodifica e remove pacotes duplicados, armazena nós, rotas, rastros e mensagens de canal no PostgreSQL, e transmite eventos ao vivo via WebSocket e API REST — combinado com um front-end web em React para inspeção de pacotes, rastreamento de nós, mensagens de canal, estatísticas e mapas da mesh.",
+      "sourceHash": "sha256:d54cfec05387be97fc44c3cd3da3d0539bbc67268378b7371f4e5232efa958ec",
+      "generatedAt": "2026-06-29T02:23:48.855Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2954,
+      "promptTokens": 199,
+      "completionTokens": 850
+    },
+    "tags": {
+      "value": "[\"auto-hospedado\",\"postgresql\",\"redis\",\"api-rest\",\"api-websocket\",\"react\"]",
+      "sourceHash": "sha256:f0c31d47548bffe6d979ac5dcd365fa2580f3e23724e63eb7c5937a42a451d0a",
+      "generatedAt": "2026-06-29T02:23:51.493Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2636,
+      "promptTokens": 146,
+      "completionTokens": 620
+    },
+    "verificationNotes.api-authentication-is-not-yet-implemented-intend": {
+      "value": "A autenticação da API ainda não foi implementada; destina-se a implementações internas confiáveis ou com proxy reverso.",
+      "sourceHash": "sha256:f8cc4f027bdaa5303e6be777f4de22a459a477d65fc153cb230af6875fd88bf7",
+      "generatedAt": "2026-06-29T02:23:55.418Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3924,
+      "promptTokens": 145,
+      "completionTokens": 865
+    },
+    "verificationNotes.full-stack-docker-compose-configs-server-web-pos": {
+      "value": "As configurações do Docker Compose para a stack completa (servidor + web + PostgreSQL + Redis + Caddy TLS) estão no repositório beacon-docs.",
+      "sourceHash": "sha256:228dde0552cc9dde05bda60c4a8c5836f53f5b962bb7d0b23229046174d8aa32",
+      "generatedAt": "2026-06-29T02:23:58.691Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3273,
+      "promptTokens": 156,
+      "completionTokens": 721
+    },
+    "verificationNotes.swagger-ui-available-at-swagger-index-html-on-a-": {
+      "value": "O Swagger UI está disponível em /swagger/index.html em uma instância em execução.",
+      "sourceHash": "sha256:d7d3b390fbb9b52f184295336a8099ffbc0ecf4fe0d4f61f5a6efcdb24c318f3",
+      "generatedAt": "2026-06-29T02:24:01.254Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2561,
+      "promptTokens": 142,
+      "completionTokens": 550
+    }
+  }
+}

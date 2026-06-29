@@ -1,0 +1,15 @@
+{
+  "resource": "network/meshcore-be",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Hub belga MeshCore e ambiente CoreScope operados pela ON8AR, exibindo tráfego MeshCore belga em tempo real, nós, observadores e estatísticas de pacotes, além de se integrar à comunidade MeshCore belga mais ampla da Radio-Actief / RRY.",
+      "sourceHash": "sha256:d0d00df67b8ccc9fe8313048b1ed9e63584d4595347ca1f8eaa4a61b3f2682a7",
+      "generatedAt": "2026-06-29T02:24:26.498Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2851,
+      "promptTokens": 175,
+      "completionTokens": 764
+    }
+  }
+}

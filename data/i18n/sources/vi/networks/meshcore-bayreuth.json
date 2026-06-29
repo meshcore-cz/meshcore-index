@@ -1,0 +1,15 @@
+{
+  "resource": "network/meshcore-bayreuth",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Cộng đồng MeshCore tại khu vực Bayreuth và Oberfranken (Thượng Franconia), xây dựng hạ tầng mạng lưới LoRa off-grid với các trạm tiếp sóng cục bộ và kênh công cộng theo preset EU/UK Narrow.",
+      "sourceHash": "sha256:94c8cf3c3bd323aa01eb8e2278a55749367ec4386fc277dc21ca0e05d3e50d22",
+      "generatedAt": "2026-06-29T02:27:21.087Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 4443,
+      "promptTokens": 169,
+      "completionTokens": 1204
+    }
+  }
+}

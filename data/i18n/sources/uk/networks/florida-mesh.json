@@ -1,0 +1,15 @@
+{
+  "resource": "network/florida-mesh",
+  "locale": "uk",
+  "fields": {
+    "description": {
+      "value": "Загальнофлоридська мережа спільноти MeshCore, створена радіоаматорами та ентузіастами автономного зв'язку по всьому штаті Сонячного сяйва.",
+      "sourceHash": "sha256:aed247dbcbeddc5e02d084e748acdcdabf1238272477278c91a1e96045b58b43",
+      "generatedAt": "2026-06-29T02:26:01.490Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 4271,
+      "promptTokens": 150,
+      "completionTokens": 1259
+    }
+  }
+}

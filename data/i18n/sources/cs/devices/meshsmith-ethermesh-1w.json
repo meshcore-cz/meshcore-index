@@ -1,0 +1,15 @@
+{
+  "resource": "device/meshsmith-ethermesh-1w",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "Uzel MeshCore pro pevnou instalaci kombinuje vývojovou platformu Waveshare ESP32-P4-POE s 1wattovým LoRa rádiem Ebyte E22P (30 dBm) od MeshSmith. Je určen pro nasazení na věže, střechy a v páteřních sítích s kabelovým Ethernetem. Napájení přes PoE zajišťuje modul Waveshare PoE; USB a PoE lze připojit současně. Bez GPS a displeje – obsahuje jen to nejnutnější pro spolehlivý pevný opakovač nebo bránu. Prodává se ve variantách pro 915 MHz a 868 MHz.",
+      "sourceHash": "sha256:f7b6a86f30eedbb62ac0dd53bf2ba60c9c076bb9f209c49ebaf130c63ef022fa",
+      "generatedAt": "2026-06-29T02:22:00.261Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 5708,
+      "promptTokens": 237,
+      "completionTokens": 1340
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "resource": "network/meshcore-catalunya",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Cộng đồng MeshCore tại Catalonia. Mạng lưới mesh độc lập hoạt động trên thiết bị radio LoRa 868 MHz, cung cấp bản đồ trực tuyến, trình phân tích CoreScope, hướng dẫn phần cứng và các tài nguyên để tham gia mạng.",
+      "sourceHash": "sha256:72c7246849c83215d443a7306053d4ac903cab8ab4afea1d1679507fafe271a7",
+      "generatedAt": "2026-06-29T02:27:24.267Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3179,
+      "promptTokens": 167,
+      "completionTokens": 862
+    }
+  }
+}

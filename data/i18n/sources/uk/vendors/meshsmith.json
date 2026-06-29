@@ -1,0 +1,15 @@
+{
+  "resource": "vendor/meshsmith",
+  "locale": "uk",
+  "fields": {
+    "description": {
+      "value": "MeshSmith проектує та збирає вручну високопотужне апаратне забезпечення LoRa потужністю 1 Вт для MeshCore та Meshtastic, зокрема HAT-модулі для Raspberry Pi, вбудовані плати з підтримкою сонячних панелей та стаціонарні вузли з пріоритетом Ethernet.",
+      "sourceHash": "sha256:7ca6aab16f7494e5b969ecad9fa6ae05ccfbe7c3ea94599122880dbb49bd0b10",
+      "generatedAt": "2026-06-29T02:25:53.017Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 4195,
+      "promptTokens": 171,
+      "completionTokens": 1227
+    }
+  }
+}

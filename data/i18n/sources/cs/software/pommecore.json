@@ -1,0 +1,51 @@
+{
+  "resource": "software/pommecore",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "Nativní doprovodná aplikace ve SwiftUI pro rádiová zařízení LoRa mesh MeshCore. Běží na zařízeních iPhone, iPad, Mac a Apple Watch a nabízí posílání zpráv, mapu sítě mesh, RF nástroje, analýzu přímé viditelnosti, vzdálenou správu a aktualizace firmwaru OTA.",
+      "sourceHash": "sha256:022bbd998f27d9a1a7e550a77503e97de1a925e833600f142847edc362dc9900",
+      "generatedAt": "2026-06-29T02:22:43.717Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 7755,
+      "promptTokens": 176,
+      "completionTokens": 1977
+    },
+    "tags": {
+      "value": "[\"apple\",\"nativní\",\"offline\",\"rf-analýza\",\"vzdálený-terminál\",\"watchos\",\"icloud\"]",
+      "sourceHash": "sha256:10399e9b706fdcef353a1584eb5a805e8f695c16cc076ce5b994313142f0dc7c",
+      "generatedAt": "2026-06-29T02:22:48.334Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 4616,
+      "promptTokens": 148,
+      "completionTokens": 1028
+    },
+    "verificationNotes.requires-ios-or-ipados-18-0-macos-15-0-apple-sil": {
+      "value": "Vyžaduje iOS nebo iPadOS 18.0, macOS 15.0 (Apple Silicon nebo Intel) nebo watchOS 11.0.",
+      "sourceHash": "sha256:0340214477f77a6425e5e460839cbc0980d83df7c22fcb72e22f3e19f1dc7483",
+      "generatedAt": "2026-06-29T02:22:50.596Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2262,
+      "promptTokens": 158,
+      "completionTokens": 494
+    },
+    "verificationNotes.build-from-source-with-xcode-16-also-available-o": {
+      "value": "Sestavte ze zdrojového kódu pomocí Xcode 16+; k dispozici je také v App Store.",
+      "sourceHash": "sha256:b38c9d8cb2f392e0e4f3603f2b37347411d1b9af2eec9a9d12c653d926aa4cdc",
+      "generatedAt": "2026-06-29T02:22:54.383Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3786,
+      "promptTokens": 146,
+      "completionTokens": 949
+    },
+    "verificationNotes.messages-and-contacts-are-interoperable-with-mes": {
+      "value": "Zprávy a kontakty jsou interoperabilní s MeshCore One.",
+      "sourceHash": "sha256:5c4a6d53ee867a10e9bf88b8f539a799b13b45f0c4904c5c521e705103fa538b",
+      "generatedAt": "2026-06-29T02:22:57.284Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2901,
+      "promptTokens": 140,
+      "completionTokens": 679
+    }
+  }
+}

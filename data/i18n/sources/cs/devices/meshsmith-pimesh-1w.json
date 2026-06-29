@@ -1,0 +1,15 @@
+{
+  "resource": "device/meshsmith-pimesh-1w",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "1-wattový LoRa HAT pro Raspberry Pi (desky standardní velikosti i typu Zero) využívající rádiový modul Ebyte E22P (kompatibilní se SX1262). Poskytuje vysílací výkon 30 dBm pro dálková nasazení opakovačů a bran (gateway). Nabízí volitelné GPS (ATGM336H), volitelný modul PoE (piny Pi 3/4 nebo Pi 5) a port Stemma QT/Qwiic I2C pro senzory. Prodává se ve variantách pro 915 MHz a 868 MHz.",
+      "sourceHash": "sha256:fdd290386803a9fa7ed431c9caebf716f4f3073a2f8868b767978ad517a0e211",
+      "generatedAt": "2026-06-29T02:22:11.568Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 5150,
+      "promptTokens": 234,
+      "completionTokens": 1419
+    }
+  }
+}

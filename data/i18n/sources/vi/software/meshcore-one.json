@@ -37,6 +37,15 @@
       "durationMs": 15061,
       "promptTokens": 145,
       "completionTokens": 551
+    },
+    "verificationNotes.github-releases-provide-unsigned-ipa-files-the-a": {
+      "value": "Các bản phát hành trên GitHub cung cấp tệp IPA chưa được ký; App Store là phương thức cài đặt được khuyến nghị.",
+      "sourceHash": "sha256:1a012f61e7686021cca62eae5d46e4d450a7fdc67a502719272e9c4865e90662",
+      "generatedAt": "2026-06-29T02:26:45.469Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2833,
+      "promptTokens": 145,
+      "completionTokens": 758
     }
   }
 }

@@ -3,13 +3,13 @@
   "locale": "uk",
   "fields": {
     "description": {
-      "value": "Комплект підсилювача WisBlock 1 Вт LoRa поєднує базову плату RAK3401 з модулем LPWAN RAK13302 та радіочастотним підсилювачем SKY66122. Комплект призначений для роботи LoRa на більших відстанях у діапазоні 902-928 МГц.",
-      "sourceHash": "sha256:b3d868b70335eb5f2313d8a0cb907ef67843e85e333fa2bd1315161f630de15e",
-      "generatedAt": "2026-06-27T15:01:05.852Z",
+      "value": "Комплект підсилювача WisBlock 1 Вт LoRa поєднує базову плату RAK3401 з LPWAN-модулем RAK13302 та радіочастотним підсилювачем SKY66122. Він призначений для збільшення дальності зв'язку LoRa та доступний у двох частотних діапазонах: 868 МГц (ЄС) і 902-928 МГц (США/Австралія).",
+      "sourceHash": "sha256:b2ea9ee2aa221ef6efc73955cc59b9dedb16285f081e8f076c9e81cc36273348",
+      "generatedAt": "2026-06-29T02:25:06.538Z",
       "model": "glm-5.2:cloud",
-      "durationMs": 3393,
-      "promptTokens": 185,
-      "completionTokens": 959
+      "durationMs": 4339,
+      "promptTokens": 202,
+      "completionTokens": 1295
     }
   }
 }

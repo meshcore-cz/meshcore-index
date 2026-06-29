@@ -1,0 +1,51 @@
+{
+  "resource": "software/meshcore-beacon",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Hệ thống quan sát mạng lưới LoRa theo thời gian thực: Backend viết bằng Go đăng ký nhận dữ liệu từ các MQTT broker của MeshCore, giải mã và khử trùng lặp gói tin, lưu trữ nút, tuyến đường, dấu vết và tin nhắn kênh vào PostgreSQL, đồng thời truyền phát sự kiện trực tiếp qua WebSocket và REST API — đi kèm với giao diện web React để kiểm tra gói tin, theo dõi nút, xem tin nhắn kênh, thống kê và bản đồ mạng lưới.",
+      "sourceHash": "sha256:d54cfec05387be97fc44c3cd3da3d0539bbc67268378b7371f4e5232efa958ec",
+      "generatedAt": "2026-06-29T02:26:33.338Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3823,
+      "promptTokens": 199,
+      "completionTokens": 1126
+    },
+    "tags": {
+      "value": "[\"tự lưu trữ\",\"postgresql\",\"redis\",\"rest-api\",\"websocket-api\",\"react\"]",
+      "sourceHash": "sha256:f0c31d47548bffe6d979ac5dcd365fa2580f3e23724e63eb7c5937a42a451d0a",
+      "generatedAt": "2026-06-29T02:26:35.439Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2099,
+      "promptTokens": 146,
+      "completionTokens": 405
+    },
+    "verificationNotes.api-authentication-is-not-yet-implemented-intend": {
+      "value": "Xác thực API chưa được triển khai; dành cho các môi trường nội bộ đáng tin cậy hoặc triển khai reverse proxy.",
+      "sourceHash": "sha256:f8cc4f027bdaa5303e6be777f4de22a459a477d65fc153cb230af6875fd88bf7",
+      "generatedAt": "2026-06-29T02:26:37.375Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 1935,
+      "promptTokens": 145,
+      "completionTokens": 335
+    },
+    "verificationNotes.full-stack-docker-compose-configs-server-web-pos": {
+      "value": "Các cấu hình Docker Compose full-stack (server + web + PostgreSQL + Redis + Caddy TLS) nằm trong kho beacon-docs.",
+      "sourceHash": "sha256:228dde0552cc9dde05bda60c4a8c5836f53f5b962bb7d0b23229046174d8aa32",
+      "generatedAt": "2026-06-29T02:26:40.438Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3063,
+      "promptTokens": 156,
+      "completionTokens": 739
+    },
+    "verificationNotes.swagger-ui-available-at-swagger-index-html-on-a-": {
+      "value": "Swagger UI có thể truy cập tại /swagger/index.html trên phiên bản đang chạy.",
+      "sourceHash": "sha256:d7d3b390fbb9b52f184295336a8099ffbc0ecf4fe0d4f61f5a6efcdb24c318f3",
+      "generatedAt": "2026-06-29T02:26:42.631Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2192,
+      "promptTokens": 142,
+      "completionTokens": 549
+    }
+  }
+}

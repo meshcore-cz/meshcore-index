@@ -1,0 +1,15 @@
+{
+  "resource": "network/florida-mesh",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Mạng cộng đồng MeshCore trên toàn bang Florida được xây dựng bởi các nhà đài vô tuyến nghiệp dư và những người đam mê thông tin liên lạc ngoài lưới trên khắp tiểu bang Ánh nắng.",
+      "sourceHash": "sha256:aed247dbcbeddc5e02d084e748acdcdabf1238272477278c91a1e96045b58b43",
+      "generatedAt": "2026-06-29T02:27:12.900Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 4590,
+      "promptTokens": 150,
+      "completionTokens": 1252
+    }
+  }
+}

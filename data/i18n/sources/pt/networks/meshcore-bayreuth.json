@@ -1,0 +1,15 @@
+{
+  "resource": "network/meshcore-bayreuth",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Comunidade MeshCore na região de Bayreuth e da Alta Francónia (Oberfranken), que constrói uma infraestrutura de rede mesh LoRa off-grid com repetidores locais e canais públicos na predefinição EU/UK Narrow.",
+      "sourceHash": "sha256:94c8cf3c3bd323aa01eb8e2278a55749367ec4386fc277dc21ca0e05d3e50d22",
+      "generatedAt": "2026-06-29T02:24:37.220Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3059,
+      "promptTokens": 169,
+      "completionTokens": 777
+    }
+  }
+}

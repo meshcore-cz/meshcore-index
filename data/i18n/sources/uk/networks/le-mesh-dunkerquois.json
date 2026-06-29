@@ -1,0 +1,15 @@
+{
+  "resource": "network/le-mesh-dunkerquois",
+  "locale": "uk",
+  "fields": {
+    "description": {
+      "value": "Спільнота MeshCore у регіоні Дюнкерка та на північному узбережжі Франції та Бельгії.",
+      "sourceHash": "sha256:c5fb6812bee30557e728e78b0c1657e340e57fb1822f468267ec2ce67bd99c3e",
+      "generatedAt": "2026-06-29T02:26:04.755Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3261,
+      "promptTokens": 144,
+      "completionTokens": 962
+    }
+  }
+}

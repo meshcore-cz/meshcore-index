@@ -3,10 +3,13 @@
   "locale": "cs",
   "fields": {
     "description": {
-      "value": "Zesilovací sada WisBlock 1 W LoRa kombinuje základní desku RAK3401 s modulem RAK13302 LPWAN a RF zesilovačem SKY66122. Sada je určena pro provoz LoRa na delší vzdálenost v pásmu 902–928 MHz.",
-      "sourceHash": "sha256:b3d868b70335eb5f2313d8a0cb907ef67843e85e333fa2bd1315161f630de15e",
-      "generatedAt": "2026-06-27T10:55:40.003Z",
-      "model": "glm-5.2:cloud"
+      "value": "Zesilovací sada WisBlock 1 W LoRa kombinuje nosnou desku RAK3401 s LPWAN modulem RAK13302 a RF zesilovačem SKY66122. Sada je určena pro provoz LoRa s delším dosahem a je dostupná ve variantách pro pásma 868 MHz (EU) a 902-928 MHz (US/AU).",
+      "sourceHash": "sha256:b2ea9ee2aa221ef6efc73955cc59b9dedb16285f081e8f076c9e81cc36273348",
+      "generatedAt": "2026-06-29T02:22:15.437Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3865,
+      "promptTokens": 202,
+      "completionTokens": 1172
     }
   }
 }

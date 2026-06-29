@@ -1,0 +1,15 @@
+{
+  "resource": "network/meshcore-be",
+  "locale": "uk",
+  "fields": {
+    "description": {
+      "value": "Вузол MeshCore та середовище CoreScope у Бельгії під управлінням ON8AR, що відображають поточний трафік MeshCore, вузли, спостерігачів та статистику пакетів, а також інтегровані з ширшою бельгійською спільнотою MeshCore — Radio-Actief / RRY.",
+      "sourceHash": "sha256:d0d00df67b8ccc9fe8313048b1ed9e63584d4595347ca1f8eaa4a61b3f2682a7",
+      "generatedAt": "2026-06-29T02:25:57.212Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 4189,
+      "promptTokens": 175,
+      "completionTokens": 1195
+    }
+  }
+}

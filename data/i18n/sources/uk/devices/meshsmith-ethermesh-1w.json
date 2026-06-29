@@ -1,0 +1,15 @@
+{
+  "resource": "device/meshsmith-ethermesh-1w",
+  "locale": "uk",
+  "fields": {
+    "description": {
+      "value": "Стаціонарний вузол MeshCore, що поєднує платформу для розробки Waveshare ESP32-P4-POE з радіомодулем Ebyte E22P LoRa (30 дБм) потужністю 1 Вт від MeshSmith. Призначений для розгортання на вежах, дахах і в магістральних мережах із дротовим підключенням Ethernet. Живлення подається через модуль Waveshare PoE; USB та PoE можна підключати одночасно. Без GPS та дисплея — лише найнеобхідніше для надійного стаціонарного репітера або шлюзу. Доступний у версіях на 915 МГц та 868 МГц.",
+      "sourceHash": "sha256:f7b6a86f30eedbb62ac0dd53bf2ba60c9c076bb9f209c49ebaf130c63ef022fa",
+      "generatedAt": "2026-06-29T02:24:49.285Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 5926,
+      "promptTokens": 237,
+      "completionTokens": 1834
+    }
+  }
+}

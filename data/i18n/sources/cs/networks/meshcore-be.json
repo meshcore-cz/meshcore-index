@@ -1,0 +1,15 @@
+{
+  "resource": "network/meshcore-be",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "Belgický uzel MeshCore a prostředí CoreScope, které provozuje ON8AR, zobrazují živý provoz v belgické síti MeshCore, její uzly, pozorovatele a statistiky paketů a zároveň se propojují se širší belgickou komunitou Radio-Actief / RRY kolem sítě MeshCore.",
+      "sourceHash": "sha256:d0d00df67b8ccc9fe8313048b1ed9e63584d4595347ca1f8eaa4a61b3f2682a7",
+      "generatedAt": "2026-06-29T02:23:08.328Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 6501,
+      "promptTokens": 175,
+      "completionTokens": 1996
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "resource": "device/meshsmith-ethermesh-1w",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Thiết bị MeshCore cố định, kết hợp nền tảng phát triển Waveshare ESP32-P4-POE với module LoRa Ebyte E22P công suất 1 watt (30 dBm) của MeshSmith. Thiết kế dành cho các điểm triển khai trên tháp, mái nhà và trục chính có kết nối Ethernet cố định. Cấp nguồn qua PoE bằng module PoE của Waveshare; có thể kết nối đồng thời cả USB và PoE. Không có GPS hay màn hình — chỉ giữ lại những thành phần thiết yếu cho một bộ lặp hoặc cổng cố định hoạt động ổn định. Bán theo hai phiên bản tần số 915 MHz và 868 MHz.",
+      "sourceHash": "sha256:f7b6a86f30eedbb62ac0dd53bf2ba60c9c076bb9f209c49ebaf130c63ef022fa",
+      "generatedAt": "2026-06-29T02:26:16.625Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 1423,
+      "promptTokens": 237,
+      "completionTokens": 184
+    }
+  }
+}

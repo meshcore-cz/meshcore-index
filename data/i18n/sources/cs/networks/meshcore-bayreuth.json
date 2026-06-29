@@ -1,0 +1,15 @@
+{
+  "resource": "network/meshcore-bayreuth",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "Komunita MeshCore v okolí Bayreuthu a Horních Franků (Oberfranken) buduje nezávislou infrastrukturu LoRa mesh s místními opakovači a veřejnými kanály na předvolbě EU/UK Narrow.",
+      "sourceHash": "sha256:94c8cf3c3bd323aa01eb8e2278a55749367ec4386fc277dc21ca0e05d3e50d22",
+      "generatedAt": "2026-06-29T02:23:19.216Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3938,
+      "promptTokens": 169,
+      "completionTokens": 1073
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "resource": "device/meshsmith-ethermesh-1w",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Nó MeshCore de instalação fixa que combina a plataforma de desenvolvimento Waveshare ESP32-P4-POE com o rádio LoRa Ebyte E22P de 1 watt da MeshSmith (30 dBm). Projetado para implantações em torres, telhados e backbones com conexão Ethernet cabeada. Alimentado por PoE através de um módulo Waveshare PoE; USB e PoE podem ser conectados simultaneamente. Sem GPS ou display — apenas o essencial para um repetidor ou gateway fixo e confiável. Disponível nas variantes de 915 MHz e 868 MHz.",
+      "sourceHash": "sha256:f7b6a86f30eedbb62ac0dd53bf2ba60c9c076bb9f209c49ebaf130c63ef022fa",
+      "generatedAt": "2026-06-29T02:23:31.408Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 4695,
+      "promptTokens": 237,
+      "completionTokens": 1232
+    }
+  }
+}

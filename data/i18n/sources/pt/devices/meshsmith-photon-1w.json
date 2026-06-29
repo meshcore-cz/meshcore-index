@@ -1,0 +1,15 @@
+{
+  "resource": "device/meshsmith-photon-1w",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Placa LoRa de 1 watt projetada para o ecossistema de MCU Seeed Xiao, equipada com um rádio Ebyte E22P (SX1262) que oferece 30 dBm de potência de saída e um GPS ATGM336H integrado. Disponível como um kit DIY de US$ 65 (sem MCU), uma versão montada de US$ 75 com Xiao nRF52840 ou ESP32-C6, ou de US$ 95 com gerenciamento solar e suporte para 3×18650 usando o Waveshare Solar Power Manager (D). Independente da fonte de alimentação: a placa principal não possui carregador integrado — a alimentação é feita por uma fonte externa regulada de 5 V. Conector de monitoramento de bateria para acompanhar o estado de carga. Inclui porta de expansão I2C Stemma QT/Qwiic.",
+      "sourceHash": "sha256:35e54ceaaa4d67b7a82e15285b2381412988c1cc452cb9d347db6330827a5d86",
+      "generatedAt": "2026-06-29T02:23:36.959Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 5539,
+      "promptTokens": 272,
+      "completionTokens": 1518
+    }
+  }
+}

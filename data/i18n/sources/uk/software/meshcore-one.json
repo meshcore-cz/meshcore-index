@@ -37,6 +37,15 @@
       "durationMs": 10133,
       "promptTokens": 145,
       "completionTokens": 852
+    },
+    "verificationNotes.github-releases-provide-unsigned-ipa-files-the-a": {
+      "value": "У релізах GitHub доступні непідписані IPA-файли; рекомендований спосіб встановлення — через App Store.",
+      "sourceHash": "sha256:1a012f61e7686021cca62eae5d46e4d450a7fdc67a502719272e9c4865e90662",
+      "generatedAt": "2026-06-29T02:25:31.490Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2827,
+      "promptTokens": 145,
+      "completionTokens": 569
     }
   }
 }

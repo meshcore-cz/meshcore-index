@@ -1,0 +1,15 @@
+{
+  "resource": "network/meshcore-catalunya",
+  "locale": "uk",
+  "fields": {
+    "description": {
+      "value": "Спільнота MeshCore у Каталонії. Автономна mesh-мережа, яка працює на радіомодулях LoRa 868 МГц, з інтерактивною картою, аналізатором CoreScope, апаратними посібниками та ресурсами для приєднання до мережі.",
+      "sourceHash": "sha256:72c7246849c83215d443a7306053d4ac903cab8ab4afea1d1679507fafe271a7",
+      "generatedAt": "2026-06-29T02:26:11.939Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3233,
+      "promptTokens": 167,
+      "completionTokens": 859
+    }
+  }
+}

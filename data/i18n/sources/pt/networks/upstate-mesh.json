@@ -1,0 +1,15 @@
+{
+  "resource": "network/upstate-mesh",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Grupo da comunidade de comunicação em malha para a região da Capital de Nova York (Albany, Schenectady, Troy, Saratoga) e arredores. Suporta tanto o Meshtastic quanto o MeshCore.",
+      "sourceHash": "sha256:644b7742ce14ba0f7b9a5ff149ac5eb5237718a1bb7f50f0cc5351eb0e693419",
+      "generatedAt": "2026-06-29T02:24:43.350Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3357,
+      "promptTokens": 167,
+      "completionTokens": 929
+    }
+  }
+}

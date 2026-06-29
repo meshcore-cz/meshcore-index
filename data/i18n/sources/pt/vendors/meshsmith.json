@@ -1,0 +1,15 @@
+{
+  "resource": "vendor/meshsmith",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "A MeshSmith projeta e monta manualmente hardware LoRa de 1W e alta potência para MeshCore e Meshtastic, incluindo Raspberry Pi HATs, placas embarcadas prontas para energia solar e nós de instalação fixa com prioridade para ethernet.",
+      "sourceHash": "sha256:7ca6aab16f7494e5b969ecad9fa6ae05ccfbe7c3ea94599122880dbb49bd0b10",
+      "generatedAt": "2026-06-29T02:24:23.642Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2873,
+      "promptTokens": 171,
+      "completionTokens": 801
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "resource": "vendor/meshsmith",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "MeshSmith navrhuje a ručně vyrábí výkonný 1W LoRa hardware pro MeshCore a Meshtastic, včetně Raspberry Pi HATů, embedded desek s podporou solárního napájení a pevně instalovaných uzlů s primárním připojením přes Ethernet.",
+      "sourceHash": "sha256:7ca6aab16f7494e5b969ecad9fa6ae05ccfbe7c3ea94599122880dbb49bd0b10",
+      "generatedAt": "2026-06-29T02:23:01.820Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 4530,
+      "promptTokens": 171,
+      "completionTokens": 1273
+    }
+  }
+}

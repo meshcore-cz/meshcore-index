@@ -1,0 +1,15 @@
+{
+  "resource": "network/meshcore-be",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Trung tâm MeshCore Bỉ và môi trường CoreScope do ON8AR vận hành, hiển thị lưu lượng MeshCore Bỉ theo thời gian thực, các nút, người quan sát và thống kê gói tin, đồng thời kết nối với cộng đồng MeshCore Bỉ rộng lớn hơn của Radio-Actief / RRY.",
+      "sourceHash": "sha256:d0d00df67b8ccc9fe8313048b1ed9e63584d4595347ca1f8eaa4a61b3f2682a7",
+      "generatedAt": "2026-06-29T02:27:08.305Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2759,
+      "promptTokens": 175,
+      "completionTokens": 772
+    }
+  }
+}

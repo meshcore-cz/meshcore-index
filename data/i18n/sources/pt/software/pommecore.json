@@ -1,0 +1,51 @@
+{
+  "resource": "software/pommecore",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Aplicativo complementar nativo em SwiftUI para dispositivos de rádio mesh LoRa MeshCore, disponível para iPhone, iPad, Mac e Apple Watch, com troca de mensagens, mapa da rede mesh, ferramentas de RF, análise de linha de visada, administração remota e atualizações de firmware OTA.",
+      "sourceHash": "sha256:022bbd998f27d9a1a7e550a77503e97de1a925e833600f142847edc362dc9900",
+      "generatedAt": "2026-06-29T02:24:07.748Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2537,
+      "promptTokens": 176,
+      "completionTokens": 639
+    },
+    "tags": {
+      "value": "[\"apple\",\"nativo\",\"offline\",\"análise-rf\",\"terminal-remoto\",\"watchos\",\"icloud\"]",
+      "sourceHash": "sha256:10399e9b706fdcef353a1584eb5a805e8f695c16cc076ce5b994313142f0dc7c",
+      "generatedAt": "2026-06-29T02:24:12.639Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 4890,
+      "promptTokens": 148,
+      "completionTokens": 1229
+    },
+    "verificationNotes.requires-ios-or-ipados-18-0-macos-15-0-apple-sil": {
+      "value": "Requer iOS ou iPadOS 18.0, macOS 15.0 (Apple Silicon ou Intel) ou watchOS 11.0.",
+      "sourceHash": "sha256:0340214477f77a6425e5e460839cbc0980d83df7c22fcb72e22f3e19f1dc7483",
+      "generatedAt": "2026-06-29T02:24:15.511Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2871,
+      "promptTokens": 158,
+      "completionTokens": 618
+    },
+    "verificationNotes.build-from-source-with-xcode-16-also-available-o": {
+      "value": "Compilar a partir do código-fonte com o Xcode 16+; também disponível na App Store.",
+      "sourceHash": "sha256:b38c9d8cb2f392e0e4f3603f2b37347411d1b9af2eec9a9d12c653d926aa4cdc",
+      "generatedAt": "2026-06-29T02:24:17.802Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2291,
+      "promptTokens": 146,
+      "completionTokens": 583
+    },
+    "verificationNotes.messages-and-contacts-are-interoperable-with-mes": {
+      "value": "Mensagens e contatos são interoperáveis com o MeshCore One.",
+      "sourceHash": "sha256:5c4a6d53ee867a10e9bf88b8f539a799b13b45f0c4904c5c521e705103fa538b",
+      "generatedAt": "2026-06-29T02:24:20.757Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2954,
+      "promptTokens": 140,
+      "completionTokens": 680
+    }
+  }
+}

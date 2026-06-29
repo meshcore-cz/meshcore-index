@@ -1,0 +1,15 @@
+{
+  "resource": "network/upstate-mesh",
+  "locale": "uk",
+  "fields": {
+    "description": {
+      "value": "Спільнота mesh-комунікацій для Столичного регіону Нью-Йорка (Олбані, Скенектаді, Трой, Саратога) та околиць. Підтримує як Meshtastic, так і MeshCore.",
+      "sourceHash": "sha256:644b7742ce14ba0f7b9a5ff149ac5eb5237718a1bb7f50f0cc5351eb0e693419",
+      "generatedAt": "2026-06-29T02:26:15.178Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 3234,
+      "promptTokens": 167,
+      "completionTokens": 869
+    }
+  }
+}

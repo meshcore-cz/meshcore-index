@@ -1,0 +1,15 @@
+{
+  "resource": "network/florida-mesh",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Rede comunitária MeshCore com cobertura em toda a Flórida, construída por radioamadores e entusiastas de comunicação off-grid por todo o Estado do Sol.",
+      "sourceHash": "sha256:aed247dbcbeddc5e02d084e748acdcdabf1238272477278c91a1e96045b58b43",
+      "generatedAt": "2026-06-29T02:24:31.502Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 4999,
+      "promptTokens": 150,
+      "completionTokens": 1363
+    }
+  }
+}

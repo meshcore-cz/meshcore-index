@@ -1,0 +1,15 @@
+{
+  "resource": "network/le-mesh-dunkerquois",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Comunidade MeshCore na região de Dunquerque e na costa norte da França/Bélgica.",
+      "sourceHash": "sha256:c5fb6812bee30557e728e78b0c1657e340e57fb1822f468267ec2ce67bd99c3e",
+      "generatedAt": "2026-06-29T02:24:34.156Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 2648,
+      "promptTokens": 144,
+      "completionTokens": 653
+    }
+  }
+}
