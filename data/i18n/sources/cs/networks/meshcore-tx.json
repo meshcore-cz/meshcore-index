@@ -1,0 +1,15 @@
+{
+  "resource": "network/meshcore-tx",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "Komunitní standard pro MeshCore v Texasu. Zveřejňuje doporučené rádiové parametry, které zajišťují ochranné pásmo oddělující uzly v Texasu od Meshtastic na frekvenci 906,875 MHz. K dispozici jsou dvě předvolby: jedna pro uživatele plně migrující z Meshtastic a druhá pro souběžný provoz sítí nebo budování nových sítí.",
+      "sourceHash": "sha256:eab8ffabcccfadb0ec0032f0a93f5ab73f47caec5d33250168fb26c198caa3f7",
+      "generatedAt": "2026-06-29T06:57:27.269Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 7750,
+      "promptTokens": 185,
+      "completionTokens": 1159
+    }
+  }
+}

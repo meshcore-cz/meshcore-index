@@ -1,0 +1,15 @@
+{
+  "resource": "device/wio-e5",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "Ultrakompaktní LoRa modul o rozměrech 12×12 mm založený na čipu STM32WLE5JC, který v jednom čipu integruje mikrokontrolér ARM Cortex-M4 a rádio kompatibilní se SX126x. SMT pouzdro typu stamp s rozhraními UART a SPI. Podporuje pásma EU868, US915 a další celosvětová pásma LoRaWAN s výkonem až 22 dBm.",
+      "sourceHash": "sha256:1ec6afd840b37c8d8bb517ae417f8cacdf077cbb1ae10050bd54d17c5e4bd2e5",
+      "generatedAt": "2026-06-29T06:56:59.927Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 8324,
+      "promptTokens": 204,
+      "completionTokens": 1293
+    }
+  }
+}

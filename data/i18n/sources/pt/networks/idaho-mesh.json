@@ -1,0 +1,15 @@
+{
+  "resource": "network/idaho-mesh",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Comunidade MeshCore do Idaho, com uma rede em malha ativa e em expansão no sudoeste do estado (Treasure Valley) e cobertura em desenvolvimento no norte e leste do Idaho. Utiliza a predefinição padrão EUA/Canadá.",
+      "sourceHash": "sha256:a5adeba1127f8dbfdb7442d0ba7316e58f49b068ff54fe41a47bcf605e2d5065",
+      "generatedAt": "2026-06-29T06:58:32.156Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 8788,
+      "promptTokens": 166,
+      "completionTokens": 1120
+    }
+  }
+}

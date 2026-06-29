@@ -1,0 +1,15 @@
+{
+  "resource": "device/ebyte-e22p",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "Výkonný rádiový modul LoRa s výstupním výkonem 30 dBm (1 W), integrovaným LNA a volitelným pásmovým filtrem. Rozhraní SPI. Varianty pro 868/915 MHz používají SX1262; varianta pro 433 MHz používá SX1268. Slouží jako RF front-end v několika deskách kompatibilních s MeshCore, včetně MeshSmith PiMesh-1W, Photon-1W a EtherMesh-1W.",
+      "sourceHash": "sha256:c2e26f1826840a913dbf20ee40f534cd61b1442b2ed04467ef21dafc0e0ec779",
+      "generatedAt": "2026-06-29T06:56:34.302Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 10920,
+      "promptTokens": 218,
+      "completionTokens": 1580
+    }
+  }
+}

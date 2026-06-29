@@ -1,0 +1,15 @@
+{
+  "resource": "vendor/hoperf",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Nhà sản xuất Trung Quốc chuyên cung cấp các mô-đun radio LoRa và FSK giá rẻ, được sử dụng rộng rãi trong các dự án DIY và maker về LoRa. Nổi tiếng nhất với dòng sản phẩm RFM9x sử dụng chip Semtech SX127x.",
+      "sourceHash": "sha256:80613c2497a4e4c5ac06c010e46d4fa0cb4970174e7bdbc01726cc7a5a014675",
+      "generatedAt": "2026-06-29T07:01:24.708Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 6897,
+      "promptTokens": 170,
+      "completionTokens": 753
+    }
+  }
+}

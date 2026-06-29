@@ -1,0 +1,15 @@
+{
+  "resource": "device/generic-ebyte-e22",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Đích biên dịch chung cho phần cứng LoRa SX1262 hoặc SX1268 dựa trên ESP32. Được dùng làm cấu hình dự phòng cho các module dòng E22 khi không có bản ghi cụ thể của nhà sản xuất.",
+      "sourceHash": "sha256:488c94f71ead48702aedc50e9162e26769f505e752a99ffdb8c09a1bc9fa318a",
+      "generatedAt": "2026-06-29T07:00:39.742Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 8255,
+      "promptTokens": 165,
+      "completionTokens": 689
+    }
+  }
+}

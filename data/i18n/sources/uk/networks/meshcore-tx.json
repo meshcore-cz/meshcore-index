@@ -1,0 +1,15 @@
+{
+  "resource": "network/meshcore-tx",
+  "locale": "uk",
+  "fields": {
+    "description": {
+      "value": "Стандарт спільноти для MeshCore у Техасі. Встановлює рекомендовані радіопараметри, щоб забезпечити техаським вузлам захисний інтервал від Meshtastic на частоті 906.875 МГц. Доступні два пресети: один для користувачів, які повністю мігрують з Meshtastic, а інший — для паралельного запуску мереж або розгортання нових меш-мереж.",
+      "sourceHash": "sha256:eab8ffabcccfadb0ec0032f0a93f5ab73f47caec5d33250168fb26c198caa3f7",
+      "generatedAt": "2026-06-29T07:00:03.105Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 14639,
+      "promptTokens": 185,
+      "completionTokens": 1103
+    }
+  }
+}

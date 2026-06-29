@@ -1,0 +1,15 @@
+{
+  "resource": "device/ebyte-e22",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "Rádiový modul LoRa se standardním výkonem, postavený na čipu SX1262 a poskytující výstup 22 dBm přes rozhraní SPI. K dispozici ve variantách pro 433, 868 a 915 MHz. Často se využívá v DIY a vestavěných projektech MeshCore/Meshtastic.",
+      "sourceHash": "sha256:4d3a57e5d492322a2fdcf9994d024c2cb088d7bfade02d1298679bfaf512a092",
+      "generatedAt": "2026-06-29T06:56:23.378Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 11708,
+      "promptTokens": 184,
+      "completionTokens": 1455
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "resource": "device/wio-e5",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Mô-đun LoRa siêu nhỏ gọn 12×12 mm dựa trên STM32WLE5JC, tích hợp vi điều khiển ARM Cortex-M4 và bộ thu phát vô tuyến tương thích SX126x trên một chip duy nhất. Đóng gói dạng tem SMT với các giao diện UART và SPI. Hỗ trợ các băng tần LoRaWAN toàn cầu như EU868, US915 và các băng tần khác với công suất lên đến 22 dBm.",
+      "sourceHash": "sha256:1ec6afd840b37c8d8bb517ae417f8cacdf077cbb1ae10050bd54d17c5e4bd2e5",
+      "generatedAt": "2026-06-29T07:01:01.351Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 11836,
+      "promptTokens": 204,
+      "completionTokens": 1341
+    }
+  }
+}

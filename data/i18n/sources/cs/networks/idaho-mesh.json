@@ -1,0 +1,15 @@
+{
+  "resource": "network/idaho-mesh",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "Komunita MeshCore pro Idaho s aktivní a rostoucí mesh sítí v jihozápadním Idahu (Treasure Valley) a rozvíjejícím se pokrytím na severu a východě státu. Používá standardní předvolbu USA/Kanada.",
+      "sourceHash": "sha256:a5adeba1127f8dbfdb7442d0ba7316e58f49b068ff54fe41a47bcf605e2d5065",
+      "generatedAt": "2026-06-29T06:57:19.512Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 5387,
+      "promptTokens": 166,
+      "completionTokens": 660
+    }
+  }
+}

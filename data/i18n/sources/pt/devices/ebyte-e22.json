@@ -1,0 +1,15 @@
+{
+  "resource": "device/ebyte-e22",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Módulo de rádio LoRa de potência padrão baseado no SX1262, com saída de 22 dBm via interface SPI. Disponível nas variantes de 433, 868 e 915 MHz. Amplamente utilizado em projetos DIY e embarcados de MeshCore/Meshtastic.",
+      "sourceHash": "sha256:4d3a57e5d492322a2fdcf9994d024c2cb088d7bfade02d1298679bfaf512a092",
+      "generatedAt": "2026-06-29T06:57:33.944Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 6662,
+      "promptTokens": 184,
+      "completionTokens": 713
+    }
+  }
+}

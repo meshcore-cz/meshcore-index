@@ -1,0 +1,15 @@
+{
+  "resource": "device/hoperf-rfm95",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Módulo de rádio LoRa amplamente utilizado, baseado no SX1276 e disponível nas versões de 868 MHz e 915 MHz. Possui interface SPI e um encapsulamento simples, sendo comum em projetos DIY e montagens LoRa de baixo custo.",
+      "sourceHash": "sha256:1359edfdd08a03dbedfb40e5c2f299161c9fbd47b4cbfc3d6da07a0a5cfc9464",
+      "generatedAt": "2026-06-29T06:57:59.309Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 8404,
+      "promptTokens": 174,
+      "completionTokens": 1111
+    }
+  }
+}

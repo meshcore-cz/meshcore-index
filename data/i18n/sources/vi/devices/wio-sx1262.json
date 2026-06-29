@@ -1,0 +1,15 @@
+{
+  "resource": "device/wio-sx1262",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Mô-đun radio LoRa nhỏ gọn sử dụng chip SX1262, được thiết kế để kết nối với các bo mạch Seeed Xiao thông qua SPI. Sản phẩm được đi kèm trong một số bộ kit Xiao+Wio-SX1262, được sử dụng rộng rãi trong hệ sinh thái MeshCore và Meshtastic cho các nút đồng hành và nút chuyển tiếp nhỏ gọn.",
+      "sourceHash": "sha256:72b3f083e4db13cde8a2596a595391a4384e11c6d107e6ea5e067777cda4124f",
+      "generatedAt": "2026-06-29T07:01:17.776Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 16423,
+      "promptTokens": 184,
+      "completionTokens": 1097
+    }
+  }
+}

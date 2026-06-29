@@ -1,0 +1,15 @@
+{
+  "resource": "device/ebyte-e22",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Mô-đun radio LoRa công suất tiêu chuẩn tích hợp chip SX1262, cung cấp công suất đầu ra 22 dBm thông qua giao diện SPI. Có sẵn các phiên bản tần số 433, 868 và 915 MHz. Được sử dụng rộng rãi trong các dự án DIY và hệ thống nhúng MeshCore/Meshtastic.",
+      "sourceHash": "sha256:4d3a57e5d492322a2fdcf9994d024c2cb088d7bfade02d1298679bfaf512a092",
+      "generatedAt": "2026-06-29T07:00:12.113Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 8985,
+      "promptTokens": 184,
+      "completionTokens": 774
+    }
+  }
+}

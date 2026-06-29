@@ -1,0 +1,15 @@
+{
+  "resource": "device/wio-e5",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Módulo LoRa ultracompacto de 12×12 mm baseado no STM32WLE5JC, que integra um microcontrolador ARM Cortex-M4 e um rádio compatível com SX126x em um único chip. Encapsulamento SMT em formato stamp com interfaces UART e SPI. Suporta as bandas LoRaWAN globais EU868, US915 e outras, com potência de até 22 dBm.",
+      "sourceHash": "sha256:1ec6afd840b37c8d8bb517ae417f8cacdf077cbb1ae10050bd54d17c5e4bd2e5",
+      "generatedAt": "2026-06-29T06:58:06.776Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 7445,
+      "promptTokens": 204,
+      "completionTokens": 1175
+    }
+  }
+}

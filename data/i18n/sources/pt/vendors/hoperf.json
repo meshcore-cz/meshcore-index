@@ -1,0 +1,15 @@
+{
+  "resource": "vendor/hoperf",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Fabricante chinesa de módulos de rádio LoRa e FSK de baixo custo, amplamente utilizados em projetos DIY e maker de LoRa. É mais conhecida pela série RFM9x, baseada nos chips Semtech SX127x.",
+      "sourceHash": "sha256:80613c2497a4e4c5ac06c010e46d4fa0cb4970174e7bdbc01726cc7a5a014675",
+      "generatedAt": "2026-06-29T06:58:23.356Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 9151,
+      "promptTokens": 170,
+      "completionTokens": 1056
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "resource": "device/wio-sx1262",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Módulo de rádio LoRa compacto baseado no SX1262, projetado para parear com placas Seeed Xiao via SPI. Faz parte de vários kits Xiao+Wio-SX1262 amplamente utilizados no ecossistema MeshCore e Meshtastic para nós companheiros e repetidores compactos.",
+      "sourceHash": "sha256:72b3f083e4db13cde8a2596a595391a4384e11c6d107e6ea5e067777cda4124f",
+      "generatedAt": "2026-06-29T06:58:14.177Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 7401,
+      "promptTokens": 184,
+      "completionTokens": 966
+    }
+  }
+}

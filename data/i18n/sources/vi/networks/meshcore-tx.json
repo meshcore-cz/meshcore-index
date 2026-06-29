@@ -1,0 +1,15 @@
+{
+  "resource": "network/meshcore-tx",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Tiêu chuẩn cộng đồng cho MeshCore tại Texas. Cung cấp các thông số vô tuyến được khuyến nghị nhằm tạo dải bảo vệ cách ly cho các nút mạng tại Texas khỏi Meshtastic ở tần số 906.875 MHz. Bao gồm hai cấu hình sẵn: một dành cho người dùng chuyển đổi hoàn toàn từ Meshtastic và một dành cho việc vận hành mạng đồng thời hoặc triển khai mạng mới.",
+      "sourceHash": "sha256:eab8ffabcccfadb0ec0032f0a93f5ab73f47caec5d33250168fb26c198caa3f7",
+      "generatedAt": "2026-06-29T07:01:38.982Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 6271,
+      "promptTokens": 185,
+      "completionTokens": 645
+    }
+  }
+}

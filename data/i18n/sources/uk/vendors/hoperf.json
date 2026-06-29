@@ -1,0 +1,15 @@
+{
+  "resource": "vendor/hoperf",
+  "locale": "uk",
+  "fields": {
+    "description": {
+      "value": "Китайський виробник недорогих радіомодулів LoRa та FSK, які широко застосовуються в DIY-проєктах та LoRa-розробках мейкерів. Найвідоміший завдяки серії RFM9x, побудованій на базі мікросхем Semtech SX127x.",
+      "sourceHash": "sha256:80613c2497a4e4c5ac06c010e46d4fa0cb4970174e7bdbc01726cc7a5a014675",
+      "generatedAt": "2026-06-29T06:59:39.330Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 6759,
+      "promptTokens": 170,
+      "completionTokens": 1097
+    }
+  }
+}

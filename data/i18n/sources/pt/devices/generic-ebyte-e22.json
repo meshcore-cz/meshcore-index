@@ -1,0 +1,15 @@
+{
+  "resource": "device/generic-ebyte-e22",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Alvo de compilação genérico baseado em ESP32 para hardware LoRa SX1262 ou SX1268. Usado como perfil alternativo para módulos da família E22 quando não há um registro específico do fabricante disponível.",
+      "sourceHash": "sha256:488c94f71ead48702aedc50e9162e26769f505e752a99ffdb8c09a1bc9fa318a",
+      "generatedAt": "2026-06-29T06:57:50.896Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 7743,
+      "promptTokens": 165,
+      "completionTokens": 1149
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "resource": "network/idaho-mesh",
+  "locale": "uk",
+  "fields": {
+    "description": {
+      "value": "Спільнота MeshCore для Айдахо з активною mesh-мережею, що розширюється на південному заході штату (Treasure Valley), та зоною покриття, яка розвивається на півночі та сході Айдахо. Використовується стандартний пресет для США/Канади.",
+      "sourceHash": "sha256:a5adeba1127f8dbfdb7442d0ba7316e58f49b068ff54fe41a47bcf605e2d5065",
+      "generatedAt": "2026-06-29T06:59:48.462Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 9113,
+      "promptTokens": 166,
+      "completionTokens": 1635
+    }
+  }
+}

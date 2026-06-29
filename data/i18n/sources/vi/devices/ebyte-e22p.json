@@ -1,0 +1,15 @@
+{
+  "resource": "device/ebyte-e22p",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Mô-đun radio LoRa công suất cao với công suất đầu ra 30 dBm (1 W), tích hợp LNA và bộ lọc thông dải tùy chọn. Giao tiếp SPI. Các phiên bản 868/915 MHz sử dụng SX1262; phiên bản 433 MHz sử dụng SX1268. Được sử dụng làm tầng tiền cực RF trong một số bo mạch tương thích MeshCore, bao gồm MeshSmith PiMesh-1W, Photon-1W và EtherMesh-1W.",
+      "sourceHash": "sha256:c2e26f1826840a913dbf20ee40f534cd61b1442b2ed04467ef21dafc0e0ec779",
+      "generatedAt": "2026-06-29T07:00:31.482Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 19368,
+      "promptTokens": 218,
+      "completionTokens": 1174
+    }
+  }
+}

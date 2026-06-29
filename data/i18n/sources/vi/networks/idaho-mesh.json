@@ -1,0 +1,15 @@
+{
+  "resource": "network/idaho-mesh",
+  "locale": "vi",
+  "fields": {
+    "description": {
+      "value": "Cộng đồng MeshCore dành cho Idaho, với mạng mesh đang hoạt động và phát triển tại Tây Nam Idaho (Treasure Valley) cùng vùng phủ sóng đang được mở rộng ở Bắc và Đông Idaho. Sử dụng cài đặt sẵn tiêu chuẩn cho Mỹ/Canada.",
+      "sourceHash": "sha256:a5adeba1127f8dbfdb7442d0ba7316e58f49b068ff54fe41a47bcf605e2d5065",
+      "generatedAt": "2026-06-29T07:01:32.704Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 7984,
+      "promptTokens": 166,
+      "completionTokens": 769
+    }
+  }
+}

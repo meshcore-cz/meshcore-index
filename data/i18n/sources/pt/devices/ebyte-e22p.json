@@ -1,0 +1,15 @@
+{
+  "resource": "device/ebyte-e22p",
+  "locale": "pt",
+  "fields": {
+    "description": {
+      "value": "Módulo de rádio LoRa de alta potência com saída de 30 dBm (1 W), LNA integrado e filtro passa-faixa opcional. Interface SPI. As variantes de 868/915 MHz utilizam o SX1262; a variante de 433 MHz utiliza o SX1268. É utilizado como front-end de RF em diversas placas compatíveis com MeshCore, incluindo as MeshSmith PiMesh-1W, Photon-1W e EtherMesh-1W.",
+      "sourceHash": "sha256:c2e26f1826840a913dbf20ee40f534cd61b1442b2ed04467ef21dafc0e0ec779",
+      "generatedAt": "2026-06-29T06:57:43.150Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 9204,
+      "promptTokens": 218,
+      "completionTokens": 1236
+    }
+  }
+}

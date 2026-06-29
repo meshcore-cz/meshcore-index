@@ -1,0 +1,15 @@
+{
+  "resource": "device/ebyte-e22",
+  "locale": "uk",
+  "fields": {
+    "description": {
+      "value": "Радіомодуль LoRa стандартної потужності на базі SX1262, що забезпечує вихідну потужність 22 дБм через інтерфейс SPI. Доступний у версіях для частот 433, 868 та 915 МГц. Широко використовується в саморобних та вбудованих пристроях на базі MeshCore/Meshtastic.",
+      "sourceHash": "sha256:4d3a57e5d492322a2fdcf9994d024c2cb088d7bfade02d1298679bfaf512a092",
+      "generatedAt": "2026-06-29T06:58:44.363Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 6718,
+      "promptTokens": 184,
+      "completionTokens": 912
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "resource": "device/ebyte-e22p",
+  "locale": "uk",
+  "fields": {
+    "description": {
+      "value": "Високопотужний радіомодуль LoRa з вихідною потужністю 30 дБм (1 Вт), вбудованим LNA та опціональним смуговим фільтром. Інтерфейс SPI. Версії для частот 868/915 МГц побудовано на базі SX1262, а версія для 433 МГц — на базі SX1268. Використовується як радіочастотний тракт у кількох платах, сумісних з MeshCore, зокрема MeshSmith PiMesh-1W, Photon-1W та EtherMesh-1W.",
+      "sourceHash": "sha256:c2e26f1826840a913dbf20ee40f534cd61b1442b2ed04467ef21dafc0e0ec779",
+      "generatedAt": "2026-06-29T06:58:54.881Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 10518,
+      "promptTokens": 218,
+      "completionTokens": 1471
+    }
+  }
+}

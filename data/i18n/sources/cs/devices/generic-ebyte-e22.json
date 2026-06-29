@@ -1,0 +1,15 @@
+{
+  "resource": "device/generic-ebyte-e22",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "Obecný cíl sestavení založený na ESP32 pro hardware LoRa SX1262 nebo SX1268. Používá se jako záložní profil pro moduly řady E22, pokud není k dispozici specifický záznam výrobce.",
+      "sourceHash": "sha256:488c94f71ead48702aedc50e9162e26769f505e752a99ffdb8c09a1bc9fa318a",
+      "generatedAt": "2026-06-29T06:56:40.574Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 6267,
+      "promptTokens": 165,
+      "completionTokens": 755
+    }
+  }
+}

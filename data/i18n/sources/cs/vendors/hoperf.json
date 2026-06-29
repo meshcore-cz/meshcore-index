@@ -1,0 +1,15 @@
+{
+  "resource": "vendor/hoperf",
+  "locale": "cs",
+  "fields": {
+    "description": {
+      "value": "Čínský výrobce levných rádiových modulů LoRa a FSK, které se hojně využívají v DIY a makerských projektech s technologií LoRa. Nejznámější je díky sérii RFM9x, která je založena na čipech Semtech SX127x.",
+      "sourceHash": "sha256:80613c2497a4e4c5ac06c010e46d4fa0cb4970174e7bdbc01726cc7a5a014675",
+      "generatedAt": "2026-06-29T06:57:14.113Z",
+      "model": "glm-5.2:cloud",
+      "durationMs": 7827,
+      "promptTokens": 170,
+      "completionTokens": 1005
+    }
+  }
+}
