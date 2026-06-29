@@ -2,7 +2,8 @@ name: MeshCore One
 short_name: MC1
 kind: client
 status: active
-maturity: beta
+maturity: stable
+website: https://meshcoreone.com/
 description: >-
   Native MeshCore client and network toolkit for iPhone, iPad and Apple Silicon
   Macs, combining messaging with offline maps, path tracing, RF line-of-sight
@@ -52,8 +53,8 @@ capabilities:
 
 install:
   - type: app-store
-    package: TestFlight
-    url: https://testflight.apple.com/join/YjGNDTaE
+    package: App Store
+    url: https://apps.apple.com/app/meshcore-one/id6757419477
   - type: github-release
     package: unsigned IPA
     url: https://github.com/Avi0n/MeshCoreOne/releases
@@ -79,7 +80,7 @@ verification:
   lastChecked: 2026-06-23
   notes:
     - Requires iOS or iPadOS 18 or an Apple Silicon Mac.
-    - GitHub releases provide unsigned IPA files; TestFlight is the simpler beta installation path.
+    - GitHub releases provide unsigned IPA files; the App Store is the recommended installation path.
 
 tags:
   - apple
@@ -88,4 +89,4 @@ tags:
   - rf-analysis
   - remote-terminal
 
-last_reviewed: 2026-06-23
+last_reviewed: 2026-06-29

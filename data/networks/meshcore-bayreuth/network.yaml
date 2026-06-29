@@ -1,0 +1,53 @@
+# Source: https://analyzer.meshcorebayreuth.de/api/observers
+name: MeshCore Bayreuth
+short_name: Mesh Bayreuth
+description: >-
+  MeshCore community around Bayreuth and Upper Franconia (Oberfranken), building
+  off-grid LoRa mesh infrastructure with local repeaters and public channels on
+  the EU/UK Narrow preset.
+scope: local
+status: active
+visibility: public
+area: area.geojson
+
+coverage:
+  countries:
+    - DE
+
+regions:
+  - code: europe
+    name: Europe
+  - code: de
+    name: Germany
+  - code: de-by
+    name: Bavaria
+    parent: de
+  - code: de-by-ofr
+    name: Upper Franconia
+    parent: de-by
+  - code: de-by-ofr-bt
+    name: Bayreuth
+    parent: de-by-ofr
+
+radio:
+  frequency: '868'
+  frequency_mhz: 869.618
+  bandwidth_khz: 62.5
+  spreading_factor: 8
+  coding_rate: 4/8
+  tx_power_dbm: 22
+  duty_cycle_pct: 10
+  path_hash_mode: 2-Byte
+  region_code: de-by-ofr-bt
+  public_channel: Public
+  app_preset: 'EU/UK (Narrow)'
+
+community:
+  website: https://meshcorebayreuth.de/
+
+analyzers:
+  - name: analyzer.meshcorebayreuth.de
+    url: https://analyzer.meshcorebayreuth.de
+
+resources:
+  getting_started: https://analyzer.meshcorebayreuth.de/

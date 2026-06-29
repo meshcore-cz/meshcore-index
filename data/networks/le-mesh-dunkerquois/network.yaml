@@ -1,0 +1,28 @@
+name: Le Mesh Dunkerquois
+short_name: Mesh Dunkerquois
+description: MeshCore community around Dunkirk and the northern France/Belgium coast.
+scope: regional
+status: active
+visibility: public
+area: area.geojson
+coverage:
+  countries:
+  - FR
+  - BE
+regions:
+- code: fr
+  name: France
+- code: fr-59
+  name: Nord
+  parent: fr
+radios:
+- name: EU France/Belgium
+  frequency: '868'
+  frequency_mhz: 869.525
+  bandwidth_khz: 62.5
+  spreading_factor: 7
+  coding_rate: 4/5
+  public_channel: Public
+analyzers:
+- name: mesh.farewell.dev
+  url: https://mesh.farewell.dev/

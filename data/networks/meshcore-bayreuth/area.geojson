@@ -1,0 +1,24 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MeshCore Bayreuth",
+        "source": "Approximate coverage around CoreScope observer locations"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [10.2, 49.4],
+            [12.0, 49.4],
+            [12.0, 50.5],
+            [10.2, 50.5],
+            [10.2, 49.4]
+          ]
+        ]
+      }
+    }
+  ]
+}
