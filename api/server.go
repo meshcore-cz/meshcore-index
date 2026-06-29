@@ -253,6 +253,7 @@ type linkView struct {
 //	GET /api/nodes/{pubkey}          node detail (overview + rolling adverts)
 //	GET /api/nodes/{pubkey}/adverts  full advert history (paginated)
 //	GET /api/nodes/{pubkey}/links    observed links
+//	GET /api/nodes/{pubkey}/activity advert counts per UTC day
 func (s *Server) handleNodeSub(w http.ResponseWriter, r *http.Request) {
 	rest := strings.TrimPrefix(r.URL.Path, "/api/nodes/")
 	pubkey, sub, _ := strings.Cut(rest, "/")
@@ -266,9 +267,62 @@ func (s *Server) handleNodeSub(w http.ResponseWriter, r *http.Request) {
 		s.handleNodeLinks(w, r, pubkey)
 	case "networks":
 		s.handleNodeNetworks(w, r, pubkey)
+	case "activity":
+		s.handleNodeActivity(w, r, pubkey)
 	default:
 		writeJSON(w, http.StatusNotFound, map[string]string{"error": "not found"})
 	}
+}
+
+const (
+	defaultActivityDays = 365
+	maxActivityDays     = 730
+)
+
+// handleNodeActivity serves one node's daily advert counts for a GitHub-style
+// activity heatmap:
+//
+//	GET /api/nodes/{pubkey}/activity?days=
+func (s *Server) handleNodeActivity(w http.ResponseWriter, r *http.Request, rawPub string) {
+	node, ok := normalizePub(rawPub)
+	if !ok {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "invalid pubkey"})
+		return
+	}
+	pubHex := hex.EncodeToString(node[:])
+
+	days := atoiDefault(r.URL.Query().Get("days"), defaultActivityDays)
+	if days <= 0 {
+		days = defaultActivityDays
+	}
+	if days > maxActivityDays {
+		days = maxActivityDays
+	}
+
+	now := nowUnix()
+	today := (now / 86400) * 86400
+	since := today - int64(days-1)*86400
+
+	activity := []DailyAdvertStat{}
+	if s.db != nil {
+		rows, err := s.db.DailyAdvertStatsForNode(pubHex, since)
+		if err != nil {
+			writeJSON(w, http.StatusInternalServerError, map[string]string{"error": "query failed"})
+			return
+		}
+		if rows != nil {
+			activity = rows
+		}
+	}
+
+	w.Header().Set("Cache-Control", "public, max-age=300")
+	writeJSON(w, http.StatusOK, map[string]any{
+		"node":     pubHex,
+		"days":     days,
+		"from":     since,
+		"to":       today,
+		"activity": activity,
+	})
 }
 
 // handleNodeNetworks serves one node's per-network advert activity (count and

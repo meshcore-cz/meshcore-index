@@ -574,6 +574,12 @@ type NetworkAdvertStat struct {
 	LastAt    int64  `json:"lastAt"`
 }
 
+// DailyAdvertStat is one UTC day of advert activity for a node.
+type DailyAdvertStat struct {
+	Day     int64 `json:"day"`
+	Adverts int64 `json:"adverts"`
+}
+
 // NetworkAdvertStatsForNode aggregates one node's adverts per network from the
 // history table: how many adverts, and the first/last time one arrived on each
 // network. Ordered most-recently-active first.
@@ -592,6 +598,30 @@ func (d *DB) NetworkAdvertStatsForNode(pubkey string) ([]NetworkAdvertStat, erro
 	for rows.Next() {
 		var s NetworkAdvertStat
 		if err := rows.Scan(&s.NetworkID, &s.Adverts, &s.FirstAt, &s.LastAt); err != nil {
+			return nil, err
+		}
+		out = append(out, s)
+	}
+	return out, rows.Err()
+}
+
+// DailyAdvertStatsForNode aggregates one node's advert counts per UTC day.
+func (d *DB) DailyAdvertStatsForNode(pubkey string, since int64) ([]DailyAdvertStat, error) {
+	rows, err := d.db.Query(`
+		SELECT (received_at / 86400) * 86400 AS day, COUNT(*)
+		FROM adverts
+		WHERE pubkey = ? AND received_at >= ?
+		GROUP BY day
+		ORDER BY day ASC`, pubkey, since)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var out []DailyAdvertStat
+	for rows.Next() {
+		var s DailyAdvertStat
+		if err := rows.Scan(&s.Day, &s.Adverts); err != nil {
 			return nil, err
 		}
 		out = append(out, s)
