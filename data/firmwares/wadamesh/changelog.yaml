@@ -1,23 +1,35 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-01T21:44:16.305Z'
+updatedAt: '2026-07-01T23:18:43.818Z'
 releases:
   - version: beta_25
-    name: wadamesh beta_25 (test)
+    name: wadamesh beta_25 (stable)
     datetime: '2026-07-01T21:34:02Z'
     url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_25
-    prerelease: true
+    prerelease: false
     notes: >-
-      **wadamesh beta_25** is a test-channel build. Opt in on-device with **Settings > About > "Get
-      test builds"**, or use the Beta toggle on
-      [flasher.wadamesh.com](https://flasher.wadamesh.com).
+      **wadamesh beta_25** is the new **stable** release. It rolls up the beta_22 through beta_25
+      test builds on top of the previous stable, beta_21.
+
+
+      Install from [flasher.wadamesh.com](https://flasher.wadamesh.com), the Launcher, or the
+      on-device update check.
 
 
       ### Fixed
 
-      - **Contacts show up right away.** A node you discover (even while you're on another screen,
-      or one the phone app adds over Bluetooth) now appears in your contact list immediately,
-      instead of only after you change the sort. Thanks to **@1nerdherder** for the report (#73).
+      - **Signal probe reads a live signal again.** It sends the standard mesh node-discovery
+      request that repeaters actually answer (the same one the Ultra and KiekR apps use), so the
+      signal reading updates. Thanks to Tarmo for decoding the exact packet.
+
+      - **Bluetooth companion reliability**, especially messages and repeater / room-server admin.
+      The device no longer floods the Bluetooth link with a per-packet log (USB and Wi-Fi companions
+      still get it), so incoming messages reach the app and admin actions like Manage Regions stop
+      timing out (#46, #54).
+
+      - **Contacts show up right away.** A node you discover (even while on another screen, or one
+      the phone app adds over Bluetooth) now appears in your contact list immediately, instead of
+      only after changing the sort. Thanks to **@1nerdherder** for the report (#73).
 
       - **Manual telemetry / status requests work first-try** (no more tapping "Request" twice).
       Thanks to **@Vybo** (Dan Vybiral) for the fix (#81).
@@ -47,8 +59,7 @@ releases:
       contacts; "Large" UI size by default.
 
 
-      Everything from stable **beta_21** and the earlier test builds is included. Install the
-      app-only `.bin` via the Launcher, or the `-merged.bin` at 0x0 with a flasher.
+      Install the app-only `.bin` via the Launcher, or the `-merged.bin` at 0x0 with a flasher.
   - version: beta_24
     name: wadamesh beta_24
     datetime: '2026-07-01T12:50:16Z'
