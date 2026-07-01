@@ -4,16 +4,16 @@
     "githubStars": 143,
     "githubForks": 36,
     "githubWatchers": 2,
-    "githubOpenIssues": 106,
+    "githubOpenIssues": 105,
     "githubContributors": 25,
-    "releaseDownloads": 34,
+    "releaseDownloads": 35,
     "latestReleaseDownloads": 0,
-    "lastChecked": "2026-06-30"
+    "lastChecked": "2026-07-01"
   },
   "verification": {
     "sourceAvailable": true,
     "releasesAvailable": true,
     "ciBuilds": true,
-    "lastChecked": "2026-06-30"
+    "lastChecked": "2026-07-01"
   }
 }
