@@ -1,7 +1,81 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-06-28T23:05:36.354Z'
+updatedAt: '2026-06-30T17:06:34.401Z'
 releases:
+  - version: beta_21
+    name: wadamesh beta_21
+    datetime: '2026-06-30T15:39:05Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_21
+    prerelease: false
+    notes: >-
+      **wadamesh beta_21 — the first stable build.**
+
+
+      This is the first release on the new two-channel system. **Stable** is what everyone gets by
+      default. If you want new features earlier, flip **Settings → About → "Get test builds
+      (beta)"** on a Wi-Fi-updatable device and you'll track the **test** channel instead — for both
+      the "update available" check and the firmware you install. Switch back any time.
+
+
+      Flash or update at **[flasher.wadamesh.com](https://flasher.wadamesh.com)**, or install over
+      Wi-Fi from **Settings → About → Install update**.
+
+
+      ## New
+
+
+      - **Stable and test update channels.** beta_21 is the first stable build. The new *Get test
+      builds (beta)* switch on the About screen lets OTA devices opt into test builds early — it
+      points both the update check and the installer at the test channel. Off by default.
+
+      - **MQTT bridge — highly experimental, off by default.** An opt-in bridge that forwards the
+      messages your node receives to an MQTT broker you choose, so you can log your mesh or wire it
+      into other tools. It is gated behind a privacy consent you must tick, direct messages are
+      excluded unless you deliberately turn them on, and the payload can be sealed with an
+      encryption key so only you can read it. Use a broker you control, never a public one.
+      Experimental — expect changes. *Contributed by @samuelcoustet (#71), reworked for privacy.*
+
+      - **Portugal (Narrow) region preset** — local defaults in one tap. (#74, requested by
+      @Salgueiron.)
+
+      - **Saved-contacts counter** in the Contacts overflow menu — how many contacts you have saved
+      out of the maximum it can hold, e.g. 42 / 2000. (#72, asked by @Buko84.)
+
+
+      ## Fixed
+
+
+      - **The signal probe is strictly zero-hop now.** The auto-discover pulse and the probe behind
+      the Signal popup can no longer be re-flooded across the mesh by a repeater — the probe only
+      measures the link to whatever hears it first, which is what it was always meant to do.
+
+      - **Your most relevant contacts show when you have a lot of them.** The on-screen list is
+      capped for performance but was trimming before sorting, so some contacts dropped out of view.
+      It now sorts first, shows the closest matches, and adds a "+N more — search to narrow the
+      list" line at the bottom. (#73, reported by @1nerdherder.)
+
+      - **The blocked-users list opened from Contacts** now shows the proper two-line title bar with
+      a back button, instead of an unlabelled screen.
+
+      - **The Contacts overflow popup** fits the screen again after the saved-contacts counter was
+      added.
+
+
+      ---
+
+
+      Everything from beta_20 is included. Big thanks to @samuelcoustet for the MQTT bridge (#71),
+      and to @Salgueiron, @Buko84 and @1nerdherder for the reports.
+
+
+      ### Files
+
+
+      - **T-Deck** — `wadamesh-tdeck-merged.bin` (full flash @ 0x0) · `wadamesh-tdeck.bin` (Launcher
+      / OTA app image)
+
+      - **Heltec V4 TFT** — `wadamesh-heltec-v4-tft-merged.bin` (full flash @ 0x0) ·
+      `wadamesh-heltec-v4-tft.bin` (OTA app image)
   - version: beta_20
     name: wadamesh beta_20
     datetime: '2026-06-28T21:37:20Z'
