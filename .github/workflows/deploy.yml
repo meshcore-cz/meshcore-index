@@ -50,7 +50,7 @@ jobs:
           SITE_ORIGIN: https://meshcore.ninja
           VITE_SITE_ORIGIN: https://meshcore.ninja
           PUBLIC_PLAUSIBLE_SCRIPT_URL: https://x.meshcore.ninja/js/pa-CELA0z_On7nm-NCODtDZB.js
-          # Live analyzer metrics come from the Go API (see api/). Setting this
+          # Live analyzer metrics come from the separate Go API service. Setting this
           # enables the pulse UI; leaving it unset disables it gracefully.
           VITE_API_BASE: https://api.meshcore.ninja
       # The single source of the github-pages artifact. Keeping this out of the

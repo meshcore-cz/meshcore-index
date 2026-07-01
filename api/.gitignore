@@ -1,8 +1,0 @@
-/bin/
-/meshcore-ninja-api
-*.exe
-
-# SQLite counter-persistence files (--db)
-*.db
-*.db-wal
-*.db-shm

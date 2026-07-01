@@ -8,7 +8,7 @@ the **data** and a permissive open-source license for the **code**.
 | Device, firmware, application & network records (`data/`) | **CC0 1.0 Universal** | [`data/LICENSE`](data/LICENSE) |
 | JSON/YAML exports and API responses (`data.json`, `/data.json`, per-record JSON) | **CC0 1.0 Universal** | [`data/LICENSE`](data/LICENSE) |
 | Schemas and compatibility matrices (`schema/`, `data/compatibility/`) | **CC0 1.0 Universal** | [`data/LICENSE`](data/LICENSE) |
-| Website / application source code (`src/`, `scripts/`, `api/`) | **MIT** | [`LICENSE`](LICENSE) |
+| Website / application source code (`src/`, `scripts/`) | **MIT** | [`LICENSE`](LICENSE) |
 | Original project documentation | **CC0 1.0 Universal** | [`data/LICENSE`](data/LICENSE) |
 | Third-party device images, photographs and logos | Their original licenses | — |
 | The "MeshCore Ninja" name and logo | All rights reserved | — |
@@ -28,8 +28,8 @@ research projects without licensing friction.
 
 ## Code — MIT
 
-The application source code (`src/`, `scripts/`, the Go metrics API in `api/`)
-is licensed under the [MIT License](LICENSE). Creative Commons recommends a
+The application source code (`src/`, `scripts/`) is licensed under the
+[MIT License](LICENSE). Creative Commons recommends a
 standard software license rather than a CC license for code, since CC0 does not
 address software-specific concerns such as patents and is not OSI-approved.
 

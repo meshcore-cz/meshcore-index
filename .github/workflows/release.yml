@@ -27,11 +27,6 @@ jobs:
           node-version: 24
           cache: npm
 
-      - uses: actions/setup-go@v6
-        with:
-          go-version-file: api/go.mod
-          cache-dependency-path: api/go.sum
-
       - name: Verify package version matches Git tag
         run: |
           tag_version="${{ github.event.inputs.tag || github.ref_name }}"
@@ -46,13 +41,6 @@ jobs:
         run: |
           npm ci
           npm test
-
-      - name: Validate API
-        working-directory: api
-        run: |
-          go vet ./...
-          go test ./...
-          CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o bin/meshcore-ninja-api .
 
       - name: Publish release
         uses: softprops/action-gh-release@v2

@@ -15,11 +15,14 @@ npm run build      # production build
 npm run preview    # preview the production build
 ```
 
-The Go metrics API lives in [`api/`](api/):
+The optional Go metrics API lives in the separate
+[`meshcore-ninja-api`](https://github.com/meshcore-cz/meshcore-ninja-api)
+repository. When working with both repos side by side, run it from
+`../meshcore-ninja-api`:
 
 ```bash
-make run-api       # run the API against ./data
-make test          # validate data and run API tests
+cd ../meshcore-ninja-api
+make run           # run the API against ../meshcore-ninja/data
 ```
 
 ## Working with the data
@@ -58,8 +61,8 @@ make release VERSION=v2026.6.0
 
 The release helper bumps `package.json` / `package-lock.json`, runs checks,
 commits the version bump, creates an annotated tag, and pushes the branch + tag.
-Tag pushes create a GitHub release and publish the API Docker image to
-`ghcr.io/meshcore-cz/meshcore-ninja-api`.
+Tag pushes create a GitHub release for the web catalog. The API image is built
+and published from the separate `meshcore-ninja-api` repository.
 
 ## Contributing
 
@@ -69,6 +72,6 @@ Edits are made by changing the YAML files in `data/`. See [`AGENTS.md`](AGENTS.m
 
 ## Licensing
 
-The MeshCore Ninja database — device, firmware, application, network and compatibility data, schemas, and generated data exports — is dedicated to the public domain under [CC0 1.0 Universal](data/LICENSE). The application source code (`src/`, `scripts/`, `api/`) is licensed under the [MIT License](LICENSE).
+The MeshCore Ninja database — device, firmware, application, network and compatibility data, schemas, and generated data exports — is dedicated to the public domain under [CC0 1.0 Universal](data/LICENSE). The application source code (`src/`, `scripts/`) is licensed under the [MIT License](LICENSE).
 
 Third-party names, trademarks, logos, photographs and other assets remain the property of their respective owners and are not covered by the CC0 dedication unless explicitly stated otherwise. See [`LICENSES.md`](LICENSES.md) for the full breakdown.

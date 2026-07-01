@@ -1,15 +1,10 @@
-# MeshCore Ninja — build orchestration for the static web app and the Go API.
+# MeshCore Ninja — build orchestration for the static web app.
 #
 # Run `make` (or `make help`) to list targets.
 
 # --- config ------------------------------------------------------------------
 
-API_DIR    := api
-API_BIN    := $(API_DIR)/bin/meshcore-ninja-api
 API_ADDR   ?= :8089
-DATA_DIR   ?= data
-TANGLEVEIL_URL ?= wss://tangleveil.meshcore.ninja/ws
-GO         ?= go
 NPM        ?= npm
 REMOTE     ?= origin
 RELEASE_BRANCH ?= main
@@ -27,13 +22,13 @@ help: ## Show this help
 # --- combined ----------------------------------------------------------------
 
 .PHONY: build
-build: build-api build-web ## Build both the Go API and the static web app
+build: build-web ## Build the static web app
 
 .PHONY: test
-test: test-api test-web ## Run all tests (Go + data validation)
+test: test-web ## Run all tests
 
 .PHONY: clean
-clean: clean-api clean-web ## Remove all build artifacts
+clean: clean-web ## Remove all build artifacts
 
 .PHONY: release
 release: ## Check, commit, tag, and push a release, for example make release VERSION=v2026.6.0
@@ -63,13 +58,12 @@ release: ## Check, commit, tag, and push a release, for example make release VER
 		exit 1; \
 	}
 	$(NPM) version --no-git-tag-version "$(RELEASE_VERSION)"
-	$(MAKE) --no-print-directory fmt tidy
-	$(MAKE) --no-print-directory vet test build
+	$(MAKE) --no-print-directory test build
 	git add -u
 	git commit -m "chore: release $(VERSION)"
 	git tag -a "$(VERSION)" -m "meshcore-ninja $(VERSION)"
 	git push $(REMOTE) "$(RELEASE_BRANCH)" "$(VERSION)"
-	@echo "Released $(VERSION). GitHub Actions will publish the release and API image."
+	@echo "Released $(VERSION). GitHub Actions will publish the web catalog release."
 
 # --- web (SvelteKit) ---------------------------------------------------------
 
@@ -103,36 +97,3 @@ test-web: node_modules ## Validate all YAML against the schema
 .PHONY: clean-web
 clean-web: ## Remove web build output
 	rm -rf build .svelte-kit
-
-# --- Go API ------------------------------------------------------------------
-
-# Build version stamped into meshcore_build_info (falls back to git describe).
-API_VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
-
-.PHONY: build-api
-build-api: ## Compile the Go API to api/bin/
-	cd $(API_DIR) && $(GO) build -ldflags "-X main.version=$(API_VERSION)" -o bin/meshcore-ninja-api .
-
-.PHONY: run-api
-run-api: ## Run the Go API (override DATA_DIR/API_ADDR as needed)
-	cd $(API_DIR) && $(GO) run . --data ../$(DATA_DIR) --addr $(API_ADDR) --tangleveil $(TANGLEVEIL_URL)
-
-.PHONY: test-api
-test-api: ## Run Go tests
-	cd $(API_DIR) && $(GO) test ./...
-
-.PHONY: vet
-vet: ## Run go vet on the API
-	cd $(API_DIR) && $(GO) vet ./...
-
-.PHONY: fmt
-fmt: ## Format the Go code
-	cd $(API_DIR) && $(GO) fmt ./...
-
-.PHONY: tidy
-tidy: ## Tidy the Go module
-	cd $(API_DIR) && $(GO) mod tidy
-
-.PHONY: clean-api
-clean-api: ## Remove the compiled API binary
-	rm -rf $(API_DIR)/bin
