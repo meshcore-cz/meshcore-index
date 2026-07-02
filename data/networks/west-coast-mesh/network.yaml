@@ -47,7 +47,7 @@ community:
 analyzers:
   # Source: CoreScope instance found via subdomain probe 2026-06-26
   - name: CoreScope
-    url: https://analyzer.wcmesh.com/
+    url: https://corescope.wcmesh.com/
 
 maps:
   - name: WCMesh live map
