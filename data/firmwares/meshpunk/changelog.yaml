@@ -1,7 +1,13 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-06-27T13:48:18.608Z'
+updatedAt: '2026-07-02T21:11:13.767Z'
 releases:
+  - version: v0.2.2
+    name: v0.2.2 alpha
+    datetime: '2026-07-02T20:56:52Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.2.2
+    prerelease: false
+    notes: "This release focused on memory fragmentation fixes and getting the launcher.bin to actually work!\r\nThe filesystem is now packed and included in the firmware. it is then unpacked and added on the first launch. if any updates are needed to the filesystem it will update based on the tag version being installed. \r\nNotifications are now on the c side so they work when lua is shut down and an elf app is running.\r\nChannel notifications are now set per channel in the notification settings. they can be set to mentions only, all, or off.\r\nThemes have been improved with 4 new themes as well as additional theme settings."
   - version: v0.2.0
     name: v0.2.0 alpha
     datetime: '2026-06-26T00:21:28Z'
